@@ -10,11 +10,11 @@ const { MIN_PLAYERS } = require("./const");
 const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 
 class Game {
-  constructor(code, onEnd, options, broadcast) {
+  constructor(code, onEmpty, options, broadcast) {
     this.code = code;
     this.plist = PlayerList(
       () => this.notifyPlayerUpdate(),
-      () => onEnd(),
+      () => onEmpty(),
     );
     this.started = false;
     this.phase = PHASES[0];
@@ -101,6 +101,14 @@ class Game {
 
   reveal(r, c) {
     this.board.reveal(r, c);
+    if (this.keycard.isBlack(r, c)) {
+      this.end();
+    }
+  }
+
+  end() {
+    this.phase = PHASES[4];
+    this.notifyPhaseChange();
   }
 
   getPlayerData() {

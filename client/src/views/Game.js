@@ -6,6 +6,7 @@ import Lobby from '../game_views/Lobby';
 import Teams from '../game_views/Teams';
 import Roles from '../game_views/Roles';
 import Board from '../game_views/Board';
+import Result from '../game_views/Result';
 
 import { getMePlayer, newPlayer } from '../models/player';
 import { newBoard, copyBoard } from '../models/board';
@@ -15,6 +16,7 @@ const LOBBY = "lobby";
 const TEAMS = "teams";
 const ROLES = "roles";
 const BOARD = "board";
+const RESULT = "result";
 
 function Game(props) {
   const [phase, setPhase] = useState(LOBBY);
@@ -87,8 +89,9 @@ function Game(props) {
               me={me}
               board={board}
               keycard={key}/>,
-
-  }
+    [RESULT]: <Result
+              socket={props.socket}/>,
+  };
 
   return (
     <div>

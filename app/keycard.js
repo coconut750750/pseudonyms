@@ -39,6 +39,10 @@ class KeyCard {
     return this.tiles[r * BOARD_LEN + c];
   }
 
+  isBlack(r, c) {
+    return this.tiles[r * BOARD_LEN + c] === BLACK_TILE;
+  }
+
   genJson() {
     var result = { keycard : [] };
     for (var r = 0; r < BOARD_LEN; r++) {
