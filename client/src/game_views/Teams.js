@@ -50,7 +50,7 @@ function Teams(props) {
 
       {confirmReady() &&
       <button type="button" className="btn btn-light"
-        onClick={() => props.confirmTeams()}>Confirm Teams</button>
+        onClick={() => props.socket.emit('confirmTeams', {})}>Confirm Teams</button>
       }
 
     </div>

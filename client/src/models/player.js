@@ -16,9 +16,13 @@ export default class Player {
   noTeam() {
     return this.team === "";
   }
-  
+
   isBlue() {
     return this.team === "blue";
+  }
+
+  isKey() {
+    return this.role === "key";
   }
 }
 

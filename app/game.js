@@ -7,6 +7,8 @@ const WordList = require("./wordlist");
 
 const { MIN_PLAYERS } = require("./const");
 
+const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
+
 class Game {
   constructor(code, onEnd, options) {
     this.code = code;
@@ -15,6 +17,7 @@ class Game {
       () => onEnd(),
     );
     this.started = false;
+    this.phase = PHASES[0];
   }
 
   getPlayer(name) {
@@ -63,7 +66,18 @@ class Game {
 
   start() {
     this.started = true;
+    this.phase = PHASES[1];
     this.notifyGameStart();
+  }
+
+  confirmTeams() {
+    this.phase = PHASES[2];
+    this.notifyPhaseChange();
+  }
+
+  confirmRoles() {
+    this.phase = PHASES[3];
+    this.notifyPhaseChange();
   }
 
   getPlayerData() {
@@ -78,6 +92,10 @@ class Game {
 
   notifyGameStart() {
     this.plist.getAll().forEach(p => p.send('start', {}));
+  }
+
+  notifyPhaseChange() {
+    this.plist.getAll().forEach(p => p.send('phase', { phase: this.phase }));
   }
 }
 

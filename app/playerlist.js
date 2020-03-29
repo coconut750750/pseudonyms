@@ -79,6 +79,11 @@ function PlayerList(notifyUpdate, endGame) {
   }
 
   const setKey = (name) => {
+    for (var p of players) {
+      if (p.team === get(name).team) {
+        p.resetRole();
+      }
+    }
     get(name).setKey();
     notifyUpdate();
   }

@@ -5,6 +5,7 @@ import GameCodeBadge from '../components/GameCodeBadge';
 
 import Lobby from '../game_views/Lobby';
 import Teams from '../game_views/Teams';
+import Roles from '../game_views/Roles';
 
 import { getMePlayer, newPlayer } from '../models/player';
 
@@ -21,6 +22,10 @@ function Game(props) {
   // on mount
   useEffect(() => {
     props.socket.emit('join', { name: props.name, gameCode: props.gameCode });
+    
+    props.socket.on('phase', data => {
+      setPhase(data.phase);
+    });
 
     props.socket.on('players', data => {
       const players = data.players.map(p => newPlayer(p));
@@ -47,7 +52,13 @@ function Game(props) {
     [TEAMS]: <Teams 
               socket={props.socket}
               players={players}
-              confirmTeams={setPhase(ROLES)}/>
+              confirmTeams={() => setPhase(ROLES)}/>,
+    [ROLES]: <Roles
+              socket={props.socket}
+              players={players}
+              me={me}
+              confirmRoles={() => {}}/>,
+
   }
 
   return (

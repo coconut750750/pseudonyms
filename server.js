@@ -64,7 +64,19 @@ app.io.on('connect', function (socket) {
   socket.on('selectTeam', data => {
     const { team } = data;
     game.setTeam(name, team === 'red');
-  })
+  });
+
+  socket.on('confirmTeams', data => {
+    game.confirmTeams();
+  });
+
+  socket.on('setKey', data => {
+    game.setKey(name);
+  });
+
+  socket.on('confirmRoles', data => {
+    game.confirmRoles();
+  });
 
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {

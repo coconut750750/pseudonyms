@@ -15,6 +15,6 @@ module.exports = {
   N_WHITE_TILES: 7,
   N_BLACK_TILES: 1,
 
-  PLAYER_ROLE: 0,
-  KEY_ROLE: 1,
+  PLAYER_ROLE: "player",
+  KEY_ROLE: "key",
 }
