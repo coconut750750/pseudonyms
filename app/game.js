@@ -10,14 +10,19 @@ const { MIN_PLAYERS } = require("./const");
 const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 
 class Game {
-  constructor(code, onEnd, options) {
+  constructor(code, onEnd, options, broadcast) {
     this.code = code;
+    this.broadcast = broadcast;
     this.plist = PlayerList(
       () => this.notifyPlayerUpdate(),
       () => onEnd(),
     );
     this.started = false;
     this.phase = PHASES[0];
+
+    this.keycard = new KeyCard();
+    this.wordlist = new WordList('test');
+    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
   }
 
   getPlayer(name) {
@@ -87,15 +92,20 @@ class Game {
   }
 
   notifyPlayerUpdate() {
-    this.plist.getAll().forEach(p => p.send('players', this.getPlayerData()));
+    this.broadcast('players', this.getPlayerData());
   }
 
   notifyGameStart() {
-    this.plist.getAll().forEach(p => p.send('start', {}));
+    this.broadcast('start', {});
   }
 
   notifyPhaseChange() {
-    this.plist.getAll().forEach(p => p.send('phase', { phase: this.phase }));
+    this.broadcast('phase', { phase: this.phase });
+  }
+
+  notifyReveal(r, c) {
+    const color = this.keycard.getTile(r, c);
+    this.broadcast('reveal', { r, c, color });
   }
 }
 

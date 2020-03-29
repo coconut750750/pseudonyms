@@ -21,8 +21,9 @@ function Game(props) {
 
   // on mount
   useEffect(() => {
+    // this will result in a 'players' message from server
     props.socket.emit('join', { name: props.name, gameCode: props.gameCode });
-    
+
     props.socket.on('phase', data => {
       setPhase(data.phase);
     });

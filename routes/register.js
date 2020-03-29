@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 router.post('/create', (req, res) => {
-  const game = req.pseudo.createGame(req.body);
+  const game = req.pseudo.createGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
     gameCode: `${game.code}`

@@ -5,9 +5,9 @@ class Pseudo {
     this.games = {};
   }
 
-  createGame(options) {
+  createGame(options, broadcast) {
     const code = this.generateCode();
-    const newGame = new Game(code, () => this.endGame(code), options);
+    const newGame = new Game(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
     this.games[code] = newGame;
     return newGame;
   }

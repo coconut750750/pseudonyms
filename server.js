@@ -24,6 +24,7 @@ app.get('/ping', (req, res) => {
 
 app.use(function(req, res, next) {
   req.pseudo = app.pseudo;
+  req.io = app.io;
   next();
 });
 app.use("/", registerRouter);
@@ -36,6 +37,7 @@ app.io.on('connect', function (socket) {
   socket.on('join', data => {
     name = data.name;
     game = app.pseudo.retrieveGame(data.gameCode);
+    socket.join(data.gameCode);
 
     if (game.playerExists(name)) {
       game.activatePlayer(name, socket);
