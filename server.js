@@ -65,6 +65,10 @@ app.io.on('connect', function (socket) {
     game.setTeam(name, team === 'red');
   });
 
+  socket.on('randomizeTeams', data => {
+    game.randomizeTeams();
+  });
+
   socket.on('confirmTeams', data => {
     game.confirmTeams();
   });

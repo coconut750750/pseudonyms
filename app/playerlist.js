@@ -71,6 +71,32 @@ function PlayerList(notifyUpdate, endGame) {
     notifyUpdate();
   }
 
+  const randomizeTeams = () => {
+    const n = players.length;
+    let nRed = Math.floor(n/2);
+    let nBlue = Math.floor(n/2);
+    if (n & 1 === 1) {
+        const r = Math.floor(Math.random() * 2);
+        nRed += (1 - r);
+        nBlue += r;
+    }
+
+    for (var p of players) {
+        if (nRed === 0) {
+            p.setTeam(false);
+        } else if (nBlue === 0) {
+            p.setTeam(true);
+        } else {
+            const isRed = Math.random() > 0.5;
+            p.setTeam(isRed);
+            nRed -= isRed;
+            nBlue -= (1 - isRed);
+        }
+    }
+
+    notifyUpdate();
+  }
+
   const resetRoles = () => {
     for (var p of players) {
       p.resetRole();
@@ -99,6 +125,7 @@ function PlayerList(notifyUpdate, endGame) {
     remove,
     resetTeams, 
     setTeam,
+    randomizeTeams,
     resetRoles, 
     setKey,
   }

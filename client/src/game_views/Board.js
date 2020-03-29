@@ -7,11 +7,19 @@ function Board(props) {
     let row = [];
     row.push(<div className="col-1"></div>);
     for (let c = 0; c < props.board.width; c++) {
+      let color;
+      console.log(props.keycard);
+      if (props.keycard !== undefined) {
+        color = props.keycard.get(r, c);
+      } else {
+        color = props.board.getColor(r, c);
+      }
       row.push(
         <div className="col-2" style={{ padding: 0 }}>
           <Tile
             word={props.board.get(r, c)}
-            color={props.board.getColor(r, c)}
+            color={color}
+            revealed={props.board.isRevealed(r, c)}
             isKey={props.me.isKey()}
             reveal={ () => props.socket.emit('revealWord', {r, c}) }/>
         </div>

@@ -6,6 +6,38 @@
     cursor: pointer;
 }
 
-.tile.key {
-    
+.tile.revealed.r {
+    background-color: #ff0000;
+}
+
+.tile.revealed.b {
+    background-color: #0000ff;
+}
+
+.tile.revealed.y {
+    background-color: #aaaaaa;
+}
+
+.tile.revealed.x {
+    background-color: #000000;
+}
+
+.tile.revealed p {
+    color: #ffffff;
+}
+
+.tile.key.hidden.r p {
+    color: #ff0000;
+}
+
+.tile.key.hidden.b p {
+    color: #0000ff;
+}
+
+.tile.key.hidden.y p {
+    color: #aaaaaa;
+}
+
+.tile.key.hidden.x p {
+    color: #000000;
 }

@@ -45,7 +45,8 @@ function Game(props) {
     });
 
     props.socket.on('key', data => {
-      // setKey(newKey(data.key));
+      console.log(data.keycard);
+      setKey(newKey(data.keycard));
     });
 
     props.socket.on('message', data => {
@@ -60,7 +61,6 @@ function Game(props) {
   }, [props.gameCode, props.name, props.socket]);
 
   useEffect(() => {
-    console.log(board);
     props.socket.off('reveal');
     props.socket.on('reveal', data => {
       const { r, c, color } = data;
@@ -86,7 +86,7 @@ function Game(props) {
               players={players}
               me={me}
               board={board}
-              key={key}/>,
+              keycard={key}/>,
 
   }
 

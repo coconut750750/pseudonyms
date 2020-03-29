@@ -1,18 +1,21 @@
 export default class Board {
   constructor() {
     this.tiles = [];
-    this.colors = []
+    this.colors = [];
+    this.revealed = [];
   }
 
   load(tiles) {
     for (var row of tiles) {
       this.tiles.push([]);
       this.colors.push([]);
+      this.revealed.push([]);
 
       for (var col of row) {
         var lastIndex = this.tiles.length - 1;
         this.tiles[lastIndex].push(col.word);
-        this.colors[lastIndex].push(undefined);
+        this.colors[lastIndex].push('');
+        this.revealed[lastIndex].push(false);
       }
     }
 
@@ -23,6 +26,7 @@ export default class Board {
   copy(board) {
     this.tiles = board.tiles;
     this.colors = board.colors;
+    this.revealed = board.revealed;
     this.width = this.tiles[0].length;
     this.height = this.tiles.length;
   }
@@ -35,11 +39,13 @@ export default class Board {
     return this.colors[r][c];
   }
 
+  isRevealed(r, c) {
+    return this.revealed[r][c];
+  }
+
   reveal(r, c, color) {
-    console.log(r, c);
-    console.log(this.colors);
     this.colors[r][c] = color;
-    console.log(this.colors);
+    this.revealed[r][c] = true;
   }
 }
 
@@ -50,7 +56,6 @@ export function newBoard(json) {
 }
 
 export function copyBoard(board) {
-  console.log(board);
   let b = new Board()
   b.copy(board);
   return b;

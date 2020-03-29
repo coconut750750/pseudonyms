@@ -65,6 +65,10 @@ class Game {
     this.plist.setTeam(name, isRed);
   }
 
+  randomizeTeams() {
+    this.plist.randomizeTeams();
+  }
+
   setKey(name) {
     this.plist.setKey(name);
   }
