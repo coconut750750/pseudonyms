@@ -1,3 +1,5 @@
+const { RED, BLUE, PLAYER_ROLE, KEY_ROLE, NO_TEAM } = require('./const');
+
 class Player {
   constructor(name, socket, isAdmin) {
     this.name = name;
@@ -5,16 +7,24 @@ class Player {
     this.isAdmin = isAdmin;
     this.active = true;
 
-    this.team = "";
-    this.role = "";
+    this.team = NO_TEAM;
+    this.role = PLAYER_ROLE;
   }
 
-  setTeam(team) {
-    this.team = team;
+  setTeam(isRed) {
+    this.team = isRed ? RED : BLUE;
   }
 
-  setRole(role) {
-    this.role = role;
+  resetTeam() {
+    this.team = NO_TEAM;
+  }
+
+  setKey() {
+    this.role = KEY_ROLE;
+  }
+
+  resetRole() {
+    this.role = PLAYER_ROLE;
   }
 
   activate(socket) {

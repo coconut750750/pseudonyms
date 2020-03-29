@@ -8,6 +8,18 @@ export default class Player {
     this.team = team;
     this.role = role;
   }
+
+  isRed() {
+    return this.team === "red";
+  }
+
+  noTeam() {
+    return this.team === "";
+  }
+  
+  isBlue() {
+    return this.team === "blue";
+  }
 }
 
 export function getMeIndex(players, name) {

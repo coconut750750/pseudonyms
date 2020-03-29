@@ -49,19 +49,19 @@ function App() {
   }
 
   const views = {
-    home:   <Home 
+    [HOME]:   <Home 
               createGame={ () => setViewState(CREATE) } 
               joinGame={ () => setViewState(JOIN) }
               viewHowTo={ () => setViewState(HOWTO) }/>,
-    howto:  <HowTo
+    [HOWTO]:  <HowTo
               goBack={ () => setViewState(HOME) }/>,
-    create: <Create
+    [CREATE]: <Create
               goBack={ () => setViewState(HOME) }
               setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
-    join:   <Join
+    [JOIN]:   <Join
               goBack={ () => setViewState(HOME) }
               join={ (gameCode, name) => setGame(gameCode, name) }/>,
-    game:  <Game
+    [GAME]:  <Game
               socket={socket}
               gameCode={gameCode}
               name={name}

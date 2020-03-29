@@ -45,8 +45,12 @@ class Game {
     this.plist.remove(name);
   }
 
-  setTeams(redNames) {
-    this.plist.setTeams(redNames);
+  resetTeams() {
+    this.plist.resetTeams();
+  }
+
+  setTeam(name, isRed) {
+    this.plist.setTeam(name, isRed);
   }
 
   setKey(name) {

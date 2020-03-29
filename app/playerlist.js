@@ -1,6 +1,5 @@
 var _ = require('lodash');
 const Player = require('./player');
-const { RED, BLUE, PLAYER_ROLE, KEY_ROLE } = require('./const');
 
 function PlayerList(notifyUpdate, endGame) {
   var players = [];
@@ -60,26 +59,27 @@ function PlayerList(notifyUpdate, endGame) {
     }
   }
 
-  const setTeams = (redNames) => {
+  const resetTeams = () => {
     for (var p of players) {
-      if (redNames.includes(p.name)) {
-        p.setTeam(RED);
-      } else {
-        p.setTeam(BLUE);
-      }
+      p.resetTeam();
     }
+    notifyUpdate();
+  }
+
+  const setTeam = (name, isRed) => {
+    get(name).setTeam(isRed);
     notifyUpdate();
   }
 
   const resetRoles = () => {
     for (var p of players) {
-      p.setRole(PLAYER_ROLE);
+      p.resetRole();
     }
     notifyUpdate();
   }
 
   const setKey = (name) => {
-    get(name).setRole(KEY_ROLE);
+    get(name).setKey();
     notifyUpdate();
   }
 
@@ -92,7 +92,8 @@ function PlayerList(notifyUpdate, endGame) {
     deactivate,
     isActive,
     remove,
-    setTeams,
+    resetTeams, 
+    setTeam,
     resetRoles, 
     setKey,
   }

@@ -4,8 +4,10 @@ function PlayerBadge(props) {
   const getBadgeClass = () => {
     if (!props.player.active) {
       return "badge-light";
-    // } else if (props.player.team !== undefined) {
-    //   return props.player.isDefending() ? "badge-primary" : "badge-secondary";
+    } else if (props.player.isRed()) {
+      return "badge-danger";
+    } else if (props.player.isBlue()) {
+      return "badge-primary";
     } else {
       return "badge-dark";
     }

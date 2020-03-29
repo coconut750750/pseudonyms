@@ -61,6 +61,11 @@ app.io.on('connect', function (socket) {
     }
   });
 
+  socket.on('selectTeam', data => {
+    const { team } = data;
+    game.setTeam(name, team === 'red');
+  })
+
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {
       game.deactivatePlayer(name);
