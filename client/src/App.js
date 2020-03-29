@@ -22,7 +22,7 @@ function App() {
   const [socket, setSocket] = useState(undefined);
 
   const setGame = (gameCode, name) => {
-    let socket = io();
+    let socket = io('localhost:5000');
     socket.on('end', data => {
       exitGame();
     });

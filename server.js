@@ -49,6 +49,18 @@ app.io.on('connect', function (socket) {
     }
   });
 
+  socket.on('getPlayers', data => {
+    socket.emit('players', game.getPlayerData());
+  });
+
+  socket.on('startGame', data => {
+    if (game.enoughPlayers()) {
+      game.start();
+    } else {
+      socket.emit('message', { message: 'Not enough players have joined the game' });
+    }
+  });
+
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {
       game.deactivatePlayer(name);

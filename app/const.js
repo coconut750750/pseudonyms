@@ -1,4 +1,5 @@
 module.exports = {
+  MIN_PLAYERS: 4,
   RED: "red",
   BLUE: "blue",
   BOARD_LEN: 5,

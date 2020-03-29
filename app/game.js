@@ -5,6 +5,8 @@ const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
 const WordList = require("./wordlist");
 
+const { MIN_PLAYERS } = require("./const");
+
 class Game {
   constructor(code, onEnd, options) {
     this.code = code;
@@ -51,10 +53,27 @@ class Game {
     this.plist.setKey(name);
   }
 
-  notifyPlayerUpdate() {
+  enoughPlayers() {
+    return this.plist.getAll().length >= MIN_PLAYERS;
+  }
+
+  start() {
+    this.started = true;
+    this.notifyGameStart();
+  }
+
+  getPlayerData() {
     const players = this.plist.getAll();
     const playerData = { players: players.map(p => p.json()) };
-    players.forEach(p => p.send('players', playerData));
+    return playerData;
+  }
+
+  notifyPlayerUpdate() {
+    this.plist.getAll().forEach(p => p.send('players', this.getPlayerData()));
+  }
+
+  notifyGameStart() {
+    this.plist.getAll().forEach(p => p.send('start', {}));
   }
 }
 
