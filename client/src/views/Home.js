@@ -8,8 +8,8 @@ function Home(props) {
         <button type="button" className="btn btn-light" onClick={props.createGame}>Create Game</button>
       </div>
 
-      <div class="btn-group-vertical">
-        <button type="button" class="btn btn-light" onClick={props.viewHowTo}>How to Play</button>
+      <div className="btn-group-vertical">
+        <button type="button" className="btn btn-light" onClick={props.viewHowTo}>How to Play</button>
       </div>
     </div>
   )

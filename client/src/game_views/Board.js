@@ -1,49 +1,49 @@
 import React from 'react';
 
-import Tile from '../components/Tile';
+import ClueInput from '../components/ClueInput';
+import Board from '../components/Board';
 
-function Board(props) {
-  const renderRow = (r) => {
-    let row = [];
-    row.push(<div className="col-1"></div>);
-    for (let c = 0; c < props.board.width; c++) {
-      let color;
-      console.log(props.keycard);
-      if (props.keycard !== undefined) {
-        color = props.keycard.get(r, c);
-      } else {
-        color = props.board.getColor(r, c);
-      }
-      row.push(
-        <div className="col-2" style={{ padding: 0 }}>
-          <Tile
-            word={props.board.get(r, c)}
-            color={color}
-            revealed={props.board.isRevealed(r, c)}
-            isKey={props.me.isKey()}
-            reveal={ () => props.socket.emit('revealWord', {r, c}) }/>
-        </div>
-      );
-    }
-    row.push(<div className="col-1"></div>);
-    return row;
+function BoardView(props) {
+  const myTurn = () => {
+    return props.me.team === props.turn;
   };
 
-  const renderBoard = () => {
-    let board = [];
-    for (let i = 0; i < props.board.height; i++) {
-      board.push(<div className="col-12 row">{ renderRow(i) }</div>);
-    }
-    return board;
+  const clueActive = () => {
+    return props.clue !== undefined;
   };
 
   return (
     <div>
-      <div>
-        {renderBoard()}
+      <div className="row">
+        <div className="col-4">
+          <h5>{props.turn === "red" ? "Red Turn" : "Blue Turn"}</h5>
+        </div>
+        <div className="col-4">
+          {clueActive() &&
+            <p>{`Clue: ${props.clue.clue}: ${props.clue.count}`}</p>
+          }
+        </div>
+        <div className="col-4">
+          {(myTurn() && clueActive())  &&
+            <button type="button" className="btn btn-light" onClick={ () => props.socket.emit('endTurn', {}) }>End Turn</button>
+          }
+        </div>
       </div>
+      <br/>
+
+      <Board
+        revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
+        board={props.board}
+        keycard={props.keycard}
+        isKey={props.me.isKey()}
+        tilesActive={myTurn() && clueActive()}/>
+      <br/>
+
+      {(myTurn() && props.me.isKey() && !clueActive()) && 
+        <ClueInput socket={props.socket}/>
+      }
     </div>
   );
 }
 
-export default Board;
+export default BoardView;

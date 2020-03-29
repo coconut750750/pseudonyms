@@ -23,8 +23,12 @@ function Game(props) {
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);
   const [message, setMessage] = useState("");
+
   const [board, setBoard] = useState(undefined);
   const [key, setKey] = useState(undefined);
+  const [turn, setTurn] = useState(0);
+  const [clue, setClue] = useState(undefined);
+  const [winner, setWinner] = useState(undefined);
 
   // on mount
   useEffect(() => {
@@ -47,7 +51,6 @@ function Game(props) {
     });
 
     props.socket.on('key', data => {
-      console.log(data.keycard);
       setKey(newKey(data.keycard));
     });
 
@@ -56,10 +59,27 @@ function Game(props) {
     });
 
     props.socket.on('start', data => {
+      const { first } = data;
+      setTurn(first);
       setMessage("");
       setPhase(TEAMS);
     });
 
+    props.socket.on('turn', data => {
+      const { turn } = data;
+      setTurn(turn);
+      setClue(undefined);
+    });
+
+    props.socket.on('clue', data => {
+      const { clue, count } = data;
+      setClue({ clue, count });
+    });
+
+    props.socket.on('winner', data => {
+      const { winner } = data;
+      setWinner(winner);
+    });
   }, [props.gameCode, props.name, props.socket]);
 
   useEffect(() => {
@@ -88,9 +108,12 @@ function Game(props) {
               players={players}
               me={me}
               board={board}
-              keycard={key}/>,
+              keycard={key}
+              turn={turn}
+              clue={clue}/>,
     [RESULT]: <Result
-              socket={props.socket}/>,
+              socket={props.socket}
+              winner={winner}/>,
   };
 
   return (

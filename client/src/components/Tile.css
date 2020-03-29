@@ -2,7 +2,7 @@
     border: 2px solid black;
 }
 
-.tile.player {
+.tile.player.active {
     cursor: pointer;
 }
 

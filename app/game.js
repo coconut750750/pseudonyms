@@ -5,7 +5,7 @@ const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
 const WordList = require("./wordlist");
 
-const { MIN_PLAYERS } = require("./const");
+const { RED, BLUE, MIN_PLAYERS } = require("./const");
 
 const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 
@@ -22,6 +22,8 @@ class Game {
     this.keycard = undefined;
     this.wordlist = undefined;
     this.board = undefined;
+    this.clues = undefined;
+    this.turn = undefined;
 
     this.broadcast = broadcast;
     this.broadcastKeys = (event, data) => {
@@ -79,6 +81,7 @@ class Game {
 
   start(options) {
     this.keycard = new KeyCard();
+    this.turn = this.keycard.start;
     this.wordlist = new WordList(options.wordlist);
     this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
 
@@ -94,21 +97,42 @@ class Game {
 
   confirmRoles() {
     this.phase = PHASES[3];
-    this.notifyBoardChange();
     this.notifyKeyChange();
+    this.notifyBoardChange();
     this.notifyPhaseChange();
   }
 
   reveal(r, c) {
+    if (this.board.isRevealed(r, c)) {
+      return;
+    }
+
     this.board.reveal(r, c);
+    this.keycard.reveal(r, c);
+
     if (this.keycard.isBlack(r, c)) {
-      this.end();
+      this.end(this.turn === RED ? BLUE : RED);
+    }
+
+    const winner = this.keycard.checkWin();
+    if (winner !== undefined) {
+      this.end(winner);
     }
   }
 
-  end() {
+  sendClue(clue, count) {
+    this.notifyClue(clue, count);
+  }
+
+  endTurn() {
+    this.turn = this.turn === RED ? BLUE : RED;
+    this.notifyTurnChange();
+  }
+
+  end(winner) {
     this.phase = PHASES[4];
     this.notifyPhaseChange();
+    this.notifyWinner(winner);
   }
 
   getPlayerData() {
@@ -122,7 +146,7 @@ class Game {
   }
 
   notifyGameStart() {
-    this.broadcast('start', {});
+    this.broadcast('start', { first: this.keycard.start });
   }
 
   notifyPhaseChange() {
@@ -137,9 +161,21 @@ class Game {
     this.broadcastKeys('key', this.keycard.json());
   }
 
+  notifyTurnChange() {
+    this.broadcast('turn', { turn: this.turn });
+  }
+
+  notifyClue(clue, count) {
+    this.broadcast('clue', { clue, count });
+  }
+
   notifyReveal(r, c) {
     const color = this.keycard.getTile(r, c);
     this.broadcast('reveal', { r, c, color });
+  }
+
+  notifyWinner(winner) {
+    this.broadcast('winner', { winner });
   }
 }
 

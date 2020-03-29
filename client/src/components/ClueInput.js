@@ -1,0 +1,33 @@
+import React, { useState } from 'react';
+
+function ClueInput(props) {
+  const [clue, setClue] = useState("");
+  const [count, setCount] = useState("");
+
+  const sendClue = () => {
+    props.socket.emit('sendClue', { clue, count });
+  };
+
+  return (
+    <div>
+      <input type="name" className="form-control" placeholder="Enter your clue" value={clue} onChange={ e => setClue(e.target.value) }/>
+      <br/>
+      <select className="form-control" onChange={ e => setCount(e.target.value) }>
+        <option value="" disabled selected>Enter your clue count</option>
+        <option value={1}>1</option>
+        <option value={2}>2</option>
+        <option value={3}>3</option>
+        <option value={4}>4</option>
+        <option value={5}>5</option>
+        <option value={6}>6</option>
+        <option value={7}>7</option>
+        <option value={8}>8</option>
+        <option value={9}>9</option>
+      </select>
+      <br/>
+      <button type="button" className="btn btn-light" onClick={ () => sendClue() }>Submit Clue</button>
+    </div>
+  );
+}
+
+export default ClueInput;

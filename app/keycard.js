@@ -30,13 +30,33 @@ class KeyCard {
   generate() {
     for (var i = 0; i < N_START_TILES; i++) { this.tiles.push(this.start === RED ? RED_TILE : BLUE_TILE) };
     for (var i = 0; i < N_OTHER_TILES; i++) { this.tiles.push(this.start === RED ? BLUE_TILE : RED_TILE) };
-    for (var i = 0; i < N_WHITE_TILES; i++) { this.tiles.push(this.start === RED ? WHITE_TILE : WHITE_TILE) };
-    for (var i = 0; i < N_BLACK_TILES; i++) { this.tiles.push(this.start === RED ? BLACK_TILE : BLACK_TILE) };
+    for (var i = 0; i < N_WHITE_TILES; i++) { this.tiles.push(WHITE_TILE) };
+    for (var i = 0; i < N_BLACK_TILES; i++) { this.tiles.push(BLACK_TILE) };
     shuffle(this.tiles);
+
+    this.redLeft = this.start === RED ? N_START_TILES : N_OTHER_TILES;
+    this.blueLeft = this.start === BLUE ? N_START_TILES : N_OTHER_TILES;
   }
 
   getTile(r, c) {
     return this.tiles[r * BOARD_LEN + c];
+  }
+
+  reveal(r, c) {
+    const color = this.tiles[r * BOARD_LEN + c];
+    if (color === RED_TILE) {
+      this.redLeft -= 1;
+    } else if (color === BLUE_TILE) {
+      this.blueLeft -= 1;
+    }
+  }
+
+  checkWin() {
+    if (this.redLeft === 0) {
+      return RED;
+    } else if (this.blueLeft === 0) {
+      return BLUE;
+    }
   }
 
   isBlack(r, c) {

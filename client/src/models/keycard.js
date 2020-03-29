@@ -17,6 +17,5 @@ export default class Key {
 }
 
 export function newKey(json) {
-  console.log(new Key(json));
   return new Key(json);
 }

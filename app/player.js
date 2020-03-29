@@ -23,6 +23,10 @@ class Player {
     this.role = KEY_ROLE;
   }
 
+  isKey() {
+    return this.role === KEY_ROLE;
+  }
+
   resetRole() {
     this.role = PLAYER_ROLE;
   }

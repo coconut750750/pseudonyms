@@ -81,9 +81,24 @@ app.io.on('connect', function (socket) {
     game.confirmRoles();
   });
 
+  socket.on('sendClue', data => {
+    if (game.turn === player.team && player.isKey()) {
+      const { clue, count } = data;
+      game.sendClue(clue, count);
+    }
+  });
+
+  socket.on('endTurn', data => {
+    if (game.turn === player.team) {
+      game.endTurn();
+    }
+  });
+
   socket.on('revealWord', data => {
-    const { r, c } = data;
-    game.reveal(r, c);
+    if (game.turn === player.team && !player.isKey()) {
+      const { r, c } = data;
+      game.reveal(r, c);
+    }
   })
 
   socket.on('disconnect', data => {

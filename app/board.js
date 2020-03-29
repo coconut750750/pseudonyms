@@ -1,3 +1,4 @@
+var _ = require('lodash');
 const { BOARD_LEN } = require("./const");
 
 function coordToIndex(r, c) {
@@ -8,6 +9,8 @@ class Board {
   constructor(wordlist, notifyReveal, sendAllReveals) {
     this.tiles = wordlist.getRandomWords(BOARD_LEN * BOARD_LEN);
     this.revealed = [];
+    this.revealedInts = [];
+
     this.jsonObj = this.genJson();
     this.notifyReveal = notifyReveal;
     this.sendAllReveals = sendAllReveals;
@@ -17,8 +20,13 @@ class Board {
     return this.tiles[coordToIndex(r, c)];
   }
 
+  isRevealed(r, c) {
+    return this.revealedInts.includes(coordToIndex(r, c));
+  }
+
   reveal(r, c) {
     this.revealed.push([r, c]);
+    this.revealedInts.push(coordToIndex(r, c));
     this.notifyReveal(r, c);
   }
 

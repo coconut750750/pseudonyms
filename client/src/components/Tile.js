@@ -4,7 +4,7 @@ import './Tile.css';
 
 function Tile(props) {
   const click = () => {
-    if (props.isKey) {
+    if (props.isKey || !props.active) {
       return;
     }
 
@@ -12,7 +12,10 @@ function Tile(props) {
   };
 
   const tileClass = () => {
-    return `tile ${props.revealed ? "revealed" : "hidden"} ${props.isKey ? "key" : "player"} ${props.color} card-body`;
+    const revealClass = props.revealed ? "revealed" : "hidden";
+    const roleClass = props.isKey ? "key" : "player";
+    const activeClass = props.active ? "active" : "inactive";
+    return `tile ${revealClass} ${roleClass} ${props.color} ${activeClass} card-body`;
   };
 
   const tileStyle = () => {
