@@ -51,13 +51,10 @@ app.io.on('connect', function (socket) {
     }
   });
 
-  socket.on('getPlayers', data => {
-    socket.emit('players', game.getPlayerData());
-  });
-
   socket.on('startGame', data => {
+    const { options } = data;
     if (game.enoughPlayers()) {
-      game.start();
+      game.start(options);
     } else {
       socket.emit('message', { message: 'Not enough players have joined the game' });
     }

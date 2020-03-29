@@ -31,7 +31,7 @@ class Board {
     for (var r = 0; r < BOARD_LEN; r++) {
       result.board.push([])
       for (var c = 0; c < BOARD_LEN; c++) {
-        result.board[r].push[{ word: this.getTile(r, c) }];
+        result.board[r].push({ word: this.getTile(r, c) });
       }
     }
     return result;

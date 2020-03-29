@@ -48,7 +48,13 @@ class Player {
   }
 
   send(event, data) {
-    if (this.socket != undefined) {
+    if (this.socket !== undefined) {
+      this.socket.emit(event, data);
+    }
+  }
+
+  sendAsKey(event, data) {
+    if (this.socket !== undefined && this.role === KEY_ROLE) {
       this.socket.emit(event, data);
     }
   }

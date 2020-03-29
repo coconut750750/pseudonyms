@@ -16,4 +16,11 @@ describe('initiating a board', () => {
     expect(board.getTile(0, 0)).toBe(board.tiles[0]);
     expect(board.getTile(0, BOARD_LEN - 1)).toBe(board.tiles[BOARD_LEN - 1]);
   });
+
+  it('to json', () => {
+    const wordlist = new WordList('test');
+    const board = new Board(wordlist);
+
+    console.log(board.json());
+  });
 });

@@ -6,18 +6,24 @@ import GameCodeBadge from '../components/GameCodeBadge';
 import Lobby from '../game_views/Lobby';
 import Teams from '../game_views/Teams';
 import Roles from '../game_views/Roles';
+import Board from '../game_views/Board';
 
 import { getMePlayer, newPlayer } from '../models/player';
+import { newBoard } from '../models/board';
+import { newKey } from '../models/keycard';
 
 const LOBBY = "lobby";
 const TEAMS = "teams";
 const ROLES = "roles";
+const BOARD = "board";
 
 function Game(props) {
   const [phase, setPhase] = useState(LOBBY);
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);
   const [message, setMessage] = useState("");
+  const [board, setBoard] = useState(undefined);
+  const [key, setKey] = useState(undefined);
 
   // on mount
   useEffect(() => {
@@ -33,6 +39,14 @@ function Game(props) {
       const mePlayer = getMePlayer(players, props.name);
       setPlayers(players);
       setMe(mePlayer)
+    });
+
+    props.socket.on('board', data => {
+      setBoard(newBoard(data.board));
+    });
+
+    props.socket.on('key', data => {
+      setKey(newKey(data.key));
     });
 
     props.socket.on('message', data => {
@@ -52,13 +66,17 @@ function Game(props) {
               players={players}/>,
     [TEAMS]: <Teams 
               socket={props.socket}
-              players={players}
-              confirmTeams={() => setPhase(ROLES)}/>,
+              players={players}/>,
     [ROLES]: <Roles
               socket={props.socket}
               players={players}
+              me={me}/>,
+    [BOARD]: <Board
+              ocket={props.socket}
+              players={players}
               me={me}
-              confirmRoles={() => {}}/>,
+              board={board}
+              key={key}/>,
 
   }
 

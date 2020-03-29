@@ -12,7 +12,6 @@ const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 class Game {
   constructor(code, onEnd, options, broadcast) {
     this.code = code;
-    this.broadcast = broadcast;
     this.plist = PlayerList(
       () => this.notifyPlayerUpdate(),
       () => onEnd(),
@@ -20,9 +19,14 @@ class Game {
     this.started = false;
     this.phase = PHASES[0];
 
-    this.keycard = new KeyCard();
-    this.wordlist = new WordList('test');
-    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
+    this.keycard = undefined;
+    this.wordlist = undefined;
+    this.board = undefined;
+
+    this.broadcast = broadcast;
+    this.broadcastKeys = (event, data) => {
+      this.plist.getAll().forEach(p => p.sendAsKey(event, data));
+    }
   }
 
   getPlayer(name) {
@@ -69,7 +73,11 @@ class Game {
     return this.plist.getAll().length >= MIN_PLAYERS;
   }
 
-  start() {
+  start(options) {
+    this.keycard = new KeyCard();
+    this.wordlist = new WordList(options.wordlist);
+    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
+
     this.started = true;
     this.phase = PHASES[1];
     this.notifyGameStart();
@@ -82,6 +90,8 @@ class Game {
 
   confirmRoles() {
     this.phase = PHASES[3];
+    this.notifyBoardChange();
+    this.notifyKeyChange();
     this.notifyPhaseChange();
   }
 
@@ -101,6 +111,14 @@ class Game {
 
   notifyPhaseChange() {
     this.broadcast('phase', { phase: this.phase });
+  }
+
+  notifyBoardChange() {
+    this.broadcast('board', this.board.json());
+  }
+
+  notifyKeyChange() {
+    this.broadcastKeys('key', this.keycard.json());
   }
 
   notifyReveal(r, c) {
