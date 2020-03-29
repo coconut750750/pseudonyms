@@ -2,43 +2,58 @@ var _ = require('lodash');
 
 const Board = require("./board");
 const KeyCard = require("./keycard");
-const Player = require("./player");
+const PlayerList = require("./playerlist");
 const WordList = require("./wordlist");
 
 class Game {
   constructor(code, onEnd, options) {
     this.code = code;
-    this.players = [];
+    this.plist = PlayerList(
+      () => this.notifyPlayerUpdate(),
+      () => onEnd(),
+    );
   }
 
   getPlayer(name) {
-    return _.filter(this.players, p => p.name == name)[0];
+    return plist.get(name);
   }
 
   playerExists(name) {
-    return _.filter(this.players, p => p.name == name).length > 0;
+    return this.plist.exists(name);
   }
 
   addPlayer(name, socket) {
-    this.players.push(new Player(
-      name,
-      socket,
-      this.players.length === 0;
-    ));
+    this.plist.add(name, socket);
   }
 
   activatePlayer(name, socket) {
-    this.getPlayer(name).activate(socket);
-    this.notifyPlayerUpdate();
+    this.plist.activate(name, socket);
   }
 
   deactivatePlayer(name) {
-    this.getPlayer(name).deactivate();
-    this.notifyPlayerUpdate();
+    this.plist.deactivate(name);
+  }
+
+  isActive(name) {
+    return this.plist.isActive(name);
+  }
+
+  removePlayer(name) {
+    this.plist.remove(name);
+  }
+
+  setTeams(redNames) {
+    this.plist.setTeams(redNames);
+  }
+
+  setKey(name) {
+    this.plist.setKey(name);
   }
 
   notifyPlayerUpdate() {
-    this.players.forEach(player => player.send('players', { players: this.players.map(p => p.json()) }));
+    const players = this.plist.getAll();
+    const playerData = { players: players.map(p => p.json()) };
+    players.forEach(p => p.send('players', playerData));
   }
 }
 
