@@ -95,6 +95,10 @@ class Game {
     this.notifyPhaseChange();
   }
 
+  reveal(r, c) {
+    this.board.reveal(r, c);
+  }
+
   getPlayerData() {
     const players = this.plist.getAll();
     const playerData = { players: players.map(p => p.json()) };

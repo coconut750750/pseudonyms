@@ -7,7 +7,7 @@ module.exports = {
 
   RED_TILE: 'r',
   BLUE_TILE: 'b',
-  WHITE_TILE: 'w',
+  WHITE_TILE: 'y',
   BLACK_TILE: 'x',
 
   N_START_TILES: 9,

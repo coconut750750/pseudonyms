@@ -77,6 +77,11 @@ app.io.on('connect', function (socket) {
     game.confirmRoles();
   });
 
+  socket.on('revealWord', data => {
+    const { r, c } = data;
+    game.reveal(r, c);
+  })
+
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {
       game.deactivatePlayer(name);

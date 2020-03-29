@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import PlayerList from '../components/PlayerList';
 import GameCodeBadge from '../components/GameCodeBadge';
 
 import Lobby from '../game_views/Lobby';
@@ -9,7 +8,7 @@ import Roles from '../game_views/Roles';
 import Board from '../game_views/Board';
 
 import { getMePlayer, newPlayer } from '../models/player';
-import { newBoard } from '../models/board';
+import { newBoard, copyBoard } from '../models/board';
 import { newKey } from '../models/keycard';
 
 const LOBBY = "lobby";
@@ -46,7 +45,7 @@ function Game(props) {
     });
 
     props.socket.on('key', data => {
-      setKey(newKey(data.key));
+      // setKey(newKey(data.key));
     });
 
     props.socket.on('message', data => {
@@ -60,6 +59,17 @@ function Game(props) {
 
   }, [props.gameCode, props.name, props.socket]);
 
+  useEffect(() => {
+    console.log(board);
+    props.socket.off('reveal');
+    props.socket.on('reveal', data => {
+      const { r, c, color } = data;
+      let b = copyBoard(board);
+      b.reveal(r, c, color);
+      setBoard(b);
+    });
+  }, [props.socket, board]);
+
   const game_views = {
     [LOBBY]: <Lobby 
               socket={props.socket}
@@ -72,7 +82,7 @@ function Game(props) {
               players={players}
               me={me}/>,
     [BOARD]: <Board
-              ocket={props.socket}
+              socket={props.socket}
               players={players}
               me={me}
               board={board}

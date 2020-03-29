@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import PlayerList from '../components/PlayerList';
 
 function Teams(props) {
-  const [team, setTeam] = useState("");
-
   const getReds = () => {
     return props.players.filter(p => p.isRed());
   };

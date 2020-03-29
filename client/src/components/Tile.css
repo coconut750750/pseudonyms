@@ -1,3 +1,11 @@
 .tile {
     border: 2px solid black;
 }
+
+.tile.player {
+    cursor: pointer;
+}
+
+.tile.key {
+    
+}

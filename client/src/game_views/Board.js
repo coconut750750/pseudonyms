@@ -6,10 +6,14 @@ function Board(props) {
   const renderRow = (r) => {
     let row = [];
     row.push(<div className="col-1"></div>);
-    for (var c = 0; c < props.board.width; c++) {
+    for (let c = 0; c < props.board.width; c++) {
       row.push(
         <div className="col-2" style={{ padding: 0 }}>
-          <Tile word={props.board.get(r, c)}/>
+          <Tile
+            word={props.board.get(r, c)}
+            color={props.board.getColor(r, c)}
+            isKey={props.me.isKey()}
+            reveal={ () => props.socket.emit('revealWord', {r, c}) }/>
         </div>
       );
     }
@@ -19,7 +23,7 @@ function Board(props) {
 
   const renderBoard = () => {
     let board = [];
-    for (var i = 0; i < props.board.height; i++) {
+    for (let i = 0; i < props.board.height; i++) {
       board.push(<div className="col-12 row">{ renderRow(i) }</div>);
     }
     return board;

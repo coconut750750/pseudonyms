@@ -44,7 +44,7 @@ class KeyCard {
     for (var r = 0; r < BOARD_LEN; r++) {
       result.keycard.push([])
       for (var c = 0; c < BOARD_LEN; c++) {
-        result.keycard[r].push[{ color: this.getTile(r, c) }];
+        result.keycard[r].push({ color: this.getTile(r, c) });
       }
     }
     return result;

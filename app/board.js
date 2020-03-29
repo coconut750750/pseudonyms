@@ -23,7 +23,7 @@ class Board {
   }
 
   sendReveals() {
-    this.sendAllReveals([r, c]);
+    this.sendAllReveals(this.revealed);
   }
 
   genJson() {
