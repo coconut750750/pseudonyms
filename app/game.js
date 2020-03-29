@@ -12,6 +12,7 @@ class Game {
       () => this.notifyPlayerUpdate(),
       () => onEnd(),
     );
+    this.started = false;
   }
 
   getPlayer(name) {

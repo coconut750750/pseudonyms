@@ -1,36 +1,62 @@
 import React, { useState } from 'react';
 import './App.css';
 
-import Home from './views/Home';
-// import HowTo from 'views/HowTo';
-// import Create from 'views/Create';
-// import Join from 'views/Join';
-// import Game from 'views/Game';
+import io from 'socket.io-client';
 
-const viewStates = ["home", "howto", "create", "join", "game"];
+import Home from './views/Home';
+// import HowTo from './views/HowTo';
+import Create from './views/Create';
+import Join from './views/Join';
+// import Game from './views/Game';
+
+const HOME = "home";
+const HOWTO = "howto";
+const CREATE = "create";
+const JOIN = "join";
+const GAME = "game";
 
 function App() {
-  const [viewState, setViewState] = useState(viewStates[0]);
+  const [viewState, setViewState] = useState(HOME);
   const [gameCode, setGameCode] = useState("");
   const [name, setName] = useState("");
 
+  let socket = undefined;
+
+  const setGame = (gameCode, name) => {
+    setGameCode(gameCode);
+    setName(name);
+    setViewState(GAME);
+
+    alert(gameCode);
+
+    socket = io();
+  }
+
+  const exitGame = () => {
+    socket.emit('exitGame', {});
+    socket.disconnect();
+    setViewState(HOME);
+    setGameCode("");
+    setName("");
+  }
+
   const views = {
     home:   <Home 
-              createGame={ () => this.setState({ viewState: "create" }) } 
-              joinGame={ () => this.setState({ viewState: "join" }) }
-              viewHowTo={ () => this.setState({ viewState: "howto" }) }/>,
+              createGame={ () => setViewState(CREATE) } 
+              joinGame={ () => setViewState(JOIN) }
+              viewHowTo={ () => setViewState(HOWTO) }/>,
     // howto:  <HowTo
     //           goBack={ () => this.setState({ viewState: "home" }) }/>,
-    // create: <Create
-    //           goBack={ () => this.setState({ viewState: "home" }) }
-    //           create={ (name, options) => createGame(options).then(res => this.setGame(res.gameCode, name)) }/>,
-    // join:   <Join
-    //           goBack={ () => this.setState({ viewState: "home" }) }
-    //           join={ (gameCode, name) => this.setGame(gameCode, name) }/>,
-    // game:  <Lobby
-    //           socket={this.socket}
-    //           gameCode={this.state.gameCode}
-    //           name={this.state.name}
+    create: <Create
+              goBack={ () => setViewState(HOME) }
+              setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
+    join:   <Join
+              goBack={ () => setViewState(HOME) }
+              join={ (gameCode, name) => setGame(gameCode, name) }/>,
+    // game:  <Game
+    //           socket={socket}
+    //           gameCode={gameCode}
+    //           name={name}
     //           exitGame={ () => this.exitGame() }/>,
     };
 

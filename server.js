@@ -12,13 +12,21 @@ const Pseudo = require('./app/pseudo');
 const port = process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'dev';
 
+const registerRouter = require("./routes/register");
+
 app.use(bodyParser.json());
 app.io = io;
 app.pseudo = new Pseudo(dev);
 
-app.get('/dump', (req, res) => {
+app.get('/ping', (req, res) => {
   res.send();
 });
+
+app.use(function(req, res, next) {
+  req.pseudo = app.pseudo;
+  next();
+});
+app.use("/", registerRouter);
 
 app.io.on('connect', function (socket) {
   var game;
