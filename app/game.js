@@ -16,7 +16,7 @@ class Game {
   }
 
   getPlayer(name) {
-    return plist.get(name);
+    return this.plist.get(name);
   }
 
   playerExists(name) {

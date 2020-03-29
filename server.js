@@ -48,6 +48,12 @@ app.io.on('connect', function (socket) {
       socket.emit('start', {});
     }
   });
+
+  socket.on('disconnect', data => {
+    if (game !== undefined && game.playerExists(name)) {
+      game.deactivatePlayer(name);
+    }
+  });
 });
 
 if (process.env.NODE_ENV === 'production') {
