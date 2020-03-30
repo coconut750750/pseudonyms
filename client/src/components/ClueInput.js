@@ -12,9 +12,14 @@ function ClueInput(props) {
     props.socket.emit('sendClue', { clue, count });
   };
 
+  const onChangeClue = (val) => {
+    const clue = val.split(" ")[0];
+    setClue(clue);
+  };
+
   return (
     <div>
-      <input type="name" className="form-control" placeholder="Enter your clue" value={clue} onChange={ e => setClue(e.target.value) }/>
+      <input type="name" className="form-control" placeholder="Enter your clue" value={clue} onChange={ e => onChangeClue(e.target.value) }/>
       <br/>
       <select className="form-control" onChange={ e => setCount(e.target.value) }>
         <option value={0} disabled selected>Enter your clue count</option>

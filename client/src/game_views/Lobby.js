@@ -4,7 +4,7 @@ import PlayerList from '../components/PlayerList';
 
 function Lobby(props) {
   const startGame = () => {
-    props.socket.emit('startGame', { options: { wordlist: 'test' } });
+    props.socket.emit('startGame', { options: { wordlist: 'basic' } });
   };
 
   return (
