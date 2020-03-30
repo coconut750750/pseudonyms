@@ -32,6 +32,7 @@ class Game {
     this.wordlist = undefined;
     this.board = undefined;
     this.clue = undefined;
+    this.clueCountLeft = 0;
     this.turn = undefined;
     this.winner = undefined;
 
@@ -123,34 +124,6 @@ class Game {
     this.notifyPhaseChange();
   }
 
-  reveal(r, c) {
-    if (this.board.isRevealed(r, c)) {
-      return;
-    }
-
-    this.board.reveal(r, c);
-    this.keycard.reveal(r, c);
-    this.notifyScore();
-
-    if (this.keycard.isBlack(r, c)) {
-      this.end(this.turn === RED ? BLUE : RED);
-    }
-
-    const winner = this.keycard.checkWin();
-    if (winner !== undefined) {
-      this.end(winner);
-    }
-  }
-
-  getRevealsData() {
-    let data = [];
-    for (var rev of this.board.revealed) {
-      const [r, c] = rev;
-      data.push({ r, c, color: this.keycard.getTile(r, c) });
-    }
-    return data;
-  }
-
   canSendClue(player) {
     if (this.turn !== player.team) {
       return false;
@@ -170,7 +143,43 @@ class Game {
 
   sendClue(clue, count) {
     this.clue = { clue, count };
+    this.clueCountLeft = count;
     this.notifyClue();
+  }
+
+  reveal(r, c) {
+    if (this.board.isRevealed(r, c)) {
+      return;
+    }
+
+    this.board.reveal(r, c);
+    this.keycard.reveal(r, c);
+    this.notifyScore();
+
+    if (this.keycard.isBlack(r, c)) {
+      this.end(this.turn === RED ? BLUE : RED);
+      return;
+    }
+
+    const winner = this.keycard.checkWin();
+    if (winner !== undefined) {
+      this.end(winner);
+      return;
+    }
+
+    this.clueCountLeft--;
+    if (this.clueCountLeft === 0) {
+      this.endTurn();
+    }
+  }
+
+  getRevealsData() {
+    let data = [];
+    for (var rev of this.board.revealed) {
+      const [r, c] = rev;
+      data.push({ r, c, color: this.keycard.getTile(r, c) });
+    }
+    return data;
   }
 
   endTurn() {

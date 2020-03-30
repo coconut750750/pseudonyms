@@ -94,12 +94,6 @@ app.io.on('connect', function (socket) {
     }
   });
 
-  socket.on('endTurn', data => {
-    if (game.turn === player.team) {
-      game.endTurn();
-    }
-  });
-
   socket.on('revealWord', data => {
     if (game.turn === player.team && !player.isKey()) {
       const { r, c } = data;

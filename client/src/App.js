@@ -70,6 +70,10 @@ function App() {
 
   return (
     <div className="App">
+      <br/>
+      <h3>Codenames</h3>
+      <hr/>
+
       {views[viewState]}
     </div>
   );

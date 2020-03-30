@@ -23,7 +23,6 @@ function Teams(props) {
     <div>
       <h5>Select Teams</h5>
       <p>Each team must have two players</p>
-
       <br/>
       
       <div className="row">

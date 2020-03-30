@@ -25,8 +25,8 @@ function Roles(props) {
 
   return (
     <div>
-      <h5>Select Keys</h5>
-
+      <h5>Elect Keys</h5>
+      <p>Each team must have one key</p>
       <br/>
       
       <div className="row">
@@ -36,7 +36,6 @@ function Roles(props) {
             <button type="button" className="btn btn-light"
               onClick={() => props.socket.emit('setKey', {})}>Elect</button>
           }
-          <PlayerList players={getRedKey()}/>
 
         </div>
 
@@ -48,7 +47,6 @@ function Roles(props) {
             <button type="button" className="btn btn-light"
               onClick={() => props.socket.emit('setKey', {})}>Elect</button>
           }
-          <PlayerList players={getBlueKey()}/>
         </div>
       </div>
 

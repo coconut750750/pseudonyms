@@ -14,10 +14,11 @@ function Lobby(props) {
   return (
     <div>
       <h5>Lobby</h5>
-      <PlayerList players={props.players}/>
-
+      <p>Waiting for players...</p>
       <br/>
 
+
+      <PlayerList players={props.players}/>
 
       <div className="row d-flex justify-content-center">
         <button type="button" className="btn btn-light" onClick={ () => leaveGame() }>Leave Game</button>

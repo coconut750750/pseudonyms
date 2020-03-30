@@ -21,7 +21,7 @@ function Create(props) {
 
   return (
     <div>
-      <h5>Create Game</h5>
+      <h4>Create Game</h4>
 
       <input type="name" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
       <br />

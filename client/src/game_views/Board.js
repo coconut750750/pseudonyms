@@ -15,23 +15,15 @@ function BoardView(props) {
   return (
     <div>
       <div className="row">
-        <div className="col-2"></div>
-        <div className="row col-8">
-          <div className="col-4 turn">
-            <h6>{`${props.turn} turn`}</h6>
-          </div>
-          <div className="col-4 clue">
-            {clueActive() &&
-              <h6>{`${props.clue.clue}: ${props.clue.count}`}</h6>
-            }
-          </div>
-          <div className="col-4">
-            {(myTurn() && clueActive())  &&
-              <button type="button" className="btn btn-light" onClick={ () => props.socket.emit('endTurn', {}) }>End Turn</button>
-            }
-          </div>
+        <div className="col-4 turn">
+          <h6>{`${props.turn} turn`}</h6>
         </div>
-        <div className="col-2"></div>
+        <div className="col-4"/>
+        <div className="col-4 clue">
+          {clueActive() &&
+            <h6>{`${props.clue.clue} ${props.clue.count}`}</h6>
+          }
+        </div>
       </div>
       <br/>
 

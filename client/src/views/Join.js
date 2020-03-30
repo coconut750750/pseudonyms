@@ -27,7 +27,7 @@ function Join(props) {
 
   return (
     <div>
-      <h5>Join Game</h5>
+      <h4>Join Game</h4>
 
       <input type="name" className="form-control" placeholder="Enter game code" 
         value={gameCode} 

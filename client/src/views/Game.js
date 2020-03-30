@@ -147,7 +147,6 @@ function Game(props) {
 
   return (
     <div>
-      <h5>Game</h5>
       <GameCodeBadge gameCode={props.gameCode}/>
       <br/>
 
@@ -156,8 +155,6 @@ function Game(props) {
         players={players}
         score={score}/>
       }
-
-      <br/>
 
       {game_views[phase]}
 
