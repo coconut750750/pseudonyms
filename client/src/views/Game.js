@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import GameCodeBadge from '../components/GameCodeBadge';
-import Score from '../components/Score';
+import GameHeader from '../components/GameHeader';
 
 import Lobby from '../game_views/Lobby';
 import Teams from '../game_views/Teams';
@@ -151,7 +151,11 @@ function Game(props) {
       <GameCodeBadge gameCode={props.gameCode}/>
       <br/>
 
-      <Score score={score}/>
+      {(phase === BOARD || phase === RESULT) &&
+      <GameHeader
+        players={players}
+        score={score}/>
+      }
 
       <br/>
 

@@ -17,12 +17,12 @@ function BoardView(props) {
       <div className="row">
         <div className="col-2"></div>
         <div className="row col-8">
-          <div className="col-4">
-            <h5>{props.turn === "red" ? "Red Turn" : "Blue Turn"}</h5>
+          <div className="col-4 turn">
+            <h6>{`${props.turn} turn`}</h6>
           </div>
-          <div className="col-4">
+          <div className="col-4 clue">
             {clueActive() &&
-              <p>{`Clue: ${props.clue.clue}: ${props.clue.count}`}</p>
+              <h6>{`${props.clue.clue}: ${props.clue.count}`}</h6>
             }
           </div>
           <div className="col-4">

@@ -1,19 +1,10 @@
 import React from 'react';
 
 import Tile from '../components/Tile';
-import PlayerList from '../components/PlayerList';
 
 import './Board.css';
 
-function Board(props) {
-  const getReds = () => {
-    return props.players.filter(p => p.isRed());
-  };
-
-  const getBlues = () => {
-    return props.players.filter(p => p.isBlue());
-  };
-  
+function Board(props) {  
   const getRevealed = (r, c) => {
     for (var rev of props.reveals) {
       if (rev.r === r && rev.c === c)
@@ -40,14 +31,6 @@ function Board(props) {
         active={props.tilesActive}
         reveal={ () => props.revealWord(r, c) }/>
     );
-  }
-
-  const renderRow = (r) => {
-    let row = [];
-    for (let c = 0; c < props.board.width; c++) {
-      row.push(renderTile(r, c));
-    }
-    return row;
   };
 
   const renderBoard = () => {
@@ -61,8 +44,10 @@ function Board(props) {
   };
 
   return (
-    <div className="board">
-      {renderBoard()}
+    <div>
+      <div className="board">
+        {renderBoard()}
+      </div>
     </div>
   );
 }

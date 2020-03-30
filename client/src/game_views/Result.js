@@ -5,8 +5,7 @@ import Board from '../components/Board';
 function Result(props) {
   return (
     <div>
-      <h5>Game Over</h5>
-      <p>{`${props.winner === 'red' ? "Red" : "Blue"} wins!`}</p>
+      <h6>{`${props.winner} wins!`}</h6>
       <br/>
 
       <Board
