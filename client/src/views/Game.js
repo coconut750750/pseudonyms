@@ -30,6 +30,18 @@ function Game(props) {
   const [clue, setClue] = useState(undefined);
   const [winner, setWinner] = useState(undefined);
 
+  const reset = () => {
+    setPlayers([]);
+    setMe(undefined);
+    setMessage("");
+
+    setBoard(undefined);
+    setKey(undefined);
+    setTurn(0);
+    setClue(undefined);
+    setWinner(undefined);
+  };
+
   // on mount
   useEffect(() => {
     // this will result in a 'players' message from server
@@ -37,6 +49,9 @@ function Game(props) {
 
     props.socket.on('phase', data => {
       setPhase(data.phase);
+      if (data.phase === LOBBY) {
+        reset();
+      }
     });
 
     props.socket.on('players', data => {
@@ -113,7 +128,9 @@ function Game(props) {
               clue={clue}/>,
     [RESULT]: <Result
               socket={props.socket}
-              winner={winner}/>,
+              winner={winner}
+              board={board}
+              keycard={key}/>,
   };
 
   return (

@@ -99,7 +99,13 @@ app.io.on('connect', function (socket) {
       const { r, c } = data;
       game.reveal(r, c);
     }
-  })
+  });
+
+  socket.on('newGame', data => {
+    if (!game.started) {
+      game.reset();
+    }
+  });
 
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {

@@ -16,19 +16,28 @@ class Game {
       () => this.notifyPlayerUpdate(),
       () => onEmpty(),
     );
+
+    this.broadcast = broadcast;
+    this.broadcastKeys = (event, data) => {
+      this.plist.getAll().forEach(p => p.sendAsKey(event, data));
+    }
+    
+    this.reset();
+  }
+
+  reset() {
     this.started = false;
     this.phase = PHASES[0];
-
     this.keycard = undefined;
     this.wordlist = undefined;
     this.board = undefined;
     this.clues = undefined;
     this.turn = undefined;
 
-    this.broadcast = broadcast;
-    this.broadcastKeys = (event, data) => {
-      this.plist.getAll().forEach(p => p.sendAsKey(event, data));
-    }
+    this.notifyPhaseChange();
+
+    this.plist.resetTeams();
+    this.plist.resetRoles();
   }
 
   getPlayer(name) {
@@ -130,9 +139,11 @@ class Game {
   }
 
   end(winner) {
+    this.started = false;
     this.phase = PHASES[4];
     this.notifyPhaseChange();
     this.notifyWinner(winner);
+    this.notifyFinalReveal();
   }
 
   getPlayerData() {
@@ -176,6 +187,10 @@ class Game {
 
   notifyWinner(winner) {
     this.broadcast('winner', { winner });
+  }
+
+  notifyFinalReveal() {
+    this.broadcast('key', this.keycard.json());
   }
 }
 
