@@ -24,6 +24,10 @@ class Board {
     return this.revealedInts.includes(coordToIndex(r, c));
   }
 
+  validWord(word) {
+    return !this.tiles.includes(word);
+  }
+
   reveal(r, c) {
     this.revealed.push([r, c]);
     this.revealedInts.push(coordToIndex(r, c));

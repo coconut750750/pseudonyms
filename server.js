@@ -84,9 +84,13 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('sendClue', data => {
-    if (game.turn === player.team && player.isKey()) {
-      const { clue, count } = data;
-      game.sendClue(clue, count);
+    const { clue, count } = data;
+    if (game.canSendClue(player)) {
+      if (game.validClue(clue)) {
+        game.sendClue(clue, count);
+      } else {
+        socket.emit('message', { message: 'Invalid Clue!' });
+      }
     }
   });
 

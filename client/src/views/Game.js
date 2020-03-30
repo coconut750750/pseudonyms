@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import GameCodeBadge from '../components/GameCodeBadge';
+import Score from '../components/Score';
 
 import Lobby from '../game_views/Lobby';
 import Teams from '../game_views/Teams';
@@ -29,6 +30,7 @@ function Game(props) {
   const [key, setKey] = useState(undefined);
   const [turn, setTurn] = useState(0);
   const [clue, setClue] = useState(undefined);
+  const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState(undefined);
 
   const reset = () => {
@@ -84,6 +86,11 @@ function Game(props) {
     props.socket.on('clue', data => {
       const { clue, count } = data;
       setClue({ clue, count });
+    });
+
+    props.socket.on('score', data => {
+      const { red, blue } = data;
+      setScore({ red, blue });
     });
 
     props.socket.on('winner', data => {
@@ -144,8 +151,13 @@ function Game(props) {
       <GameCodeBadge gameCode={props.gameCode}/>
       <br/>
 
+      <Score score={score}/>
+
+      <br/>
+
       {game_views[phase]}
 
+      <br/>
       {message && <div class="alert alert-danger" role="alert">
         {message}
       </div>}

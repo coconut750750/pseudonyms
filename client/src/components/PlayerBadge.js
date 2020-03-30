@@ -14,6 +14,9 @@ function PlayerBadge(props) {
   }
 
   const getStyle = () => {
+    if (props.player.isKey()) {
+      return { boxShadow: "0px 0px 4px 4px black" };
+    }
     return {};
   }
 

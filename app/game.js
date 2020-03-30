@@ -74,7 +74,7 @@ class Game {
   }
 
   canSetTeam() {
-    return this.phase === PHASE[1];
+    return this.phase === PHASES[1];
   }
 
   setTeam(name, isRed) {
@@ -86,7 +86,7 @@ class Game {
   }
 
   canSetRole() {
-    return this.phase === PHASE[2];
+    return this.phase === PHASES[2];
   }
 
   setKey(name) {
@@ -119,6 +119,7 @@ class Game {
     this.notifyKeyChange();
     this.notifyBoardChange();
     this.notifyTurnChange();
+    this.notifyScore();
     this.notifyPhaseChange();
   }
 
@@ -129,6 +130,7 @@ class Game {
 
     this.board.reveal(r, c);
     this.keycard.reveal(r, c);
+    this.notifyScore();
 
     if (this.keycard.isBlack(r, c)) {
       this.end(this.turn === RED ? BLUE : RED);
@@ -147,6 +149,23 @@ class Game {
       data.push({ r, c, color: this.keycard.getTile(r, c) });
     }
     return data;
+  }
+
+  canSendClue(player) {
+    if (this.turn !== player.team) {
+      return false;
+    }
+    if (!player.isKey()) {
+      return false;
+    }
+    if (this.phase !== PHASES[3]) {
+      return false;
+    }
+    return true;
+  }
+
+  validClue(clue) {
+    return this.board.validWord(clue.toLowerCase());
   }
 
   sendClue(clue, count) {
@@ -197,6 +216,10 @@ class Game {
 
   notifyClue() {
     this.broadcast('clue', this.clue);
+  }
+
+  notifyScore() {
+    this.broadcast('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
   }
 
   notifyReveal(r, c) {

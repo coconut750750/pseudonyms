@@ -9,11 +9,11 @@
 }
 
 .tile.revealed.r {
-    background-color: #ff0000;
+    background-color: #dc3545;
 }
 
 .tile.revealed.b {
-    background-color: #0000ff;
+    background-color: #007bff;
 }
 
 .tile.revealed.y {
@@ -29,11 +29,11 @@
 }
 
 .tile.key.hidden.r p {
-    color: #ff0000;
+    color: #dc3545;
 }
 
 .tile.key.hidden.b p {
-    color: #0000ff;
+    color: #007bff;
 }
 
 .tile.key.hidden.y p {
