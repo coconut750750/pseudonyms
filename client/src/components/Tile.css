@@ -1,7 +1,13 @@
 .tile {
+    display: flex;
     border: 2px solid black;
     padding-right: 0;
     padding-left: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 19%;
+    height: 19%;
 }
 
 .tile.player.active {
@@ -22,6 +28,10 @@
 
 .tile.revealed.x {
     background-color: #000000;
+}
+
+.tile p {
+    margin: 0;
 }
 
 .tile.revealed p {
