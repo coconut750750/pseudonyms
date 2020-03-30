@@ -26,7 +26,7 @@ function Create(props) {
       <input type="name" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
       <br />
 
-      <div className="row d-flex justify-content-center">
+      <div className="button-row d-flex justify-content-around">
         <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
         <button type="button" className="btn btn-light" onClick={ () => create() }>Create</button>
       </div>

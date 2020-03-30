@@ -18,3 +18,9 @@
 .App-link {
   color: #61dafb;
 }
+
+.button-row {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
