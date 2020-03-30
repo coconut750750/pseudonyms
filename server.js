@@ -103,6 +103,16 @@ app.io.on('connect', function (socket) {
     }
   });
 
+  socket.on('exitGame', data => {
+    if (player.isAdmin) {
+      game.end();
+    } else if (game.started) {
+      game.deactivatePlayer(name);
+    } else {
+      game.removePlayer(name);
+    }
+  });
+
   // retrieving info for reconnected clients
   socket.on('getPhase', data => {
     if (game.phase !== 'lobby') {
