@@ -25,9 +25,9 @@ function Tile(props) {
 
   return (
     <div className={tileClass()} onClick={ () => click() } style={tileStyle()}>
-      <h5 className="card-title">
+      <div className="card-title">
         <p>{props.word}</p>
-      </h5>
+      </div>
     </div>
   );
 }

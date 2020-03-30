@@ -1,5 +1,7 @@
 .tile {
     border: 2px solid black;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .tile.player.active {
