@@ -21,7 +21,7 @@ function BoardView(props) {
         <div className="col-4"/>
         <div className="col-4 clue">
           {clueActive() &&
-            <h6>{`${props.clue.clue} ${props.clue.count}`}</h6>
+            <h6>{`${props.clue.clue} : ${props.clue.count}`}</h6>
           }
         </div>
       </div>
