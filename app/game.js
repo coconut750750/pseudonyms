@@ -21,7 +21,7 @@ class Game {
     this.broadcastKeys = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsKey(event, data));
     }
-    
+
     this.reset();
   }
 
@@ -31,8 +31,9 @@ class Game {
     this.keycard = undefined;
     this.wordlist = undefined;
     this.board = undefined;
-    this.clues = undefined;
+    this.clue = undefined;
     this.turn = undefined;
+    this.winner = undefined;
 
     this.notifyPhaseChange();
 
@@ -89,14 +90,10 @@ class Game {
   }
 
   start(options) {
-    this.keycard = new KeyCard();
-    this.turn = this.keycard.start;
     this.wordlist = new WordList(options.wordlist);
-    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
-
     this.started = true;
     this.phase = PHASES[1];
-    this.notifyGameStart();
+    this.notifyPhaseChange();
   }
 
   confirmTeams() {
@@ -106,8 +103,14 @@ class Game {
 
   confirmRoles() {
     this.phase = PHASES[3];
+
+    this.keycard = new KeyCard();
+    this.turn = this.keycard.start;
+    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
+
     this.notifyKeyChange();
     this.notifyBoardChange();
+    this.notifyTurnChange();
     this.notifyPhaseChange();
   }
 
@@ -129,21 +132,33 @@ class Game {
     }
   }
 
+  getRevealsData() {
+    let data = [];
+    for (var rev of this.board.revealed) {
+      const [r, c] = rev;
+      data.push({ r, c, color: this.keycard.getTile(r, c) });
+    }
+    return data;
+  }
+
   sendClue(clue, count) {
-    this.notifyClue(clue, count);
+    this.clue = { clue, count };
+    this.notifyClue();
   }
 
   endTurn() {
+    this.clue = undefined;
     this.turn = this.turn === RED ? BLUE : RED;
     this.notifyTurnChange();
   }
 
   end(winner) {
+    this.winner = winner;
     this.started = false;
     this.phase = PHASES[4];
-    this.notifyPhaseChange();
-    this.notifyWinner(winner);
+    this.notifyWinner();
     this.notifyFinalReveal();
+    this.notifyPhaseChange();
   }
 
   getPlayerData() {
@@ -154,10 +169,6 @@ class Game {
 
   notifyPlayerUpdate() {
     this.broadcast('players', this.getPlayerData());
-  }
-
-  notifyGameStart() {
-    this.broadcast('start', { first: this.keycard.start });
   }
 
   notifyPhaseChange() {
@@ -176,21 +187,56 @@ class Game {
     this.broadcast('turn', { turn: this.turn });
   }
 
-  notifyClue(clue, count) {
-    this.broadcast('clue', { clue, count });
+  notifyClue() {
+    this.broadcast('clue', this.clue);
   }
 
   notifyReveal(r, c) {
     const color = this.keycard.getTile(r, c);
-    this.broadcast('reveal', { r, c, color });
+    this.broadcast('reveal', { reveal: [{ r, c, color }] });
   }
 
-  notifyWinner(winner) {
-    this.broadcast('winner', { winner });
+  notifyWinner() {
+    this.broadcast('winner', { winner: this.winner });
   }
 
   notifyFinalReveal() {
     this.broadcast('key', this.keycard.json());
+  }
+
+  // send data for disconnected users
+  connectSendBoard(player) {
+    if (this.board !== undefined) {
+      player.send('board', this.board.json());
+      player.send('reveal', { reveal: this.getRevealsData() });
+    }
+  }
+
+  connectSendKey(player) {
+    if (this.keycard === undefined) {
+      return;
+    }
+    if (this.phase === PHASES[4] || player.isKey()) {
+      player.send('key', this.keycard.json());
+    }
+  }
+
+  connectSendTurn(player) {
+    if (this.turn !== undefined) {
+      player.send('turn', { turn: this.turn });
+    }
+  }
+
+  connectSendClue(player) {
+    if (this.clue !== undefined) {
+      player.send('clue', this.clue);
+    }
+  }
+
+  connectSendWinner(player) {
+    if (this.phase === 'result' && this.winner !== undefined) {
+      player.send('winner', { winner: this.winner });
+    }
   }
 }
 

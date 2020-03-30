@@ -32,8 +32,10 @@ function BoardView(props) {
       <br/>
 
       <Board
+        players={props.players}
         revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
         board={props.board}
+        reveals={props.reveals}
         keycard={props.keycard}
         isKey={props.me.isKey()}
         tilesActive={myTurn() && clueActive()}/>

@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 
 function ClueInput(props) {
   const [clue, setClue] = useState("");
-  const [count, setCount] = useState("");
+  const [count, setCount] = useState(0);
+
+  const submitReady = () => {
+    return clue !== "" && count !== 0;
+  };
 
   const sendClue = () => {
     props.socket.emit('sendClue', { clue, count });
@@ -13,7 +17,7 @@ function ClueInput(props) {
       <input type="name" className="form-control" placeholder="Enter your clue" value={clue} onChange={ e => setClue(e.target.value) }/>
       <br/>
       <select className="form-control" onChange={ e => setCount(e.target.value) }>
-        <option value="" disabled selected>Enter your clue count</option>
+        <option value={0} disabled selected>Enter your clue count</option>
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
@@ -25,7 +29,7 @@ function ClueInput(props) {
         <option value={9}>9</option>
       </select>
       <br/>
-      <button type="button" className="btn btn-light" onClick={ () => sendClue() }>Submit Clue</button>
+      <button type="button" className="btn btn-light" disabled={!submitReady()} onClick={ () => sendClue() }>Submit Clue</button>
     </div>
   );
 }

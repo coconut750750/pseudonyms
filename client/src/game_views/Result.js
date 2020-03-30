@@ -10,8 +10,10 @@ function Result(props) {
       <br/>
 
       <Board
+        players={props.players}
         revealWord={ (r, c) => {} }
         board={props.board}
+        reveals={props.reveals}
         keycard={props.keycard}
         isKey={true}
         tilesActive={false}/>

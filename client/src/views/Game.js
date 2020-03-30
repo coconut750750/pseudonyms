@@ -9,7 +9,7 @@ import Board from '../game_views/Board';
 import Result from '../game_views/Result';
 
 import { getMePlayer, newPlayer } from '../models/player';
-import { newBoard, copyBoard } from '../models/board';
+import { newBoard } from '../models/board';
 import { newKey } from '../models/keycard';
 
 const LOBBY = "lobby";
@@ -25,6 +25,7 @@ function Game(props) {
   const [message, setMessage] = useState("");
 
   const [board, setBoard] = useState(undefined);
+  const [reveals, setReveals] = useState([]);
   const [key, setKey] = useState(undefined);
   const [turn, setTurn] = useState(0);
   const [clue, setClue] = useState(undefined);
@@ -36,6 +37,7 @@ function Game(props) {
     setMessage("");
 
     setBoard(undefined);
+    setReveals([]);
     setKey(undefined);
     setTurn(0);
     setClue(undefined);
@@ -73,13 +75,6 @@ function Game(props) {
       setMessage(data.message);
     });
 
-    props.socket.on('start', data => {
-      const { first } = data;
-      setTurn(first);
-      setMessage("");
-      setPhase(TEAMS);
-    });
-
     props.socket.on('turn', data => {
       const { turn } = data;
       setTurn(turn);
@@ -95,17 +90,24 @@ function Game(props) {
       const { winner } = data;
       setWinner(winner);
     });
+
+    // get data if disconnected
+    props.socket.emit('getBoard', {});
+    props.socket.emit('getKey', {});
+    props.socket.emit('getTurn', {});
+    props.socket.emit('getClue', {});
+    props.socket.emit('getWinner', {});
+    props.socket.emit('getPhase', {});
+
   }, [props.gameCode, props.name, props.socket]);
 
   useEffect(() => {
     props.socket.off('reveal');
     props.socket.on('reveal', data => {
-      const { r, c, color } = data;
-      let b = copyBoard(board);
-      b.reveal(r, c, color);
-      setBoard(b);
+      const newReveals = data.reveal;
+      setReveals([...reveals, ...newReveals]);
     });
-  }, [props.socket, board]);
+  }, [props.socket, reveals]);
 
   const game_views = {
     [LOBBY]: <Lobby 
@@ -123,13 +125,16 @@ function Game(props) {
               players={players}
               me={me}
               board={board}
+              reveals={reveals}
               keycard={key}
               turn={turn}
               clue={clue}/>,
     [RESULT]: <Result
               socket={props.socket}
+              players={players}
               winner={winner}
               board={board}
+              reveals={reveals}
               keycard={key}/>,
   };
 

@@ -45,10 +45,6 @@ app.io.on('connect', function (socket) {
       game.addPlayer(name, socket);
     }
     player = game.getPlayer(name);
-
-    if (game.started) {
-      socket.emit('start', {});
-    }
   });
 
   socket.on('startGame', data => {
@@ -106,6 +102,34 @@ app.io.on('connect', function (socket) {
       game.reset();
     }
   });
+
+  // retrieving info for reconnected clients
+  socket.on('getPhase', data => {
+    if (game.phase !== 'lobby') {
+      socket.emit('phase', { phase: game.phase });
+    }
+  });
+
+  socket.on('getBoard', data => {
+    game.connectSendBoard(player);
+  });
+
+  socket.on('getKey', data => {
+    game.connectSendKey(player);
+  });
+
+  socket.on('getTurn', data => {
+    game.connectSendTurn(player);
+  });
+
+  socket.on('getClue', data => {
+    game.connectSendClue(player);
+  });
+
+  socket.on('getWinner', data => {
+    game.connectSendWinner(player);
+  });
+
 
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {
