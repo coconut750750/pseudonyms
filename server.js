@@ -57,12 +57,16 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('selectTeam', data => {
-    const { team } = data;
-    game.setTeam(name, team === 'red');
+    if (game.canSetTeam()) {
+      const { team } = data;
+      game.setTeam(name, team === 'red');
+    }
   });
 
   socket.on('randomizeTeams', data => {
-    game.randomizeTeams();
+    if (game.canSetTeam()) {
+      game.randomizeTeams();
+    }
   });
 
   socket.on('confirmTeams', data => {
@@ -70,7 +74,9 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('setKey', data => {
-    game.setKey(name);
+    if (game.canSetRole()) {
+      game.setKey(name);
+    }
   });
 
   socket.on('confirmRoles', data => {

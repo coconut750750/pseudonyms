@@ -73,12 +73,20 @@ class Game {
     this.plist.resetTeams();
   }
 
+  canSetTeam() {
+    return this.phase === PHASE[1];
+  }
+
   setTeam(name, isRed) {
     this.plist.setTeam(name, isRed);
   }
 
   randomizeTeams() {
     this.plist.randomizeTeams();
+  }
+
+  canSetRole() {
+    return this.phase === PHASE[2];
   }
 
   setKey(name) {
