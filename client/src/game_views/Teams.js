@@ -33,10 +33,9 @@ function Teams(props) {
         </div>
 
         <div className="col-4">
-          <PlayerList players={getUndecideds()}/>
-          <br/>
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('randomizeTeams', {})}>Randomize</button>
+          <PlayerList players={getUndecideds()}/>
         </div>
 
         <div className="col-4">

@@ -101,9 +101,15 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('revealWord', data => {
-    if (game.turn === player.team && !player.isKey()) {
+    if (game.isActivePlayer(player)) {
       const { r, c } = data;
       game.reveal(r, c);
+    }
+  });
+
+  socket.on('endTurn', data => {
+    if (game.isActivePlayer(player)) {
+      game.endTurn();
     }
   });
 

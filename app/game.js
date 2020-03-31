@@ -33,7 +33,6 @@ class Game {
     this.wordlist = undefined;
     this.board = undefined;
     this.clue = undefined;
-    this.clueCountLeft = 0;
     this.turn = undefined;
     this.winner = undefined;
 
@@ -150,8 +149,11 @@ class Game {
 
   sendClue(clue, count) {
     this.clue = { clue, count };
-    this.clueCountLeft = count;
     this.notifyClue();
+  }
+
+  isActivePlayer(player) {
+    return this.turn === player.team && !player.isKey();
   }
 
   reveal(r, c) {
@@ -174,8 +176,11 @@ class Game {
       return;
     }
 
-    this.clueCountLeft--;
-    if (this.clueCountLeft === 0) {
+    if (this.keycard.isWhite(r, c)) {
+      this.endTurn();
+    } else if (this.keycard.isRed(r, c) && this.turn !== RED) {
+      this.endTurn();
+    } else if (this.keycard.isBlue(r, c) && this.turn !== BLUE) {
       this.endTurn();
     }
   }

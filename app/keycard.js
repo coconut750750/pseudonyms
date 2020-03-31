@@ -60,7 +60,19 @@ class KeyCard {
   }
 
   isBlack(r, c) {
-    return this.tiles[r * BOARD_LEN + c] === BLACK_TILE;
+    return this.getTile(r, c) === BLACK_TILE;
+  }
+
+  isWhite(r, c) {
+    return this.getTile(r, c) === WHITE_TILE;
+  }
+
+  isRed(r, c) {
+    return this.getTile(r, c) === RED_TILE;
+  }
+
+  isBlue(r, c) {
+    return this.getTile(r, c) === BLUE_TILE;
   }
 
   genJson() {

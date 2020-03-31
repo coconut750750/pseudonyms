@@ -22,6 +22,9 @@ function BoardView(props) {
         </div>
         <div className="col-4">
           <h6>{`${props.turn} turn`}</h6>
+          <button type="button" className="btn btn-light"
+            disabled={!clueActive() || !myTurn()}
+            onClick={ () => props.socket.emit('endTurn', {}) }>end turn</button>
         </div>
         <div className="col-4">
           {(clueActive() && props.turn === "blue") &&
