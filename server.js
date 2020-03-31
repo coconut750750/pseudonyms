@@ -104,7 +104,7 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('newGame', data => {
-    if (!game.started) {
+    if (!game.started || player.isAdmin) {
       game.reset();
     }
   });
@@ -145,7 +145,6 @@ app.io.on('connect', function (socket) {
   socket.on('getWinner', data => {
     game.connectSendWinner(player);
   });
-
 
   socket.on('disconnect', data => {
     if (game !== undefined && game.playerExists(name)) {
