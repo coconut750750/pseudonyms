@@ -12,6 +12,7 @@ const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 class Game {
   constructor(code, onEmpty, options, broadcast) {
     this.code = code;
+    this.onEmpty = onEmpty;
     this.plist = PlayerList(
       () => this.notifyPlayerUpdate(),
       () => onEmpty(),
@@ -163,13 +164,13 @@ class Game {
     this.notifyScore();
 
     if (this.keycard.isBlack(r, c)) {
-      this.end(this.turn === RED ? BLUE : RED);
+      this.endGame(this.turn === RED ? BLUE : RED);
       return;
     }
 
     const winner = this.keycard.checkWin();
     if (winner !== undefined) {
-      this.end(winner);
+      this.endGame(winner);
       return;
     }
 
@@ -194,7 +195,7 @@ class Game {
     this.notifyTurnChange();
   }
 
-  end(winner) {
+  endGame(winner) {
     this.winner = winner;
     this.started = false;
     this.phase = PHASES[4];
@@ -287,6 +288,11 @@ class Game {
     if (this.phase === 'result' && this.winner !== undefined) {
       player.send('winner', { winner: this.winner });
     }
+  }
+
+  delete() {
+    this.broadcast('end', {});
+    this.onEmpty();
   }
 }
 

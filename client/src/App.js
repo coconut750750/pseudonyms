@@ -22,9 +22,9 @@ function App() {
   const [socket, setSocket] = useState(undefined);
 
   const setGame = (gameCode, name) => {
-    let socket = io('');
+    let socket = io('localhost:5000');
     socket.on('end', data => {
-      exitGame();
+      exitGame(socket);
     });
     socket.on('disconnect', data => {
       reset();
@@ -36,7 +36,7 @@ function App() {
     setViewState(GAME);
   }
 
-  const exitGame = () => {
+  const exitGame = (socket) => {
     socket.emit('exitGame', {});
     socket.disconnect();
     reset();
@@ -65,7 +65,7 @@ function App() {
               socket={socket}
               gameCode={gameCode}
               name={name}
-              exitGame={ () => exitGame() }/>,
+              exitGame={ () => exitGame(socket) }/>,
     };
 
   return (

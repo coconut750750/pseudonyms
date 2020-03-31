@@ -115,7 +115,7 @@ app.io.on('connect', function (socket) {
 
   socket.on('exitGame', data => {
     if (player.isAdmin) {
-      game.end();
+      game.delete();
     } else if (game.started) {
       game.deactivatePlayer(name);
     } else {
