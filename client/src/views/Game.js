@@ -107,6 +107,7 @@ function Game(props) {
     props.socket.emit('getKey', {});
     props.socket.emit('getTurn', {});
     props.socket.emit('getClue', {});
+    props.socket.emit('getScore', {});
     props.socket.emit('getWinner', {});
     props.socket.emit('getPhase', {});
 

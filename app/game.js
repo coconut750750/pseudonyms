@@ -284,6 +284,12 @@ class Game {
     }
   }
 
+  connectSendScore(player) {
+    if (this.keycard !== undefined && (this.phase === PHASES[3] || this.phase === PHASES[4])) {
+      player.send('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
+    }
+  }
+
   connectSendWinner(player) {
     if (this.phase === 'result' && this.winner !== undefined) {
       player.send('winner', { winner: this.winner });

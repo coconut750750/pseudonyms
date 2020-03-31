@@ -146,6 +146,10 @@ app.io.on('connect', function (socket) {
     game.connectSendClue(player);
   });
 
+  socket.on('getScore', data => {
+    game.connectSendScore(player);
+  });
+
   socket.on('getWinner', data => {
     game.connectSendWinner(player);
   });
