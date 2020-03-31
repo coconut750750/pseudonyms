@@ -15,12 +15,16 @@ function BoardView(props) {
   return (
     <div>
       <div className="row">
-        <div className="col-4 turn">
+        <div className="col-4">
+          {(clueActive() && props.turn === "red") &&
+            <h6>{`${props.clue.clue} : ${props.clue.count}`}</h6>
+          }
+        </div>
+        <div className="col-4">
           <h6>{`${props.turn} turn`}</h6>
         </div>
-        <div className="col-4"/>
-        <div className="col-4 clue">
-          {clueActive() &&
+        <div className="col-4">
+          {(clueActive() && props.turn === "blue") &&
             <h6>{`${props.clue.clue} : ${props.clue.count}`}</h6>
           }
         </div>
