@@ -164,6 +164,13 @@ function Game(props) {
 
       {game_views[phase]}
 
+      {phase !== LOBBY &&
+        <div>
+          <br/>
+          <button type="button" className="btn btn-light" onClick={ () => props.socket.emit('newGame', {}) }>Return to Lobby</button>
+        </div>
+      }
+
       <br/>
       {message && <div class="alert alert-danger" role="alert">
         {message}

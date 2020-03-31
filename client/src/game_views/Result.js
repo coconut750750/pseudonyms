@@ -18,9 +18,6 @@ function Result(props) {
         isKey={true}
         tilesActive={false}/>
       <br/>
-
-      <button type="button" className="btn btn-light" onClick={ () => props.socket.emit('newGame', {}) }>New Game</button>
-
     </div>
   );
 }
