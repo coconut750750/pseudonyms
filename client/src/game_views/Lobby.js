@@ -5,11 +5,19 @@ import PlayerList from '../components/PlayerList';
 import { getWordlists } from '../api/api';
 
 function Lobby(props) {
-  const [wordlist, setWordlist] = useState('');
   const [wordlists, setWordlists] = useState([]);
 
+  const [wordlist, setWordlist] = useState('');
+
+  const [useCustom, setUseCustom] = useState(false);
+  const [customWords, setCustomWords] = useState('');
+
   const startGame = () => {
-    props.socket.emit('startGame', { options: { wordlist } });
+    if (!useCustom) {
+      props.socket.emit('startGame', { options: { wordlist } });
+    } else {
+      props.socket.emit('startGame', { options: { customWords } });
+    }
   };
 
   const leaveGame = () => {
@@ -36,6 +44,12 @@ function Lobby(props) {
     );
   };
 
+  const renderWordlistUpload = () => {
+    return (
+      <textarea className="form-control" value={customWords} onChange={ e => setCustomWords(e.target.value) } rows="10"></textarea>
+    );
+  }
+
   const canRenderAdmin = () => {
     return props.me !== undefined && props.me.isAdmin;
   }
@@ -47,10 +61,24 @@ function Lobby(props) {
 
     return (
       <div>
-        <h6>Game Settings</h6>
-
         <p>Wordlist</p>
-        {renderWordlistSelect()}
+        {!useCustom &&
+          <div>
+            <button type="button" className="btn btn-light" onClick={ () => setUseCustom(true) }>Use Custom List</button>
+            <br/>
+            <br/>
+            {renderWordlistSelect()}
+          </div>
+        }
+
+        {useCustom &&
+          <div>
+            <button type="button" className="btn btn-light" onClick={ () => setUseCustom(false) }>Use Standard Lists</button>
+            <br/>
+            <br/>
+            {renderWordlistUpload()}
+          </div>
+        }
         <br/>
       </div>
     );

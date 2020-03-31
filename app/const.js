@@ -4,6 +4,7 @@ module.exports = {
   RED: "red",
   BLUE: "blue",
   BOARD_LEN: 5,
+  MIN_WORDS: 50,
 
   RED_TILE: 'r',
   BLUE_TILE: 'b',

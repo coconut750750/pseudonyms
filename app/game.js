@@ -103,7 +103,9 @@ class Game {
   }
 
   start(options) {
-    this.wordlist = new WordList(options.wordlist);
+    const { wordlist, customWords } = options;
+    this.wordlist = new WordList(wordlist, customWords);
+
     this.started = true;
     this.phase = PHASES[1];
     this.notifyPhaseChange();

@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require("path");
 
+const { MIN_WORDS } = require('./const');
+
 function wordsFromFile(wordfile) {
   const filepath = path.join(__dirname, `../wordfiles/${wordfile}`);
   const contents = fs.readFileSync(filepath, 'utf8');
@@ -9,12 +11,23 @@ function wordsFromFile(wordfile) {
 }
 
 class WordList {
-  constructor(wordfile) {
-    this.load(wordfile);
+  constructor(wordfile, customWords) {
+    if (wordfile !== undefined) {
+      this.loadFile(wordfile);
+    } else {
+      this.loadString(customWords);
+    }
+    if (this.words.length < MIN_WORDS) {
+      throw new Error("Not enough words!");
+    }
   }
 
-  load(wordfile) {
+  loadFile(wordfile) {
     this.words = wordsFromFile(wordfile);
+  }
+
+  loadString(string) {
+    this.words = string.trim().toLowerCase().split(/\r?\n/);
   }
 
   getRandomWords(n) {

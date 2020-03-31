@@ -51,7 +51,11 @@ app.io.on('connect', function (socket) {
     if (game.canStart() && player.isAdmin) {
       const { options } = data;
       if (game.enoughPlayers()) {
-        game.start(options);
+        try {
+          game.start(options);
+        } catch (err) {
+          socket.emit('message', { message: err.message });
+        }
       } else {
         socket.emit('message', { message: 'Not enough players have joined the game' });
       }
