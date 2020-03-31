@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { checkName, createGame } from '../api/api';
+import debounce from "lodash/debounce";
 
 function Create(props) {
   const [message, setMessage] = useState("");
   const [name, setName] = useState("");
 
+  const debounceDisappear = () => setMessage("");
+  const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
+
   const create = async () => {
     checkName(name).then(res => {
       if (!res.valid) {
         setMessage(res.message);
+        disappearCallback();
         return;
       }
 

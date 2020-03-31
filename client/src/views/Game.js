@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import debounce from "lodash/debounce";
 
 import GameCodeBadge from '../components/GameCodeBadge';
 import GameHeader from '../components/GameHeader';
@@ -33,10 +34,12 @@ function Game(props) {
   const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState(undefined);
 
+  const debounceDisappear = () => setMessage("");
+  const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
+
   const reset = () => {
     setPlayers([]);
     setMe(undefined);
-    setMessage("");
 
     setBoard(undefined);
     setReveals([]);
@@ -75,6 +78,7 @@ function Game(props) {
 
     props.socket.on('message', data => {
       setMessage(data.message);
+      disappearCallback();
     });
 
     props.socket.on('turn', data => {
@@ -106,7 +110,7 @@ function Game(props) {
     props.socket.emit('getWinner', {});
     props.socket.emit('getPhase', {});
 
-  }, [props.gameCode, props.name, props.socket]);
+  }, [props.gameCode, props.name, props.socket, disappearCallback]);
 
   useEffect(() => {
     props.socket.off('reveal');

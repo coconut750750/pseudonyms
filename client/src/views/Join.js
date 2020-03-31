@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import debounce from "lodash/debounce";
 
 import { checkName, checkCode } from '../api/api';
 
@@ -7,16 +8,21 @@ function Join(props) {
   const [name, setName] = useState("");
   const [gameCode, setGameCode] = useState("");
 
+  const debounceDisappear = () => setMessage("");
+  const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
+
   const joinGame = async () => {
     checkCode(gameCode).then(res => {
       if (!res.valid) {
         setMessage(res.message);
+        disappearCallback();
         return;
       }
 
       checkName(name, gameCode).then(res => {
         if (!res.valid) {
           setMessage(res.message);
+          disappearCallback();
           return;
         }
 
