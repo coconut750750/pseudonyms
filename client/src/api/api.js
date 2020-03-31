@@ -30,3 +30,7 @@ export async function checkName(name, gameCode) {
     return callApi(`/checkname?name=${name}`);
   }
 }
+
+export async function getWordlists() {
+  return callApi('/wordlists');
+}

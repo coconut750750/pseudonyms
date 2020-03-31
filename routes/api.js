@@ -1,5 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const fs = require('fs');
+const path = require("path");
+
+const wordlistPath = path.join(__dirname, `../wordfiles/`);
+const files = fs.readdirSync(wordlistPath);
 
 router.post('/create', (req, res) => {
   const game = req.pseudo.createGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
@@ -43,6 +48,10 @@ router.get('/checkcode', (req, res) => {
   } else {
     res.send({ valid: false, message: 'This game code is invalid' });
   }
+});
+
+router.get('/wordlists', (req, res) => {
+  res.send(files);
 });
 
 module.exports = router;

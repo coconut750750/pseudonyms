@@ -12,7 +12,7 @@ const Pseudo = require('./app/pseudo');
 const port = process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'dev';
 
-const registerRouter = require("./routes/register");
+const apiRouter = require("./routes/api");
 
 app.use(bodyParser.json());
 app.io = io;
@@ -27,7 +27,7 @@ app.use(function(req, res, next) {
   req.io = app.io;
   next();
 });
-app.use("/", registerRouter);
+app.use("/", apiRouter);
 
 app.io.on('connect', function (socket) {
   var game;
@@ -47,12 +47,21 @@ app.io.on('connect', function (socket) {
     player = game.getPlayer(name);
   });
 
+  socket.on('updateOptions', data => {
+    if (!game.started) {
+      const { options } = data;
+      game.broadcast('options', { options });
+    }
+  });
+
   socket.on('startGame', data => {
-    const { options } = data;
-    if (game.enoughPlayers()) {
-      game.start(options);
-    } else {
-      socket.emit('message', { message: 'Not enough players have joined the game' });
+    if (game.canStart()) {
+      const { options } = data;
+      if (game.enoughPlayers()) {
+        game.start(options);
+      } else {
+        socket.emit('message', { message: 'Not enough players have joined the game' });
+      }
     }
   });
 

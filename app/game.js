@@ -98,6 +98,10 @@ class Game {
     return this.plist.getAll().length >= MIN_PLAYERS;
   }
 
+  canStart() {
+    return this.phase === PHASES[0];
+  }
+
   start(options) {
     this.wordlist = new WordList(options.wordlist);
     this.started = true;
@@ -201,6 +205,10 @@ class Game {
     const players = this.plist.getAll();
     const playerData = { players: players.map(p => p.json()) };
     return playerData;
+  }
+
+  broadcast(event, data) {
+    this.broadcast(event, data);
   }
 
   notifyPlayerUpdate() {
