@@ -47,15 +47,8 @@ app.io.on('connect', function (socket) {
     player = game.getPlayer(name);
   });
 
-  socket.on('updateOptions', data => {
-    if (!game.started) {
-      const { options } = data;
-      game.broadcast('options', { options });
-    }
-  });
-
   socket.on('startGame', data => {
-    if (game.canStart()) {
+    if (game.canStart() && player.isAdmin) {
       const { options } = data;
       if (game.enoughPlayers()) {
         game.start(options);

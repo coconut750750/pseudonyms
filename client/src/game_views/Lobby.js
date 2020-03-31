@@ -23,18 +23,6 @@ function Lobby(props) {
     });
   }, []);
 
-  useEffect(() => {
-    props.socket.on('options', data => {
-      const { options } = data;
-      const { wordlist } = options;
-      setWordlist(wordlist);
-    });
-  }, [props.socket]);
-
-  const changeWordlist = (wl) => {
-    props.socket.emit('updateOptions', { options: { wordlist: wl } });
-  };
-
   const renderWordlistSelect = () => {
     let options = [];
     for (let wl of wordlists) {
@@ -42,9 +30,29 @@ function Lobby(props) {
     }
 
     return (
-      <select className="form-control" value={wordlist} onChange={ e => changeWordlist(e.target.value) }>
+      <select className="form-control" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
         {options}
       </select>
+    );
+  };
+
+  const canRenderAdmin = () => {
+    return props.me !== undefined && props.me.isAdmin;
+  }
+
+  const renderGameOptions = () => {
+    if (!canRenderAdmin()) {
+      return undefined;
+    }
+
+    return (
+      <div>
+        <h6>Game Settings</h6>
+
+        <p>Wordlist</p>
+        {renderWordlistSelect()}
+        <br/>
+      </div>
     );
   };
 
@@ -58,15 +66,13 @@ function Lobby(props) {
       <PlayerList players={props.players}/>
       <br/>
 
-      <h6>Game Settings</h6>
-
-      <p>Wordlist</p>
-      {renderWordlistSelect()}
-      <br/>
+      {renderGameOptions()}
 
       <div className="button-row d-flex justify-content-around">
         <button type="button" className="btn btn-light" onClick={ () => leaveGame() }>Leave Game</button>
-        <button type="button" className="btn btn-light" onClick={ () => startGame() }>Start Game</button>
+        {canRenderAdmin() &&
+          <button type="button" className="btn btn-light" onClick={ () => startGame() }>Start Game</button>
+        }
       </div>
 
     </div>

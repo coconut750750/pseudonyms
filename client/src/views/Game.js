@@ -119,7 +119,8 @@ function Game(props) {
   const game_views = {
     [LOBBY]: <Lobby 
               socket={props.socket}
-              players={players}/>,
+              players={players}
+              me={me}/>,
     [TEAMS]: <Teams 
               socket={props.socket}
               players={players}/>,
