@@ -91,7 +91,10 @@ function Lobby(props) {
       <br/>
 
 
-      <PlayerList players={props.players}/>
+      <PlayerList
+        players={props.players}
+        remove={ canRenderAdmin() ? ((player) => props.socket.emit('removePlayer', { name: player.name })) : undefined }
+        removeExempt={props.me}/>
       <br/>
 
       {renderGameOptions()}

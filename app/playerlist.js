@@ -51,7 +51,10 @@ function PlayerList(notifyUpdate, endGame) {
   }
 
   const remove = (name) => {
-    var removedPlayer = _.remove(players, p => p.name == name);
+    const removedPlayers = _.remove(players, p => p.name == name);
+    if (removedPlayers.length > 0) {
+      removedPlayers[0].send('end', {});
+    }
     if (allDeactivated()) {
       endGame();
     } else {

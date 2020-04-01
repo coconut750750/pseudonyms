@@ -21,18 +21,19 @@ const BOARD = "board";
 const RESULT = "result";
 
 function Game(props) {
+  const [message, setMessage] = useState("");
   const [phase, setPhase] = useState(LOBBY);
+
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);
-  const [message, setMessage] = useState("");
 
   const [board, setBoard] = useState(undefined);
   const [reveals, setReveals] = useState([]);
   const [key, setKey] = useState(undefined);
-  const [turn, setTurn] = useState(0);
+  const [turn, setTurn] = useState("");
   const [clue, setClue] = useState(undefined);
   const [score, setScore] = useState(undefined);
-  const [winner, setWinner] = useState(undefined);
+  const [winner, setWinner] = useState("");
 
   const debounceDisappear = () => setMessage("");
   const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
@@ -44,9 +45,9 @@ function Game(props) {
     setBoard(undefined);
     setReveals([]);
     setKey(undefined);
-    setTurn(0);
+    setTurn("");
     setClue(undefined);
-    setWinner(undefined);
+    setWinner("");
   };
 
   // on mount
@@ -164,7 +165,7 @@ function Game(props) {
 
       {game_views[phase]}
 
-      {phase !== LOBBY &&
+      {(phase !== LOBBY && phase !== BOARD) &&
         <div>
           <br/>
           <button type="button" className="btn btn-light" onClick={ () => props.socket.emit('newGame', {}) }>Return to Lobby</button>

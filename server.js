@@ -119,6 +119,13 @@ app.io.on('connect', function (socket) {
     }
   });
 
+  socket.on('removePlayer', data => {
+    if (!game.started || player.isAdmin) {
+      const { name } = data;
+      game.removePlayer(name);
+    }
+  });
+
   socket.on('exitGame', data => {
     if (player.isAdmin) {
       game.delete();

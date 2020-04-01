@@ -6,7 +6,7 @@ function Result(props) {
   return (
     <div>
       <h5>Results</h5>
-      <h6>{`${props.winner} wins!`}</h6>
+      <h6>{`${props.winner.replace(/^\w/, c => c.toUpperCase())} wins!`}</h6>
       <br/>
 
       <Board

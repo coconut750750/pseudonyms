@@ -21,7 +21,7 @@ function BoardView(props) {
           }
         </div>
         <div className="col-4">
-          <h6>{`${props.turn === "red" ? "Red" : "Blue"} turn`}</h6>
+          <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>
           <button type="button" className="btn btn-light btn-sm"
             disabled={!clueActive() || !myTurn()}
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './PlayerBadge.css';
+
 function PlayerBadge(props) {
   const getBadgeClass = () => {
     if (!props.player.active) {
@@ -13,17 +15,20 @@ function PlayerBadge(props) {
     }
   }
 
-  const getStyle = () => {
-    if (props.player.isKey()) {
-      return { boxShadow: "0px 0px 4px 4px black" };
-    }
-    return {};
-  }
+  const getRoleClass = () => {
+    return props.player.isKey() ? "key" : "player";
+  };
 
   return (
-    <div
-      className={`badge m-2 ${getBadgeClass()}`}
-      style={getStyle()}>{ props.player.name }</div>
+    <div className={`badge m-2 ${getBadgeClass()} ${getRoleClass()}`}>
+      { props.player.name }
+
+      {props.remove !== undefined &&
+      <button className="badge-x" onClick={() => props.remove(props.player)}>
+        <span/>
+      </button>
+      }
+    </div>
   );
 }
 
