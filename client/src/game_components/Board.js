@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tile from '../components/Tile';
+import Tile from './Tile';
 
 import './Board.css';
 

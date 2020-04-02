@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import debounce from "lodash/debounce";
 
 import GameCodeBadge from '../components/GameCodeBadge';
-import GameHeader from '../components/GameHeader';
+
+import GameHeader from '../game_components/GameHeader';
 
 import Lobby from '../game_views/Lobby';
 import Teams from '../game_views/Teams';

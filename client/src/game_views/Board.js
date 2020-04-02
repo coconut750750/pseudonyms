@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ClueInput from '../components/ClueInput';
-import Board from '../components/Board';
+import ClueInput from '../game_components/ClueInput';
+import Board from '../game_components/Board';
 
 function BoardView(props) {
   const myTurn = () => {

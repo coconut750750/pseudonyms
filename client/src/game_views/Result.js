@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Board from '../components/Board';
+import Board from '../game_components/Board';
 
 function Result(props) {
   return (

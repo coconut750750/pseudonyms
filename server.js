@@ -11,11 +11,11 @@ const Game = require('./app/game');
 const GameManager = require('./app/manager');
 const gameSocketio = require('./app/socketio');
 
-const port = process.env.PORT || 5000;
-const dev = process.env.NODE_ENV === 'dev';
-
 const registerRouter = require("./app/register");
 const gameRouter = require("./app/routes")
+
+const port = process.env.PORT || 5000;
+const dev = process.env.NODE_ENV === 'dev';
 
 app.use(bodyParser.json());
 app.io = io;
