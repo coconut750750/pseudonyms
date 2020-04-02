@@ -10,27 +10,36 @@
     padding: 0;
     border: none;
     background-color: #00000000;
+    cursor: pointer;
 }
 
-.badge-x span {
+.badge .badge-x span {
     margin-left: 12px;
     margin-right: 4px;
 }
 
-.badge-x span:hover {
+.badge .badge-x span:hover {
   opacity: 1;
 }
-.badge-x span:before,
-.badge-x span:after {
+
+.badge .badge-x span:before,
+.badge .badge-x span:after {
   position: absolute;
   content: ' ';
   height: 12px;
   width: 1.2px;
   background-color: #fff;
 }
-.badge-x span:before {
+
+.badge.badge-light .badge-x span:before,
+.badge.badge-light .badge-x span:after {
+  background-color: #333;
+}
+
+.badge .badge-x span:before {
   transform: rotate(45deg);
 }
-.badge-x span:after {
+
+.badge .badge-x span:after {
   transform: rotate(-45deg);
 }
