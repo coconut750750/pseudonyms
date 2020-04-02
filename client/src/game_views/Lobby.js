@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import PlayerList from '../components/PlayerList';
 
-import { getWordlists } from '../api/api';
+import { getWordlists } from '../api/game';
 
 function Lobby(props) {
   const [wordlists, setWordlists] = useState([]);

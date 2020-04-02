@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import debounce from "lodash/debounce";
 
-import { checkName, checkCode } from '../api/api';
+import { checkName, checkCode } from '../api/register';
 
 function Join(props) {
   const [message, setMessage] = useState("");
@@ -35,11 +35,11 @@ function Join(props) {
     <div>
       <h4>Join Game</h4>
 
-      <input type="name" className="form-control" placeholder="Enter game code" 
+      <input type="text" className="form-control" placeholder="Enter game code" 
         value={gameCode} 
         onChange={ e => setGameCode(e.target.value) }/>
       <br/>
-      <input type="name" className="form-control" placeholder="Enter your name" 
+      <input type="text" className="form-control" placeholder="Enter your name" 
         value={name} 
         onChange={ e => setName(e.target.value) }/>
       <br/>

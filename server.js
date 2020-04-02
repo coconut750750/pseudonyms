@@ -7,36 +7,43 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-const Pseudo = require('./app/pseudo');
+const Game = require('./app/game');
+const GameManager = require('./app/manager');
+const gameSocketio = require('./app/socketio');
 
 const port = process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'dev';
 
-const apiRouter = require("./routes/api");
+const registerRouter = require("./app/register");
+const gameRouter = require("./app/routes")
 
 app.use(bodyParser.json());
 app.io = io;
-app.pseudo = new Pseudo(dev);
+app.gm = new GameManager(dev);
 
 app.get('/ping', (req, res) => {
   res.send();
 });
 
 app.use(function(req, res, next) {
-  req.pseudo = app.pseudo;
+  req.gm = app.gm;
   req.io = app.io;
   next();
 });
-app.use("/", apiRouter);
+app.use("/register/", registerRouter);
+app.use("/game/", gameRouter);
 
 app.io.on('connect', function (socket) {
   var game;
   var name;
   var player;
 
-  socket.on('join', data => {
+  socket.on('joinGame', data => {
     name = data.name;
-    game = app.pseudo.retrieveGame(data.gameCode);
+    game = app.gm.retrieveGame(data.gameCode);
+    if (!(game instanceof Game)) {
+      return;
+    }
     socket.join(data.gameCode);
 
     if (game.playerExists(name)) {
@@ -45,126 +52,18 @@ app.io.on('connect', function (socket) {
       game.addPlayer(name, socket);
     }
     player = game.getPlayer(name);
-  });
 
-  socket.on('startGame', data => {
-    if (game.canStart() && player.isAdmin) {
-      const { options } = data;
-      if (game.enoughPlayers()) {
-        try {
-          game.start(options);
-        } catch (err) {
-          socket.emit('message', { message: err.message });
-        }
-      } else {
-        socket.emit('message', { message: 'Not enough players have joined the game' });
-      }
-    }
-  });
-
-  socket.on('selectTeam', data => {
-    if (game.canSetTeam()) {
-      const { team } = data;
-      game.setTeam(name, team === 'red');
-    }
-  });
-
-  socket.on('randomizeTeams', data => {
-    if (game.canSetTeam()) {
-      game.randomizeTeams();
-    }
-  });
-
-  socket.on('confirmTeams', data => {
-    game.confirmTeams();
-  });
-
-  socket.on('setKey', data => {
-    if (game.canSetRole()) {
-      game.setKey(name);
-    }
-  });
-
-  socket.on('confirmRoles', data => {
-    game.confirmRoles();
-  });
-
-  socket.on('sendClue', data => {
-    const { clue, count } = data;
-    if (game.canSendClue(player)) {
-      if (game.validClue(clue)) {
-        game.sendClue(clue, count);
-      } else {
-        socket.emit('message', { message: 'Invalid Clue!' });
-      }
-    }
-  });
-
-  socket.on('revealWord', data => {
-    if (game.isActivePlayer(player)) {
-      const { r, c } = data;
-      game.reveal(r, c);
-    }
-  });
-
-  socket.on('endTurn', data => {
-    if (game.isActivePlayer(player)) {
-      game.endTurn();
-    }
-  });
-
-  socket.on('newGame', data => {
-    if (!game.started || player.isAdmin) {
-      game.reset();
-    }
-  });
-
-  socket.on('removePlayer', data => {
-    if (!game.started || player.isAdmin) {
-      const { name } = data;
-      game.removePlayer(name);
-    }
+    gameSocketio(socket, game, name, player);
   });
 
   socket.on('exitGame', data => {
     if (player.isAdmin) {
       game.delete();
-    } else if (game.started) {
+    } else if (game.hasStarted()) {
       game.deactivatePlayer(name);
     } else {
       game.removePlayer(name);
     }
-  });
-
-  // retrieving info for reconnected clients
-  socket.on('getPhase', data => {
-    if (game.phase !== 'lobby') {
-      socket.emit('phase', { phase: game.phase });
-    }
-  });
-
-  socket.on('getBoard', data => {
-    game.connectSendBoard(player);
-  });
-
-  socket.on('getKey', data => {
-    game.connectSendKey(player);
-  });
-
-  socket.on('getTurn', data => {
-    game.connectSendTurn(player);
-  });
-
-  socket.on('getClue', data => {
-    game.connectSendClue(player);
-  });
-
-  socket.on('getScore', data => {
-    game.connectSendScore(player);
-  });
-
-  socket.on('getWinner', data => {
-    game.connectSendWinner(player);
   });
 
   socket.on('disconnect', data => {

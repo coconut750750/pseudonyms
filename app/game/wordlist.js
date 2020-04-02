@@ -4,7 +4,7 @@ const path = require("path");
 const { MIN_WORDS } = require('./const');
 
 function wordsFromFile(wordfile) {
-  const filepath = path.join(__dirname, `../wordfiles/${wordfile}`);
+  const filepath = path.join(__dirname, `./wordfiles/${wordfile}`);
   const contents = fs.readFileSync(filepath, 'utf8');
   const words = contents.trim().toLowerCase().split(/\r?\n/);
   return words;

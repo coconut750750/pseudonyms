@@ -1,13 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const fs = require('fs');
-const path = require("path");
-
-const wordlistPath = path.join(__dirname, `../wordfiles/`);
-const files = fs.readdirSync(wordlistPath);
 
 router.post('/create', (req, res) => {
-  const game = req.pseudo.createGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
+  const game = req.gm.createGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
     gameCode: `${game.code}`
@@ -23,7 +18,7 @@ router.get('/checkname', (req, res) => {
 
   const { gameCode } = req.query;
   if (gameCode != undefined) {
-    const game = req.pseudo.retrieveGame(gameCode);
+    const game = req.gm.retrieveGame(gameCode);
     if (game.playerExists(name) && !game.isActive(name)) {
       res.send({ valid: true });
       return;
@@ -31,7 +26,7 @@ router.get('/checkname', (req, res) => {
       res.send({ valid: false, message: 'This name has been taken' });
       return;
     }
-    if (game.started) {
+    if (game.hasStarted()) {
       res.send({ valid: false, message: 'This game is closed' });
       return;
     }
@@ -42,16 +37,12 @@ router.get('/checkname', (req, res) => {
 
 router.get('/checkcode', (req, res) => {
   const { gameCode } = req.query;
-  const game = req.pseudo.retrieveGame(gameCode);
+  const game = req.gm.retrieveGame(gameCode);
   if (game != undefined) {
     res.send({ valid: true });
   } else {
     res.send({ valid: false, message: 'This game code is invalid' });
   }
-});
-
-router.get('/wordlists', (req, res) => {
-  res.send(files);
 });
 
 module.exports = router;

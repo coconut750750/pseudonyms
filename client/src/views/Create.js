@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
-
-import { checkName, createGame } from '../api/api';
 import debounce from "lodash/debounce";
+
+import { checkName, createGame } from '../api/register';
 
 function Create(props) {
   const [message, setMessage] = useState("");
@@ -28,7 +28,7 @@ function Create(props) {
     <div>
       <h4>Create Game</h4>
 
-      <input type="name" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
+      <input type="text" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
       <br />
 
       <div className="button-row d-flex justify-content-around">

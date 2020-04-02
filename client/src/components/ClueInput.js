@@ -20,7 +20,7 @@ function ClueInput(props) {
   return (
     <div className="row">
       <div className="col-6">
-        <input type="name" className="form-control" placeholder="Enter your clue" value={clue} onChange={ e => onChangeClue(e.target.value) }/>
+        <input type="text" className="form-control" placeholder="Enter your clue" value={clue} onChange={ e => onChangeClue(e.target.value) }/>
       </div>
 
       <div className="col-4">
