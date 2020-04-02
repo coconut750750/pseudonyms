@@ -21,8 +21,6 @@ function App() {
   const [name, setName] = useState("");
   const [socket, setSocket] = useState(undefined);
 
-  console.log('env', process.env);
-
   const socketiohost = process.env.NODE_ENV === "development" ? 'localhost:5000' : '';
 
   const setGame = (gameCode, name) => {
@@ -75,10 +73,15 @@ function App() {
   return (
     <div className="App">
       <br/>
-      <h3>Pseudonyms</h3>
+        <h3>Pseudonyms</h3>
       <hr/>
 
       {views[viewState]}
+
+      <hr/>
+      <div>
+        <small>built by <a href="https://brandon-wang.me">brandon wang</a></small>
+      </div>
     </div>
   );
 }
