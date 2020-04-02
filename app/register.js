@@ -22,6 +22,9 @@ router.get('/checkname', (req, res) => {
   const { gameCode } = req.query;
   if (gameCode != undefined) {
     const game = req.gm.retrieveGame(gameCode);
+    if (game === undefined) {
+      res.send({ valid: false, message: 'Invalid game code' });
+    }
     if (game.playerExists(name) && !game.isActive(name)) {
       res.send({ valid: true });
       return;
