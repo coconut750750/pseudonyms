@@ -21,8 +21,12 @@ function App() {
   const [name, setName] = useState("");
   const [socket, setSocket] = useState(undefined);
 
+  console.log('env', process.env);
+
+  const socketiohost = process.env.NODE_ENV === "development" ? 'localhost:5000' : '';
+
   const setGame = (gameCode, name) => {
-    let socket = io('localhost:5000');
+    let socket = io(socketiohost);
     socket.on('end', data => {
       exitGame(socket);
     });
