@@ -20,7 +20,7 @@ function Tile(props) {
 
   return (
     <div className={tileClass()} onClick={ () => click() }>
-      <p>{props.word}</p>
+      <h6>{props.word}</h6>
     </div>
   );
 }

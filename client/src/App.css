@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+p {
+    font-size: 12px;
+}
+
 .button-row {
     width: 50%;
     margin: 0 auto;

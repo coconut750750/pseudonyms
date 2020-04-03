@@ -9,6 +9,8 @@ import Create from './views/Create';
 import Join from './views/Join';
 import Game from './views/Game';
 
+import Footer from './components/Footer';
+
 const HOME = "home";
 const HOWTO = "howto";
 const CREATE = "create";
@@ -78,10 +80,7 @@ function App() {
 
       {views[viewState]}
 
-      <hr/>
-      <div>
-        <small>built by <a href="https://brandon-wang.me">brandon wang</a></small>
-      </div>
+      <Footer/>
     </div>
   );
 }

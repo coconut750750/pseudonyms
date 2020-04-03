@@ -61,7 +61,7 @@ function Lobby(props) {
 
     return (
       <div>
-        <p>Wordlist</p>
+        <h6>Wordlist</h6>
         {!useCustom &&
           <div>
             <button type="button" className="btn btn-light" onClick={ () => setUseCustom(true) }>Use Custom List</button>
@@ -87,7 +87,7 @@ function Lobby(props) {
   return (
     <div>
       <h5>Lobby</h5>
-      <p>Waiting for players...</p>
+      <h6>Waiting for players...</h6>
       <br/>
 
 

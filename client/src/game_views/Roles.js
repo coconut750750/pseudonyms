@@ -26,7 +26,7 @@ function Roles(props) {
   return (
     <div>
       <h5>Elect Keys</h5>
-      <p>Each team must have one key</p>
+      <h6>Each team must have one key</h6>
       <br/>
       
       <div className="row">
