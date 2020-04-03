@@ -1,6 +1,8 @@
 {
   "name": "pseudonyms",
   "version": "1.0.0",
+  "author": "Brandon Wang",
+  "license": "MIT",
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
