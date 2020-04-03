@@ -75,7 +75,7 @@ function Lobby(props) {
           <div>
             <button type="button" className="btn btn-light" onClick={ () => setUseCustom(false) }>Use Standard Lists</button>
             <br/>
-            <br/>
+            <small>Enter each word on a separate line</small>
             {renderWordlistUpload()}
           </div>
         }

@@ -17,8 +17,9 @@ function HowTo(props) {
       <p>One team is chosen at random to go first. That team will 9 words to identify; the other team will have 8. If a team reveals the black word, they automatically lose. </p>
 
       <h6>The Clue</h6>
-      <p>The key will give their team a clue that consists of one word and one number. The word should relate to the words that their team must reveal. The number tells the key’s team how many words are related to the clue. </p>
-      <p>Rules about what clues are valid are up to you, but Pseudonyms will discourage multi-word clues by restricting the use of spaces. </p>
+      <p>The key will give their team a clue that consists of one word and one number. The word should relate to the words that the key's team must reveal. The number tells the key’s team how many words are related to the clue. </p>
+      <p>For example, the clue tree: 2 can refer to the words "nut" and "bark"</p>
+      <p>Rules about what clues are valid are up to you, but Pseudonyms will discourage multi-word clues by restricting the use of spaces and prevent the key from giving a clue that exists on the board. </p>
 
       <h6>The Reveal</h6>
       <p>One the key submits the clue, the other players on the team will have a chance to guess which words the key was trying to hint at. Each team can have as many guesses as they want and can end their turn whenever they want, but if a player guesses incorrectly, i.e. revealing a word that is not their team color, their turn ends. </p>
