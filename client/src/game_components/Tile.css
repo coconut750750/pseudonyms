@@ -38,22 +38,22 @@
     word-wrap: break-word;
 }
 
-.tile.revealed p {
+.tile.revealed {
     color: #ffffff;
 }
 
-.tile.key.hidden.r p {
+.tile.hidden.key.r {
     color: #dc3545;
 }
 
-.tile.key.hidden.b p {
+.tile.hidden.key.b {
     color: #007bff;
 }
 
-.tile.key.hidden.y p {
-    color: #999;
+.tile.hidden.key.y {
+    color: #999999;
 }
 
-.tile.key.hidden.x p {
+.tile.hidden.key.x {
     color: #000000;
 }
