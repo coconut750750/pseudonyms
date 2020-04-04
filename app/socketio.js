@@ -53,14 +53,14 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('revealWord', data => {
-    if (game.isActivePlayer(player)) {
+    if (game.canReveal(player)) {
       const { r, c } = data;
       game.reveal(r, c);
     }
   });
 
   socket.on('endTurn', data => {
-    if (game.isActivePlayer(player)) {
+    if (game.canEndTurn(player)) {
       game.endTurn();
     }
   });

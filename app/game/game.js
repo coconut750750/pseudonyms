@@ -157,6 +157,14 @@ class PseudoGame extends Game {
     return this.turn === player.team && !player.isKey();
   }
 
+  canReveal(player) {
+    return this.turn === player.team && !player.isKey();
+  }
+
+  canEndTurn(player) {
+    return this.clue !== undefined && this.turn === player.team;
+  }
+
   reveal(r, c) {
     if (this.board.isRevealed(r, c)) {
       return;
