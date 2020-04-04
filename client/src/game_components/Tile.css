@@ -31,29 +31,29 @@
     background-color: #000000;
 }
 
-.tile p {
+.tile h6 {
     margin: 0;
     width: 100%;
     padding: 0.5em;
     word-wrap: break-word;
 }
 
-.tile.revealed {
+.tile.revealed h6 {
     color: #ffffff;
 }
 
-.tile.hidden.key.r {
+.tile.hidden.key.r h6 {
     color: #dc3545;
 }
 
-.tile.hidden.key.b {
+.tile.hidden.key.b h6 {
     color: #007bff;
 }
 
-.tile.hidden.key.y {
-    color: #999999;
+.tile.hidden.key.y h6 {
+    color: #999;
 }
 
-.tile.hidden.key.x {
+.tile.hidden.key.x h6 {
     color: #000000;
 }
