@@ -5,7 +5,10 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var io = require('socket.io')(server, {
+  pingInterval: 15000,
+  pingTimeout: 30000
+});
 
 const Game = require('./app/game');
 const GameManager = require('./app/manager');

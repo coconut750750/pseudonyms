@@ -23,7 +23,7 @@ function App() {
   const [name, setName] = useState("");
   const [socket, setSocket] = useState(undefined);
 
-  const socketiohost = process.env.NODE_ENV === "development" ? 'localhost:5000' : '';
+  const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
 
   const setGame = (gameCode, name) => {
     let socket = io(socketiohost);
