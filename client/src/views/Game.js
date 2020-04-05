@@ -12,7 +12,7 @@ import Board from '../game_views/Board';
 import Result from '../game_views/Result';
 
 import { getMePlayer, newPlayer } from '../models/player';
-import { newBoard } from '../models/board';
+import BoardModel, { newBoard } from '../models/board';
 import { newKey } from '../models/keycard';
 
 const LOBBY = "lobby";
@@ -28,31 +28,32 @@ function Game(props) {
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);
 
-  const [board, setBoard] = useState(undefined);
+  const [board, setBoard] = useState(new BoardModel());
   const [reveals, setReveals] = useState([]);
   const [key, setKey] = useState(undefined);
   const [turn, setTurn] = useState("");
   const [clue, setClue] = useState(undefined);
-  const [score, setScore] = useState(undefined);
+  const [score, setScore] = useState({red: 0, blue:0});
   const [winner, setWinner] = useState("");
 
   const debounceDisappear = () => setMessage("");
   const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
 
-  const reset = () => {
-    setPlayers([]);
-    setMe(undefined);
-
-    setBoard(undefined);
-    setReveals([]);
-    setKey(undefined);
-    setTurn("");
-    setClue(undefined);
-    setWinner("");
-  };
-
   // on mount
   useEffect(() => {
+    const reset = () => {
+      setPlayers([]);
+      setMe(undefined);
+
+      setBoard(new BoardModel());
+      setReveals([]);
+      setKey(undefined);
+      setTurn("");
+      setClue(undefined);
+      setScore({red: 0, blue:0});
+      setWinner("");
+    }
+
     // this will result in a 'players' message from server
     props.socket.emit('joinGame', { name: props.name, gameCode: props.gameCode });
 

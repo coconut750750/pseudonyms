@@ -20,7 +20,7 @@ function Lobby(props) {
     }
   };
 
-  const leaveGame = () => {
+  const exitGame = () => {
     props.socket.emit('exitGame', {});
   };
 
@@ -34,7 +34,7 @@ function Lobby(props) {
   const renderWordlistSelect = () => {
     let options = [];
     for (let wl of wordlists) {
-      options.push(<option value={wl}>{wl}</option>)
+      options.push(<option key={wl} value={wl}>{wl}</option>)
     }
 
     return (
@@ -100,7 +100,11 @@ function Lobby(props) {
       {renderGameOptions()}
 
       <div className="button-row d-flex justify-content-around">
-        <button type="button" className="btn btn-light" onClick={ () => leaveGame() }>Leave Game</button>
+        <button type="button" className="btn btn-light"
+          onClick={ () => exitGame() }>
+          {canRenderAdmin() ? "End Game" : "Leave Game"}
+        </button>
+        
         {canRenderAdmin() &&
           <button type="button" className="btn btn-light" onClick={ () => startGame() }>Start Game</button>
         }

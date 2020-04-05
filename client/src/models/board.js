@@ -2,6 +2,8 @@ export default class Board {
   constructor() {
     this.tiles = [];
     this.colors = [];
+    this.width = 0;
+    this.height = 0;
   }
 
   load(tiles) {
