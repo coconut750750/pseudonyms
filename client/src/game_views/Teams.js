@@ -47,10 +47,11 @@ function Teams(props) {
 
       <br/>
 
-      {confirmReady() &&
       <button type="button" className="btn btn-light"
-        onClick={() => props.socket.emit('confirmTeams', {})}>Confirm Teams</button>
-      }
+        disabled={!confirmReady()}
+        onClick={() => props.socket.emit('confirmTeams', {})}>
+        Confirm Teams
+      </button>
 
     </div>
   );

@@ -52,10 +52,11 @@ function Roles(props) {
 
       <br/>
 
-      {confirmReady() &&
       <button type="button" className="btn btn-light"
-        onClick={() => props.socket.emit('confirmRoles', {})}>Confirm Roles</button>
-      }
+        disabled={!confirmReady()}
+        onClick={() => props.socket.emit('confirmRoles', {})}>
+        Confirm Roles
+      </button>
 
     </div>
   );
