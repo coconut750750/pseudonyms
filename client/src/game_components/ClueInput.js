@@ -24,8 +24,8 @@ function ClueInput(props) {
       </div>
 
       <div className="col-4">
-        <select className="form-control" onChange={ e => setCount(e.target.value) }>
-          <option value={0} disabled selected>Clue count</option>
+        <select className="form-control" defaultValue={0} onChange={ e => setCount(e.target.value) }>
+          <option value={0} disabled>Clue count</option>
           <option value={1}>1</option>
           <option value={2}>2</option>
           <option value={3}>3</option>

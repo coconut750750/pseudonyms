@@ -15,11 +15,9 @@ function GameHeader(props) {
   return (
     <div>
       <div className="row">
-        {props.score !== undefined && [
-          <div className="col-4"><h5>{`${props.score.red}`}</h5></div>,
-          <div className="col-4"></div>,
-          <div className="col-4"><h5>{`${props.score.blue}`}</h5></div>
-        ]}
+        <div className="col-4"><h5>{`${props.score.red}`}</h5></div>
+        <div className="col-4"></div>
+        <div className="col-4"><h5>{`${props.score.blue}`}</h5></div>
       </div>
       <div className="row">
         <div className="col-4"><PlayerList players={getReds()}/></div>
