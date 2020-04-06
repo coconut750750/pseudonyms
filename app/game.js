@@ -11,6 +11,7 @@ class Game {
   }
 
   getPlayer(name) {
+    // the object returned will be the object the server will pass into socketio
     throw new Error('Game.getPlayer() implemention required!');
   }
 
@@ -35,6 +36,8 @@ class Game {
   }
 
   hasStarted() {
+    // prevents new users from joining
+    // prevents existing users from completely being removed
     throw new Error('Game.hasStarted() implemention required!');
   }
 

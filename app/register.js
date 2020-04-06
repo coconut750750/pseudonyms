@@ -47,7 +47,7 @@ router.get('/checkcode', (req, res) => {
   if (game != undefined) {
     res.send({ valid: true });
   } else {
-    res.send({ valid: false, message: 'This game code is invalid' });
+    res.send({ valid: false, message: 'Invalid game code' });
   }
 });
 
