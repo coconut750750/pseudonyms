@@ -8,7 +8,7 @@ function Create(props) {
   const [name, setName] = useState("");
 
   const debounceDisappear = () => setMessage("");
-  const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
+  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
 
   const create = async () => {
     checkName(name).then(res => {

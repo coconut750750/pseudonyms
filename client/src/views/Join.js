@@ -9,7 +9,7 @@ function Join(props) {
   const [gameCode, setGameCode] = useState("");
 
   const debounceDisappear = () => setMessage("");
-  const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
+  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
 
   const joinGame = async () => {
     checkCode(gameCode).then(res => {
@@ -35,9 +35,9 @@ function Join(props) {
     <div>
       <h4>Join Game</h4>
 
-      <input type="text" className="form-control" placeholder="Enter game code" 
+      <input type="text" className="form-control" placeholder="Enter game code (4 characters)" 
         value={gameCode} 
-        onChange={ e => setGameCode(e.target.value) }/>
+        onChange={ e => setGameCode(e.target.value.toLowerCase()) }/>
       <br/>
       <input type="text" className="form-control" placeholder="Enter your name" 
         value={name} 

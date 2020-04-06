@@ -37,7 +37,7 @@ function Game(props) {
   const [winner, setWinner] = useState("");
 
   const debounceDisappear = () => setMessage("");
-  const disappearCallback = useCallback(debounce(debounceDisappear, 1000), []);
+  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
 
   // on mount
   useEffect(() => {
