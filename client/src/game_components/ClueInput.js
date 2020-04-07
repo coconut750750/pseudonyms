@@ -9,7 +9,7 @@ function ClueInput(props) {
   };
 
   const sendClue = () => {
-    props.socket.emit('sendClue', { clue, count });
+    props.socket.emit('sendClue', { word: clue, count });
   };
 
   const onChangeClue = (val) => {

@@ -91,8 +91,8 @@ function Game(props) {
     });
 
     props.socket.on('clue', data => {
-      const { clue, count } = data;
-      setClue({ clue, count });
+      const { word, count } = data;
+      setClue({ word, count });
     });
 
     props.socket.on('score', data => {

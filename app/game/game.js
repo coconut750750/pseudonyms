@@ -144,12 +144,12 @@ class PseudoGame extends Game {
     return true;
   }
 
-  validClue(clue) {
-    return this.board.validWord(clue.toLowerCase());
+  validClue(word) {
+    return this.board.validWord(word.toLowerCase());
   }
 
-  sendClue(clue, count) {
-    this.clue = { clue, count };
+  sendClue(word, count) {
+    this.clue = { word, count };
     this.notifyClue();
   }
 
@@ -246,6 +246,10 @@ class PseudoGame extends Game {
 
   notifyTurnChange() {
     this.broadcast('turn', { turn: this.turn });
+  }
+
+  notifyClue() {
+    this.broadcast('clue', this.clue);
   }
 
   notifyClue() {

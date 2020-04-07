@@ -42,10 +42,10 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('sendClue', data => {
-    const { clue, count } = data;
+    const { word, count } = data;
     if (game.canSendClue(player)) {
-      if (game.validClue(clue)) {
-        game.sendClue(clue, count);
+      if (game.validClue(word)) {
+        game.sendClue(word, count);
       } else {
         socket.emit('message', { message: 'Invalid Clue!' });
       }

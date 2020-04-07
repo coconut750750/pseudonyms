@@ -17,7 +17,7 @@ function BoardView(props) {
       <div className="row">
         <div className="col-4">
           {(clueActive() && props.turn === "red") &&
-            <h6>{`${props.clue.clue} : ${props.clue.count}`}</h6>
+            <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
           }
         </div>
         <div className="col-4">
@@ -28,7 +28,7 @@ function BoardView(props) {
         </div>
         <div className="col-4">
           {(clueActive() && props.turn === "blue") &&
-            <h6>{`${props.clue.clue} : ${props.clue.count}`}</h6>
+            <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
           }
         </div>
       </div>
