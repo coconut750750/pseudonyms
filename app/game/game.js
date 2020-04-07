@@ -11,7 +11,7 @@ const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 class PseudoGame extends Game {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast);
-    this.plist = PlayerList(
+    this.plist = new PlayerList(
       () => this.notifyPlayerUpdate(),
       () => onEmpty(),
     );
