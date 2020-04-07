@@ -1,8 +1,9 @@
 const PseudoGame = require('./game/game');
 
 class Manager {
-  constructor() {
+  constructor(dev) {
     this.games = {};
+    this.dev = dev;
   }
 
   createGame(options, broadcast) {

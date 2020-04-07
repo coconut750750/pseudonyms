@@ -5,16 +5,30 @@ class Clues {
   constructor(notifyClue) {
     this.notifyClue = notifyClue;
     this.clues = [];
+    this.currentClue = undefined;
   }
 
   add(word, count, team) {
     const clue = new Clue(word, count, team);
-    this.clue.push[clue];
+    this.clues.push(clue);
     this.notifyClue(clue);
+    this.currentClue = clue;
   }
 
   clear() {
     this.clues = [];
+  }
+
+  getCurrent() {
+    return this.currentClue;
+  }
+
+  currentExists() {
+    return this.currentClue !== undefined;
+  }
+
+  resetCurrent() {
+    this.currentClue = undefined;
   }
 
   json() {

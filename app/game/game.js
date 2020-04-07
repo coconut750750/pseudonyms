@@ -2,6 +2,7 @@ const Game = require("../game")
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
+const Clues = require("./clues");
 const WordList = require("./wordlist");
 
 const { RED, BLUE, MIN_PLAYERS } = require("./const");
@@ -16,6 +17,8 @@ class PseudoGame extends Game {
       () => onEmpty(),
     );
 
+    this.clues = new Clues( clue => this.notifyClue(clue) );
+
     this.broadcastKeys = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsKey(event, data));
     }
@@ -29,9 +32,9 @@ class PseudoGame extends Game {
     this.keycard = undefined;
     this.wordlist = undefined;
     this.board = undefined;
-    this.clue = undefined;
     this.turn = undefined;
     this.winner = undefined;
+    this.clues.clear();
 
     this.notifyPhaseChange();
 
@@ -132,7 +135,7 @@ class PseudoGame extends Game {
   }
 
   canSendClue(player) {
-    if (this.turn !== player.team) {
+    if (!player.isOnTeam(this.turn)) {
       return false;
     }
     if (!player.isKey()) {
@@ -148,21 +151,20 @@ class PseudoGame extends Game {
     return this.board.validWord(word.toLowerCase());
   }
 
-  sendClue(word, count) {
-    this.clue = { word, count };
-    this.notifyClue();
+  addClue(word, count) {
+    this.clues.add(word, count, this.turn);
   }
 
   isActivePlayer(player) {
-    return this.turn === player.team && !player.isKey();
+    return player.isOnTeam(this.turn) && !player.isKey();
   }
 
   canReveal(player) {
-    return this.turn === player.team && !player.isKey();
+    return player.isOnTeam(this.turn) && !player.isKey();
   }
 
   canEndTurn(player) {
-    return this.clue !== undefined && this.turn === player.team;
+    return this.clues.currentExists() && player.isOnTeam(this.turn);
   }
 
   reveal(r, c) {
@@ -204,7 +206,7 @@ class PseudoGame extends Game {
   }
 
   endTurn() {
-    this.clue = undefined;
+    this.clues.resetCurrent();
     this.turn = this.turn === RED ? BLUE : RED;
     this.notifyTurnChange();
   }
@@ -248,12 +250,8 @@ class PseudoGame extends Game {
     this.broadcast('turn', { turn: this.turn });
   }
 
-  notifyClue() {
-    this.broadcast('clue', this.clue);
-  }
-
-  notifyClue() {
-    this.broadcast('clue', this.clue);
+  notifyClue(clue) {
+    this.broadcast('clue', clue.json());
   }
 
   notifyScore() {
@@ -297,8 +295,8 @@ class PseudoGame extends Game {
   }
 
   connectSendClue(player) {
-    if (this.clue !== undefined) {
-      player.send('clue', this.clue);
+    if (this.clues.currentExists()) {
+      player.send('clue', this.clues.getCurrent().json());
     }
   }
 

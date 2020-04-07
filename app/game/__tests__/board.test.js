@@ -4,12 +4,12 @@ const { BOARD_LEN } = require("../const");
 
 describe('initiating a board', () => {
   it('construct tiles', () => {
-    const wordlist = new WordList('test');
+    const wordlist = new WordList('classic');
     const board = new Board(wordlist);
   });
 
   it('get tiles', () => {
-    const wordlist = new WordList('test');
+    const wordlist = new WordList('classic');
     const board = new Board(wordlist);
 
     expect(board.getTile(BOARD_LEN - 1, BOARD_LEN - 1)).toBe(board.tiles[board.tiles.length - 1]);
@@ -18,9 +18,9 @@ describe('initiating a board', () => {
   });
 
   it('to json', () => {
-    const wordlist = new WordList('test');
+    const wordlist = new WordList('classic');
     const board = new Board(wordlist);
-
-    console.log(board.json());
+    expect(board.json()['board'].length).toBe(BOARD_LEN);
+    expect(board.json()['board'][0].length).toBe(BOARD_LEN);
   });
 });

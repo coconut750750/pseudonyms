@@ -1,8 +1,9 @@
 const WordList = require('../wordlist');
+const { BOARD_LEN } = require('../const');
 
 describe('initiating a wordlist', () => {
-  it('get 5 random words', () => {
-    const wordlist = new WordList('test');
-    console.log(wordlist.getRandomWords(5));
+  it('get 25 random words', () => {
+    const wordlist = new WordList('classic');
+    expect(wordlist.getRandomWords(BOARD_LEN * BOARD_LEN).length).toBe(BOARD_LEN * BOARD_LEN);
   });
 });

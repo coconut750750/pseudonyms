@@ -15,6 +15,10 @@ class Player {
     this.team = isRed ? RED : BLUE;
   }
 
+  isOnTeam(team) {
+    return this.team === team;
+  }
+
   resetTeam() {
     this.team = NO_TEAM;
   }

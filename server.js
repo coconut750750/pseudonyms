@@ -18,7 +18,7 @@ const registerRouter = require("./app/register");
 const gameRouter = require("./app/routes")
 
 const port = process.env.PORT || 5000;
-const dev = process.env.NODE_ENV === 'dev';
+const dev = process.env.NODE_ENV !== 'production';
 
 app.use(bodyParser.json());
 app.io = io;
