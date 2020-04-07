@@ -19,6 +19,10 @@ class Player {
     return this.team === team;
   }
 
+  assignedTeam() {
+    return this.team !== NO_TEAM;
+  }
+
   resetTeam() {
     this.team = NO_TEAM;
   }

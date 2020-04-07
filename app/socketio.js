@@ -28,7 +28,11 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('confirmTeams', data => {
-    game.confirmTeams();
+    if (game.canConfirmTeams()) {
+      game.confirmTeams();
+    } else {
+      socket.emit('message', { message: 'All players must be on a team!' });
+    }
   });
 
   socket.on('setKey', data => {
@@ -38,7 +42,11 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('confirmRoles', data => {
-    game.confirmRoles();
+    if (game.canConfirmRoles()) {
+      game.confirmRoles();
+    } else {
+      socket.emit('message', { message: 'Not enough keys!' });
+    }
   });
 
   socket.on('sendClue', data => {

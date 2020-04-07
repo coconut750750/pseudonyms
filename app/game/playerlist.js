@@ -1,5 +1,6 @@
 var _ = require('lodash');
 const Player = require('./player');
+const { RED, BLUE } = require('./const');
 
 class PlayerList {
   constructor(notifyUpdate, endGame) {
@@ -104,6 +105,15 @@ class PlayerList {
     this.notifyUpdate();
   }
 
+  allAssignedTeam() {
+    for (var p of this.players) {
+      if (!p.assignedTeam()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   resetRoles() {
     for (var p of this.players) {
       p.resetRole();
@@ -113,12 +123,24 @@ class PlayerList {
 
   setKey(name) {
     for (var p of this.players) {
-      if (p.team === this.get(name).team) {
+      if (p.isOnTeam(this.get(name).team)) {
         p.resetRole();
       }
     }
     this.get(name).setKey();
     this.notifyUpdate();
+  }
+
+  enoughKeys() {
+    let hasRedKey = false;
+    let hasBlueKey = false;
+
+    for (var p of this.players) {
+      hasRedKey = hasRedKey || (p.isOnTeam(RED) && p.isKey());
+      hasBlueKey = hasBlueKey || (p.isOnTeam(BLUE) && p.isKey());
+    }
+
+    return hasRedKey && hasBlueKey
   }
 }
 

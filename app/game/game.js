@@ -115,9 +115,17 @@ class PseudoGame extends Game {
     this.notifyPhaseChange();
   }
 
+  canConfirmTeams() {
+    return this.plist.allAssignedTeam();
+  }
+
   confirmTeams() {
     this.phase = PHASES[2];
     this.notifyPhaseChange();
+  }
+
+  canConfirmRoles() {
+    return this.plist.enoughKeys();
   }
 
   confirmRoles() {
