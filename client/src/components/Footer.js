@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div>
       <hr/>
-      <small>built by <a href="https://brandon-wang.me" target="_blank">brandon wang</a></small>
+      <small>built by <a href="https://brandon-wang.me" target="_blank" rel="noopener noreferrer">brandon wang</a></small>
       <br/>
       <br/>
     </div>
