@@ -29,6 +29,9 @@ class Board {
   }
 
   reveal(r, c) {
+    if (this.isRevealed(r, c)) {
+      return;
+    }
     this.revealed.push([r, c]);
     this.revealedInts.push(coordToIndex(r, c));
     this.notifyReveal(r, c);
