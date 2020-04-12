@@ -234,10 +234,6 @@ class Game extends GameInterface {
     return playerData;
   }
 
-  broadcast(event, data) {
-    this.broadcast(event, data);
-  }
-
   notifyPlayerUpdate() {
     this.broadcast('players', this.getPlayerData());
   }
