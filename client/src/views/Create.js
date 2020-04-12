@@ -36,7 +36,7 @@ function Create(props) {
         <button type="button" className="btn btn-light" onClick={ () => create() }>Create</button>
       </div>
 
-      {message && <div class="alert alert-danger" role="alert">
+      {message && <div className="alert alert-danger" role="alert">
         {message}
       </div>}
     </div>
