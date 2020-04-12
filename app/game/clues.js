@@ -4,8 +4,7 @@ var Clue = require('./clue');
 class Clues {
   constructor(notifyClue) {
     this.notifyClue = notifyClue;
-    this.clues = [];
-    this.currentClue = undefined;
+    this.clear();
   }
 
   add(word, count, team) {
@@ -17,6 +16,7 @@ class Clues {
 
   clear() {
     this.clues = [];
+    this.currentClue = undefined;
   }
 
   getCurrent() {
