@@ -6,7 +6,7 @@ var app = express();
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server, {
-  pingInterval: 15000,
+  pingInterval: 10000,
   pingTimeout: 30000
 });
 
