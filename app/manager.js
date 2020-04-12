@@ -1,4 +1,4 @@
-const PseudoGame = require('./game/game');
+const Game = require('./game/game');
 
 class Manager {
   constructor(dev) {
@@ -8,7 +8,7 @@ class Manager {
 
   createGame(options, broadcast) {
     const code = this.generateCode();
-    const newGame = new PseudoGame(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
+    const newGame = new Game(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
     this.games[code] = newGame;
     return newGame;
   }

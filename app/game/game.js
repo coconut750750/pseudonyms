@@ -1,4 +1,4 @@
-const Game = require("../game")
+const GameInterface = require("../game")
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
@@ -9,7 +9,7 @@ const { RED, BLUE, MIN_PLAYERS } = require("./const");
 
 const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 
-class PseudoGame extends Game {
+class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast);
     this.plist = new PlayerList(
@@ -326,4 +326,4 @@ class PseudoGame extends Game {
   }
 }
 
-module.exports = PseudoGame;
+module.exports = Game;

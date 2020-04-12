@@ -1,4 +1,4 @@
-class Game {
+class GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     this.code = code;
     this.onEmpty = onEmpty;
@@ -46,4 +46,4 @@ class Game {
   }
 }
 
-module.exports = Game;
+module.exports = GameInterface;
