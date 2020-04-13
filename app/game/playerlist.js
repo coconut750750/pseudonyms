@@ -6,37 +6,41 @@ class PlayerList {
   constructor(notifyUpdate, endGame) {
     this.notifyUpdate = notifyUpdate;
     this.endGame = endGame;
-    this.players = [];
+    this.players = {};
+  }
+
+  length() {
+    return Object.keys(this.players).length;
   }
 
   get(name) {
-    return _.filter(this.players, p => p.name == name)[0];
+    return this.players[name];
   }
 
   getAll() {
-    return this.players;
+    return Object.values(this.players);
   }
 
   exists(name) {
-    return _.filter(this.players, p => p.name == name).length > 0;
+    return name in this.players;
   }
 
   add(name, socket) {
-    this.players.push(new Player(
+    this.players[name] = new Player(
       name,
       socket,
-      this.players.length === 0
-    ));
+      this.length() === 0
+    );
     this.notifyUpdate();
   }
 
   activate(name, socket) {
-    this.get(name).activate(socket);
+    this.players[name].activate(socket);
     this.notifyUpdate();
   }
 
   deactivate(name) {
-    this.get(name).deactivate();
+    this.players[name].deactivate();
     if (this.allDeactivated()) {
       this.endGame();
     } else {
@@ -45,20 +49,20 @@ class PlayerList {
   }
 
   allDeactivated() {
-    for (var p of this.players) {
+    for (var p of Object.values(this.players)) {
       if (p.active) { return false; }
     }
     return true;
   }
 
   isActive(name) {
-    return this.get(name).active;
+    return this.players[name].active;
   }
 
   remove(name) {
-    const removedPlayers = _.remove(this.players, p => p.name == name);
-    if (removedPlayers.length > 0) {
-      removedPlayers[0].send('end', {});
+    if (name in this.players) {
+      this.players[name].send('end', {});
+      delete this.players[name];
     }
     if (this.allDeactivated()) {
       this.endGame();
@@ -68,19 +72,19 @@ class PlayerList {
   }
 
   resetTeams() {
-    for (var p of this.players) {
+    for (var p of Object.values(this.players)) {
       p.resetTeam();
     }
     this.notifyUpdate();
   }
 
   setTeam(name, isRed) {
-    this.get(name).setTeam(isRed);
+    this.players[name].setTeam(isRed);
     this.notifyUpdate();
   }
 
   randomizeTeams() {
-    const n = this.players.length;
+    const n = this.length();
     let nRed = Math.floor(n/2);
     let nBlue = Math.floor(n/2);
     if (n & 1 === 1) {
@@ -89,7 +93,7 @@ class PlayerList {
       nBlue += r;
     }
 
-    for (var p of this.players) {
+    for (var p of Object.values(this.players)) {
       if (nRed === 0) {
           p.setTeam(false);
       } else if (nBlue === 0) {
@@ -106,7 +110,7 @@ class PlayerList {
   }
 
   allAssignedTeam() {
-    for (var p of this.players) {
+    for (var p of Object.values(this.players)) {
       if (!p.assignedTeam()) {
         return false;
       }
@@ -115,19 +119,19 @@ class PlayerList {
   }
 
   resetRoles() {
-    for (var p of this.players) {
+    for (var p of Object.values(this.players)) {
       p.resetRole();
     }
     this.notifyUpdate();
   }
 
   setKey(name) {
-    for (var p of this.players) {
-      if (p.isOnTeam(this.get(name).team)) {
+    for (var p of Object.values(this.players)) {
+      if (p.isOnTeam(this.players[name].team)) {
         p.resetRole();
       }
     }
-    this.get(name).setKey();
+    this.players[name].setKey();
     this.notifyUpdate();
   }
 
@@ -135,7 +139,7 @@ class PlayerList {
     let hasRedKey = false;
     let hasBlueKey = false;
 
-    for (var p of this.players) {
+    for (var p of Object.values(this.players)) {
       hasRedKey = hasRedKey || (p.isOnTeam(RED) && p.isKey());
       hasBlueKey = hasBlueKey || (p.isOnTeam(BLUE) && p.isKey());
     }

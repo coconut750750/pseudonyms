@@ -31,7 +31,7 @@ describe('clues test', () => {
     game.addPlayer("p1", undefined);
     game.addClue("clue", 1);
 
-    const p1 = game.plist.players[0];
+    const p1 = game.plist.get("p1");
     let sendEvent = "";
     p1.send.mockImplementation( (event, data) => sendEvent = event );
 
@@ -43,7 +43,7 @@ describe('clues test', () => {
   it('reconnecting user gets gets nothing with no current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
     game.addPlayer("p1", undefined);
-    const p1 = game.plist.players[0];
+    const p1 = game.plist.get("p1");
 
     let sendEvent = undefined;
     p1.send.mockImplementation( (event, data) => sendEvent = event );
@@ -56,7 +56,7 @@ describe('clues test', () => {
   it('allow end turn with current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
     game.addPlayer("p1", undefined);
-    const p1 = game.plist.players[0];
+    const p1 = game.plist.get("p1");
 
     p1.isOnTeam.mockImplementation( (team) => true );
 
@@ -68,7 +68,7 @@ describe('clues test', () => {
   it('disallow end turn with no current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
     game.addPlayer("p1", undefined);
-    const p1 = game.plist.players[0];
+    const p1 = game.plist.get("p1");
 
     p1.isOnTeam.mockImplementation( (team) => true );
 
