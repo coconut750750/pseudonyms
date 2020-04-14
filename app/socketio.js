@@ -74,7 +74,7 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('newGame', data => {
-    if (!game.started || player.isAdmin) {
+    if (game.phase !== 'board') {
       game.reset();
     }
   });

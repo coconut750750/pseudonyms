@@ -221,7 +221,6 @@ class Game extends GameInterface {
 
   endGame(winner) {
     this.winner = winner;
-    this.started = false;
     this.phase = PHASES[4];
     this.notifyWinner();
     this.notifyFinalReveal();
