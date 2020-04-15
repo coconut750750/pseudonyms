@@ -88,9 +88,7 @@ function socketio(socket, game, name, player) {
 
   // retrieving info for reconnected clients
   socket.on('getPhase', data => {
-    if (game.phase !== 'lobby') {
-      socket.emit('phase', { phase: game.phase });
-    }
+    socket.emit('phase', { phase: game.phase });
   });
 
   socket.on('getBoard', data => {

@@ -42,9 +42,6 @@ function Game(props) {
   // on mount
   useEffect(() => {
     const reset = () => {
-      setPlayers([]);
-      setMe(undefined);
-
       setBoard(new BoardModel());
       setReveals([]);
       setKey(undefined);
