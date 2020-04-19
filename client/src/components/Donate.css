@@ -1,0 +1,51 @@
+.donate {
+    font-size: 75%;
+    display: inline-block;
+    line-height: 1;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 1.25rem;
+    padding-left: 1.25rem;
+    position: fixed;
+
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.donate a {
+    font-weight: 700;
+    color: #0c5460;
+}
+
+.badge-x {
+    padding: 0;
+    border: none;
+    background-color: #00000000;
+    cursor: pointer;
+}
+
+.badge-x span {
+    margin-left: 12px;
+    margin-right: 4px;
+}
+
+.badge-x span:hover {
+  opacity: 1;
+}
+
+.badge-x span:before,
+.badge-x span:after {
+  position: absolute;
+  content: ' ';
+  height: 12px;
+  width: 1.2px;
+  background-color: #333;
+}
+
+.badge-x span:before {
+  transform: rotate(45deg);
+}
+
+.badge-x span:after {
+  transform: rotate(-45deg);
+}

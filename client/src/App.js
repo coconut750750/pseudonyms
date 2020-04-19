@@ -9,6 +9,7 @@ import Create from './views/Create';
 import Join from './views/Join';
 import Game from './views/Game';
 
+import Donate from './components/Donate';
 import Footer from './components/Footer';
 
 const HOME = "home";
@@ -85,6 +86,7 @@ function App() {
 
   return (
     <div className="App">
+      <Donate/>
       <br/>
         <h3>Pseudonyms</h3>
       <hr/>
