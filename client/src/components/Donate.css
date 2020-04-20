@@ -10,6 +10,8 @@
 
     left: 50%;
     transform: translateX(-50%);
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
 }
 
 .donate a {
@@ -30,22 +32,22 @@
 }
 
 .badge-x span:hover {
-  opacity: 1;
+    opacity: 1;
 }
 
 .badge-x span:before,
 .badge-x span:after {
-  position: absolute;
-  content: ' ';
-  height: 12px;
-  width: 1.2px;
-  background-color: #333;
+    position: absolute;
+    content: ' ';
+    height: 12px;
+    width: 1.2px;
+    background-color: #333;
 }
 
 .badge-x span:before {
-  transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .badge-x span:after {
-  transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
