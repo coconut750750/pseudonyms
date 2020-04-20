@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import "./Donate.css";
 
 const altPrompts = [
-  "Like the app? I need money for Chipotle",
-  "Like the app? Help me pay my taxes",
+  "I need money for Chipotle",
+  "Help me pay my taxes",
   "If you won't support Wikipedia, at least support me",
   "Feet pics?"
 ];
