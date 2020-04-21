@@ -21,12 +21,13 @@ function getPrompt() {
 
 export default function Donate(props) {
   const [display, setDisplay] = useState(true);
+  const [prompt] = useState(getPrompt());
 
   if (display) {
     return (
       <div>
         <div className="donate alert alert-info" role="alert">
-          <a href="https://www.paypal.me/brandonw4">{getPrompt()}</a>
+          <a href="https://www.paypal.me/brandonw4">{prompt}</a>
 
           <button className="badge-x" onClick={() => setDisplay(false)}>
             <span/>
