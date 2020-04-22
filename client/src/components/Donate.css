@@ -12,6 +12,8 @@
     transform: translateX(-50%);
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+
+    z-index: 1;
 }
 
 .donate a {
