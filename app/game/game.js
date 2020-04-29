@@ -267,6 +267,7 @@ class Game extends GameInterface {
   }
 
   endGame(winner) {
+    clearInterval(this.timer);
     this.winner = winner;
     this.phase = PHASES[4];
     this.notifyWinner();
