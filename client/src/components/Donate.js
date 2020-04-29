@@ -5,13 +5,15 @@ import "./Donate.css";
 const altPrompts = [
   "I need money for Chipotle",
   "Help me pay my taxes",
-  "If you won't support Wikipedia, at least support me",
   "Feet pics?"
 ];
 
 function getPrompt() {
-  if (Math.random() < 0.5) {
+  const r = Math.random();
+  if (r < 0.4) {
     return "Like the app? Support your local broke college student";
+  } else if (r < 0.7) {
+    return "I am once again asking for your financial support";
   } else {
     const i = Math.floor(Math.random() * altPrompts.length);
     return altPrompts[i];
