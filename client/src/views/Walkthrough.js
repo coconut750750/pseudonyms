@@ -32,7 +32,7 @@ function Walkthrough(props) {
             <i id="left-arrow"></i>
           }
         </div>
-        <img className="screen" src={`images/${screenOrder[screen]}.png`}/>
+        <img className="screen" src={`images/${screenOrder[screen]}.png`} alt={screenOrder[screen]}/>
         <div className="arrow" onClick={ () => goRight(screen) }>
           {screen < screenOrder.length - 1 &&
             <i id="right-arrow"></i>
