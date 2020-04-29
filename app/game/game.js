@@ -168,19 +168,24 @@ class Game extends GameInterface {
     }, 1000);
   }
 
+  stopTimer() {
+    clearInterval(this.timer);
+    this.notifyTime(undefined);
+  }
+
   startClue() {
+    this.stopTimer();
     if (this.gameoptions.clueLimit === 0) {
       return;
     }
-    clearInterval(this.timer);
     this.startTimer(this.gameoptions.clueLimit);
   }
 
   startGuess() {
+    this.stopTimer();
     if (this.gameoptions.guessLimit === 0) {
       return;
     }
-    clearInterval(this.timer);
     this.startTimer(this.gameoptions.guessLimit);
   }
 
@@ -267,7 +272,7 @@ class Game extends GameInterface {
   }
 
   endGame(winner) {
-    clearInterval(this.timer);
+    this.stopTimer();
     this.winner = winner;
     this.phase = PHASES[4];
     this.notifyWinner();
