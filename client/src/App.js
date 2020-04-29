@@ -8,12 +8,14 @@ import HowTo from './views/HowTo';
 import Create from './views/Create';
 import Join from './views/Join';
 import Game from './views/Game';
+import Walkthrough from './views/Walkthrough';
 
 import Donate from './components/Donate';
 import Footer from './components/Footer';
 
 const HOME = "home";
 const HOWTO = "howto";
+const WALKTHROUGH = "walkthrough";
 const CREATE = "create";
 const JOIN = "join";
 const GAME = "game";
@@ -65,23 +67,26 @@ function App() {
   }, [viewState, socket]);
 
   const views = {
-    [HOME]:   <Home 
-              createGame={ () => setViewState(CREATE) } 
-              joinGame={ () => setViewState(JOIN) }
-              viewHowTo={ () => setViewState(HOWTO) }/>,
-    [HOWTO]:  <HowTo
-              goBack={ () => setViewState(HOME) }/>,
-    [CREATE]: <Create
-              goBack={ () => setViewState(HOME) }
-              setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
-    [JOIN]:   <Join
-              goBack={ () => setViewState(HOME) }
-              join={ (gameCode, name) => setGame(gameCode, name) }/>,
-    [GAME]:  <Game
-              socket={socket}
-              gameCode={gameCode}
-              name={name}
-              exitGame={ () => exitGame(socket) }/>,
+    [HOME]:         <Home 
+                      createGame={ () => setViewState(CREATE) } 
+                      joinGame={ () => setViewState(JOIN) }
+                      viewHowTo={ () => setViewState(HOWTO) }
+                      viewWalkthrough={ () => setViewState(WALKTHROUGH) }/>,
+    [WALKTHROUGH]:  <Walkthrough
+                      goBack={ () => setViewState(HOME) }/>,
+    [HOWTO]:        <HowTo
+                      goBack={ () => setViewState(HOME) }/>,
+    [CREATE]:       <Create
+                      goBack={ () => setViewState(HOME) }
+                      setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
+    [JOIN]:         <Join
+                      goBack={ () => setViewState(HOME) }
+                      join={ (gameCode, name) => setGame(gameCode, name) }/>,
+    [GAME]:         <Game
+                      socket={socket}
+                      gameCode={gameCode}
+                      name={name}
+                      exitGame={ () => exitGame(socket) }/>,
     };
 
   return (

@@ -154,7 +154,6 @@ function Game(props) {
   return (
     <div>
       <GameCodeBadge gameCode={props.gameCode}/>
-      <br/>
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader

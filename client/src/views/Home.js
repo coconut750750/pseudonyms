@@ -8,8 +8,9 @@ function Home(props) {
         <button type="button" className="btn btn-light" onClick={props.createGame}>Create Game</button>
       </div>
 
-      <div className="button-row d-flex justify-content-around">
+      <div class="btn-group-vertical">
         <button type="button" className="btn btn-light" onClick={props.viewHowTo}>How to Play</button>
+        <button type="button" className="btn btn-light" onClick={props.viewWalkthrough}>Walkthrough</button>
       </div>
     </div>
   )

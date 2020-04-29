@@ -13,3 +13,7 @@ p {
     margin: 0 auto;
     margin-bottom: 20px;
 }
+
+.button-row button {
+    width: 40%;
+}
