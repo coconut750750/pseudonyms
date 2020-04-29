@@ -2,14 +2,10 @@ function socketio(socket, game, name, player) {
   socket.on('startGame', data => {
     if (game.canStart() && player.isAdmin) {
       const { options } = data;
-      if (game.enoughPlayers()) {
-        try {
-          game.start(options);
-        } catch (err) {
-          socket.emit('message', { message: err.message });
-        }
-      } else {
-        socket.emit('message', { message: 'Not enough players have joined the game' });
+      try {
+        game.start(options);
+      } catch (err) {
+        socket.emit('message', { message: err.message });
       }
     }
   });
@@ -28,10 +24,10 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('confirmTeams', data => {
-    if (game.canConfirmTeams()) {
+    try {
       game.confirmTeams();
-    } else {
-      socket.emit('message', { message: 'All players must be on a team!' });
+    } catch (err) {
+      socket.emit('message', { message: err.message });
     }
   });
 
@@ -42,20 +38,20 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('confirmRoles', data => {
-    if (game.canConfirmRoles()) {
+    try {
       game.confirmRoles();
-    } else {
-      socket.emit('message', { message: 'Not enough keys!' });
+    } catch (err) {
+      socket.emit('message', { message: err.message });
     }
   });
 
   socket.on('sendClue', data => {
     const { word, count } = data;
     if (game.canSendClue(player)) {
-      if (game.validClue(word)) {
+      try {
         game.addClue(word, count);
-      } else {
-        socket.emit('message', { message: 'Invalid Clue!' });
+      } catch (err) {
+        socket.emit('message', { message: err.message });
       }
     }
   });

@@ -25,7 +25,11 @@ class Board {
   }
 
   validWord(word) {
-    return !this.tiles.includes(word);
+    const index = this.tiles.indexOf(word);
+    if (index === -1) {
+      return true;
+    }
+    return this.revealedInts.includes(index);
   }
 
   reveal(r, c) {

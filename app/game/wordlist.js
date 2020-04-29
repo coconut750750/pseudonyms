@@ -18,7 +18,7 @@ class WordList {
       this.loadString(customWords);
     }
     if (this.words.length < MIN_WORDS) {
-      throw new Error("Not enough words!");
+      throw new Error(`Please provide at least ${MIN_WORDS} words`);
     }
   }
 

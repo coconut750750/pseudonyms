@@ -107,6 +107,9 @@ class Game extends GameInterface {
   }
 
   start(options) {
+    if (!this.enoughPlayers()) {
+      throw new Error(`At least ${MIN_PLAYERS} players required to start`);
+    }
     const { wordlist, customWords } = options;
     this.wordlist = new WordList(wordlist, customWords);
 
@@ -120,6 +123,9 @@ class Game extends GameInterface {
   }
 
   confirmTeams() {
+    if (!this.canConfirmTeams()) {
+      throw new Error("All players must be on a team");
+    }
     this.phase = PHASES[2];
     this.notifyPhaseChange();
   }
@@ -129,6 +135,9 @@ class Game extends GameInterface {
   }
 
   confirmRoles() {
+    if (!this.canConfirmRoles()) {
+      throw new Error("Not enough keys");
+    }
     this.phase = PHASES[3];
 
     this.keycard = new KeyCard();
@@ -160,6 +169,9 @@ class Game extends GameInterface {
   }
 
   addClue(word, count) {
+    if (!this.validClue(word)) {
+      throw new Error("Invalid Clue");
+    }
     this.clues.add(word, count, this.turn);
   }
 
