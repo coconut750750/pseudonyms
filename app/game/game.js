@@ -156,14 +156,18 @@ class Game extends GameInterface {
     this.startClue();
   }
 
-  startTimer(time) {
+  startTimer(time, timeout) {
+    if (time <= 0) {
+      return;
+    }
     let timeLeft = time;
     this.notifyTime(timeLeft);
     this.timer = setInterval(() => {
       timeLeft--;
       this.notifyTime(timeLeft);
       if (timeLeft === 0) {
-        this.endTurn();
+        clearInterval(this.timer);
+        timeout();
       }
     }, 1000);
   }
@@ -178,7 +182,7 @@ class Game extends GameInterface {
     if (this.gameoptions.clueLimit === 0) {
       return;
     }
-    this.startTimer(this.gameoptions.clueLimit);
+    this.startTimer(this.gameoptions.clueLimit, () => this.addClue("-", "-"));
   }
 
   startGuess() {
@@ -186,7 +190,7 @@ class Game extends GameInterface {
     if (this.gameoptions.guessLimit === 0) {
       return;
     }
-    this.startTimer(this.gameoptions.guessLimit);
+    this.startTimer(this.gameoptions.guessLimit, () => this.endTurn());
   }
 
   canSendClue(player) {
