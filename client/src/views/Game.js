@@ -158,6 +158,7 @@ function Game(props) {
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
+        socket={props.socket}
         players={players}
         score={score}/>
       }

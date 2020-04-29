@@ -1,17 +1,19 @@
 .donate {
     font-size: 75%;
-    display: inline-block;
     line-height: 1;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    padding-right: 1.25rem;
-    padding-left: 1.25rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
     position: fixed;
 
     left: 50%;
     transform: translateX(-50%);
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+
+    width: auto;
+    white-space: nowrap;
 
     z-index: 1;
 }

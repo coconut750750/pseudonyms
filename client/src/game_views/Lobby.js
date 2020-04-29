@@ -4,6 +4,16 @@ import PlayerList from '../components/PlayerList';
 
 import { getWordlists } from '../api/game';
 
+import "./Lobby.css";
+
+const timeLimitOptions = [
+  { value: 30, display: "30 seconds"},
+  { value: 60, display: "1 minute"},
+  { value: 120, display: "2 minutes"},
+  { value: 300, display: "5 minutes"},
+  { value: 0, display: "Unlimited"}
+];
+
 function Lobby(props) {
   const [wordlists, setWordlists] = useState([]);
 
@@ -12,12 +22,17 @@ function Lobby(props) {
   const [useCustom, setUseCustom] = useState(false);
   const [customWords, setCustomWords] = useState('');
 
+  const [clueLimit, setClueLimit] = useState(0);
+  const [guessLimit, setGuessLimit] = useState(0);
+
   const startGame = () => {
+    let options = { clueLimit, guessLimit };
     if (!useCustom) {
-      props.socket.emit('startGame', { options: { wordlist } });
+      options = { ...options, wordlist };
     } else {
-      props.socket.emit('startGame', { options: { customWords } });
+      options = { ...options, customWords };
     }
+    props.socket.emit('startGame', { options: options });
   };
 
   const exitGame = () => {
@@ -38,7 +53,7 @@ function Lobby(props) {
     }
 
     return (
-      <select className="form-control" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
+      <select className="form-control wordlist-select" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
         {options}
       </select>
     );
@@ -47,6 +62,30 @@ function Lobby(props) {
   const renderWordlistUpload = () => {
     return (
       <textarea className="form-control" value={customWords} onChange={ e => setCustomWords(e.target.value) } rows="10"></textarea>
+    );
+  }
+
+  const renderTimeLimit = () => {
+    let options = [];
+    for (let tl of timeLimitOptions) {
+      options.push(<option key={tl.value} value={tl.value}>{tl.display}</option>)
+    }
+
+    return (
+      <div className="row">
+        <div className="col-6">
+          <small>Time for clue</small>
+          <select className="form-control wordlist-select" value={clueLimit} onChange={ e => setClueLimit(e.target.value) }>
+            {options}
+          </select>
+        </div>
+        <div className="col-6">
+          <small>Time for guess</small>
+          <select className="form-control wordlist-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
+            {options}
+          </select>
+        </div>
+      </div>
     );
   }
 
@@ -61,25 +100,30 @@ function Lobby(props) {
 
     return (
       <div>
-        <h6>Wordlist</h6>
-        {!useCustom &&
-          <div>
-            <button type="button" className="btn btn-light" onClick={ () => setUseCustom(true) }>Use Custom List</button>
-            <br/>
-            <br/>
-            {renderWordlistSelect()}
-          </div>
-        }
+        <h6>Game Settings</h6>
+        <div className="">
+          {!useCustom &&
+            <div>
+              <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
+              <br/>
+              {renderWordlistSelect()}
+            </div>
+          }
 
-        {useCustom &&
-          <div>
-            <button type="button" className="btn btn-light" onClick={ () => setUseCustom(false) }>Use Standard Lists</button>
-            <br/>
-            <small>Enter each word on a separate line</small>
-            {renderWordlistUpload()}
-          </div>
-        }
-        <br/>
+          {useCustom &&
+            <div>
+              <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(false) }>Use Standard Wordlists</button>
+              <br/>
+              {renderWordlistUpload()}
+              <small>Enter each word on a separate line</small>
+            </div>
+          }
+          <br/>
+
+          {renderTimeLimit()}
+
+          <br/>
+        </div>
       </div>
     );
   };

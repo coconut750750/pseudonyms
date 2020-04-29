@@ -4,6 +4,7 @@ const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
 const Clues = require("./clues");
 const WordList = require("./wordlist");
+const GameOptions = require("./gameoptions");
 
 const { RED, BLUE, MIN_PLAYERS } = require("./const");
 
@@ -14,7 +15,7 @@ class Game extends GameInterface {
     super(code, onEmpty, options, broadcast);
     this.plist = new PlayerList(
       () => this.notifyPlayerUpdate(),
-      () => onEmpty(),
+      () => this.delete(),
     );
 
     this.clues = new Clues( clue => this.notifyClue(clue) );
@@ -28,11 +29,13 @@ class Game extends GameInterface {
 
   reset() {
     this.started = false;
+    this.gameoptions = undefined;
     this.phase = PHASES[0];
     this.keycard = undefined;
     this.wordlist = undefined;
     this.board = undefined;
     this.turn = undefined;
+    this.timer = undefined;
     this.winner = undefined;
     this.clues.clear();
 
@@ -110,8 +113,8 @@ class Game extends GameInterface {
     if (!this.enoughPlayers()) {
       throw new Error(`At least ${MIN_PLAYERS} players required to start`);
     }
-    const { wordlist, customWords } = options;
-    this.wordlist = new WordList(wordlist, customWords);
+    this.gameoptions = new GameOptions(options);
+    this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
 
     this.started = true;
     this.phase = PHASES[1];
@@ -149,6 +152,36 @@ class Game extends GameInterface {
     this.notifyTurnChange();
     this.notifyScore();
     this.notifyPhaseChange();
+
+    this.startClue();
+  }
+
+  startTimer(time) {
+    let timeLeft = time;
+    this.notifyTime(timeLeft);
+    this.timer = setInterval(() => {
+      timeLeft--;
+      this.notifyTime(timeLeft);
+      if (timeLeft === 0) {
+        this.endTurn();
+      }
+    }, 1000);
+  }
+
+  startClue() {
+    if (this.gameoptions.clueLimit === 0) {
+      return;
+    }
+    clearInterval(this.timer);
+    this.startTimer(this.gameoptions.clueLimit);
+  }
+
+  startGuess() {
+    if (this.gameoptions.guessLimit === 0) {
+      return;
+    }
+    clearInterval(this.timer);
+    this.startTimer(this.gameoptions.guessLimit);
   }
 
   canSendClue(player) {
@@ -173,6 +206,7 @@ class Game extends GameInterface {
       throw new Error("Invalid Clue");
     }
     this.clues.add(word, count, this.turn);
+    this.startGuess();
   }
 
   isActivePlayer(player) {
@@ -229,6 +263,7 @@ class Game extends GameInterface {
     this.clues.resetCurrent();
     this.turn = this.turn === RED ? BLUE : RED;
     this.notifyTurnChange();
+    this.startClue();
   }
 
   endGame(winner) {
@@ -267,6 +302,10 @@ class Game extends GameInterface {
 
   notifyClue(clue) {
     this.broadcast('clue', clue.json());
+  }
+
+  notifyTime(time) {
+    this.broadcast('time', { time });
   }
 
   notifyScore() {
@@ -328,6 +367,7 @@ class Game extends GameInterface {
   }
 
   delete() {
+    clearInterval(this.timer);
     this.broadcast('end', {});
     this.onEmpty();
   }
