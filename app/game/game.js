@@ -157,7 +157,7 @@ class Game extends GameInterface {
   }
 
   startTimer(time, timeout) {
-    if (time <= 0) {
+    if (time <= 0 || Number.isNaN(time)) {
       return;
     }
     let timeLeft = time;
@@ -179,17 +179,11 @@ class Game extends GameInterface {
 
   startClue() {
     this.stopTimer();
-    if (this.gameoptions.clueLimit === 0) {
-      return;
-    }
     this.startTimer(this.gameoptions.clueLimit, () => this.addClue("-", "-"));
   }
 
   startGuess() {
     this.stopTimer();
-    if (this.gameoptions.guessLimit === 0) {
-      return;
-    }
     this.startTimer(this.gameoptions.guessLimit, () => this.endTurn());
   }
 

@@ -53,7 +53,7 @@ function Lobby(props) {
     }
 
     return (
-      <select className="form-control wordlist-select" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
+      <select className="form-control gameoptions-select" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
         {options}
       </select>
     );
@@ -75,13 +75,13 @@ function Lobby(props) {
       <div className="row">
         <div className="col-6">
           <small>Time for clue</small>
-          <select className="form-control wordlist-select" value={clueLimit} onChange={ e => setClueLimit(e.target.value) }>
+          <select className="form-control gameoptions-select" value={clueLimit} onChange={ e => setClueLimit(e.target.value) }>
             {options}
           </select>
         </div>
         <div className="col-6">
           <small>Time for guess</small>
-          <select className="form-control wordlist-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
+          <select className="form-control gameoptions-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
             {options}
           </select>
         </div>

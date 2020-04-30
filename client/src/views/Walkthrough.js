@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import "./Walkthrough.css";
-
 const screenOrder = ["lobby", "teams", "roles", "clue", "guess"];
 const description = {
   lobby: "This is the lobby screen. As you wait for players to join, you can set some game settings. Once you have at least four players, you can start the game.",
@@ -23,7 +21,7 @@ function Walkthrough(props) {
   };
 
   return (
-    <div>
+    <div id="walkthrough">
       <h4>Walkthrough</h4>
       <small>{description[screenOrder[screen]]}</small>
       <div className="justify-content-between">
