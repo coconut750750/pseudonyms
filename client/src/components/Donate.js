@@ -2,21 +2,12 @@ import React, { useState } from 'react';
 
 import "./Donate.css";
 
-const altPrompts = [
-  "I need money for Chipotle",
-  "Help me pay my taxes",
-  "Feet pics?"
-];
-
 function getPrompt() {
   const r = Math.random();
-  if (r < 0.4) {
+  if (r < 0.5) {
     return "Like the app? Support your local broke college student";
-  } else if (r < 0.7) {
-    return "I am once again asking for your financial support";
   } else {
-    const i = Math.floor(Math.random() * altPrompts.length);
-    return altPrompts[i];
+    return "I am once again asking for your financial support";
   }
 }
 
