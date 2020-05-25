@@ -28,13 +28,18 @@ function Create(props) {
     <div>
       <h4>Create Game</h4>
 
-      <input type="text" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
-      <br />
+      <form onSubmit={ (e) => {
+        e.preventDefault();
+        create();
+      } }>
+        <input type="text" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
+        <br />
 
-      <div className="button-row d-flex justify-content-around">
-        <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
-        <button type="button" className="btn btn-light" onClick={ () => create() }>Create</button>
-      </div>
+        <div className="button-row d-flex justify-content-around">
+          <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
+          <button type="submit" className="btn btn-light">Create</button>
+        </div>
+      </form>
 
       {message && <div className="alert alert-danger" role="alert">
         {message}
