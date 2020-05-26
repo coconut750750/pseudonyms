@@ -1,57 +1,35 @@
-.donate {
-    font-size: 75%;
-    line-height: 1;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-right: 0.5rem;
-    padding-left: 0.5rem;
-    position: fixed;
-
-    left: 50%;
-    transform: translateX(-50%);
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-
-    width: auto;
-    white-space: nowrap;
-
-    z-index: 1;
+.bmc-button {
+    padding: 5px 10px 5px 5px !important;
+    height: 35px !important;
+    display: inline-flex !important;
+    color: #ffffff !important;
+    background-color: #79D6B5 !important;
+    border: 1px solid transparent !important;
+    border-radius: 5px !important;
+    font-size: 15px !important;
+    box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+    -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+    margin: 0 auto !important;
+    font-family: 'Lato', sans-serif !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
 }
 
-.donate a {
-    font-weight: 700;
-    color: #0c5460;
+.bmc-button img {
+    height: 100% !important;
+    width: 35px !important;
+    margin-bottom: 1px !important;
+    box-shadow: none !important;
+    border: none !important;
+    vertical-align: middle !important;
 }
 
-.badge-x {
-    padding: 0;
-    border: none;
-    background-color: #00000000;
-    cursor: pointer;
-}
-
-.badge-x span {
-    margin-left: 12px;
-    margin-right: 4px;
-}
-
-.badge-x span:hover {
-    opacity: 1;
-}
-
-.badge-x span:before,
-.badge-x span:after {
-    position: absolute;
-    content: ' ';
-    height: 12px;
-    width: 1.2px;
-    background-color: #333;
-}
-
-.badge-x span:before {
-    transform: rotate(45deg);
-}
-
-.badge-x span:after {
-    transform: rotate(-45deg);
+.bmc-button:hover,
+.bmc-button:active,
+.bmc-button:focus {
+    box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+    -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+    opacity: 0.85 !important;
+    color: #ffffff !important;
 }
