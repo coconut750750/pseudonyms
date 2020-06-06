@@ -35,6 +35,7 @@ class Game extends GameInterface {
     this.wordlist = undefined;
     this.board = undefined;
     this.turn = undefined;
+    this.guessesLeft = 0;
     this.timer = undefined;
     this.winner = undefined;
     this.clues.clear();
@@ -209,6 +210,7 @@ class Game extends GameInterface {
       throw new Error("Invalid Clue");
     }
     this.clues.add(word, count, this.turn);
+    this.guessesLeft = count + 1;
     this.startGuess();
   }
 
@@ -231,6 +233,7 @@ class Game extends GameInterface {
 
     this.board.reveal(r, c);
     this.keycard.reveal(r, c);
+    this.guessesLeft -= 1;
     this.notifyScore();
 
     if (this.keycard.isBlack(r, c)) {
@@ -249,6 +252,8 @@ class Game extends GameInterface {
     } else if (this.keycard.isRed(r, c) && this.turn !== RED) {
       this.endTurn();
     } else if (this.keycard.isBlue(r, c) && this.turn !== BLUE) {
+      this.endTurn();
+    } else if (this.guessesLeft == 0) {
       this.endTurn();
     }
   }
@@ -321,6 +326,10 @@ class Game extends GameInterface {
     this.broadcast('reveal', { reveal: [{ r, c, color }] });
   }
 
+  notifyGuessesLeft() {
+    this.broadcast('guesses', { guesses: this.guessesLeft });
+  }
+
   notifyWinner() {
     this.broadcast('winner', { winner: this.winner });
   }
@@ -330,14 +339,14 @@ class Game extends GameInterface {
   }
 
   // send data for disconnected users
-  connectSendBoard(player) {
+  reconnectSendBoard(player) {
     if (this.board !== undefined) {
       player.send('board', this.board.json());
       player.send('reveal', { reveal: this.getRevealsData() });
     }
   }
 
-  connectSendKey(player) {
+  reconnectSendKey(player) {
     if (this.keycard === undefined) {
       return;
     }
@@ -346,25 +355,31 @@ class Game extends GameInterface {
     }
   }
 
-  connectSendTurn(player) {
+  reconnectSendTurn(player) {
     if (this.turn !== undefined) {
       player.send('turn', { turn: this.turn });
     }
   }
 
-  connectSendClue(player) {
+  reconnectSendClue(player) {
     if (this.clues.currentExists()) {
       player.send('clue', this.clues.getCurrent().json());
     }
   }
 
-  connectSendScore(player) {
+  reconnectSnedGuessesLeft(player) {
+    if (this.clues.currentExists()) {
+      player.send('guesses', { guesses: this.guessesLeft });
+    }
+  }
+
+  reconnectSendScore(player) {
     if (this.keycard !== undefined && (this.phase === PHASES[3] || this.phase === PHASES[4])) {
       player.send('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
     }
   }
 
-  connectSendWinner(player) {
+  reconnectSendWinner(player) {
     if (this.phase === 'result' && this.winner !== undefined) {
       player.send('winner', { winner: this.winner });
     }
