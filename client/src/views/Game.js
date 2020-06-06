@@ -39,10 +39,10 @@ function Game(props) {
 
   const debounceDisappear = () => setMessage("");
   const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
-  const setDisappearingMessage = (string, cssClass) => {
+  const setDisappearingMessage = useCallback((string, cssClass) => {
     setMessage({ string, class: cssClass });
     disappearCallback();
-  };
+  }, [disappearCallback]);
 
   // on mount
   useEffect(() => {
@@ -114,7 +114,7 @@ function Game(props) {
 
     props.socket.emit('getReconnect', {});
 
-  }, [props.gameCode, props.name, props.socket, disappearCallback]);
+  }, [props.gameCode, props.name, props.socket, setDisappearingMessage]);
 
   useEffect(() => {
     props.socket.off('reveal');
