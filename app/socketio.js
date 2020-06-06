@@ -47,9 +47,12 @@ function socketio(socket, game, name, player) {
 
   socket.on('sendClue', data => {
     const { word, count } = data;
+    if (Number.isNaN(parseInt(count))) {
+      return;
+    }
     if (game.canSendClue(player)) {
       try {
-        game.addClue(word, count);
+        game.addClue(word, parseInt(count));
       } catch (err) {
         socket.emit('message', { message: err.message });
       }
@@ -88,7 +91,7 @@ function socketio(socket, game, name, player) {
     game.reconnectSendKey(player);
     game.reconnectSendTurn(player);
     game.reconnectSendClue(player);
-    game.reconnectSnedGuessesLeft(player);
+    game.reconnectSendGuessesLeft(player);
     game.reconnectSendScore(player);
     game.reconnectSendWinner(player);
     socket.emit('phase', { phase: game.phase });

@@ -33,6 +33,7 @@ function Game(props) {
   const [key, setKey] = useState(undefined);
   const [turn, setTurn] = useState("");
   const [clue, setClue] = useState(undefined);
+  const [guessesLeft, setGuessesLeft] = useState(undefined);
   const [score, setScore] = useState({red: 0, blue:0});
   const [winner, setWinner] = useState("");
 
@@ -85,11 +86,17 @@ function Game(props) {
       const { turn } = data;
       setTurn(turn);
       setClue(undefined);
+      setGuessesLeft(undefined);
     });
 
     props.socket.on('clue', data => {
       const { word, count } = data;
       setClue({ word, count });
+    });
+
+    props.socket.on('guesses', data => {
+      const { guesses } = data;
+      setGuessesLeft(guesses);
     });
 
     props.socket.on('score', data => {
@@ -134,7 +141,8 @@ function Game(props) {
               reveals={reveals}
               keycard={key}
               turn={turn}
-              clue={clue}/>,
+              clue={clue}
+              guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
               socket={props.socket}
               players={players}

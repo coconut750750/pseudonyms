@@ -211,6 +211,7 @@ class Game extends GameInterface {
     }
     this.clues.add(word, count, this.turn);
     this.guessesLeft = count + 1;
+    this.notifyGuessesLeft();
     this.startGuess();
   }
 
@@ -235,6 +236,7 @@ class Game extends GameInterface {
     this.keycard.reveal(r, c);
     this.guessesLeft -= 1;
     this.notifyScore();
+    this.notifyGuessesLeft();
 
     if (this.keycard.isBlack(r, c)) {
       this.endGame(this.turn === RED ? BLUE : RED);
@@ -367,7 +369,7 @@ class Game extends GameInterface {
     }
   }
 
-  reconnectSnedGuessesLeft(player) {
+  reconnectSendGuessesLeft(player) {
     if (this.clues.currentExists()) {
       player.send('guesses', { guesses: this.guessesLeft });
     }
