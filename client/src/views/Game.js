@@ -102,14 +102,7 @@ function Game(props) {
       setWinner(winner);
     });
 
-    // get data if disconnected
-    props.socket.emit('getBoard', {});
-    props.socket.emit('getKey', {});
-    props.socket.emit('getTurn', {});
-    props.socket.emit('getClue', {});
-    props.socket.emit('getScore', {});
-    props.socket.emit('getWinner', {});
-    props.socket.emit('getPhase', {});
+    props.socket.emit('getReconnect', {});
 
   }, [props.gameCode, props.name, props.socket, disappearCallback]);
 

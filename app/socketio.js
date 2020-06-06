@@ -83,32 +83,14 @@ function socketio(socket, game, name, player) {
   });
 
   // retrieving info for reconnected clients
-  socket.on('getPhase', data => {
-    socket.emit('phase', { phase: game.phase });
-  });
-
-  socket.on('getBoard', data => {
+  socket.on('getReconnect', data => {
     game.connectSendBoard(player);
-  });
-
-  socket.on('getKey', data => {
     game.connectSendKey(player);
-  });
-
-  socket.on('getTurn', data => {
     game.connectSendTurn(player);
-  });
-
-  socket.on('getClue', data => {
     game.connectSendClue(player);
-  });
-
-  socket.on('getScore', data => {
     game.connectSendScore(player);
-  });
-
-  socket.on('getWinner', data => {
     game.connectSendWinner(player);
+    socket.emit('phase', { phase: game.phase });
   });
 }
 
