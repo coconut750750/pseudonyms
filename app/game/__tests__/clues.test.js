@@ -1,12 +1,22 @@
 const PseudoGame = require('../game');
 const PlayerList = require('../playerlist');
+const WordList = require('../wordlist');
+const Board = require('../board');
+const GameOptions = require('../gameoptions');
 
 jest.mock('../player');
 const Player = require('../player');
 
 describe('clues test', () => {
+  const wordlist = new WordList('classic');
+  const board = new Board(wordlist, () => {});
+  const gameOptions = new GameOptions({});
+
   it('adding a clue adds to list', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {});
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addClue("clue", 1);
     game.addClue("clue", 2);
     game.addClue("clue", 3);
@@ -16,7 +26,13 @@ describe('clues test', () => {
 
   it('adding a clue broadcasts it to everyone', () => {
     let totalBroadcasts = 0;
-    let game = new PseudoGame("code", () => {}, () => {}, (event, data) => totalBroadcasts += 1 );
+    let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {
+      if (event === 'clue') {
+        totalBroadcasts += 1;
+      }
+    });
+    game.board = board;
+    game.gameoptions = gameOptions;
     totalBroadcasts = 0;
 
     game.addClue("clue", 1);
@@ -28,6 +44,9 @@ describe('clues test', () => {
 
   it('reconnecting user gets existing current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addPlayer("p1", undefined);
     game.addClue("clue", 1);
 
@@ -35,26 +54,32 @@ describe('clues test', () => {
     let sendEvent = "";
     p1.send.mockImplementation( (event, data) => sendEvent = event );
 
-    game.connectSendClue(p1);
+    game.reconnectSendClue(p1);
 
     expect(sendEvent).toBe("clue");
   });
 
   it('reconnecting user gets gets nothing with no current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addPlayer("p1", undefined);
     const p1 = game.plist.get("p1");
 
     let sendEvent = undefined;
     p1.send.mockImplementation( (event, data) => sendEvent = event );
 
-    game.connectSendClue(p1);
+    game.reconnectSendClue(p1);
 
     expect(sendEvent).toBe(undefined);
   });
 
   it('allow end turn with current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addPlayer("p1", undefined);
     const p1 = game.plist.get("p1");
 
@@ -67,6 +92,9 @@ describe('clues test', () => {
 
   it('disallow end turn with no current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addPlayer("p1", undefined);
     const p1 = game.plist.get("p1");
 
@@ -77,6 +105,9 @@ describe('clues test', () => {
 
   it('end turn clears current clue', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addClue("clue", 1);
 
     expect(game.clues.currentExists()).toBeTruthy();
@@ -88,6 +119,9 @@ describe('clues test', () => {
 
   it('resetting game clears clues', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {} );
+    game.board = board;
+    game.gameoptions = gameOptions;
+
     game.addClue("clue", 1);
     game.addClue("clue", 2);
 
