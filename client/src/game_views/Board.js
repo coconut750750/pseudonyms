@@ -13,16 +13,16 @@ function BoardView(props) {
   };
 
   const renderClueAndButton = (team) => {
-    if (clueActive() && props.turn === team) {
-      return (
-        <div>
+    return (
+      <div>
+        {(clueActive() && props.turn === team) &&
           <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
+        }
+        {(props.guessesLeft && props.turn === team) &&
           <h6>{`${props.guessesLeft} guesses left`}</h6>
-        </div>
-      );
-    } else {
-      return <div/>
-    }
+        }
+      </div>
+    );
   };
 
   return (

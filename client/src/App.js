@@ -80,7 +80,7 @@ function App() {
     if (viewState === HOME) {
       const url = new URL(window.location.href);
       const possibleGameCode = url.pathname.slice(1);
-      if (possibleGameCode.length != 0) {
+      if (possibleGameCode.length !== 0) {
         checkCode(possibleGameCode).then(resp => {
           if (resp.valid) {
             setUrlGameCode(possibleGameCode);
