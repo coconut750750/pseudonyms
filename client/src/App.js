@@ -30,6 +30,10 @@ function App() {
 
   const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
 
+  window.addEventListener("popstate", e => {
+    window.location.href = '/';
+  });
+
   const setGame = (gameCode, name) => {
     let socket = io(socketiohost);
     socket.on('end', data => {

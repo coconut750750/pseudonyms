@@ -1,7 +1,8 @@
 import React from 'react';
 
 const style = {
-    boxShadow: "0px 0px 5px 0px #21252999",
+    boxShadow: "0px 0px 8px 0px #21252999",
+    cursor: "pointer",
 }
 
 function GameCodeBadge(props) {
@@ -17,7 +18,7 @@ function GameCodeBadge(props) {
 
   return (
     <h6>
-    Game code: <span onClick={() => copyLink()} id="gamecode" className="badge badge-secondary badge-light" style={style}>{props.gameCode}</span>
+    Game code: <span onClick={() => copyLink()} className="badge badge-secondary badge-light" style={style}>{props.gameCode}</span>
     </h6>
   );
 }
