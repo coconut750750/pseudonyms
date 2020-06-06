@@ -236,7 +236,6 @@ class Game extends GameInterface {
     this.keycard.reveal(r, c);
     this.guessesLeft -= 1;
     this.notifyScore();
-    this.notifyGuessesLeft();
 
     if (this.keycard.isBlack(r, c)) {
       this.endGame(this.turn === RED ? BLUE : RED);
@@ -257,6 +256,8 @@ class Game extends GameInterface {
       this.endTurn();
     } else if (this.guessesLeft == 0) {
       this.endTurn();
+    } else {
+      this.notifyGuessesLeft();
     }
   }
 
