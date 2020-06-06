@@ -12,25 +12,33 @@ function BoardView(props) {
     return props.clue !== undefined;
   };
 
+  const renderClueAndButton = (team) => {
+    if (clueActive() && props.turn === team) {
+      return (
+        <div>
+          <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
+          <h6>{`${props.guessesLeft} guesses left`}</h6>
+        </div>
+      );
+    } else {
+      return <div/>
+    }
+  };
+
   return (
     <div>
       <div className="row">
         <div className="col-4">
-          {(clueActive() && props.turn === "red") &&
-            <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
-          }
+          {renderClueAndButton("red")}
         </div>
         <div className="col-4">
           <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>
-          {clueActive() && <h6>{`${props.guessesLeft} guesses left`}</h6>}
           <button type="button" className="btn btn-light btn-sm"
             disabled={!clueActive() || !myTurn()}
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
         </div>
         <div className="col-4">
-          {(clueActive() && props.turn === "blue") &&
-            <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
-          }
+          {renderClueAndButton("blue")}
         </div>
       </div>
       <br/>
