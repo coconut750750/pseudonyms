@@ -131,6 +131,7 @@ function Lobby(props) {
   return (
     <div>
       <h5>Lobby</h5>
+      <h6>Click on the game code for a shareable link!</h6>
       <h6>Waiting for players...</h6>
       <br/>
 

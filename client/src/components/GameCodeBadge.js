@@ -5,8 +5,20 @@ const style = {
 }
 
 function GameCodeBadge(props) {
+  const copyLink = () => {
+    const el = document.createElement('textarea');
+    el.value = window.location.href;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    props.copySuccess();
+  };
+
   return (
-    <h6>Game code: <span className="badge badge-secondary badge-light" style={style}>{props.gameCode}</span></h6>
+    <h6>
+    Game code: <span onClick={() => copyLink()} id="gamecode" className="badge badge-secondary badge-light" style={style}>{props.gameCode}</span>
+    </h6>
   );
 }
 

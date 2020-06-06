@@ -39,6 +39,10 @@ function Game(props) {
 
   const debounceDisappear = () => setMessage("");
   const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
+  const setDisappearingMessage = (string, cssClass) => {
+    setMessage({ string, class: cssClass });
+    disappearCallback();
+  };
 
   // on mount
   useEffect(() => {
@@ -78,8 +82,7 @@ function Game(props) {
     });
 
     props.socket.on('message', data => {
-      setMessage(data.message);
-      disappearCallback();
+      setDisappearingMessage(data.message, 'alert-danger');
     });
 
     props.socket.on('turn', data => {
@@ -154,7 +157,9 @@ function Game(props) {
 
   return (
     <div>
-      <GameCodeBadge gameCode={props.gameCode}/>
+      <GameCodeBadge 
+        gameCode={props.gameCode}
+        copySuccess={() => setDisappearingMessage('Successfully copied shareable link!', 'alert-success')}/>
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
@@ -173,8 +178,8 @@ function Game(props) {
       }
 
       <br/>
-      {message && <div className="alert alert-danger" role="alert">
-        {message}
+      {message && <div className={`alert ${message.class}`} role="alert">
+        {message.string}
       </div>}
     </div>
   );
