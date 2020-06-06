@@ -8,7 +8,8 @@ function Home(props) {
       <div className="d-flex justify-content-center">
         <div className="alert alert-success updates" role="alert">
           <p>New features!</p>
-          <p>Added a time limit. Try a speed round, where each turn lasts for 30 seconds!</p>
+          <p>The game will display the number of clues a team has left. The maximum number of guesses per turn is the count given by the Key plus 1.</p>
+          <p>Tired of copying and pasting the game code? Now you can simply click on a link to join a game!</p>
         </div>
       </div>
 

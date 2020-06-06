@@ -12,6 +12,8 @@ import Walkthrough from './views/Walkthrough';
 
 import Footer from './components/Footer';
 
+import { checkCode } from './api/register';
+
 const HOME = "home";
 const HOWTO = "howto";
 const WALKTHROUGH = "walkthrough";
@@ -24,6 +26,7 @@ function App() {
   const [gameCode, setGameCode] = useState("");
   const [name, setName] = useState("");
   const [socket, setSocket] = useState(undefined);
+  const [urlGameCode, setUrlGameCode] = useState(undefined);
 
   const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
 
@@ -40,6 +43,7 @@ function App() {
     setGameCode(gameCode);
     setName(name);
     setViewState(GAME);
+    window.history.pushState({}, 'Game', `/${gameCode}`);
   };
 
   const exitGame = (socket) => {
@@ -48,9 +52,15 @@ function App() {
   };
 
   const reset = () => {
-    setViewState(HOME);
+    goHome();
     setGameCode("");
     setName("");
+  };
+
+  const goHome = () => {
+    window.history.pushState({}, 'Home', '/');
+    setUrlGameCode(undefined);
+    setViewState(HOME);
   };
 
   const closeSocket = (socket) => {
@@ -63,6 +73,20 @@ function App() {
     if (viewState === HOME && socket !== undefined) {
       closeSocket(socket);
     }
+    if (viewState === HOME) {
+      const url = new URL(window.location.href);
+      const possibleGameCode = url.pathname.slice(1);
+      if (possibleGameCode.length != 0) {
+        checkCode(possibleGameCode).then(resp => {
+          if (resp.valid) {
+            setUrlGameCode(possibleGameCode);
+            setViewState(JOIN);
+          } else {
+            reset();
+          }
+        });
+      } 
+    }
   }, [viewState, socket]);
 
   const views = {
@@ -72,14 +96,15 @@ function App() {
                       viewHowTo={ () => setViewState(HOWTO) }
                       viewWalkthrough={ () => setViewState(WALKTHROUGH) }/>,
     [WALKTHROUGH]:  <Walkthrough
-                      goBack={ () => setViewState(HOME) }/>,
+                      goBack={ () => goHome() }/>,
     [HOWTO]:        <HowTo
-                      goBack={ () => setViewState(HOME) }/>,
+                      goBack={ () => goHome() }/>,
     [CREATE]:       <Create
-                      goBack={ () => setViewState(HOME) }
+                      goBack={ () => goHome() }
                       setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
     [JOIN]:         <Join
-                      goBack={ () => setViewState(HOME) }
+                      urlGameCode={urlGameCode}
+                      goBack={ () => goHome() }
                       join={ (gameCode, name) => setGame(gameCode, name) }/>,
     [GAME]:         <Game
                       socket={socket}
