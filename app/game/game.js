@@ -210,7 +210,7 @@ class Game extends GameInterface {
       throw new Error("Invalid Clue");
     }
     this.clues.add(word, count, this.turn);
-    this.guessesLeft = count + 1;
+    this.guessesLeft = parseInt(count) + 1;
     this.notifyGuessesLeft();
     this.startGuess();
   }
@@ -330,7 +330,9 @@ class Game extends GameInterface {
   }
 
   notifyGuessesLeft() {
-    this.broadcast('guesses', { guesses: this.guessesLeft });
+    if (!Number.isNaN(this.guessesLeft)) {
+      this.broadcast('guesses', { guesses: this.guessesLeft });
+    }
   }
 
   notifyWinner() {
