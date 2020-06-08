@@ -124,6 +124,9 @@ function addMatureGame(collection, matureStats) {
 }
 
 function saveGame(collection, numPlayers, wordlist, matureStats) {
+  if (wordlist === undefined) {
+    wordlist = "custom";
+  }
   incrementGameCount(collection);
   incrementWordlistCount(collection, wordlist);
   updateNumPlayerCount(collection, numPlayers);
