@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 var bodyParser = require('body-parser');
 
+require('dotenv').config();
 var app = express();
 
 var server = require('http').Server(app);
