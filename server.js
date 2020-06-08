@@ -19,7 +19,6 @@ const gameRouter = require("./app/routes")
 
 const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
-console.log(process.env.NODE_ENV);
 
 app.use(bodyParser.json());
 app.io = io;
