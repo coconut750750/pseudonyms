@@ -7,16 +7,20 @@ class Clues {
     this.clear();
   }
 
+  clear() {
+    this.clues = [];
+    this.currentClue = undefined;
+  }
+
+  length() {
+    return this.clues.length;
+  }
+
   add(word, count, team) {
     const clue = new Clue(word, count, team);
     this.clues.push(clue);
     this.notifyClue(clue);
     this.currentClue = clue;
-  }
-
-  clear() {
-    this.clues = [];
-    this.currentClue = undefined;
   }
 
   getCurrent() {

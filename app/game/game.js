@@ -5,6 +5,7 @@ const PlayerList = require("./playerlist");
 const Clues = require("./clues");
 const WordList = require("./wordlist");
 const GameOptions = require("./gameoptions");
+const { saveGame, getStats, GameStats } = require("./analytics");
 
 const { RED, BLUE, MIN_PLAYERS } = require("./const");
 
@@ -13,6 +14,9 @@ const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast);
+    this.dbCollection = options.dbCollection;
+    console.log(getStats(this.dbCollection));
+
     this.plist = new PlayerList(
       () => this.notifyPlayerUpdate(),
       () => this.delete(),
@@ -39,6 +43,7 @@ class Game extends GameInterface {
     this.timer = undefined;
     this.winner = undefined;
     this.clues.clear();
+    this.gameStats = new GameStats();
 
     this.notifyPhaseChange();
 
@@ -147,6 +152,7 @@ class Game extends GameInterface {
     this.keycard = new KeyCard();
     this.turn = this.keycard.start;
     this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
+    this.gameStats.startGame(this.turn);
 
     this.notifyKeyChange();
     this.notifyBoardChange();
@@ -238,13 +244,13 @@ class Game extends GameInterface {
     this.notifyScore();
 
     if (this.keycard.isBlack(r, c)) {
-      this.endGame(this.turn === RED ? BLUE : RED);
+      this.endGame(this.turn === RED ? BLUE : RED, false);
       return;
     }
 
     const winner = this.keycard.checkWin();
     if (winner !== undefined) {
-      this.endGame(winner);
+      this.endGame(winner, true);
       return;
     }
 
@@ -275,15 +281,21 @@ class Game extends GameInterface {
     this.turn = this.turn === RED ? BLUE : RED;
     this.notifyTurnChange();
     this.startClue();
+
+    this.gameStats.addTurn(this.keycard.redLeft, this.keycard.blueLeft);
   }
 
-  endGame(winner) {
+  endGame(winner, matured) {
     this.stopTimer();
     this.winner = winner;
     this.phase = PHASES[4];
     this.notifyWinner();
     this.notifyFinalReveal();
     this.notifyPhaseChange();
+
+    this.gameStats.addTurn(this.keycard.redLeft, this.keycard.blueLeft);
+    this.gameStats.endGame(matured, this.winner);
+    saveGame(this.dbCollection, this.plist.length(), this.gameoptions.wordlist, this.gameStats);
   }
 
   getPlayerData() {
