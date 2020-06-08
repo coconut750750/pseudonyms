@@ -1,5 +1,5 @@
-const TOTAL_STARTS_QUERY = { type: "starts" };
 const TOTAL_COUNT_QUERY = { type: "total" };
+const TOTAL_STARTS_QUERY = { type: "starts" };
 const WORDLIST_COUNT_QUERY = { type: "wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "players" };
 const MATURE_QUERY = { type: "mature" };
@@ -134,11 +134,12 @@ function saveGame(collection, numPlayers, wordlist, matureStats) {
 
 async function getStats(collection) {
   const totalCountDoc = await collection.findOne(TOTAL_COUNT_QUERY);
+  const gameStartsDoc = await collection.findOne(TOTAL_STARTS_QUERY);
   const wordlistDoc = await collection.findOne(WORDLIST_COUNT_QUERY);
   const playerCountDoc = await collection.findOne(PLAYERS_COUNT_QUERY);
   const matureGamesDoc = await collection.findOne(MATURE_QUERY);
 
-  if (totalCountDoc === null || wordlistDoc === null || playerCountDoc === null || matureGamesDoc === null) {
+  if (gameStartsDoc || totalCountDoc || wordlistDoc || playerCountDoc || matureGamesDoc) {
     return {};
   }
 
@@ -149,6 +150,7 @@ async function getStats(collection) {
 
   return {
     totalGames: n,
+    gamesStarted: gameStartsDoc.count,
     wordlistDistribution: wordlistDoc,
     averagePlayersPerGame: playerCountDoc.count / n,
     matureGames: {
