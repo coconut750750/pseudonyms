@@ -139,7 +139,7 @@ async function getStats(collection) {
   const playerCountDoc = await collection.findOne(PLAYERS_COUNT_QUERY);
   const matureGamesDoc = await collection.findOne(MATURE_QUERY);
 
-  if (gameStartsDoc || totalCountDoc || wordlistDoc || playerCountDoc || matureGamesDoc) {
+  if (!gameStartsDoc || !totalCountDoc || !wordlistDoc || !playerCountDoc || !matureGamesDoc) {
     return {};
   }
 
