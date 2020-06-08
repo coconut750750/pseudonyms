@@ -124,6 +124,10 @@ async function getStats(collection) {
   const playerCountDoc = await collection.findOne(PLAYERS_COUNT_QUERY);
   const matureGamesDoc = await collection.findOne(MATURE_QUERY);
 
+  if (totalCountDoc === null || wordlistDoc === null || playerCountDoc === null || matureGamesDoc === null) {
+    return {};
+  }
+
   const n = totalCountDoc.count;
   const m = matureGamesDoc.count;
   delete wordlistDoc["_id"];
