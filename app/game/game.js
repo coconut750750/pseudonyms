@@ -15,7 +15,6 @@ class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast);
     this.dbCollection = options.dbCollection;
-    console.log(getStats(this.dbCollection));
 
     this.plist = new PlayerList(
       () => this.notifyPlayerUpdate(),
