@@ -1,3 +1,4 @@
+const TOTAL_STARTS_QUERY = { type: "starts" };
 const TOTAL_COUNT_QUERY = { type: "total" };
 const WORDLIST_COUNT_QUERY = { type: "wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "players" };
@@ -39,6 +40,19 @@ class GameStats {
     this.matured = matured;
     this.firstTeamWin = this.startTeam === winner;
   }
+}
+
+function incrementGameStarts(collection) {
+  collection.findOneAndUpdate(
+    TOTAL_STARTS_QUERY,
+    {
+      $inc: { count: 1 },
+    },
+    {
+      new: true,
+      upsert: true,
+    }
+  );
 }
 
 function incrementGameCount(collection) {
@@ -150,6 +164,7 @@ async function getStats(collection) {
 }
 
 module.exports = {
+  incrementGameStarts,
   saveGame,
   getStats,
   GameStats,

@@ -5,7 +5,7 @@ const PlayerList = require("./playerlist");
 const Clues = require("./clues");
 const WordList = require("./wordlist");
 const GameOptions = require("./gameoptions");
-const { saveGame, getStats, GameStats } = require("./analytics");
+const { incrementGameStarts, saveGame, getStats, GameStats } = require("./analytics");
 
 const { RED, BLUE, MIN_PLAYERS } = require("./const");
 
@@ -118,6 +118,8 @@ class Game extends GameInterface {
     if (!this.enoughPlayers()) {
       throw new Error(`At least ${MIN_PLAYERS} players required to start`);
     }
+    incrementGameStarts(this.dbCollection);
+    
     this.gameoptions = new GameOptions(options);
     this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
 
