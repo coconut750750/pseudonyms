@@ -118,7 +118,6 @@ class Game extends GameInterface {
     if (!this.enoughPlayers()) {
       throw new Error(`At least ${MIN_PLAYERS} players required to start`);
     }
-    incrementGameStarts(this.dbCollection);
     
     this.gameoptions = new GameOptions(options);
     this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
@@ -160,6 +159,7 @@ class Game extends GameInterface {
     this.notifyTurnChange();
     this.notifyScore();
     this.notifyPhaseChange();
+    incrementGameStarts(this.dbCollection);
 
     this.startClue();
   }
