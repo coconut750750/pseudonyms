@@ -8,8 +8,7 @@ function Home(props) {
       <div className="d-flex justify-content-center">
         <div className="alert alert-success updates" role="alert">
           <p>New features!</p>
-          <p>The game will display the number of guesses a team has left. The maximum number of guesses per turn is the count given by the Key plus 1.</p>
-          <p>Tired of copying and pasting the game code? Now you can simply click on the shareable link to join a game!</p>
+          <p>Tired of copying and pasting the game code? Now you can simply click on a shareable link to join a game!</p>
         </div>
       </div>
 

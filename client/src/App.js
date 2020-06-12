@@ -121,6 +121,7 @@ function App() {
     <div className="App">
       <br/>
       <h3>Pseudonyms</h3>
+      <h6>Codenames online</h6>
       <hr/>
 
       {views[viewState]}
