@@ -6,7 +6,6 @@ const games = [
   {name: "Secret Hitler", link: "http://www.secrethitler.party/"},
   {name: "Drawphone", description: "Telephone with pictures", link: "https://drawphone.tannerkrewson.com/"},
   {name: "Netgames", description: "Avalon, Love Letter, One Night Ultimate Werewolf & more", link: "https://netgames.io/games/"},
-  {name: "Poker", link: "https://playcards.live/"},
 ];
 
 export default function MoreGames(props) {
