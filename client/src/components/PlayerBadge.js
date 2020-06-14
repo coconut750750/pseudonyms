@@ -22,7 +22,7 @@ function PlayerBadge(props) {
   return (
     <div className={`badge m-2 ${getBadgeClass()} ${getRoleClass()}`}>
       {props.player.isKey() &&
-        <img className="key-icon" src={"/icon.svg"}/>
+        <img className="key-icon" src="/icon.svg" alt=""/>
       }
       
       { props.player.name }
