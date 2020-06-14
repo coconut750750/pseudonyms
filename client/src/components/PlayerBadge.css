@@ -1,5 +1,14 @@
 .badge.key {
-    box-shadow: 0px 0px 4px 4px black;
+}
+
+.badge img.key-icon {
+    height: 9px;
+    margin-right: 4px;
+    filter: invert(1);
+}
+
+.badge.badge-light img.key-icon {
+    filter: invert(0);
 }
 
 .badge.player {
