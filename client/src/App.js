@@ -9,6 +9,7 @@ import Create from './views/Create';
 import Join from './views/Join';
 import Game from './views/Game';
 import Walkthrough from './views/Walkthrough';
+import MoreGames from './views/MoreGames';
 
 import Footer from './components/Footer';
 
@@ -17,6 +18,7 @@ import { checkCode } from './api/register';
 const HOME = "home";
 const HOWTO = "howto";
 const WALKTHROUGH = "walkthrough";
+const MORE = "more";
 const CREATE = "create";
 const JOIN = "join";
 const GAME = "game";
@@ -98,10 +100,13 @@ function App() {
                       createGame={ () => setViewState(CREATE) } 
                       joinGame={ () => setViewState(JOIN) }
                       viewHowTo={ () => setViewState(HOWTO) }
-                      viewWalkthrough={ () => setViewState(WALKTHROUGH) }/>,
+                      viewWalkthrough={ () => setViewState(WALKTHROUGH) }
+                      viewMoreGames={ () => setViewState(MORE) }/>,
     [WALKTHROUGH]:  <Walkthrough
                       goBack={ () => goHome() }/>,
     [HOWTO]:        <HowTo
+                      goBack={ () => goHome() }/>,
+    [MORE]:         <MoreGames
                       goBack={ () => goHome() }/>,
     [CREATE]:       <Create
                       goBack={ () => goHome() }

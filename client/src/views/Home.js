@@ -20,6 +20,7 @@ function Home(props) {
       <div class="btn-group-vertical">
         <button type="button" className="btn btn-light" onClick={props.viewHowTo}>How to Play</button>
         <button type="button" className="btn btn-light" onClick={props.viewWalkthrough}>Walkthrough</button>
+        <button type="button" className="btn btn-light" onClick={props.viewMoreGames}>More Games</button>
       </div>
 
       <br/>
