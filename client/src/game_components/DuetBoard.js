@@ -15,7 +15,9 @@ function DuetBoard(props) {
     let glow = undefined;
     if (props.keycard !== undefined) {
       color = props.keycard.get(r, c)[props.team];
-      glow = props.keycard.get(r, c)[props.otherTeam];
+      if (props.otherTeam !== undefined) {
+        glow = props.keycard.get(r, c)[props.otherTeam];
+      }
     }
 
     return (

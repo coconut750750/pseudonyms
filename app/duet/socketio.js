@@ -1,4 +1,10 @@
 function socketio(socket, game, name, player) {
+  socket.on('revealWord', data => {
+    if (game.canSuddenDeathReveal()) {
+      const { r, c } = data;
+      game.suddenDeathReveal(player, r, c);
+    }
+  });
 
   // retrieving info for reconnected clients
   socket.on('getReconnect', data => {

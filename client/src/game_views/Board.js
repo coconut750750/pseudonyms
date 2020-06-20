@@ -58,6 +58,8 @@ function BoardView(props) {
     } else if (props.typeChecks.duet()) {
       if (firstTurn()) {
         return <h6>First clue</h6>;
+      } else if (suddenDeath()) {
+        return <h6>Sudden Death</h6>;
       }
       const teamName = props.turn.replace(/^\w/, c => c.toUpperCase());
       const otherTeamName = otherTeam(props.turn).replace(/^\w/, c => c.toUpperCase());
@@ -98,9 +100,8 @@ function BoardView(props) {
           reveals={props.reveals}
           keycard={props.keycard}
           team={props.me.team}
-          otherTeam={otherTeam(props.me.team)}
           isKey={true}
-          canReveal={!myTurn() && clueActive()}/>
+          canReveal={(!myTurn() && clueActive()) || suddenDeath()}/>
       );
     }
     return <div/>

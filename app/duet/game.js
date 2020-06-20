@@ -193,12 +193,38 @@ class DuetGame extends GameInterface {
     this.timersLeft -= 1;
     this.notifyScore();
 
-    this.turn = this.turn === RED ? BLUE : RED;
-    if (this.keycard.teamFinished(this.turn)) {
+    if (this.timersLeft === 0) {
+      this.turn = SUDDEN_DEATH;
+    } else {
       this.turn = this.turn === RED ? BLUE : RED;
+      if (this.keycard.teamFinished(this.turn)) {
+        this.turn = this.turn === RED ? BLUE : RED;
+      }
+      this.startClue();
     }
     this.notifyTurnChange();
-    this.startClue();
+  }
+
+  canSuddenDeathReveal() {
+    return this.turn === SUDDEN_DEATH;
+  }
+
+  suddenDeathReveal(player, r, c) {
+    const otherTeam = player.team === RED ? BLUE : RED;
+    if (this.board.isRevealed(r, c, otherTeam)) {
+      return;
+    }
+
+    const isGreen = this.keycard.isGreen(r, c, otherTeam);
+    this.board.reveal(r, c, otherTeam, isGreen);
+    this.keycard.reveal(r, c, otherTeam);
+    this.notifyScore();
+
+    if (!isGreen) {
+      this.endGame(false);
+    } else if (this.keycard.checkWin()) {
+      this.endGame(true);
+    }
   }
 
   endGame(win) {
