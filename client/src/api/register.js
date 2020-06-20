@@ -1,7 +1,7 @@
 import { callApi } from './api';
 
-export async function createGame(options) {
-  return callApi('/register/create', {
+export async function createClassicGame(options) {
+  return callApi('/register/classic/create', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',

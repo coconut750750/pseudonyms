@@ -4,10 +4,10 @@ const router = express.Router();
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 12;
 
-router.post('/create', (req, res) => {
+router.post('/classic/create', (req, res) => {
   let options = req.body;
   options.dbCollection = req.dbCollection;
-  const game = req.gm.createGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
+  const game = req.gm.createClassicGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
     gameCode: `${game.code}`

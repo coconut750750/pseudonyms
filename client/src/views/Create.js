@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import debounce from "lodash/debounce";
 
-import { checkName, createGame } from '../api/register';
+import { checkName, createClassicGame } from '../api/register';
 
 function Create(props) {
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ function Create(props) {
         return;
       }
 
-      createGame({}).then(res => {
+      createClassicGame({}).then(res => {
         props.setGame(res.gameCode, name);
       });
     });
