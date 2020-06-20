@@ -7,7 +7,7 @@ const Clues = require("../common/clues");
 const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 
-const { RED, BLUE, MIN_PLAYERS } = require("../common/const").duet;
+const { RED, BLUE, MIN_PLAYERS, FIRST_TURN, SUDDEN_DEATH } = require("../common/const").duet;
 
 const LOBBY = 'lobby';
 const TEAMS = 'teams';
@@ -108,11 +108,13 @@ class DuetGame extends GameInterface {
   startBoard() {
     this.phase = BOARD;
 
+    this.turn = FIRST_TURN;
     this.keycard = new KeyCard();
     this.board = new Board(this.wordlist, (r, c, team) => this.notifyReveal(r, c, team));
 
     this.notifyKeyChange();
     this.notifyBoardChange();
+    this.notifyTurnChange();
     this.notifyScore();
     this.notifyPhaseChange();
 
@@ -137,7 +139,7 @@ class DuetGame extends GameInterface {
     if (this.phase !== BOARD) {
       return false;
     }
-    return this.turn === undefined || player.isOnTeam(this.turn);
+    return this.turn === FIRST_TURN || player.isOnTeam(this.turn);
   }
 
   validClue(word) {
@@ -151,7 +153,7 @@ class DuetGame extends GameInterface {
     if (!this.validClue(word)) {
       throw new Error("Invalid Clue");
     }
-    if (this.turn === undefined) {
+    if (this.turn === FIRST_TURN) {
       this.turn = player.team;
       this.notifyTurnChange();
     }

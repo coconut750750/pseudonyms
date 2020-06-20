@@ -15,8 +15,12 @@ function BoardView(props) {
     return props.me.team === props.turn;
   };
 
-  const emptyTurn = () => {
-    return props.turn === "";
+  const firstTurn = () => {
+    return props.turn === "ft";
+  };
+
+  const suddenDeath = () => {
+    return props.turn === "sd";
   };
 
   const clueActive = () => {
@@ -43,7 +47,7 @@ function BoardView(props) {
     if (props.typeChecks.classic()) {
       return myTurn() && props.me.isKey() && !clueActive();
     } else if (props.typeChecks.duet()) {
-      return (myTurn() || emptyTurn()) && !clueActive();
+      return (myTurn() || firstTurn()) && !clueActive();
     }
     return false;
   };
@@ -52,7 +56,7 @@ function BoardView(props) {
     if (props.typeChecks.classic()) {
       return <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>;
     } else if (props.typeChecks.duet()) {
-      if (emptyTurn()) {
+      if (firstTurn()) {
         return <h6>First clue</h6>;
       }
       const teamName = props.turn.replace(/^\w/, c => c.toUpperCase());

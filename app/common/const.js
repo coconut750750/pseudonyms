@@ -23,6 +23,8 @@ const duet = {
   NO_TEAM: "",
   RED: "red",
   BLUE: "blue",
+  FIRST_TURN: "ft",
+  SUDDEN_DEATH: "sd",
 
   GREEN_TILE: 'g',
   WHITE_TILE: 'y',
