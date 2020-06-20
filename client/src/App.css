@@ -4,6 +4,12 @@
     margin: 0 auto;
 }
 
+@media only screen and (max-width: 700px) {
+  .App {
+    width: 90vw;
+  }
+}
+
 p {
     font-size: 12px;
 }
@@ -21,6 +27,16 @@ p {
 /* home */
 #home .updates {
     width: 60%;
+}
+
+@media only screen and (max-width: 700px) {
+  #home .updates {
+    width: 100%;
+  }
+
+  .button-row {
+    width: 100%;
+  }
 }
 
 /* walkthrough */

@@ -42,6 +42,12 @@
     word-wrap: break-word;
 }
 
+@media only screen and (max-width: 700px) {
+  .tile h6 {
+    font-size: 2vw;
+  }
+}
+
 .tile.revealed h6 {
     color: #ffffff;
 }
