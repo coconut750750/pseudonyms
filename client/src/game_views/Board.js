@@ -55,6 +55,15 @@ function BoardView(props) {
     return false;
   };
 
+  const canEndTurn = () => {
+    if (props.typeChecks.classic()) {
+      return clueActive() && myTurn();
+    } else if (props.typeChecks.duet()) {
+      return clueActive() && !myTurn();
+    }
+    return false;
+  };
+
   return (
     <div>
       <div className="row">
@@ -64,7 +73,7 @@ function BoardView(props) {
         <div className="col-4">
           <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>
           <button type="button" className="btn btn-light btn-sm"
-            disabled={!clueActive() || !myTurn()}
+            disabled={!canEndTurn()}
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
         </div>
         <div className="col-4">
