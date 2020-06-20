@@ -4,16 +4,26 @@ import ClueInput from '../game_components/ClueInput';
 import ClassicBoard from '../game_components/ClassicBoard';
 import DuetBoard from '../game_components/DuetBoard';
 
+const RED = "red";
+const BLUE = "blue";
+const otherTeam = (team) => {
+  return team === RED ? BLUE : RED;
+}
+
 function BoardView(props) {
   const myTurn = () => {
     return props.me.team === props.turn;
+  };
+
+  const emptyTurn = () => {
+    return props.turn === "";
   };
 
   const clueActive = () => {
     return props.clue !== undefined;
   };
 
-  const renderClueAndButton = (team) => {
+  const renderClue = (team) => {
     if (props.turn === team) {
       return (
         <div>
@@ -33,9 +43,27 @@ function BoardView(props) {
     if (props.typeChecks.classic()) {
       return myTurn() && props.me.isKey() && !clueActive();
     } else if (props.typeChecks.duet()) {
-      return (myTurn() || props.turn === "") && !clueActive();
+      return (myTurn() || emptyTurn()) && !clueActive();
     }
     return false;
+  };
+
+  const getTurnDescriptor = () => {
+    if (props.typeChecks.classic()) {
+      return <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>;
+    } else if (props.typeChecks.duet()) {
+      if (emptyTurn()) {
+        return <h6>First clue</h6>;
+      }
+      const teamName = props.turn.replace(/^\w/, c => c.toUpperCase());
+      const otherTeamName = otherTeam(props.turn).replace(/^\w/, c => c.toUpperCase());
+      if (!clueActive()) {
+        return <h6>{`${teamName} giving clue`}</h6>;
+      } else {
+        return <h6>{`${otherTeamName} guessing`}</h6>;
+      }
+    }
+    return <div/>
   };
 
   const canEndTurn = () => {
@@ -78,16 +106,16 @@ function BoardView(props) {
     <div>
       <div className="row">
         <div className="col-4">
-          {renderClueAndButton("red")}
+          {renderClue(RED)}
         </div>
         <div className="col-4">
-          <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>
+          {getTurnDescriptor()}
           <button type="button" className="btn btn-light btn-sm"
             disabled={!canEndTurn()}
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
         </div>
         <div className="col-4">
-          {renderClueAndButton("blue")}
+          {renderClue(BLUE)}
         </div>
       </div>
       <br/>

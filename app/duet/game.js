@@ -205,6 +205,7 @@ class DuetGame extends GameInterface {
     this.startClue();
 
     this.timersLeft -= 1;
+    this.notifyScore();
   }
 
   endGame(win) {
