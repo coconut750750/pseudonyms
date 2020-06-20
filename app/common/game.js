@@ -12,6 +12,10 @@ class Game extends GameInterface {
     this.minPlayers = minPlayers;
   }
 
+  name() {
+    throw new Error('Game.name() implemention required!');
+  }
+
   socketio(socket, game, name, player) {
     socketio(socket, game, name, player);
   }

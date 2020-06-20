@@ -31,6 +31,10 @@ class DuetGame extends GameInterface {
     this.reset();
   }
 
+  name() {
+    return "duet";
+  }
+
   socketio(socket, game, name, player) {
     super.socketio(socket, game, name, player);
     socketio(socket, game, name, player);

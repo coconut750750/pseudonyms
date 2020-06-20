@@ -57,6 +57,7 @@ app.io.on('connect', function (socket) {
       game.addPlayer(name, socket);
     }
     player = game.getPlayer(name);
+    player.send('type', { type: game.name() });
 
     game.socketio(socket, game, name, player);
   });

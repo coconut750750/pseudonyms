@@ -21,9 +21,18 @@ const ROLES = "roles";
 const BOARD = "board";
 const RESULT = "result";
 
+const CLASSIC = "classic";
+const DUET = "duet";
+
 function Game(props) {
   const [message, setMessage] = useState("");
   const [phase, setPhase] = useState(LOBBY);
+
+  const [type, setType] = useState(undefined);
+  const typeChecks = (type) => ({
+    classic: () => (type === CLASSIC),
+    duet: () => (type === DUET),
+  });
 
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);
@@ -59,6 +68,11 @@ function Game(props) {
     // this will result in a 'players' message from server
     props.socket.emit('joinGame', { name: props.name, gameCode: props.gameCode });
 
+    props.socket.on('type', data => {
+      const { type } = data;
+      setType(type);
+    })
+
     props.socket.on('phase', data => {
       setPhase(data.phase);
       if (data.phase === LOBBY) {
@@ -78,6 +92,7 @@ function Game(props) {
     });
 
     props.socket.on('key', data => {
+      console.log(data.keycard);
       setKey(newKey(data.keycard));
     });
 
@@ -137,6 +152,7 @@ function Game(props) {
               players={players}
               me={me}/>,
     [BOARD]: <Board
+              typeChecks={typeChecks(type)}
               socket={props.socket}
               players={players}
               me={me}
@@ -147,6 +163,7 @@ function Game(props) {
               clue={clue}
               guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
+              typeChecks={typeChecks(type)}
               socket={props.socket}
               players={players}
               winner={winner}

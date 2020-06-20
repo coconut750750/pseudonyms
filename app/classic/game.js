@@ -30,6 +30,10 @@ class ClassicGame extends GameInterface {
     this.reset();
   }
 
+  name() {
+    return "classic";
+  }
+
   socketio(socket, game, name, player) {
     super.socketio(socket, game, name, player);
     socketio(socket, game, name, player);

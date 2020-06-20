@@ -52,7 +52,7 @@ function BoardView(props) {
         board={props.board}
         reveals={props.reveals}
         keycard={props.keycard}
-        isKey={props.me.isKey()}
+        isKey={props.me.isKey() || props.typeChecks.duet()}
         tilesActive={myTurn() && clueActive()}/>
       <br/>
 
