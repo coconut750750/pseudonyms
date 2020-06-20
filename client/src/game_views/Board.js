@@ -79,7 +79,6 @@ function BoardView(props) {
     if (props.typeChecks.classic()) {
       return (
         <ClassicBoard
-          players={props.players}
           revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
           board={props.board}
           reveals={props.reveals}
@@ -90,11 +89,12 @@ function BoardView(props) {
     } else if (props.typeChecks.duet()) {
       return (
         <DuetBoard
-          players={props.players}
           revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
           board={props.board}
           reveals={props.reveals}
           keycard={props.keycard}
+          team={props.me.team}
+          otherTeam={otherTeam(props.me.team)}
           isKey={true}
           canReveal={!myTurn() && clueActive()}/>
       );

@@ -75,13 +75,17 @@ class KeyCard {
   }
 
   genJson() {
-    let result = { [RED]: [], [BLUE]: [] };
+    let result = { [RED]: [], [BLUE]: [], merged: [] };
     for (let r = 0; r < BOARD_LEN; r++) {
       result[RED].push([])
       result[BLUE].push([])
+      result.merged.push([])
       for (let c = 0; c < BOARD_LEN; c++) {
-        result[RED][r].push({ color: this.getTile(r, c, RED) });
-        result[BLUE][r].push({ color: this.getTile(r, c, BLUE) });
+        const redColor = this.getTile(r, c, RED);
+        const blueColor = this.getTile(r, c, BLUE);
+        result[RED][r].push({ color: { red: redColor } });
+        result[BLUE][r].push({ color: { blue: blueColor } });
+        result.merged[r].push({ color: { red: redColor, blue: blueColor } });
       }
     }
     return result;
@@ -92,7 +96,7 @@ class KeyCard {
   }
 
   jsonMerged() {
-    return { keycard: this.tiles };
+    return { keycard: this.jsonObj.merged };
   }
 }
 

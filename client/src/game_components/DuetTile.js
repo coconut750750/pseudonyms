@@ -29,9 +29,10 @@ function DuetTile(props) {
 
   const tileClass = () => {
     const color = fillColor === undefined ? props.color : fillColor;
+    const glow = props.glow === undefined ? "" : `glow-${props.glow}`;
     const revealClass = fillColor === undefined ? "hidden" : "revealed";
     const activeClass = props.active ? "active" : "inactive";
-    return `tile ${revealClass} ${color} ${activeClass}`;
+    return `tile ${revealClass} ${color} ${glow} ${activeClass}`;
   };
 
   return (

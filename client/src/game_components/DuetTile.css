@@ -37,3 +37,15 @@
 .tile.hidden.x h6 {
     color: #000000;
 }
+
+.tile.glow-g {
+    border: 2px solid #28a745;
+}
+
+.tile.glow-y {
+    /*border: 2px solid #999;*/
+}
+
+.tile.glow-x {
+    border: 2px solid #000000;
+}

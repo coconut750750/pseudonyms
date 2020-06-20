@@ -12,8 +12,10 @@ function DuetBoard(props) {
   const renderTile = (r, c) => {
     const reveals = getReveals(r, c);
     let color = "";
+    let glow = undefined;
     if (props.keycard !== undefined) {
-      color = props.keycard.get(r, c);
+      color = props.keycard.get(r, c)[props.team];
+      glow = props.keycard.get(r, c)[props.otherTeam];
     }
 
     return (
@@ -21,6 +23,7 @@ function DuetBoard(props) {
         key={`${r}-${c}`}
         word={props.board.get(r, c)}
         color={color}
+        glow={glow}
         reveals={reveals}
         active={props.canReveal}
         reveal={ () => props.revealWord(r, c) }/>

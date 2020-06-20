@@ -172,6 +172,7 @@ class DuetGame extends GameInterface {
       return;
     }
 
+    this.board.reveal(r, c, this.turn, this.keycard.isGreen(r, c, this.turn));
     this.keycard.reveal(r, c, this.turn);
     this.notifyScore();
 
@@ -180,11 +181,8 @@ class DuetGame extends GameInterface {
     } else if (this.keycard.checkWin()) {
       this.endGame(true);
     } else if (this.keycard.isWhite(r, c, this.turn)) {
-      this.board.reveal(r, c, this.turn, false);
       this.mistakesLeft -= 1;
       this.endTurn();
-    } else { // was green
-      this.board.reveal(r, c, this.turn, true);
     }
   }
 
@@ -249,7 +247,7 @@ class DuetGame extends GameInterface {
   }
 
   notifyWin() {
-    this.broadcast('winner', { win: this.win });
+    this.broadcast('winner', { winner: this.win });
   }
 
   notifyFinalReveal() {
@@ -295,7 +293,7 @@ class DuetGame extends GameInterface {
 
   reconnectSendWin(player) {
     if (this.phase === RESULT && this.winner !== undefined) {
-      player.send('winner', { win: this.win });
+      player.send('winner', { winner: this.win });
     }
   }
 }

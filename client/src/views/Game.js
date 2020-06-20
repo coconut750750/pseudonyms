@@ -163,7 +163,7 @@ function Game(props) {
     [RESULT]: <Result
               typeChecks={typeChecks(type)}
               socket={props.socket}
-              players={players}
+              me={me}
               winner={winner}
               board={board}
               reveals={reveals}
