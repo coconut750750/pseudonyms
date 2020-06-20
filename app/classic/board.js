@@ -1,13 +1,10 @@
 var _ = require('lodash');
 const { BOARD_LEN } = require("../common/const");
+const BoardInterface = require("../common/board")
 
-function coordToIndex(r, c) {
-  return r * BOARD_LEN + c;
-}
-
-class Board {
+class Board extends BoardInterface {
   constructor(wordlist, notifyReveal, sendAllReveals) {
-    this.tiles = wordlist.getRandomWords(BOARD_LEN * BOARD_LEN);
+    super(wordlist);
     this.revealed = [];
     this.revealedInts = [];
 
@@ -16,19 +13,12 @@ class Board {
     this.sendAllReveals = sendAllReveals;
   }
 
-  getTile(r, c) {
-    return this.tiles[coordToIndex(r, c)];
-  }
-
   isRevealed(r, c) {
-    return this.revealedInts.includes(coordToIndex(r, c));
+    return this.revealedInts.includes(this.coordToIndex(r, c));
   }
 
-  validWord(word) {
+  isValid(word) {
     const index = this.tiles.indexOf(word);
-    if (index === -1) {
-      return true;
-    }
     return this.revealedInts.includes(index);
   }
 
@@ -37,23 +27,12 @@ class Board {
       return;
     }
     this.revealed.push([r, c]);
-    this.revealedInts.push(coordToIndex(r, c));
+    this.revealedInts.push(this.coordToIndex(r, c));
     this.notifyReveal(r, c);
   }
 
   sendReveals() {
     this.sendAllReveals(this.revealed);
-  }
-
-  genJson() {
-    var result = { board : [] };
-    for (var r = 0; r < BOARD_LEN; r++) {
-      result.board.push([])
-      for (var c = 0; c < BOARD_LEN; c++) {
-        result.board[r].push({ word: this.getTile(r, c) });
-      }
-    }
-    return result;
   }
 
   json() {
