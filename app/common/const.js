@@ -28,12 +28,23 @@ const duet = {
   WHITE_TILE: 'y',
   BLACK_TILE: 'x',
 
+  // numbers are for 1 side only
+  N_GREEN_TILES: 9,
+  N_WHITE_TILES: 13,
+  N_BLACK_TILES: 3,
+  
   N_GREEN_GREEN_TILES: 3,
-  N_GREEN_WHITE_TILES: 5 * 2,
-  N_GREEN_BLACK_TILES: 1 * 2,
-  N_WHITE_BLACK_TILES: 1 * 2,
-  N_BLACK_BLACK_TILES: 1,
   N_WHITE_WHITE_TILES: 7,
+  N_BLACK_BLACK_TILES: 1,
+  
+  N_GREEN_WHITE_TILES: 5,
+  N_WHITE_GREEN_TILES: 5,
+
+  N_GREEN_BLACK_TILES: 1,
+  N_BLACK_GREEN_TILES: 1,
+
+  N_WHITE_BLACK_TILES: 1,
+  N_BLACK_WHITE_TILES: 1,
 };
 
 module.exports = {
