@@ -153,6 +153,7 @@ class DuetGame extends GameInterface {
     }
     if (this.turn === undefined) {
       this.turn = player.team;
+      this.notifyTurnChange();
     }
     this.clues.add(word, count, this.turn);
     this.startGuess();

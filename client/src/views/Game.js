@@ -92,7 +92,6 @@ function Game(props) {
     });
 
     props.socket.on('key', data => {
-      console.log(data.keycard);
       setKey(newKey(data.keycard));
     });
 

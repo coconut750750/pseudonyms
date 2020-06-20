@@ -37,7 +37,7 @@ function socketio(socket, game, name, player) {
       return;
     }
     try {
-      game.addClue(word, parseInt(count));
+      game.addClue(player, word, parseInt(count));
     } catch (err) {
       socket.emit('message', { message: err.message });
     }

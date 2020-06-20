@@ -28,6 +28,33 @@ function BoardView(props) {
     return <div/>
   };
 
+  const canViewKey = () => {
+    if (props.typeChecks.classic()) {
+      return props.me.isKey()
+    } else if (props.typeChecks.duet()) {
+      return true;
+    }
+    return false;
+  };
+
+  const canReveal = () => {
+    if (props.typeChecks.classic()) {
+      return myTurn() && !props.me.isKey() && clueActive();
+    } else if (props.typeChecks.duet()) {
+      return !myTurn() && clueActive();
+    }
+    return false;
+  };
+
+  const canSubmitClue = () => {
+    if (props.typeChecks.classic()) {
+      return myTurn() && props.me.isKey() && !clueActive();
+    } else if (props.typeChecks.duet()) {
+      return (myTurn() || props.turn === "") && !clueActive();
+    }
+    return false;
+  };
+
   return (
     <div>
       <div className="row">
@@ -52,11 +79,11 @@ function BoardView(props) {
         board={props.board}
         reveals={props.reveals}
         keycard={props.keycard}
-        isKey={props.me.isKey() || props.typeChecks.duet()}
-        tilesActive={myTurn() && clueActive()}/>
+        isKey={canViewKey()}
+        canReveal={canReveal()}/>
       <br/>
 
-      {(myTurn() && props.me.isKey() && !clueActive()) && 
+      {canSubmitClue() && 
         <ClueInput socket={props.socket}/>
       }
     </div>

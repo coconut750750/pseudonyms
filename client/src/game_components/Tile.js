@@ -4,7 +4,7 @@ import './Tile.css';
 
 function Tile(props) {
   const click = () => {
-    if (props.isKey || !props.active) {
+    if (!props.active) {
       return;
     }
 

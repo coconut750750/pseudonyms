@@ -28,7 +28,7 @@ function Board(props) {
         color={color}
         revealed={isRevealed}
         isKey={props.isKey}
-        active={props.tilesActive}
+        active={props.canReveal}
         reveal={ () => props.revealWord(r, c) }/>
     );
   };
