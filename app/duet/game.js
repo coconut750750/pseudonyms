@@ -188,24 +188,14 @@ class DuetGame extends GameInterface {
     }
   }
 
-  getRevealsData() {
-    let data = [];
-    this.board.revealed.forEach((rev, index) => {
-      const [r, c] = this.board.indexToCoord(index);
-      const colors = [...rev].map(team => this.keycard.getTile(r, c, team));
-      data.push({ r, c, teams: rev, colors: colors });
-    });
-    return data;
-  }
-
   endTurn() {
     this.clues.resetCurrent();
+    this.timersLeft -= 1;
+    this.notifyScore();
+
     this.turn = this.turn === RED ? BLUE : RED;
     this.notifyTurnChange();
     this.startClue();
-
-    this.timersLeft -= 1;
-    this.notifyScore();
   }
 
   endGame(win) {
@@ -216,6 +206,16 @@ class DuetGame extends GameInterface {
     this.notifyWin();
     this.notifyFinalReveal();
     this.notifyPhaseChange();
+  }
+
+  getRevealsData() {
+    let data = [];
+    this.board.revealed.forEach((rev) => {
+      const { r, c, team } = rev;
+      const color = this.keycard.getTile(r, c, team);      
+      data.push({ r, c, color, team });
+    });
+    return data;
   }
 
   notifyPhaseChange() {
