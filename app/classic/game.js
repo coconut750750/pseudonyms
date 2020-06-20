@@ -9,9 +9,13 @@ const { incrementGameStarts, saveGame, getStats, GameStats } = require("./analyt
 
 const { RED, BLUE, MIN_PLAYERS } = require("../common/const").classic;
 
-const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
+const LOBBY = 'lobby';
+const TEAMS = 'teams';
+const ROLES = 'roles';
+const BOARD = 'board';
+const RESULT = 'result';
 
-class Game extends GameInterface {
+class ClassicGame extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
     this.dbCollection = options.dbCollection;
@@ -30,7 +34,7 @@ class Game extends GameInterface {
     
     this.started = false;
     this.gameoptions = undefined;
-    this.phase = PHASES[0];
+    this.phase = LOBBY;
     this.keycard = undefined;
     this.wordlist = undefined;
     this.board = undefined;
@@ -47,11 +51,11 @@ class Game extends GameInterface {
   }
 
   canSetTeam() {
-    return this.phase === PHASES[1];
+    return this.phase === TEAMS;
   }
 
   canSetRole() {
-    return this.phase === PHASES[2];
+    return this.phase === ROLES;
   }
 
   setKey(name) {
@@ -59,7 +63,7 @@ class Game extends GameInterface {
   }
 
   canStart() {
-    return this.phase === PHASES[0];
+    return this.phase === LOBBY;
   }
 
   hasStarted() {
@@ -75,7 +79,7 @@ class Game extends GameInterface {
     this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
 
     this.started = true;
-    this.phase = PHASES[1];
+    this.phase = TEAMS;
     this.notifyPhaseChange();
   }
 
@@ -83,7 +87,7 @@ class Game extends GameInterface {
     if (!this.allAssignedTeam()) {
       throw new Error("All players must be on a team");
     }
-    this.phase = PHASES[2];
+    this.phase = ROLES;
     this.notifyPhaseChange();
   }
 
@@ -95,7 +99,7 @@ class Game extends GameInterface {
     if (!this.canConfirmRoles()) {
       throw new Error("Not enough keys");
     }
-    this.phase = PHASES[3];
+    this.phase = BOARD;
 
     this.keycard = new KeyCard();
     this.turn = this.keycard.start;
@@ -129,7 +133,7 @@ class Game extends GameInterface {
     if (!player.isKey()) {
       return false;
     }
-    if (this.phase !== PHASES[3]) {
+    if (this.phase !== BOARD) {
       return false;
     }
     return true;
@@ -147,10 +151,6 @@ class Game extends GameInterface {
     this.guessesLeft = parseInt(count) + 1;
     this.notifyGuessesLeft();
     this.startGuess();
-  }
-
-  isActivePlayer(player) {
-    return player.isOnTeam(this.turn) && !player.isKey();
   }
 
   canReveal(player) {
@@ -216,7 +216,7 @@ class Game extends GameInterface {
   endGame(winner, matured) {
     this.stopTimer();
     this.winner = winner;
-    this.phase = PHASES[4];
+    this.phase = RESULT;
     this.notifyWinner();
     this.notifyFinalReveal();
     this.notifyPhaseChange();
@@ -281,7 +281,7 @@ class Game extends GameInterface {
     if (this.keycard === undefined) {
       return;
     }
-    if (this.phase === PHASES[4] || player.isKey()) {
+    if (this.phase === RESULT || player.isKey()) {
       player.send('key', this.keycard.json());
     }
   }
@@ -305,7 +305,7 @@ class Game extends GameInterface {
   }
 
   reconnectSendScore(player) {
-    if (this.keycard !== undefined && (this.phase === PHASES[3] || this.phase === PHASES[4])) {
+    if (this.keycard !== undefined && (this.phase === BOARD || this.phase === RESULT)) {
       player.send('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
     }
   }
@@ -317,4 +317,4 @@ class Game extends GameInterface {
   }
 }
 
-module.exports = Game;
+module.exports = ClassicGame;

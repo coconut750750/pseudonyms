@@ -1,26 +1,16 @@
 var _ = require('lodash');
 const c = require("../common/const");
 const { BOARD_LEN } = c;
-const { RED, BLUE, MAX_TIMER_TOKENS } = c.duet;
+const { RED, BLUE } = c.duet;
 
 const BoardInterface = require("../common/board")
 
 class Board extends BoardInterface {
-  constructor(wordlist, timers, mistakes, notifyReveal, sendAllReveals) {
+  constructor(wordlist, notifyReveal, sendAllReveals) {
     this.tiles = wordlist.getRandomWords(BOARD_LEN * BOARD_LEN);
-    if (timers > MAX_TIMER_TOKENS) {
-      throw new Error(`The maximum number of timer tokens is ${MAX_TIMER_TOKENS}`);
-    }
-    if (mistakes > timers) {
-      throw new Error(`The number of allowed mistakes can't be more than the number of timer tokens`);
-    }
-    this.timerLeft = timers;
-    this.mistakesLeft = mistakes;
 
-    this.revealed = {
-      [RED]: [],
-      [BLUE]: [],
-    };
+    this.revealed = [];
+    for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealed.push(new Set()) };
 
     this.jsonObj = this.genJson();
     this.notifyReveal = notifyReveal;
@@ -28,7 +18,7 @@ class Board extends BoardInterface {
   }
 
   isRevealed(r, c, team) {
-    return this.revealed[team].map( ([i, j]) => this.coordToIndex(i, j) ).includes(this.coordToIndex(r, c));
+    return this.revealed[this.coordToIndex(r, c)].has(team);
   }
 
   isValid(word) {
@@ -37,20 +27,23 @@ class Board extends BoardInterface {
     return this.isRevealed(r, c, RED) && this.isRevealed(r, c, BLUE);
   }
 
-  reveal(r, c, team) {
+  reveal(r, c, team, isGreen) {
     if (this.isRevealed(r, c, team)) {
       return;
     }
-    this.revealed[team].push([r, c]);
+    const index = this.coordToIndex(r, c);
+
+    if (isGreen) {
+      this.revealed[index].add(RED);
+      this.revealed[index].add(BLUE);
+    } else {
+      this.revealed[index].add(team);
+    }
     this.notifyReveal(r, c, team);
   }
 
   sendReveals() {
     this.sendAllReveals(this.revealed);
-  }
-
-  json() {
-    return this.jsonObj;
   }
 }
 

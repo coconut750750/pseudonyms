@@ -26,10 +26,11 @@ function shuffle(a) {
 }
 
 class KeyCard {
-  constructor() {
+  constructor(timers, mistakes) {
     this.tiles = [];
     this.redLeft = 9;
     this.blueLeft = 9;
+
     this.generate();
     this.jsonObj = this.genJson();
   }

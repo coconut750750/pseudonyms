@@ -39,6 +39,10 @@ class Board {
     }
     return result;
   }
+
+  json() {
+    return this.jsonObj;
+  }
 }
 
 module.exports = Board;

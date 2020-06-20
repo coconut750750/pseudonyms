@@ -34,10 +34,6 @@ class Board extends BoardInterface {
   sendReveals() {
     this.sendAllReveals(this.revealed);
   }
-
-  json() {
-    return this.jsonObj;
-  }
 }
 
 module.exports = Board;
