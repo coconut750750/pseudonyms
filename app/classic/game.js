@@ -1,4 +1,4 @@
-const GameInterface = require("../game")
+const GameInterface = require("../common/game")
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
@@ -13,13 +13,8 @@ const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 
 class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
-    super(code, onEmpty, options, broadcast);
+    super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
     this.dbCollection = options.dbCollection;
-
-    this.plist = new PlayerList(
-      () => this.notifyPlayerUpdate(),
-      () => this.delete(),
-    );
 
     this.clues = new Clues( clue => this.notifyClue(clue) );
 
@@ -31,6 +26,8 @@ class Game extends GameInterface {
   }
 
   reset() {
+    super.reset();
+    
     this.started = false;
     this.gameoptions = undefined;
     this.phase = PHASES[0];
@@ -39,7 +36,6 @@ class Game extends GameInterface {
     this.board = undefined;
     this.turn = undefined;
     this.guessesLeft = 0;
-    this.timer = undefined;
     this.winner = undefined;
     this.clues.clear();
     this.gameStats = new GameStats();
@@ -50,48 +46,8 @@ class Game extends GameInterface {
     this.plist.resetRoles();
   }
 
-  getPlayer(name) {
-    return this.plist.get(name);
-  }
-
-  playerExists(name) {
-    return this.plist.exists(name);
-  }
-
-  addPlayer(name, socket) {
-    this.plist.add(name, socket);
-  }
-
-  activatePlayer(name, socket) {
-    this.plist.activate(name, socket);
-  }
-
-  deactivatePlayer(name) {
-    this.plist.deactivate(name);
-  }
-
-  isActive(name) {
-    return this.plist.isActive(name);
-  }
-
-  removePlayer(name) {
-    this.plist.remove(name);
-  }
-
-  resetTeams() {
-    this.plist.resetTeams();
-  }
-
   canSetTeam() {
     return this.phase === PHASES[1];
-  }
-
-  setTeam(name, isRed) {
-    this.plist.setTeam(name, isRed);
-  }
-
-  randomizeTeams() {
-    this.plist.randomizeTeams();
   }
 
   canSetRole() {
@@ -100,10 +56,6 @@ class Game extends GameInterface {
 
   setKey(name) {
     this.plist.setKey(name);
-  }
-
-  enoughPlayers() {
-    return this.plist.getAll().length >= MIN_PLAYERS;
   }
 
   canStart() {
@@ -127,12 +79,8 @@ class Game extends GameInterface {
     this.notifyPhaseChange();
   }
 
-  canConfirmTeams() {
-    return this.plist.allAssignedTeam();
-  }
-
   confirmTeams() {
-    if (!this.canConfirmTeams()) {
+    if (!this.allAssignedTeam()) {
       throw new Error("All players must be on a team");
     }
     this.phase = PHASES[2];
@@ -162,27 +110,6 @@ class Game extends GameInterface {
     incrementGameStarts(this.dbCollection);
 
     this.startClue();
-  }
-
-  startTimer(time, timeout) {
-    if (time <= 0 || Number.isNaN(time)) {
-      return;
-    }
-    let timeLeft = time;
-    this.notifyTime(timeLeft);
-    this.timer = setInterval(() => {
-      timeLeft--;
-      this.notifyTime(timeLeft);
-      if (timeLeft === 0) {
-        clearInterval(this.timer);
-        timeout();
-      }
-    }, 1000);
-  }
-
-  stopTimer() {
-    clearInterval(this.timer);
-    this.notifyTime(undefined);
   }
 
   startClue() {
@@ -299,16 +226,6 @@ class Game extends GameInterface {
     saveGame(this.dbCollection, this.plist.length(), this.gameoptions.wordlist, this.gameStats);
   }
 
-  getPlayerData() {
-    const players = this.plist.getAll();
-    const playerData = { players: players.map(p => p.json()) };
-    return playerData;
-  }
-
-  notifyPlayerUpdate() {
-    this.broadcast('players', this.getPlayerData());
-  }
-
   notifyPhaseChange() {
     this.broadcast('phase', { phase: this.phase });
   }
@@ -327,10 +244,6 @@ class Game extends GameInterface {
 
   notifyClue(clue) {
     this.broadcast('clue', clue.json());
-  }
-
-  notifyTime(time) {
-    this.broadcast('time', { time });
   }
 
   notifyScore() {
@@ -401,12 +314,6 @@ class Game extends GameInterface {
     if (this.phase === 'result' && this.winner !== undefined) {
       player.send('winner', { winner: this.winner });
     }
-  }
-
-  delete() {
-    clearInterval(this.timer);
-    this.broadcast('end', {});
-    this.onEmpty();
   }
 }
 
