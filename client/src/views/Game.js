@@ -43,7 +43,7 @@ function Game(props) {
   const [turn, setTurn] = useState("");
   const [clue, setClue] = useState(undefined);
   const [guessesLeft, setGuessesLeft] = useState(undefined);
-  const [score, setScore] = useState({red: 0, blue:0});
+  const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState("");
 
   const debounceDisappear = () => setMessage("");
@@ -61,7 +61,7 @@ function Game(props) {
       setKey(undefined);
       setTurn("");
       setClue(undefined);
-      setScore({red: 0, blue:0});
+      setScore(undefined);
       setWinner("");
     }
 
@@ -117,8 +117,7 @@ function Game(props) {
     });
 
     props.socket.on('score', data => {
-      const { red, blue } = data;
-      setScore({ red, blue });
+      setScore(data);
     });
 
     props.socket.on('winner', data => {
@@ -179,6 +178,7 @@ function Game(props) {
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
+        typeChecks={typeChecks(type)}
         socket={props.socket}
         players={players}
         score={score}/>

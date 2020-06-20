@@ -1,7 +1,8 @@
 import React from 'react';
 
 import ClueInput from '../game_components/ClueInput';
-import Board from '../game_components/Board';
+import ClassicBoard from '../game_components/ClassicBoard';
+import DuetBoard from '../game_components/DuetBoard';
 
 function BoardView(props) {
   const myTurn = () => {
@@ -28,24 +29,6 @@ function BoardView(props) {
     return <div/>
   };
 
-  const canViewKey = () => {
-    if (props.typeChecks.classic()) {
-      return props.me.isKey()
-    } else if (props.typeChecks.duet()) {
-      return true;
-    }
-    return false;
-  };
-
-  const canReveal = () => {
-    if (props.typeChecks.classic()) {
-      return myTurn() && !props.me.isKey() && clueActive();
-    } else if (props.typeChecks.duet()) {
-      return !myTurn() && clueActive();
-    }
-    return false;
-  };
-
   const canSubmitClue = () => {
     if (props.typeChecks.classic()) {
       return myTurn() && props.me.isKey() && !clueActive();
@@ -62,6 +45,33 @@ function BoardView(props) {
       return clueActive() && !myTurn();
     }
     return false;
+  };
+
+  const renderBoard = () => {
+    if (props.typeChecks.classic()) {
+      return (
+        <ClassicBoard
+          players={props.players}
+          revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
+          board={props.board}
+          reveals={props.reveals}
+          keycard={props.keycard}
+          isKey={props.me.isKey()}
+          canReveal={myTurn() && !props.me.isKey() && clueActive()}/>
+      );
+    } else if (props.typeChecks.duet()) {
+      return (
+        <DuetBoard
+          players={props.players}
+          revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
+          board={props.board}
+          reveals={props.reveals}
+          keycard={props.keycard}
+          isKey={true}
+          canReveal={!myTurn() && clueActive()}/>
+      );
+    }
+    return <div/>
   };
 
   return (
@@ -82,14 +92,7 @@ function BoardView(props) {
       </div>
       <br/>
 
-      <Board
-        players={props.players}
-        revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
-        board={props.board}
-        reveals={props.reveals}
-        keycard={props.keycard}
-        isKey={canViewKey()}
-        canReveal={canReveal()}/>
+      {renderBoard()}
       <br/>
 
       {canSubmitClue() && 

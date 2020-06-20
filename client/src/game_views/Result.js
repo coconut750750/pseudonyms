@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Board from '../game_components/Board';
+import ClassicBoard from '../game_components/ClassicBoard';
 
 function Result(props) {
   return (
@@ -9,7 +9,7 @@ function Result(props) {
       <h6>{`${props.winner.replace(/^\w/, c => c.toUpperCase())} wins!`}</h6>
       <br/>
 
-      <Board
+      <ClassicBoard
         players={props.players}
         revealWord={ (r, c) => {} }
         board={props.board}

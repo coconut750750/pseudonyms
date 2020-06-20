@@ -1,0 +1,39 @@
+.tile .token {
+    position: absolute;
+    top: -2px;
+    min-height: 40%;
+    min-width: 25%;
+    box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 8px 0px;
+}
+
+.tile .token.badge-danger {
+    left: -2px;
+}
+
+.tile .token.badge-primary {
+    right: -2px;
+}
+
+.tile.revealed.g {
+    background-color: #28a745;
+}
+
+.tile.revealed.x {
+    background-color: #000000;
+}
+
+.tile.revealed h6 {
+    color: #ffffff;
+}
+
+.tile.hidden.g h6 {
+    color: #28a745;
+}
+
+.tile.hidden.y h6 {
+    color: #999;
+}
+
+.tile.hidden.x h6 {
+    color: #000000;
+}

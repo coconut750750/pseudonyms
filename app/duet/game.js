@@ -7,7 +7,7 @@ const Clues = require("../common/clues");
 const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 
-const { RED, BLUE, MIN_PLAYERS, DEFAULT_TIMER_TOKENS } = require("../common/const").duet;
+const { RED, BLUE, MIN_PLAYERS } = require("../common/const").duet;
 
 const LOBBY = 'lobby';
 const TEAMS = 'teams';
@@ -109,7 +109,7 @@ class DuetGame extends GameInterface {
     this.phase = BOARD;
 
     this.keycard = new KeyCard();
-    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
+    this.board = new Board(this.wordlist, (r, c, team) => this.notifyReveal(r, c, team));
 
     this.notifyKeyChange();
     this.notifyBoardChange();
@@ -175,11 +175,11 @@ class DuetGame extends GameInterface {
     this.keycard.reveal(r, c, this.turn);
     this.notifyScore();
 
-    if (this.keycard.isBlack(r, c, this.team)) {
+    if (this.keycard.isBlack(r, c, this.turn)) {
       this.endGame(false);
     } else if (this.keycard.checkWin()) {
       this.endGame(true);
-    } else if (this.keycard.isWhite(r, c, this.team)) {
+    } else if (this.keycard.isWhite(r, c, this.turn)) {
       this.board.reveal(r, c, this.turn, false);
       this.mistakesLeft -= 1;
       this.endTurn();
@@ -239,12 +239,12 @@ class DuetGame extends GameInterface {
   }
 
   notifyScore() {
-    this.broadcast('score', { score: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
+    this.broadcast('score', { leftover: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
   }
 
-  notifyReveal(r, c) {
-    const color = this.keycard.getTile(r, c);
-    this.broadcast('reveal', { reveal: [{ r, c, color }] });
+  notifyReveal(r, c, team) {
+    const color = this.keycard.getTile(r, c, team);
+    this.broadcast('reveal', { reveal: [{ r, c, color, team }] });
   }
 
   notifyWin() {
@@ -252,7 +252,7 @@ class DuetGame extends GameInterface {
   }
 
   notifyFinalReveal() {
-    this.broadcast('key', this.keycard.json());
+    this.broadcast('key', this.keycard.jsonMerged());
   }
 
   // send data for disconnected users
@@ -267,7 +267,11 @@ class DuetGame extends GameInterface {
     if (this.keycard === undefined) {
       return;
     }
-    player.send('key', this.keycard.json(player.team));
+    if (this.phase === RESULT) {
+      player.send('key', this.keycard.jsonMerged());
+    } else {
+      player.send('key', this.keycard.json(player.team));
+    }
   }
 
   reconnectSendTurn(player) {
@@ -284,7 +288,7 @@ class DuetGame extends GameInterface {
 
   reconnectSendScore(player) {
     if (this.keycard !== undefined && (this.phase === BOARD || this.phase === RESULT)) {
-      player.send('score', { score: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
+      player.send('score', { leftover: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
     }
   }
 

@@ -8,31 +8,11 @@
     width: 19%;
     height: 19%;
     background-color: #eee;
-    overflow: hidden;
+    position: relative;
 }
 
-.tile.player.active {
+.tile.active {
     cursor: pointer;
-}
-
-.tile.revealed.r {
-    background-color: #dc3545;
-}
-
-.tile.revealed.b {
-    background-color: #007bff;
-}
-
-.tile.revealed.g {
-    background-color: #28a745;
-}
-
-.tile.revealed.y {
-    background-color: #999;
-}
-
-.tile.revealed.x {
-    background-color: #000000;
 }
 
 .tile h6 {
@@ -46,28 +26,4 @@
   .tile h6 {
     font-size: 2vw;
   }
-}
-
-.tile.revealed h6 {
-    color: #ffffff;
-}
-
-.tile.hidden.key.r h6 {
-    color: #dc3545;
-}
-
-.tile.hidden.key.b h6 {
-    color: #007bff;
-}
-
-.tile.hidden.key.g h6 {
-    color: #28a745;
-}
-
-.tile.hidden.key.y h6 {
-    color: #999;
-}
-
-.tile.hidden.key.x h6 {
-    color: #000000;
 }

@@ -9,8 +9,9 @@ class Board extends BoardInterface {
   constructor(wordlist, notifyReveal, sendAllReveals) {
     super(wordlist);
 
+    this.revealedMatrix = [];
+    for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealedMatrix.push(new Set()) };
     this.revealed = [];
-    for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealed.push(new Set()) };
 
     this.jsonObj = this.genJson();
     this.notifyReveal = notifyReveal;
@@ -18,7 +19,7 @@ class Board extends BoardInterface {
   }
 
   isRevealed(r, c, team) {
-    return this.revealed[this.coordToIndex(r, c)].has(team);
+    return this.revealedMatrix[this.coordToIndex(r, c)].has(team);
   }
 
   isValid(word) {
@@ -34,16 +35,17 @@ class Board extends BoardInterface {
     const index = this.coordToIndex(r, c);
 
     if (isGreen) {
-      this.revealed[index].add(RED);
-      this.revealed[index].add(BLUE);
+      this.revealedMatrix[index].add(RED);
+      this.revealedMatrix[index].add(BLUE);
     } else {
-      this.revealed[index].add(team);
+      this.revealedMatrix[index].add(team);
     }
+    this.revealed.push({ r, c, team });
     this.notifyReveal(r, c, team);
   }
 
   sendReveals() {
-    this.sendAllReveals(this.revealed);
+    this.sendAllReveals(this.revealedMatrix);
   }
 }
 

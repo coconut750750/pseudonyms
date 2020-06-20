@@ -1,8 +1,9 @@
 import React from 'react';
 
 import './Tile.css';
+import './ClassicTile.css';
 
-function Tile(props) {
+function ClassicTile(props) {
   const click = () => {
     if (!props.active) {
       return;
@@ -25,4 +26,4 @@ function Tile(props) {
   );
 }
 
-export default Tile;
+export default ClassicTile;

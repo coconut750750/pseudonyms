@@ -90,6 +90,10 @@ class KeyCard {
   json(team) {
     return { keycard: this.jsonObj[team] };
   }
+
+  jsonMerged() {
+    return { keycard: this.tiles };
+  }
 }
 
 module.exports = KeyCard;

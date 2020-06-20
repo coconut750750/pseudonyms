@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Tile from './Tile';
+import ClassicTile from './ClassicTile';
 
 import './Board.css';
 
-function Board(props) {  
+function ClassicBoard(props) {  
   const getRevealed = (r, c) => {
     for (var rev of props.reveals) {
       if (rev.r === r && rev.c === c)
@@ -22,7 +22,7 @@ function Board(props) {
     }
 
     return (
-      <Tile
+      <ClassicTile
         key={`${r}-${c}`}
         word={props.board.get(r, c)}
         color={color}
@@ -52,4 +52,4 @@ function Board(props) {
   );
 }
 
-export default Board;
+export default ClassicBoard;
