@@ -10,6 +10,16 @@ export async function createClassicGame(options) {
   });
 }
 
+export async function createDuetGame(options) {
+  return callApi('/register/duet/create', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(options),
+  });
+}
+
 export async function checkCode(gameCode) {
   return callApi(`/register/checkcode?gameCode=${gameCode}`);
 }

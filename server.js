@@ -13,7 +13,6 @@ var io = require('socket.io')(server, {
 
 const GameInterface = require('./app/game');
 const GameManager = require('./app/manager');
-const gameSocketio = require('./app/socketio');
 
 const registerRouter = require("./app/register");
 const gameRouter = require("./app/routes")
@@ -59,7 +58,7 @@ app.io.on('connect', function (socket) {
     }
     player = game.getPlayer(name);
 
-    gameSocketio(socket, game, name, player);
+    game.socketio(socket, game, name, player);
   });
 
   socket.on('exitGame', data => {

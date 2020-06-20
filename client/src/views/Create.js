@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import debounce from "lodash/debounce";
 
-import { checkName, createClassicGame } from '../api/register';
+import { checkName, createClassicGame, createDuetGame } from '../api/register';
 
 function Create(props) {
   const [message, setMessage] = useState("");
@@ -18,15 +18,28 @@ function Create(props) {
         return;
       }
 
-      createClassicGame({}).then(res => {
+      const createSuccess = res => {
         props.setGame(res.gameCode, name);
-      });
+      }
+
+      if (props.duet) {
+        createDuetGame({}).then(createSuccess);
+      } else {
+        createClassicGame({}).then(createSuccess);
+      }
     });
+  }
+
+  let header = "Create Game";
+  if (props.classic) {
+    header = "Create Classic Game";
+  } else if (props.duet) {
+    header = "Create Duet Game";
   }
 
   return (
     <div>
-      <h4>Create Game</h4>
+      <h4>{header}</h4>
 
       <form onSubmit={ (e) => {
         e.preventDefault();

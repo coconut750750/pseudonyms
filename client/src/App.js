@@ -19,7 +19,8 @@ const HOME = "home";
 const HOWTO = "howto";
 const WALKTHROUGH = "walkthrough";
 const MORE = "more";
-const CREATE = "create";
+const CREATE_CLASSIC = "create_classic";
+const CREATE_DUET = "create_duet";
 const JOIN = "join";
 const GAME = "game";
 
@@ -97,7 +98,8 @@ function App() {
 
   const views = {
     [HOME]:         <Home 
-                      createGame={ () => setViewState(CREATE) } 
+                      createClassicGame={ () => setViewState(CREATE_CLASSIC) } 
+                      createDuetGame={ () => setViewState(CREATE_DUET) } 
                       joinGame={ () => setViewState(JOIN) }
                       viewHowTo={ () => setViewState(HOWTO) }
                       viewWalkthrough={ () => setViewState(WALKTHROUGH) }
@@ -108,7 +110,12 @@ function App() {
                       goBack={ () => goHome() }/>,
     [MORE]:         <MoreGames
                       goBack={ () => goHome() }/>,
-    [CREATE]:       <Create
+    [CREATE_CLASSIC]: <Create
+                        classic
+                        goBack={ () => goHome() }
+                        setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
+    [CREATE_DUET]:  <Create
+                      duet
                       goBack={ () => goHome() }
                       setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
     [JOIN]:         <Join
