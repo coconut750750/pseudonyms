@@ -1,4 +1,5 @@
-const GameInterface = require("../game")
+const GameInterface = require("../game");
+const socketio = require("./socketio");
 
 class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast, PlayerListClass, minPlayers) {
@@ -11,8 +12,16 @@ class Game extends GameInterface {
     this.minPlayers = minPlayers;
   }
 
+  socketio(socket, game, name, player) {
+    socketio(socket, game, name, player);
+  }
+
   reset() {
     this.timer = undefined;
+  }
+
+  canReset() {
+    throw new Error('Game.canReset() implemention required!');
   }
 
   getPlayer(name) {
@@ -51,6 +60,10 @@ class Game extends GameInterface {
     this.plist.resetTeams();
   }
 
+  canSetTeam() {
+    throw new Error('Game.canSetTeam() implemention required!');
+  }
+
   setTeam(name, isRed) {
     this.plist.setTeam(name, isRed);
   }
@@ -61,6 +74,12 @@ class Game extends GameInterface {
 
   allAssignedTeam() {
     return this.plist.allAssignedTeam();
+  }
+
+  confirmTeams() {
+    if (!this.allAssignedTeam()) {
+      throw new Error("All players must be on a team");
+    }
   }
 
   startTimer(time, timeout) {
@@ -82,6 +101,14 @@ class Game extends GameInterface {
   stopTimer() {
     clearInterval(this.timer);
     this.notifyTime(undefined);
+  }
+
+  canEndTurn() {
+    throw new Error('Game.canEndTurn() implemention required!');
+  }
+
+  endTurn() {
+    throw new Error('Game.endTurn() implemention required!');
   }
 
   getPlayerData() {

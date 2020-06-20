@@ -1,4 +1,5 @@
 const GameInterface = require("../common/game")
+const socketio = require("./socketio");
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
@@ -29,6 +30,11 @@ class ClassicGame extends GameInterface {
     this.reset();
   }
 
+  socketio(socket, game, name, player) {
+    super.socketio(socket, game, name, player);
+    socketio(socket, game, name, player);
+  }
+
   reset() {
     super.reset();
     
@@ -48,6 +54,10 @@ class ClassicGame extends GameInterface {
 
     this.plist.resetTeams();
     this.plist.resetRoles();
+  }
+
+  canReset() {
+    return this.phase !== BOARD;
   }
 
   canSetTeam() {
@@ -84,9 +94,7 @@ class ClassicGame extends GameInterface {
   }
 
   confirmTeams() {
-    if (!this.allAssignedTeam()) {
-      throw new Error("All players must be on a team");
-    }
+    super.confirmTeams()
     this.phase = ROLES;
     this.notifyPhaseChange();
   }

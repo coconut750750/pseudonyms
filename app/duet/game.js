@@ -53,6 +53,10 @@ class DuetGame extends GameInterface {
     // }
   }
 
+  canReset() {
+    return this.phase !== BOARD;
+  }
+
   canStart() {
     return this.phase === LOBBY;
   }
@@ -79,9 +83,7 @@ class DuetGame extends GameInterface {
   }
 
   confirmTeams() {
-    if (!this.allAssignedTeam()) {
-      throw new Error("All players must be on a team");
-    }
+    super.confirmTeams()
     this.startBoard();
   }
 
