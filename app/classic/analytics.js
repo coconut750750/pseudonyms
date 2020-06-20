@@ -3,7 +3,7 @@ const TOTAL_STARTS_QUERY = { type: "starts" };
 const WORDLIST_COUNT_QUERY = { type: "wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "players" };
 const MATURE_QUERY = { type: "mature" };
-const { RED, BLUE, N_START_TILES, N_OTHER_TILES } = require("./const");
+const { RED, BLUE, N_START_TILES, N_OTHER_TILES } = require("../common/const").classic;
 
 class GameStats {
   constructor() {

@@ -1,5 +1,5 @@
 var _ = require('lodash');
-const { BOARD_LEN } = require("./const");
+const { BOARD_LEN } = require("../common/const").classic;
 
 function coordToIndex(r, c) {
   return r * BOARD_LEN + c;

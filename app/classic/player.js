@@ -1,4 +1,4 @@
-const { RED, BLUE, PLAYER_ROLE, KEY_ROLE, NO_TEAM } = require('./const');
+const { RED, BLUE, PLAYER_ROLE, KEY_ROLE, NO_TEAM } = require('../common/const').classic;
 
 class Player {
   constructor(name, socket, isAdmin) {

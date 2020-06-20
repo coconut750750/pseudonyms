@@ -3,10 +3,10 @@ const router = express.Router();
 const fs = require('fs');
 const path = require("path");
 
-const wordlistPath = path.join(__dirname, `./game/wordfiles/`);
+const wordlistPath = path.join(__dirname, `./common/wordfiles/`);
 const files = fs.readdirSync(wordlistPath);
 
-const { getStats } = require("./game/analytics");
+const { getStats } = require("./classic/analytics");
 
 router.get('/wordlists', (req, res) => {
   res.send(files);

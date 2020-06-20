@@ -3,11 +3,11 @@ const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
 const Clues = require("./clues");
-const WordList = require("./wordlist");
+const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 const { incrementGameStarts, saveGame, getStats, GameStats } = require("./analytics");
 
-const { RED, BLUE, MIN_PLAYERS } = require("./const");
+const { RED, BLUE, MIN_PLAYERS } = require("../common/const").classic;
 
 const PHASES = ['lobby', 'teams', 'roles', 'board', 'result'];
 

@@ -1,6 +1,6 @@
 var _ = require('lodash');
 const Player = require('./player');
-const { RED, BLUE } = require('./const');
+const { RED, BLUE } = require('../common/const').classic;
 
 class PlayerList {
   constructor(notifyUpdate, endGame) {

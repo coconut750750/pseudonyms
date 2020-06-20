@@ -1,4 +1,4 @@
-const Game = require('./game/game');
+const Game = require('./classic/game');
 
 class Manager {
   constructor(dev) {

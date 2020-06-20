@@ -9,7 +9,7 @@ const {
   N_START_TILES,
   N_OTHER_TILES,
   N_WHITE_TILES,
-  N_BLACK_TILES, } = require('./const');
+  N_BLACK_TILES, } = require('../common/const').classic;
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {

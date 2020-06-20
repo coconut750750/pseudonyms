@@ -23,6 +23,10 @@
     background-color: #007bff;
 }
 
+.tile.revealed.g {
+    background-color: #28a745;
+}
+
 .tile.revealed.y {
     background-color: #999;
 }
@@ -48,6 +52,10 @@
 
 .tile.hidden.key.b h6 {
     color: #007bff;
+}
+
+.tile.hidden.key.g h6 {
+    color: #28a745;
 }
 
 .tile.hidden.key.y h6 {
