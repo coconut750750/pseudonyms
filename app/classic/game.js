@@ -93,8 +93,15 @@ class ClassicGame extends GameInterface {
     this.notifyPhaseChange();
   }
 
+  validTeamCount() {
+    return this.plist.teamCount(RED) >= 2 && this.plist.teamCount(BLUE) >= 2;
+  }
+
   confirmTeams() {
-    super.confirmTeams()
+    super.confirmTeams();
+    if (!this.validTeamCount()) {
+      throw new Error("At least 2 players must be on each team");
+    }
     this.phase = ROLES;
     this.notifyPhaseChange();
   }

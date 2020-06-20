@@ -116,6 +116,16 @@ class PlayerList {
     }
     return true;
   }
+
+  teamCount(team) {
+    let count = 0;
+    for (var p of Object.values(this.players)) {
+      if (p.isOnTeam(team)) {
+        count += 1;
+      }
+    }
+    return count
+  }
 }
 
 module.exports = PlayerList;

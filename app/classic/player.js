@@ -13,10 +13,6 @@ class Player extends PlayerInterface {
     this.team = isRed ? RED : BLUE;
   }
 
-  isOnTeam(team) {
-    return this.team === team;
-  }
-
   assignedTeam() {
     return this.team !== NO_TEAM;
   }

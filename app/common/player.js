@@ -16,6 +16,10 @@ class Player {
     this.socket = undefined;
   }
 
+  isOnTeam(team) {
+    return this.team === team;
+  }
+
   json() {
     return {
       name: this.name,

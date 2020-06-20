@@ -88,7 +88,7 @@ class KeyCard {
   }
 
   json(team) {
-    return { [team]: this.jsonObj[team] };
+    return { keycard: this.jsonObj[team] };
   }
 }
 

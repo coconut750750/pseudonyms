@@ -89,8 +89,15 @@ class DuetGame extends GameInterface {
     this.notifyPhaseChange();
   }
 
+  validTeamCount() {
+    return this.plist.teamCount(RED) >= 1 && this.plist.teamCount(BLUE) >= 1;
+  }
+
   confirmTeams() {
-    super.confirmTeams()
+    super.confirmTeams();
+    if (!this.validTeamCount()) {
+      throw new Error("At least 1 player must be on each team");
+    }
     this.startBoard();
   }
 

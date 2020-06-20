@@ -16,7 +16,7 @@ function Teams(props) {
   }
 
   const confirmReady = () => {
-    return getUndecideds().length === 0 && getReds().length >= 2 && getBlues().length >= 2;
+    return getUndecideds().length === 0;
   };
 
   return (
