@@ -3,7 +3,6 @@ const classic = {
   NO_TEAM: "",
   RED: "red",
   BLUE: "blue",
-  BOARD_LEN: 5,
 
   RED_TILE: 'r',
   BLUE_TILE: 'b',
@@ -24,7 +23,6 @@ const duet = {
   NO_TEAM: "",
   RED: "red",
   BLUE: "blue",
-  BOARD_LEN: 5,
 
   GREEN_TILE: 'g',
   WHITE_TILE: 'y',
@@ -42,4 +40,5 @@ module.exports = {
   classic,
   duet,
   MIN_WORDS: 50,
+  BOARD_LEN: 5,
 }

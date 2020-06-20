@@ -1,6 +1,6 @@
 const Board = require('../board');
-const WordList = require('../wordlist');
-const { BOARD_LEN } = require("../const");
+const WordList = require('../../common/wordlist');
+const { BOARD_LEN } = require("../../common/const");
 
 describe('initiating a board', () => {
   it('construct tiles', () => {

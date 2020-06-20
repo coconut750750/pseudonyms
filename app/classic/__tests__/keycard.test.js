@@ -1,5 +1,5 @@
 const KeyCard = require('../keycard');
-const { BOARD_LEN } = require('../const');
+const { BOARD_LEN } = require("../../common/const");
 
 describe('initiating a keycard', () => {
   it('generating keycard', () => {

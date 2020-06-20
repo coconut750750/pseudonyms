@@ -1,7 +1,9 @@
+const c = require('../common/const');
+
+const { BOARD_LEN } = c;
 const { 
   RED, 
   BLUE, 
-  BOARD_LEN, 
   RED_TILE, 
   BLUE_TILE, 
   WHITE_TILE, 
@@ -9,7 +11,7 @@ const {
   N_START_TILES,
   N_OTHER_TILES,
   N_WHITE_TILES,
-  N_BLACK_TILES, } = require('../common/const').classic;
+  N_BLACK_TILES, } = c.classic;
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {

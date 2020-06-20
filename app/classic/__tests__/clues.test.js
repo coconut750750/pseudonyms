@@ -1,8 +1,9 @@
 const PseudoGame = require('../game');
 const PlayerList = require('../playerlist');
-const WordList = require('../wordlist');
+const WordList = require('../../common/wordlist');
 const Board = require('../board');
 const GameOptions = require('../gameoptions');
+const KeyCard = require("../keycard");
 
 jest.mock('../player');
 const Player = require('../player');
@@ -112,6 +113,7 @@ describe('clues test', () => {
 
     expect(game.clues.currentExists()).toBeTruthy();
 
+    game.keycard = new KeyCard();
     game.endTurn();
 
     expect(game.clues.currentExists()).toBeFalsy();
