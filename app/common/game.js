@@ -103,6 +103,23 @@ class Game extends GameInterface {
     this.notifyTime(undefined);
   }
 
+  canSendClue() {
+    throw new Error('Game.canSendClue() implemention required!');
+  }
+  
+  addClue() {
+    throw new Error('Game.addClue() implemention required!');
+  }
+  
+  canReveal() {
+    throw new Error('Game.canReveal() implemention required!');
+  }
+  
+  reveal() {
+    throw new Error('Game.reveal() implemention required!');
+  }
+  
+
   canEndTurn() {
     throw new Error('Game.canEndTurn() implemention required!');
   }

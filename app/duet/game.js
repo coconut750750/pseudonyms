@@ -1,4 +1,5 @@
 const GameInterface = require("../common/game")
+const socketio = require("./socketio");
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
@@ -6,7 +7,7 @@ const Clues = require("../common/clues");
 const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 
-const { RED, BLUE, MIN_PLAYERS, MAX_TIMER_TOKENS } = require("../common/const").duet;
+const { RED, BLUE, MIN_PLAYERS, DEFAULT_TIMER_TOKENS } = require("../common/const").duet;
 
 const LOBBY = 'lobby';
 const TEAMS = 'teams';
@@ -19,11 +20,20 @@ class DuetGame extends GameInterface {
 
     this.clues = new Clues( clue => this.notifyClue(clue) );
 
-    // this.broadcastKeys = (event, data) => {
-    //   this.plist.getAll().forEach(p => p.sendAsKey(event, data));
-    // }
+    this.broadcastReds = (event, data) => {
+      this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data));
+    };
+
+    this.broadcastBlues = (event, data) => {
+      this.plist.getAll().forEach(p => p.sendAsTeam(BLUE, event, data));
+    };
 
     this.reset();
+  }
+
+  socketio(socket, game, name, player) {
+    super.socketio(socket, game, name, player);
+    socketio(socket, game, name, player);
   }
 
   reset() {
@@ -45,12 +55,6 @@ class DuetGame extends GameInterface {
     this.notifyPhaseChange();
 
     this.plist.resetTeams();
-    // if (timers > MAX_TIMER_TOKENS) {
-    //   throw new Error(`The maximum number of timer tokens is ${MAX_TIMER_TOKENS}`);
-    // }
-    // if (mistakes > timers) {
-    //   throw new Error(`The number of allowed mistakes can't be more than the number of timer tokens`);
-    // }
   }
 
   canReset() {
@@ -76,6 +80,9 @@ class DuetGame extends GameInterface {
     
     this.gameoptions = new GameOptions(options);
     this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
+
+    this.timersLeft = this.gameoptions.timers;
+    this.mistakesLeft = this.gameoptions.mistakes;
 
     this.started = true;
     this.phase = TEAMS;
@@ -105,7 +112,9 @@ class DuetGame extends GameInterface {
 
   startClue() {
     this.stopTimer();
-    this.startTimer(this.gameoptions.clueLimit, () => this.addClue("-", "-"));
+    if (this.turn !== undefined) {
+      this.startTimer(this.gameoptions.clueLimit, () => this.addClue(undefined, "-", "-"));
+    }
   }
 
   startGuess() {
@@ -125,6 +134,9 @@ class DuetGame extends GameInterface {
   }
 
   addClue(player, word, count) {
+    if (player !== undefined && !this.canSendClue(player)) {
+      return;
+    }
     if (!this.validClue(word)) {
       throw new Error("Invalid Clue");
     }
@@ -156,8 +168,9 @@ class DuetGame extends GameInterface {
     } else if (this.keycard.checkWin()) {
       this.endGame(true);
     } else if (this.keycard.isWhite(r, c, this.team)) {
-      this.endTurn();
       this.board.reveal(r, c, this.turn, false);
+      this.mistakesLeft -= 1;
+      this.endTurn();
     } else { // was green
       this.board.reveal(r, c, this.turn, true);
     }
@@ -178,12 +191,16 @@ class DuetGame extends GameInterface {
     this.turn = this.turn === RED ? BLUE : RED;
     this.notifyTurnChange();
     this.startClue();
+
+    this.timersLeft -= 1;
   }
 
   endGame(win) {
     this.stopTimer();
     this.phase = RESULT;
-    this.notifyWin(win);
+
+    this.win = win;
+    this.notifyWin();
     this.notifyFinalReveal();
     this.notifyPhaseChange();
   }
@@ -196,6 +213,11 @@ class DuetGame extends GameInterface {
     this.broadcast('board', this.board.json());
   }
 
+  notifyKeyChange() {
+    this.broadcastReds('key', this.keycard.json(RED));
+    this.broadcastBlues('key', this.keycard.json(BLUE));
+  }
+
   notifyTurnChange() {
     this.broadcast('turn', { turn: this.turn });
   }
@@ -205,7 +227,7 @@ class DuetGame extends GameInterface {
   }
 
   notifyScore() {
-    this.broadcast('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
+    this.broadcast('score', { score: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
   }
 
   notifyReveal(r, c) {
@@ -213,14 +235,52 @@ class DuetGame extends GameInterface {
     this.broadcast('reveal', { reveal: [{ r, c, color }] });
   }
 
-  notifyWinner() {
-    this.broadcast('winner', { winner: this.winner });
+  notifyWin() {
+    this.broadcast('winner', { win: this.win });
   }
 
   notifyFinalReveal() {
     this.broadcast('key', this.keycard.json());
   }
 
+  // send data for disconnected users
+  reconnectSendBoard(player) {
+    if (this.board !== undefined) {
+      player.send('board', this.board.json());
+      player.send('reveal', { reveal: this.getRevealsData() });
+    }
+  }
+
+  reconnectSendKey(player) {
+    if (this.keycard === undefined) {
+      return;
+    }
+    player.send('key', this.keycard.json(player.team));
+  }
+
+  reconnectSendTurn(player) {
+    if (this.turn !== undefined) {
+      player.send('turn', { turn: this.turn });
+    }
+  }
+
+  reconnectSendClue(player) {
+    if (this.clues.currentExists()) {
+      player.send('clue', this.clues.getCurrent().json());
+    }
+  }
+
+  reconnectSendScore(player) {
+    if (this.keycard !== undefined && (this.phase === BOARD || this.phase === RESULT)) {
+      player.send('score', { score: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
+    }
+  }
+
+  reconnectSendWin(player) {
+    if (this.phase === RESULT && this.winner !== undefined) {
+      player.send('winner', { win: this.win });
+    }
+  }
 }
 
 module.exports = DuetGame;

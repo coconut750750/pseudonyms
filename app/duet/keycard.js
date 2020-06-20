@@ -28,8 +28,7 @@ function shuffle(a) {
 class KeyCard {
   constructor(timers, mistakes) {
     this.tiles = [];
-    this.redLeft = 9;
-    this.blueLeft = 9;
+    this.leftover = 15;
 
     this.generate();
     this.jsonObj = this.genJson();
@@ -55,17 +54,12 @@ class KeyCard {
   reveal(r, c, team) {
     const colors = this.tiles[r * BOARD_LEN + c];
     if (colors[team] === GREEN_TILE) {
-      if (colors[RED] === GREEN_TILE) {
-        this.redLeft -= 1;
-      }
-      if (colors[BLUE] === GREEN_TILE) {
-        this.blueLeft -= 1;
-      }
+      this.leftover -= 1;
     }
   }
 
   checkWin() {
-    return this.redLeft + this.blueLeft === 0;
+    return this.leftover === 0;
   }
 
   isBlack(r, c, team) {
@@ -93,8 +87,8 @@ class KeyCard {
     return result;
   }
 
-  json() {
-    return this.jsonObj;
+  json(team) {
+    return { [team]: this.jsonObj[team] };
   }
 }
 

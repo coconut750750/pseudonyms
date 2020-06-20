@@ -31,6 +31,25 @@ function socketio(socket, game, name, player) {
     }
   });
 
+   socket.on('sendClue', data => {
+    const { word, count } = data;
+    if (Number.isNaN(parseInt(count))) {
+      return;
+    }
+    try {
+      game.addClue(word, parseInt(count));
+    } catch (err) {
+      socket.emit('message', { message: err.message });
+    }
+  });
+
+  socket.on('revealWord', data => {
+    if (game.canReveal(player)) {
+      const { r, c } = data;
+      game.reveal(r, c);
+    }
+  });
+
   socket.on('endTurn', data => {
     if (game.canEndTurn(player)) {
       game.endTurn();

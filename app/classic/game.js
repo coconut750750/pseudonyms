@@ -126,7 +126,7 @@ class ClassicGame extends GameInterface {
 
   startClue() {
     this.stopTimer();
-    this.startTimer(this.gameoptions.clueLimit, () => this.addClue("-", "-"));
+    this.startTimer(this.gameoptions.clueLimit, () => this.addClue(undefined, "-", "-"));
   }
 
   startGuess() {
@@ -151,7 +151,10 @@ class ClassicGame extends GameInterface {
     return this.board.validWord(word.toLowerCase());
   }
 
-  addClue(word, count) {
+  addClue(player, word, count) {
+    if (player !== undefined && !this.canSendClue(player)) {
+      return;
+    }
     if (!this.validClue(word)) {
       throw new Error("Invalid Clue");
     }
@@ -319,7 +322,7 @@ class ClassicGame extends GameInterface {
   }
 
   reconnectSendWinner(player) {
-    if (this.phase === 'result' && this.winner !== undefined) {
+    if (this.phase === RESULT && this.winner !== undefined) {
       player.send('winner', { winner: this.winner });
     }
   }

@@ -13,27 +13,6 @@ function socketio(socket, game, name, player) {
     }
   });
 
-  socket.on('sendClue', data => {
-    const { word, count } = data;
-    if (Number.isNaN(parseInt(count))) {
-      return;
-    }
-    if (game.canSendClue(player)) {
-      try {
-        game.addClue(word, parseInt(count));
-      } catch (err) {
-        socket.emit('message', { message: err.message });
-      }
-    }
-  });
-
-  socket.on('revealWord', data => {
-    if (game.canReveal(player)) {
-      const { r, c } = data;
-      game.reveal(r, c);
-    }
-  });
-
   // retrieving info for reconnected clients
   socket.on('getReconnect', data => {
     game.reconnectSendBoard(player);

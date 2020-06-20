@@ -7,7 +7,7 @@ const BoardInterface = require("../common/board")
 
 class Board extends BoardInterface {
   constructor(wordlist, notifyReveal, sendAllReveals) {
-    this.tiles = wordlist.getRandomWords(BOARD_LEN * BOARD_LEN);
+    super(wordlist);
 
     this.revealed = [];
     for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealed.push(new Set()) };
