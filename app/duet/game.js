@@ -192,6 +192,9 @@ class DuetGame extends GameInterface {
     this.notifyScore();
 
     this.turn = this.turn === RED ? BLUE : RED;
+    if (this.keycard.teamFinished(this.turn)) {
+      this.turn = this.turn === RED ? BLUE : RED;
+    }
     this.notifyTurnChange();
     this.startClue();
   }

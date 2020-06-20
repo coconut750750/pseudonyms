@@ -29,6 +29,10 @@ class KeyCard {
   constructor(timers, mistakes) {
     this.tiles = [];
     this.leftover = 15;
+    this.teamLeftover = {
+      [RED]: 9,
+      [BLUE]: 9,
+    };
 
     this.generate();
     this.jsonObj = this.genJson();
@@ -55,7 +59,17 @@ class KeyCard {
     const colors = this.tiles[r * BOARD_LEN + c];
     if (colors[team] === GREEN_TILE) {
       this.leftover -= 1;
+      if (colors[RED] === GREEN_TILE) {
+        this.teamLeftover[RED] -= 1;
+      }
+      if (colors[BLUE] === GREEN_TILE) {
+        this.teamLeftover[BLUE] -= 1;
+      }
     }
+  }
+
+  teamFinished(team) {
+    return this.teamLeftover[team] === 0;
   }
 
   checkWin() {
