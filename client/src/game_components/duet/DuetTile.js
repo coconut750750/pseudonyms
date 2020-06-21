@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Tile.css';
+import '../Tile.css';
 import './DuetTile.css';
 
 const WHITE = 'y';

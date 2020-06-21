@@ -1,8 +1,8 @@
 import React from 'react';
 
 import ClueInput from '../game_components/ClueInput';
-import ClassicBoard from '../game_components/ClassicBoard';
-import DuetBoard from '../game_components/DuetBoard';
+import ClassicBoard from '../game_components/classic/ClassicBoard';
+import DuetBoard from '../game_components/duet/DuetBoard';
 
 const RED = "red";
 const BLUE = "blue";

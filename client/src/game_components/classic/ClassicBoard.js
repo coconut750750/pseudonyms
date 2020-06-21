@@ -1,33 +1,34 @@
 import React from 'react';
 
-import DuetTile from './DuetTile';
+import ClassicTile from './ClassicTile';
 
-import './Board.css';
+import '../Board.css';
 
-function DuetBoard(props) {  
-  const getReveals = (r, c) => {
-    return props.reveals.filter( rev => rev.r === r && rev.c === c );
+function ClassicBoard(props) {  
+  const getRevealed = (r, c) => {
+    for (var rev of props.reveals) {
+      if (rev.r === r && rev.c === c)
+        return rev;
+    }
+    return undefined;
   };
 
   const renderTile = (r, c) => {
-    const reveals = getReveals(r, c);
-    let color = "";
-    let glow = undefined;
+    const rev = getRevealed(r, c);
+    const isRevealed = rev !== undefined;
+    let color = isRevealed ? rev.color : "";
     if (props.keycard !== undefined) {
-      color = props.keycard.get(r, c)[props.team];
-      if (props.otherTeam !== undefined) {
-        glow = props.keycard.get(r, c)[props.otherTeam];
-      }
+      color = props.keycard.get(r, c);
     }
 
     const word = props.board.get(r, c);
     return (
-      <DuetTile
+      <ClassicTile
         key={word}
         word={word}
         color={color}
-        glow={glow}
-        reveals={reveals}
+        revealed={isRevealed}
+        isKey={props.isKey}
         active={props.canReveal}
         reveal={ () => props.revealWord(r, c) }/>
     );
@@ -52,4 +53,4 @@ function DuetBoard(props) {
   );
 }
 
-export default DuetBoard;
+export default ClassicBoard;
