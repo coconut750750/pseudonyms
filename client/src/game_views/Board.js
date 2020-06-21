@@ -4,19 +4,21 @@ import ClueInput from '../game_components/ClueInput';
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
 
-import { RED, BLUE, otherTeam } from '../utils/const';
+import { 
+  RED,
+  BLUE,
+  redTurn,
+  blueTurn,
+  firstTurn,
+  suddenDeath,
+  otherTeam,
+  classicTurnDescriptor,
+  duetTurnDescriptor,
+} from '../utils/const';
 
 function BoardView(props) {
   const myTurn = () => {
     return props.me.team === props.turn;
-  };
-
-  const firstTurn = () => {
-    return props.turn === "ft";
-  };
-
-  const suddenDeath = () => {
-    return props.turn === "sd";
   };
 
   const clueActive = () => {
@@ -43,27 +45,16 @@ function BoardView(props) {
     if (props.typeChecks.classic()) {
       return myTurn() && props.me.isKey() && !clueActive();
     } else if (props.typeChecks.duet()) {
-      return (myTurn() || firstTurn()) && !clueActive();
+      return (myTurn() || firstTurn(props.turn)) && !clueActive();
     }
     return false;
   };
 
   const getTurnDescriptor = () => {
     if (props.typeChecks.classic()) {
-      return <h6>{`${props.turn.replace(/^\w/, c => c.toUpperCase())} turn`}</h6>;
+      return <h6>{classicTurnDescriptor(props.turn)}</h6>;
     } else if (props.typeChecks.duet()) {
-      if (firstTurn()) {
-        return <h6>First clue</h6>;
-      } else if (suddenDeath()) {
-        return <h6>Sudden Death</h6>;
-      }
-      const teamName = props.turn.replace(/^\w/, c => c.toUpperCase());
-      const otherTeamName = otherTeam(props.turn).replace(/^\w/, c => c.toUpperCase());
-      if (!clueActive()) {
-        return <h6>{`${teamName} giving clue`}</h6>;
-      } else {
-        return <h6>{`${otherTeamName} guessing`}</h6>;
-      }
+      return <h6>{duetTurnDescriptor(props.turn, clueActive())}</h6>;
     }
     return <div/>
   };
@@ -97,7 +88,7 @@ function BoardView(props) {
           keycard={props.keycard}
           team={props.me.team}
           isKey={true}
-          canReveal={(!myTurn() && clueActive()) || suddenDeath()}/>
+          canReveal={(!myTurn() && clueActive()) || suddenDeath(props.turn)}/>
       );
     }
     return <div/>

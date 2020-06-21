@@ -15,14 +15,15 @@ import { getMePlayer, newPlayer } from '../models/player';
 import BoardModel, { newBoard } from '../models/board';
 import { newKey } from '../models/keycard';
 
-const LOBBY = "lobby";
-const TEAMS = "teams";
-const ROLES = "roles";
-const BOARD = "board";
-const RESULT = "result";
-
-const CLASSIC = "classic";
-const DUET = "duet";
+import { 
+  LOBBY,
+  TEAMS,
+  ROLES,
+  BOARD,
+  RESULT,
+  CLASSIC,
+  DUET,
+} from '../utils/const';
 
 function Game(props) {
   const [message, setMessage] = useState("");

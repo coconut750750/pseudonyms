@@ -3,16 +3,14 @@ import React from 'react';
 import '../Tile.css';
 import './DuetTile.css';
 
-const WHITE = 'y';
-const RED = 'red';
-const BLUE = 'blue';
+import { RED, BLUE, WHITE_TILE } from "../../utils/const";
 
 function DuetTile(props) {
   const { reveals } = props;
   let tokens = [];
   let fillColor = undefined;
   reveals.forEach(rev => {
-    if (rev.color === WHITE) {
+    if (rev.color === WHITE_TILE) {
       tokens.push(rev.team);
     } else {
       fillColor = rev.color;
