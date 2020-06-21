@@ -6,7 +6,7 @@ const description = {
   teams: "This is the team selection screen. Players can select their own teams, or randomize the teams. Everyone must be on a team before advancing.",
   roles: "In this screen, one player from each team voluntarily elects themselves as the Key. Each team needs one Key.",
   clue: "This is what a Key will see once the game has started. He/she types a clue and selects a clue count below. Non-Key players will not see the color of the words.",
-  guess: "Non-Key players will guess words based off the clue. The color of the word won't be revealed until after they have chosen a word.",
+  guess: "Non-Key players will guess words based off the clue. The color of the word won't be revealed until after they have clicked a word.",
 }
 
 function Walkthrough(props) {
