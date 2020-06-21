@@ -21,10 +21,11 @@ function ClassicBoard(props) {
       color = props.keycard.get(r, c);
     }
 
+    const word = props.board.get(r, c);
     return (
       <ClassicTile
-        key={`${r}-${c}`}
-        word={props.board.get(r, c)}
+        key={word}
+        word={word}
         color={color}
         revealed={isRevealed}
         isKey={props.isKey}

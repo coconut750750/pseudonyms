@@ -20,10 +20,11 @@ function DuetBoard(props) {
       }
     }
 
+    const word = props.board.get(r, c);
     return (
       <DuetTile
-        key={`${r}-${c}`}
-        word={props.board.get(r, c)}
+        key={word}
+        word={word}
         color={color}
         glow={glow}
         reveals={reveals}
