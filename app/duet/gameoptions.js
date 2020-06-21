@@ -6,17 +6,17 @@ class GameOptions extends GameOptionsInterface {
     const { clueLimit, guessLimit, wordlist, customWords } = options;
     let { timers, mistakes } = options;
     
-    if (timers !== undefined) {
+    if (timers !== 0) {
       if (timers > MAX_TIMER_TOKENS) {
-        throw new Error(`The maximum number of timer tokens is ${MAX_TIMER_TOKENS}`);
+        throw new Error(`The maximum turn limit is ${MAX_TIMER_TOKENS}`);
       }
     } else {
       timers = DEFAULT_TIMER_TOKENS;
     }
 
-    if (mistakes !== undefined) {
+    if (mistakes !== 0) {
       if (mistakes > timers) {
-        throw new Error(`The number of allowed mistakes can't be more than the number of timer tokens`);
+        throw new Error(`The number of allowed mistakes can't be more than the turn limit`);
       }
     } else {
       mistakes = timers;

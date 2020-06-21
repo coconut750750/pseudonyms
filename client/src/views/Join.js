@@ -47,7 +47,7 @@ function Join(props) {
         </div>
       </form>
 
-      {message && <div className="alert alert-danger" role="alert">
+      {message && <div className="alert alert-danger message" role="alert">
         {message}
       </div>}
     </div>

@@ -24,7 +24,7 @@ function GameHeader(props) {
     <div className="row">
       <div className="col-4"><h6>{`Words left: ${props.score.leftover}`}</h6></div>
       <div className="col-4"></div>
-      <div className="col-4"><h6>{`Time left: ${props.score.timer}`}</h6></div>
+      <div className="col-4"><h6>{`Turns left: ${props.score.timer}`}<br/>{`Mistakes left: ${props.score.mistakes}`}</h6></div>
     </div>
   );
 

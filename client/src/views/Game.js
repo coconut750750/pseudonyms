@@ -195,8 +195,7 @@ function Game(props) {
         </div>
       }
 
-      <br/>
-      {message && <div className={`alert ${message.class}`} role="alert">
+      {message && <div className={`alert ${message.class} message`} role="alert">
         {message.string}
       </div>}
     </div>

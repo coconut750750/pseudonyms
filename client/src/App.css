@@ -17,7 +17,6 @@ p {
 .button-row {
     width: 75%;
     margin: 0 auto;
-    margin-bottom: 20px;
 }
 
 .button-row > * {
@@ -72,4 +71,8 @@ p {
     padding: 3px;
     cursor: pointer;
     transform: rotate(-45deg);
+}
+
+.message {
+    margin-top: 20px;
 }

@@ -25,12 +25,18 @@ function Lobby(props) {
   const [clueLimit, setClueLimit] = useState(0);
   const [guessLimit, setGuessLimit] = useState(0);
 
+  const [turnLimit, setTurnLimit] = useState(0);
+  const [mistakeLimit, setMistakeLimit] = useState(0);
+
   const startGame = () => {
     let options = { clueLimit, guessLimit };
     if (!useCustom) {
       options = { ...options, wordlist };
     } else {
       options = { ...options, customWords };
+    }
+    if (props.typeChecks.duet) {
+      options = { ...options, timers: turnLimit, mistakes: mistakeLimit };
     }
     props.socket.emit('startGame', { options: options });
   };
@@ -89,6 +95,47 @@ function Lobby(props) {
     );
   }
 
+  const renderDuetTokens = () => {
+    if (props.typeChecks.duet()) {
+      return (
+        <div className="row">
+          <div className="col-6">
+            <small>Turn limit</small>
+            <select className="form-control gameoptions-select" defaultValue={9} onChange={ e => setTurnLimit(e.target.value) }>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
+              <option value={9}>9</option>
+              <option value={10}>10</option>
+              <option value={11}>11</option>
+            </select>
+          </div>
+          <div className="col-6">
+            <small>Mistake limit</small>
+            <select className="form-control gameoptions-select" defaultValue={9} onChange={ e => setMistakeLimit(e.target.value) }>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+              <option value={6}>6</option>
+              <option value={7}>7</option>
+              <option value={8}>8</option>
+              <option value={9}>9</option>
+              <option value={10}>10</option>
+              <option value={11}>11</option>
+            </select>
+          </div>
+        </div>
+      );
+    }
+  }
+
   const canRenderAdmin = () => {
     return props.me !== undefined && props.me.isAdmin;
   }
@@ -121,6 +168,8 @@ function Lobby(props) {
           <br/>
 
           {renderTimeLimit()}
+          <br/>
+          {renderDuetTokens()}
 
           <br/>
         </div>
