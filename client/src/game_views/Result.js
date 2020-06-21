@@ -3,11 +3,7 @@ import React from 'react';
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
 
-const RED = "red";
-const BLUE = "blue";
-const otherTeam = (team) => {
-  return team === RED ? BLUE : RED;
-}
+import { RED, BLUE, otherTeam } from '../utils/const';
 
 function Result(props) {
   const renderBoard = () => {
