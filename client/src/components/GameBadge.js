@@ -17,18 +17,19 @@ function GameBadge(props) {
   };
 
   return (
-    <div className="d-flex justify-content-between">
-      <h6 className>
+    <div className="row">
+      <h6 className="col-4">
       Game code: <span onClick={() => copyLink()} className="badge badge-light" style={style}>{props.gameCode}</span>
       </h6>
 
+      <div className="col-4"/>
       {props.typeChecks.classic() &&
-        <h6>
+        <h6 className="col-4">
         Game type: <span className="badge badge-primary">Classic</span>
         </h6>
       }
       {props.typeChecks.duet() &&
-        <h6>
+        <h6 className="col-4">
         Game type: <span className="badge badge-success">Duet</span>
         </h6>
       }
