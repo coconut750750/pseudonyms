@@ -125,7 +125,7 @@ class DuetGame extends GameInterface {
 
   startClue() {
     this.stopTimer();
-    if (this.turn !== undefined) {
+    if (this.turn !== FIRST_TURN) {
       this.startTimer(this.gameoptions.clueLimit, () => this.addClue(undefined, "-", "-"));
     }
   }

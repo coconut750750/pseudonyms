@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import debounce from "lodash/debounce";
 
-import GameCodeBadge from '../components/GameCodeBadge';
+import GameBadge from '../components/GameBadge';
 
 import GameHeader from '../game_components/GameHeader';
 
@@ -139,6 +139,7 @@ function Game(props) {
 
   const game_views = {
     [LOBBY]: <Lobby 
+              typeChecks={typeChecks(type)}
               socket={props.socket}
               players={players}
               me={me}/>,
@@ -172,7 +173,8 @@ function Game(props) {
 
   return (
     <div>
-      <GameCodeBadge 
+      <GameBadge
+        typeChecks={typeChecks(type)}
         gameCode={props.gameCode}
         copySuccess={() => setDisappearingMessage('Successfully copied shareable link!', 'alert-success')}/>
 

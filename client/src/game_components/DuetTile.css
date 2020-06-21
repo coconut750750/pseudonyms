@@ -1,17 +1,17 @@
 .tile .token {
     position: absolute;
-    top: -2px;
+    top: -4px;
     min-height: 40%;
     min-width: 25%;
     box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 8px 0px;
 }
 
 .tile .token.badge-danger {
-    left: -2px;
+    left: -4px;
 }
 
 .tile .token.badge-primary {
-    right: -2px;
+    right: -4px;
 }
 
 .tile.revealed.g {
@@ -40,6 +40,7 @@
 
 .tile.glow-g {
     border: 2px solid #28a745;
+    /*box-shadow: #28a745 0px 0px 0px 2px;*/
 }
 
 .tile.glow-y {
@@ -48,4 +49,5 @@
 
 .tile.glow-x {
     border: 2px solid #000000;
+    /*box-shadow: #000000 0px 0px 0px 2px;*/
 }

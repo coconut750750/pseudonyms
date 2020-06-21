@@ -20,8 +20,13 @@ p {
     margin-bottom: 20px;
 }
 
-.button-row button {
+.button-row > * {
     width: 30%;
+    white-space: normal
+}
+
+.button-row > * > button {
+    width: 100%;
     white-space: normal
 }
 

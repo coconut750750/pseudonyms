@@ -13,10 +13,15 @@ function Home(props) {
       </div>
 
       <div className="button-row d-flex justify-content-around">
-        <button type="button" className="btn btn-light" onClick={props.createClassicGame}>Create<br/>Classic Game</button>
-        <button type="button" className="btn btn-light" onClick={props.createDuetGame}>Create<br/>Duet Game</button>
+        <div>
+          <button type="button" className="btn btn-light" onClick={props.createClassicGame}>Create<br/>Classic Game</button>
+          <p>Two Teams<br/>4+ players</p>
+        </div>
+        <div>
+          <button type="button" className="btn btn-light" onClick={props.createDuetGame}>Create<br/>Duet Game</button>
+          <p>Collaborative<br/>2+ players</p>
+        </div>
       </div>
-
 
       <div class="btn-group-vertical">
         <button type="button" className="btn btn-light" onClick={props.joinGame}>Join Game</button>
