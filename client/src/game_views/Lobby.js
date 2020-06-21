@@ -25,8 +25,8 @@ function Lobby(props) {
   const [clueLimit, setClueLimit] = useState(0);
   const [guessLimit, setGuessLimit] = useState(0);
 
-  const [turnLimit, setTurnLimit] = useState(0);
-  const [mistakeLimit, setMistakeLimit] = useState(0);
+  const [turnLimit, setTurnLimit] = useState(9);
+  const [mistakeLimit, setMistakeLimit] = useState(9);
 
   const startGame = () => {
     let options = { clueLimit, guessLimit };
@@ -101,34 +101,14 @@ function Lobby(props) {
         <div className="row">
           <div className="col-6">
             <small>Turn limit</small>
-            <select className="form-control gameoptions-select" defaultValue={9} onChange={ e => setTurnLimit(e.target.value) }>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-              <option value={11}>11</option>
+            <select className="form-control gameoptions-select" value={turnLimit} onChange={ e => setTurnLimit(e.target.value) }>
+              {[...Array(11).keys()].map(i => <option value={i + 1}>{i + 1}</option>)}
             </select>
           </div>
           <div className="col-6">
             <small>Mistake limit</small>
-            <select className="form-control gameoptions-select" defaultValue={9} onChange={ e => setMistakeLimit(e.target.value) }>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={3}>3</option>
-              <option value={4}>4</option>
-              <option value={5}>5</option>
-              <option value={6}>6</option>
-              <option value={7}>7</option>
-              <option value={8}>8</option>
-              <option value={9}>9</option>
-              <option value={10}>10</option>
-              <option value={11}>11</option>
+            <select className="form-control gameoptions-select" value={mistakeLimit} onChange={ e => setMistakeLimit(e.target.value) }>
+              {[...Array(12).keys()].map(i => <option value={i}>{i}</option>)}
             </select>
           </div>
         </div>

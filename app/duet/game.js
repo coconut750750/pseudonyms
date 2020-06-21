@@ -183,17 +183,21 @@ class DuetGame extends GameInterface {
     } else if (this.keycard.checkWin()) {
       this.endGame(true);
     } else if (this.keycard.isWhite(r, c, this.turn)) {
-      this.mistakesLeft -= 1;
+      if (this.mistakesLeft <= 0) {
+        this.timersLeft = Math.max(this.timersLeft - 1, 0);
+      } else {
+        this.mistakesLeft = Math.max(this.mistakesLeft - 1, 0);
+      }
       this.endTurn();
     }
   }
 
   endTurn() {
     this.clues.resetCurrent();
-    this.timersLeft -= 1;
+    this.timersLeft = Math.max(this.timersLeft - 1, 0);
     this.notifyScore();
 
-    if (this.timersLeft === 0) {
+    if (this.timersLeft <= 0) {
       this.turn = SUDDEN_DEATH;
     } else {
       this.turn = this.turn === RED ? BLUE : RED;
