@@ -19,7 +19,6 @@ class GameOptions extends GameOptionsInterface {
 
     super(clueLimit, guessLimit, wordlist, customWords);
 
-    console.log(options);
     this.timers = timers;
     this.mistakes = mistakes;
   }
