@@ -9,6 +9,10 @@ class Board {
     return this.tiles[this.coordToIndex(r, c)];
   }
 
+  validTile(r, c) {
+    return 0 <= r && r < BOARD_LEN && 0 <= c && c < BOARD_LEN;
+  }
+
   isValid(word) {
     throw new Error("Board needs to override isValid function"); 
   }

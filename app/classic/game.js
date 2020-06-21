@@ -163,9 +163,6 @@ class ClassicGame extends GameInterface {
   }
 
   addClue(player, word, count) {
-    if (player !== undefined && !this.canSendClue(player)) {
-      return;
-    }
     if (!this.validClue(word)) {
       throw new Error("Invalid Clue");
     }
@@ -184,6 +181,9 @@ class ClassicGame extends GameInterface {
   }
 
   reveal(r, c) {
+    if (!this.board.validTile(r, c)) {
+      return;
+    }
     if (this.board.isRevealed(r, c)) {
       return;
     }

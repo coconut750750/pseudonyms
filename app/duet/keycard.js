@@ -26,7 +26,7 @@ function shuffle(a) {
 }
 
 class KeyCard {
-  constructor(timers, mistakes) {
+  constructor() {
     this.tiles = [];
     this.leftover = 15;
     this.teamLeftover = {

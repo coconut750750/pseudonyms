@@ -2,7 +2,7 @@ const Board = require('../board');
 const WordList = require('../../common/wordlist');
 const { BOARD_LEN } = require("../../common/const");
 
-describe('initiating a board', () => {
+describe('classic board test', () => {
   it('construct tiles', () => {
     const wordlist = new WordList('classic');
     const board = new Board(wordlist, () => {}, () => {});

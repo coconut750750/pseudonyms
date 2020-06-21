@@ -1,5 +1,4 @@
 const PseudoGame = require('../game');
-const PlayerList = require('../playerlist');
 const WordList = require('../../common/wordlist');
 const Board = require('../board');
 const GameOptions = require('../gameoptions');
@@ -13,14 +12,14 @@ describe('clues test', () => {
   const board = new Board(wordlist, () => {});
   const gameOptions = new GameOptions({});
 
-  it('adding a clue adds to list', () => {
+  it('adding a clue to list', () => {
     let game = new PseudoGame("code", () => {}, () => {}, (event, data) => {});
     game.board = board;
     game.gameoptions = gameOptions;
 
-    game.addClue("clue", 1);
-    game.addClue("clue", 2);
-    game.addClue("clue", 3);
+    game.addClue(undefined, "clue", 1);
+    game.addClue(undefined, "clue", 2);
+    game.addClue(undefined, "clue", 3);
 
     expect(game.clues.clues.length).toBe(3);
   });
@@ -36,9 +35,9 @@ describe('clues test', () => {
     game.gameoptions = gameOptions;
     totalBroadcasts = 0;
 
-    game.addClue("clue", 1);
-    game.addClue("clue", 2);
-    game.addClue("clue", 3);
+    game.addClue(undefined, "clue", 1);
+    game.addClue(undefined, "clue", 2);
+    game.addClue(undefined, "clue", 3);
 
     expect(totalBroadcasts).toBe(3);
   });
@@ -49,7 +48,7 @@ describe('clues test', () => {
     game.gameoptions = gameOptions;
 
     game.addPlayer("p1", undefined);
-    game.addClue("clue", 1);
+    game.addClue(undefined, "clue", 1);
 
     const p1 = game.plist.get("p1");
     let sendEvent = "";
@@ -86,7 +85,7 @@ describe('clues test', () => {
 
     p1.isOnTeam.mockImplementation( (team) => true );
 
-    game.addClue("clue", 1);
+    game.addClue(undefined, "clue", 1);
 
     expect(game.canEndTurn(p1)).toBeTruthy();
   });
@@ -109,7 +108,7 @@ describe('clues test', () => {
     game.board = board;
     game.gameoptions = gameOptions;
 
-    game.addClue("clue", 1);
+    game.addClue(undefined, "clue", 1);
 
     expect(game.clues.currentExists()).toBeTruthy();
 
@@ -124,8 +123,8 @@ describe('clues test', () => {
     game.board = board;
     game.gameoptions = gameOptions;
 
-    game.addClue("clue", 1);
-    game.addClue("clue", 2);
+    game.addClue(undefined, "clue", 1);
+    game.addClue(undefined, "clue", 2);
 
     expect(game.clues.clues.length).toBe(2);
 
