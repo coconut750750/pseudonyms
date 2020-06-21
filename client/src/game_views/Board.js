@@ -7,11 +7,8 @@ import DuetBoard from '../game_components/duet/DuetBoard';
 import { 
   RED,
   BLUE,
-  redTurn,
-  blueTurn,
   firstTurn,
   suddenDeath,
-  otherTeam,
   classicTurnDescriptor,
   duetTurnDescriptor,
 } from '../utils/const';

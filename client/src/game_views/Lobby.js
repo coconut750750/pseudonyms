@@ -95,7 +95,7 @@ function Lobby(props) {
     );
   }
 
-  const renderDuetTokens = () => {
+  const renderDuetLimits = () => {
     if (props.typeChecks.duet()) {
       return (
         <div className="row">
@@ -149,7 +149,7 @@ function Lobby(props) {
 
           {renderTimeLimit()}
           <br/>
-          {renderDuetTokens()}
+          {renderDuetLimits()}
 
           <br/>
         </div>
