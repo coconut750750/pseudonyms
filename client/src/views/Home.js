@@ -8,7 +8,8 @@ function Home(props) {
       <div className="d-flex justify-content-center">
         <div className="alert alert-success updates" role="alert">
           <p>New features!</p>
-          <p>Tired of copying and pasting the game code? Now you can simply click on a shareable link to join a game!</p>
+          <p>Added a new game mode: Duet! Work with a group as small as 2 people to guess all the green words. Be careful though, there are more black words in this mode.</p>
+          <p>Spend less time explaining/reading rules, and more time playing, with Hints! Hints are scattered throughout the game to guide unexperienced players through the game. Simply click on the "i" icon to read more about relevant rules. Veterans of the game can also turn them off.</p>
         </div>
       </div>
 

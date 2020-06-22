@@ -137,6 +137,7 @@ function Lobby(props) {
           {!useCustom &&
             <div>
               <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
+              <Info help="customWords"/>
               <br/>
               {renderWordlistSelect()}
             </div>
