@@ -1,4 +1,4 @@
-export const description = "Duet is the collaborative version of Pseudonyms Classic.";
+export const description = "Duet is a collaborative version of Pseudonyms. Find all 15 green words before you run out of time!";
 export const turnLimit = "Once players use up all their turns but still have green words left, Sudden Death starts. Players continue guessing without any more clues, and any incorrect guess ends the game.";
 export const mistakeLimit = "Once players use up all their mistakes, future mistakes cost 2 turns.";
 export const wordScore = "There are 15 distinct green words to guess; each team sees 9 and 3 overlap. The green words you see might not be green to the other team."; 
