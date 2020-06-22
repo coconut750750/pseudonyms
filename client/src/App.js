@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
 
 import io from 'socket.io-client';
@@ -28,6 +29,7 @@ function App() {
   const [viewState, setViewState] = useState(HOME);
   const [gameCode, setGameCode] = useState("");
   const [name, setName] = useState("");
+  const [gameType, setGameType] = useState("");
   const [socket, setSocket] = useState(undefined);
   const [urlGameCode, setUrlGameCode] = useState(undefined);
   
@@ -47,7 +49,7 @@ function App() {
     window.location.href = '/';
   });
 
-  const setGame = (gameCode, name) => {
+  const setGame = (gameCode, name, gameType) => {
     let socket = io(socketiohost);
     socket.on('end', data => {
       exitGame(socket);
@@ -55,11 +57,15 @@ function App() {
     socket.on('disconnect', data => {
       reset();
     });
-    setSocket(socket);
 
-    setGameCode(gameCode);
-    setName(name);
-    setViewState(GAME);
+    ReactDOM.unstable_batchedUpdates(() => {
+      setSocket(socket);
+
+      setGameCode(gameCode);
+      setName(name);
+      setGameType(gameType);
+      setViewState(GAME);
+    });
     window.history.pushState({}, 'Game', `/${gameCode}`);
   };
 
@@ -123,19 +129,20 @@ function App() {
     [CREATE_CLASSIC]: <Create
                         classic
                         goBack={ () => goHome() }
-                        setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
+                        setGame={setGame}/>,
     [CREATE_DUET]:  <Create
                       duet
                       goBack={ () => goHome() }
-                      setGame={ (gameCode, name) => setGame(gameCode, name) }/>,
+                      setGame={setGame}/>,
     [JOIN]:         <Join
                       urlGameCode={urlGameCode}
                       goBack={ () => goHome() }
-                      join={ (gameCode, name) => setGame(gameCode, name) }/>,
+                      join={setGame}/>,
     [GAME]:         <Game
                       socket={socket}
                       gameCode={gameCode}
                       name={name}
+                      gameType={gameType}
                       exitGame={ () => exitGame(socket) }/>,
     };
 

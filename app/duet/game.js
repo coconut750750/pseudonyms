@@ -7,7 +7,9 @@ const Clues = require("../common/clues");
 const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 
-const { RED, BLUE, MIN_PLAYERS, FIRST_TURN, SUDDEN_DEATH } = require("../common/const").duet;
+const c = require('../common/const');
+const { DUET } = c;
+const { RED, BLUE, MIN_PLAYERS, FIRST_TURN, SUDDEN_DEATH } = c.duet;
 
 const LOBBY = 'lobby';
 const TEAMS = 'teams';
@@ -31,8 +33,8 @@ class DuetGame extends GameInterface {
     this.reset();
   }
 
-  name() {
-    return "duet";
+  type() {
+    return DUET;
   }
 
   socketio(socket, game, name, player) {

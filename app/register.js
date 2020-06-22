@@ -4,13 +4,16 @@ const router = express.Router();
 const MIN_NAME_LENGTH = 2;
 const MAX_NAME_LENGTH = 12;
 
+const { CLASSIC, DUET } = require('./common/const');
+
 router.post('/classic/create', (req, res) => {
   let options = req.body;
   options.dbCollection = req.dbCollection;
   const game = req.gm.createClassicGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
-    gameCode: `${game.code}`
+    gameCode: `${game.code}`,
+    type: CLASSIC,
   });
 });
 
@@ -20,7 +23,8 @@ router.post('/duet/create', (req, res) => {
   const game = req.gm.createDuetGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
-    gameCode: `${game.code}`
+    gameCode: `${game.code}`,
+    type: DUET,
   });
 });
 
@@ -40,22 +44,24 @@ router.get('/checkname', (req, res) => {
     const game = req.gm.retrieveGame(gameCode);
     if (game === undefined) {
       res.send({ valid: false, message: 'Invalid game code' });
-      return;
-    }
-    if (game.playerExists(name) && !game.isActive(name)) {
-      res.send({ valid: true });
-      return;
+    } else if (game.playerExists(name) && !game.isActive(name)) {
+      res.send({
+        valid: true,
+        type: game.type(),
+      });
     } else if (game.playerExists(name)) {
       res.send({ valid: false, message: 'This name has been taken' });
-      return;
-    }
-    if (game.hasStarted()) {
+    } else if (game.hasStarted()) {
       res.send({ valid: false, message: 'This game is closed' });
-      return;
+    } else {
+      res.send({
+        valid: true,
+        type: game.type(),
+      });
     }
+  } else {
+    res.send({ valid: true });
   }
-
-  res.send({ valid: true });
 });
 
 router.get('/checkcode', (req, res) => {

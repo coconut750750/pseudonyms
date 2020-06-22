@@ -25,7 +25,7 @@ import {
 } from '../utils/const';
 
 function Game(props) {
-  const [type, setType] = useState(undefined);
+  console.log('game')
   const [message, setMessage] = useState("");
   const [phase, setPhase] = useState(LOBBY);
 
@@ -62,11 +62,6 @@ function Game(props) {
 
     // this will result in a 'players' message from server
     props.socket.emit('joinGame', { name: props.name, gameCode: props.gameCode });
-
-    props.socket.on('type', data => {
-      const { type } = data;
-      setType(type);
-    })
 
     props.socket.on('phase', data => {
       ReactDOM.unstable_batchedUpdates(() => {
@@ -140,7 +135,7 @@ function Game(props) {
 
   const game_views = {
     [LOBBY]: <Lobby 
-              type={type}
+              type={props.gameType}
               socket={props.socket}
               players={players}
               me={me}/>,
@@ -152,7 +147,7 @@ function Game(props) {
               players={players}
               me={me}/>,
     [BOARD]: <Board
-              type={type}
+              type={props.gameType}
               socket={props.socket}
               players={players}
               me={me}
@@ -163,7 +158,7 @@ function Game(props) {
               clue={clue}
               guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
-              type={type}
+              type={props.gameType}
               socket={props.socket}
               me={me}
               winner={winner}
@@ -175,13 +170,13 @@ function Game(props) {
   return (
     <div>
       <GameBadge
-        type={type}
+        type={props.gameType}
         gameCode={props.gameCode}
         copySuccess={() => setDisappearingMessage('Successfully copied shareable link!', 'alert-success')}/>
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
-        type={type}
+        type={props.gameType}
         socket={props.socket}
         players={players}
         score={score}/>

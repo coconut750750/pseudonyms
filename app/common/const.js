@@ -48,8 +48,12 @@ const duet = {
 };
 
 module.exports = {
+  CLASSIC: 'classic',
   classic,
+  
+  DUET: 'duet',
   duet,
+
   MIN_WORDS: 50,
   BOARD_LEN: 5,
 }

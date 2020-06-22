@@ -8,7 +8,9 @@ const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 const { incrementGameStarts, saveGame, getStats, GameStats } = require("./analytics");
 
-const { RED, BLUE, MIN_PLAYERS } = require("../common/const").classic;
+const c = require('../common/const');
+const { CLASSIC } = c;
+const { RED, BLUE, MIN_PLAYERS } = c.classic;
 
 const LOBBY = 'lobby';
 const TEAMS = 'teams';
@@ -30,8 +32,8 @@ class ClassicGame extends GameInterface {
     this.reset();
   }
 
-  name() {
-    return "classic";
+  type() {
+    return CLASSIC;
   }
 
   socketio(socket, game, name, player) {
