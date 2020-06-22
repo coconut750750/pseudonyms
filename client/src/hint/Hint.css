@@ -29,6 +29,8 @@
     margin-top: 4px;
     margin-bottom: 4px;
     min-width: 150px;
+    max-height: 150px;
+    overflow-y: scroll;
     z-index: 2;
     background-color: #fff;
 }

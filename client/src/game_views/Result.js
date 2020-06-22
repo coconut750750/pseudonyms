@@ -48,7 +48,6 @@ function Result(props) {
       <br/>
 
       {renderBoard()}
-      <br/>
     </div>
   );
 }

@@ -8,6 +8,9 @@
   .App {
     width: 90vw;
   }
+  h6 {
+    /*font-size: 0.8rem;*/
+  }
 }
 
 .hint-toggle {

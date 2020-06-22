@@ -101,21 +101,21 @@ function BoardView(props) {
         </div>
         <div className="col-2">
           {getTurnDescriptor()}
-          <button type="button" className="btn btn-light btn-sm"
-            disabled={!canEndTurn()}
-            onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
+          <br/>
         </div>
         <div className="col-5">
           {renderClue(BLUE)}
         </div>
       </div>
-      <br/>
 
       {renderBoard()}
       <br/>
 
-      {canSubmitClue() && 
-        <ClueInput socket={props.socket}/>
+      {canSubmitClue() && <ClueInput socket={props.socket}/>}
+      {canEndTurn() &&
+        <button type="button" className="btn btn-light"
+          disabled={!canEndTurn()}
+          onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
       }
     </div>
   );
