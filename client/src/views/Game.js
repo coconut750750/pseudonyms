@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import ReactDOM from 'react-dom';
 import debounce from "lodash/debounce";
 
 import GameBadge from '../components/GameBadge';
@@ -21,19 +22,12 @@ import {
   ROLES,
   BOARD,
   RESULT,
-  CLASSIC,
-  DUET,
 } from '../utils/const';
 
 function Game(props) {
+  const [type, setType] = useState(undefined);
   const [message, setMessage] = useState("");
   const [phase, setPhase] = useState(LOBBY);
-
-  const [type, setType] = useState(undefined);
-  const typeChecks = (type) => ({
-    classic: () => (type === CLASSIC),
-    duet: () => (type === DUET),
-  });
 
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);
@@ -75,17 +69,21 @@ function Game(props) {
     })
 
     props.socket.on('phase', data => {
-      setPhase(data.phase);
-      if (data.phase === LOBBY) {
-        reset();
-      }
+      ReactDOM.unstable_batchedUpdates(() => {
+        setPhase(data.phase);
+        if (data.phase === LOBBY) {
+          reset();
+        }
+      });
     });
 
     props.socket.on('players', data => {
-      const players = data.players.map(p => newPlayer(p));
-      const mePlayer = getMePlayer(players, props.name);
-      setPlayers(players);
-      setMe(mePlayer)
+      ReactDOM.unstable_batchedUpdates(() => {
+        const players = data.players.map(p => newPlayer(p));
+        const mePlayer = getMePlayer(players, props.name);
+        setPlayers(players);
+        setMe(mePlayer)
+      });
     });
 
     props.socket.on('board', data => {
@@ -102,9 +100,11 @@ function Game(props) {
 
     props.socket.on('turn', data => {
       const { turn } = data;
-      setTurn(turn);
-      setClue(undefined);
-      setGuessesLeft(undefined);
+      ReactDOM.unstable_batchedUpdates(() => {
+        setTurn(turn);
+        setClue(undefined);
+        setGuessesLeft(undefined);
+      });
     });
 
     props.socket.on('clue', data => {
@@ -140,7 +140,7 @@ function Game(props) {
 
   const game_views = {
     [LOBBY]: <Lobby 
-              typeChecks={typeChecks(type)}
+              type={type}
               socket={props.socket}
               players={players}
               me={me}/>,
@@ -152,7 +152,7 @@ function Game(props) {
               players={players}
               me={me}/>,
     [BOARD]: <Board
-              typeChecks={typeChecks(type)}
+              type={type}
               socket={props.socket}
               players={players}
               me={me}
@@ -163,7 +163,7 @@ function Game(props) {
               clue={clue}
               guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
-              typeChecks={typeChecks(type)}
+              type={type}
               socket={props.socket}
               me={me}
               winner={winner}
@@ -175,13 +175,13 @@ function Game(props) {
   return (
     <div>
       <GameBadge
-        typeChecks={typeChecks(type)}
+        type={type}
         gameCode={props.gameCode}
         copySuccess={() => setDisappearingMessage('Successfully copied shareable link!', 'alert-success')}/>
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
-        typeChecks={typeChecks(type)}
+        type={type}
         socket={props.socket}
         players={players}
         score={score}/>

@@ -8,6 +8,8 @@ import Hint from '../hint/Hint';
 import { 
   RED,
   BLUE,
+  isClassic,
+  isDuet,
   firstTurn,
   suddenDeath,
   classicTurnDescriptor,
@@ -15,6 +17,7 @@ import {
 } from '../utils/const';
 
 function BoardView(props) {
+  console.log('board');
   const myTurn = () => {
     return props.me.team === props.turn;
   };
@@ -41,34 +44,34 @@ function BoardView(props) {
   };
 
   const canSubmitClue = () => {
-    if (props.typeChecks.classic()) {
+    if (isClassic(props.type)) {
       return myTurn() && props.me.isKey() && !clueActive();
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return (myTurn() || firstTurn(props.turn)) && !clueActive();
     }
     return false;
   };
 
   const getTurnDescriptor = () => {
-    if (props.typeChecks.classic()) {
+    if (isClassic(props.type)) {
       return classicTurnDescriptor(props.turn);
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return duetTurnDescriptor(props.turn, clueActive());
     }
     return <div/>
   };
 
   const canEndTurn = () => {
-    if (props.typeChecks.classic()) {
+    if (isClassic(props.type)) {
       return clueActive() && myTurn();
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return clueActive() && !myTurn();
     }
     return false;
   };
 
   const renderBoard = () => {
-    if (props.typeChecks.classic()) {
+    if (isClassic(props.type)) {
       return (
         <ClassicBoard
           revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
@@ -78,7 +81,7 @@ function BoardView(props) {
           isKey={props.me.isKey()}
           canReveal={myTurn() && !props.me.isKey() && clueActive()}/>
       );
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return (
         <DuetBoard
           revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }

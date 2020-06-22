@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 import PlayerList from '../components/PlayerList';
 import Hint from '../hint/Hint';
 
 import { getWordlists } from '../api/game';
+import { isClassic, isDuet } from '../utils/const';
 
 import "./Lobby.css";
 
@@ -16,6 +18,7 @@ const timeLimitOptions = [
 ];
 
 function Lobby(props) {
+  console.log('lobyy');
   const [wordlists, setWordlists] = useState([]);
 
   const [wordlist, setWordlist] = useState('');
@@ -36,7 +39,7 @@ function Lobby(props) {
     } else {
       options = { ...options, customWords };
     }
-    if (props.typeChecks.duet) {
+    if (isDuet(props.type)) {
       options = { ...options, timers: turnLimit, mistakes: mistakeLimit };
     }
     props.socket.emit('startGame', { options: options });
@@ -47,15 +50,19 @@ function Lobby(props) {
   };
 
   useEffect(() => {
-    getWordlists().then(data => {
-      if (props.typeChecks.classic()) {
-        setWordlist("classic");
-      } else if (props.typeChecks.duet()) {
-        setWordlist("duet");
-      }
-      setWordlists(data);
-    });
-  }, [props.typeChecks]);
+    if (props.type !== undefined) {
+      getWordlists().then(data => {
+        ReactDOM.unstable_batchedUpdates(() => {
+          if (isClassic(props.type)) {
+            setWordlist("classic");
+          } else if (isDuet(props.type)) {
+            setWordlist("duet");
+          }
+          setWordlists(data);
+        });
+      });
+    }
+  }, [props.type]);
 
   const renderWordlistSelect = () => {
     let options = [];
@@ -103,7 +110,7 @@ function Lobby(props) {
   }
 
   const renderDuetLimits = () => {
-    if (props.typeChecks.duet()) {
+    if (isDuet(props.type)) {
       return (
         <div className="row">
           <div className="col-6">

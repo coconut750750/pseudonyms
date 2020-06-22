@@ -4,11 +4,16 @@ import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
 import Hint from '../hint/Hint';
 
-import { otherTeam } from '../utils/const';
+import {
+  isClassic,
+  isDuet,
+  otherTeam,
+} from '../utils/const';
 
 function Result(props) {
+  console.log('result');
   const renderBoard = () => {
-    if (props.typeChecks.classic()) {
+    if (isClassic(props.type)) {
       return (
         <ClassicBoard
           revealWord={ (r, c) => {} }
@@ -17,7 +22,7 @@ function Result(props) {
           keycard={props.keycard}
           isKey={true}/>
       );
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return (
         <DuetBoard
           revealWord={ (r, c) => {} }
@@ -33,9 +38,9 @@ function Result(props) {
   };
 
   const renderHeader = () => {
-    if (props.typeChecks.classic()) {
+    if (isClassic(props.type)) {
       return <h6>{`${props.winner.replace(/^\w/, c => c.toUpperCase())} wins!`}</h6>;
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return <h6>{props.winner ? "You win!" : "You lose"}</h6>;
     }
     return <div/>
@@ -43,7 +48,7 @@ function Result(props) {
 
   return (
     <div>
-      <h5>Results<Hint classic={props.typeChecks.classic()} duet={props.typeChecks.duet} help="resultsHelp"/></h5>
+      <h5>Results<Hint classic={isClassic(props.type)} duet={isDuet(props.type)} help="resultsHelp"/></h5>
       {renderHeader()}
       <br/>
 

@@ -3,6 +3,10 @@ import React from 'react';
 import PlayerList from '../components/PlayerList';
 import Clock from '../game_components/Clock';
 import Hint from '../hint/Hint';
+import {
+  isClassic,
+  isDuet,
+} from '../utils/const';
 
 function GameHeader(props) {
   const getReds = () => {
@@ -50,9 +54,9 @@ function GameHeader(props) {
           <div className="col"><h5>Scoreboard loading...</h5></div>
         </div>
       );
-    } else if (props.typeChecks.classic()) {
+    } else if (isClassic(props.type)) {
       return renderClassicScore();
-    } else if (props.typeChecks.duet()) {
+    } else if (isDuet(props.type)) {
       return renderDuetScore();
     }
   }
