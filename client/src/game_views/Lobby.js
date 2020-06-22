@@ -48,10 +48,14 @@ function Lobby(props) {
 
   useEffect(() => {
     getWordlists().then(data => {
-      setWordlist(data[0]);
+      if (props.typeChecks.classic()) {
+        setWordlist("classic");
+      } else if (props.typeChecks.duet()) {
+        setWordlist("duet");
+      }
       setWordlists(data);
     });
-  }, []);
+  }, [props.typeChecks]);
 
   const renderWordlistSelect = () => {
     let options = [];
