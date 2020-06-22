@@ -26,19 +26,19 @@ function Teams(props) {
       <br/>
       
       <div className="row">
-        <div className="col-4">
+        <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('selectTeam', { team: 'red' })}>Join Red</button>
           <PlayerList players={getReds()}/>
         </div>
 
-        <div className="col-4">
+        <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('randomizeTeams', {})}>Randomize</button>
           <PlayerList players={getUndecideds()}/>
         </div>
 
-        <div className="col-4">
+        <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('selectTeam', { team: 'blue' })}>Join Blue</button>
           <PlayerList players={getBlues()}/>
