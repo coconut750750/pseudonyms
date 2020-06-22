@@ -16,7 +16,7 @@ function Home(props) {
       <div className="button-row d-flex justify-content-around">
         <div>
           <button type="button" className="btn btn-light" onClick={props.createClassicGame}>Create<br/>Classic Game</button>
-          <p>Two Teams<br/>4+ players</p>
+          <p>Competitive<br/>4+ players</p>
         </div>
         <div>
           <button type="button" className="btn btn-light" onClick={props.createDuetGame}>Create<br/>Duet Game</button>

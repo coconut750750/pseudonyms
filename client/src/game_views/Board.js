@@ -117,7 +117,6 @@ function BoardView(props) {
       {canSubmitClue() && <ClueInput socket={props.socket}/>}
       {canEndTurn() &&
         <button type="button" className="btn btn-light"
-          disabled={!canEndTurn()}
           onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
       }
     </div>
