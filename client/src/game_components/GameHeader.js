@@ -2,7 +2,7 @@ import React from 'react';
 
 import PlayerList from '../components/PlayerList';
 import Clock from '../game_components/Clock';
-import Info from '../info/Info';
+import Hint from '../hint/Hint';
 
 function GameHeader(props) {
   const getReds = () => {
@@ -15,9 +15,13 @@ function GameHeader(props) {
 
   const renderClassicScore = () => (
     <div className="row">
-      <div className="col-5"><h5>{`${props.score.red}`}</h5></div>
+      <div className="col-5">
+        <h5>{`${props.score.red}`}<Hint classic help="score"/></h5>
+      </div>
       <div className="col-2"></div>
-      <div className="col-5"><h5>{`${props.score.blue}`}</h5></div>
+      <div className="col-5">
+        <h5>{`${props.score.blue}`}</h5>
+      </div>
     </div>
   );
 
@@ -25,15 +29,15 @@ function GameHeader(props) {
     <div className="row">
       <div className="col-5">
         <h6>
-          {`Words: ${props.score.leftover}`}<Info duet help="wordScore"/>
+          {`Words: ${props.score.leftover}`}<Hint duet help="wordScore"/>
         </h6>
       </div>
       <div className="col-2"></div>
       <div className="col-5">
         <h6>
-          {`Turns: ${props.score.timer}`}<Info duet help="turnLimit"/>
+          {`Turns: ${props.score.timer}`}<Hint duet help="turnLimit"/>
           <br/>
-          {`Mistakes: ${props.score.mistakes}`}<Info duet help="mistakeScore"/>
+          {`Mistakes: ${props.score.mistakes}`}<Hint duet help="mistakeScore"/>
         </h6>
       </div>
     </div>

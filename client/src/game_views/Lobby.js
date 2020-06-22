@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import PlayerList from '../components/PlayerList';
-import Info from '../info/Info';
+import Hint from '../hint/Hint';
 
 import { getWordlists } from '../api/game';
 
@@ -82,14 +82,14 @@ function Lobby(props) {
       <div className="row">
         <div className="col-6">
           <small>Time for clue</small>
-          <Info help="timeForClue"/>
+          <Hint help="timeForClue"/>
           <select className="form-control gameoptions-select" value={clueLimit} onChange={ e => setClueLimit(e.target.value) }>
             {options}
           </select>
         </div>
         <div className="col-6">
           <small>Time for guess</small>
-          <Info help="timeForGuess"/>
+          <Hint help="timeForGuess"/>
           <select className="form-control gameoptions-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
             {options}
           </select>
@@ -104,14 +104,14 @@ function Lobby(props) {
         <div className="row">
           <div className="col-6">
             <small>Turn limit</small>
-            <Info duet help="turnLimit"/>
+            <Hint duet help="turnLimit"/>
             <select className="form-control gameoptions-select" value={turnLimit} onChange={ e => setTurnLimit(e.target.value) }>
               {[...Array(11).keys()].map(i => <option value={i + 1}>{i + 1}</option>)}
             </select>
           </div>
           <div className="col-6">
             <small>Mistake limit</small>
-            <Info duet help="mistakeLimit"/>
+            <Hint duet help="mistakeLimit"/>
             <select className="form-control gameoptions-select" value={mistakeLimit} onChange={ e => setMistakeLimit(e.target.value) }>
               {[...Array(12).keys()].map(i => <option value={i}>{i}</option>)}
             </select>
@@ -137,7 +137,7 @@ function Lobby(props) {
           {!useCustom &&
             <div>
               <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
-              <Info help="customWords"/>
+              <Hint help="customWords"/>
               <br/>
               {renderWordlistSelect()}
             </div>

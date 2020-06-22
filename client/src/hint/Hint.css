@@ -1,8 +1,8 @@
-.hidehints .info {
+.hidehints .hint {
     display: none;
 }
 
-.info {
+.hint {
     display: inline;
     position: absolute;
     height: 16px;
@@ -11,7 +11,7 @@
     margin-left: 4px;
 }
 
-.info button {
+.hint button {
     height: 16px;
     width: 16px;
     padding: 0;
@@ -21,13 +21,13 @@
     vertical-align: super;
 }
 
-.infomodal {
+.hintmodal {
     border: 1px solid rgba(0,0,0,.2);
     position: absolute;
     padding: 4px;
     border-radius: 4px;
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: 4px;
+    margin-bottom: 4px;
     left: 0;
     transform: translateX(-80%) translateY(0%);
     min-width: 150px;
@@ -35,14 +35,14 @@
     background-color: #fff;
 }
 
-.infomodal.open {
+.hintmodal.open {
 }
 
-.infomodal.closed {
+.hintmodal.closed {
     display: none;
 }
 
-.infomodal p {
+.hintmodal p {
     margin: 0;
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Info from '../info/Info';
+import Hint from '../hint/Hint';
 
 import './GameBadge.css';
 
@@ -25,13 +25,13 @@ function GameBadge(props) {
       {props.typeChecks.classic() &&
         <h6 className="col-5">
         Game type: <span className="badge badge-primary">Classic</span>
-        <Info classic help="description"/>
+        <Hint classic help="description"/>
         </h6>
       }
       {props.typeChecks.duet() &&
         <h6 className="col-5">
         Game type: <span className="badge badge-success">Duet</span>
-        <Info duet help="description"/>
+        <Hint duet help="description"/>
         </h6>
       }
     </div>

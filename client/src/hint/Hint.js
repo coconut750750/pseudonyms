@@ -4,9 +4,9 @@ import * as classic from './classic';
 import * as duet from './duet';
 import * as common from './common';
 
-import './Info.css';
+import './Hint.css';
 
-export default function Info(props) {
+export default function Hint(props) {
   const [open, setOpen] = useState(false);
   
   if (props.help === undefined) {
@@ -27,9 +27,9 @@ export default function Info(props) {
   }
 
   return (
-    <div className="info">
+    <div className="hint">
       <button className={`btn ${open ? "btn-danger" : "btn-dark"}`} onClick={ () => setOpen(true) }>i</button>
-      <div className={`infomodal ${open ? "open" : "closed"}`}>
+      <div className={`hintmodal ${open ? "open" : "closed"}`}>
         <p>{text}</p>
       </div>
       <div className={`cover ${open ? "open" : "closed"}`} onClick={ () => setOpen(false) }/>

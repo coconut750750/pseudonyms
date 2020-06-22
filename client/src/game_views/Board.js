@@ -3,6 +3,7 @@ import React from 'react';
 import ClueInput from '../game_components/ClueInput';
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
+import Hint from '../hint/Hint';
 
 import { 
   RED,
@@ -27,10 +28,10 @@ function BoardView(props) {
       return (
         <div>
           {clueActive() &&
-            <h6>{`${props.clue.word} : ${props.clue.count}`}</h6>
+            <h6>{`${props.clue.word} : ${props.clue.count}`}<Hint help="clue"/></h6>
           }
           {props.guessesLeft &&
-            <h6>{`${props.guessesLeft} guesses left`}</h6>
+            <h6>{`${props.guessesLeft} guesses left`}<Hint classic help="guessesLeft"/></h6>
           }
         </div>
       );

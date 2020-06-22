@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Info from '../info/Info';
+import Hint from '../hint/Hint';
 
 export const RED = "red";
 export const BLUE = "blue";
@@ -35,9 +35,9 @@ export const classicTurnDescriptor = (turn) => `${turn.replace(/^\w/, c => c.toU
 
 export const duetTurnDescriptor = (turn, clueActive) => {
   if (turn === FIRST_TURN) {
-    return <h6>{"First clue"}<Info duet help="firstTurn"/></h6>;
+    return <h6>{"First clue"}<Hint duet help="firstTurn"/></h6>;
   } else if (turn === SUDDEN_DEATH) {
-    return <h6>{"Sudden Death"}<Info duet help="suddenDeath"/></h6>;
+    return <h6>{"Sudden Death"}<Hint duet help="suddenDeath"/></h6>;
   }
 
   const teamName = turn.replace(/^\w/, c => c.toUpperCase());
