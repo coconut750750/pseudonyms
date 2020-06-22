@@ -1,4 +1,8 @@
-#info {
+.hidehints .info {
+    display: none;
+}
+
+.info {
     display: inline;
     position: absolute;
     height: 16px;
@@ -7,7 +11,7 @@
     margin-left: 4px;
 }
 
-#info button {
+.info button {
     height: 16px;
     width: 16px;
     padding: 0;
@@ -17,7 +21,7 @@
     vertical-align: super;
 }
 
-#modal {
+.infomodal {
     border: 1px solid rgba(0,0,0,.2);
     position: absolute;
     padding: 4px;
@@ -31,18 +35,18 @@
     background-color: #fff;
 }
 
-#modal.open {
+.infomodal.open {
 }
 
-#modal.closed {
+.infomodal.closed {
     display: none;
 }
 
-#modal p {
+.infomodal p {
     margin: 0;
 }
 
-#cover.open {
+.cover.open {
     position: fixed;
     height: 100vh;
     width: 100vw;
@@ -53,6 +57,6 @@
     cursor: pointer;
 }
 
-#cover.closed {
+.cover.closed {
     display: none;
 }

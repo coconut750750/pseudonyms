@@ -2,10 +2,7 @@ import React from 'react';
 
 import Info from '../info/Info';
 
-const style = {
-    boxShadow: "0px 0px 8px 0px #21252999",
-    cursor: "pointer",
-}
+import './GameBadge.css';
 
 function GameBadge(props) {
   const copyLink = () => {
@@ -21,7 +18,7 @@ function GameBadge(props) {
   return (
     <div className="row">
       <h6 className="col-5">
-      Game code: <span onClick={() => copyLink()} className="badge badge-light" style={style}>{props.gameCode}</span>
+      Game code: <span onClick={() => copyLink()} className="gamecode badge badge-light">{props.gameCode}</span>
       </h6>
 
       <div className="col-2"/>

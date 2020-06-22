@@ -30,6 +30,7 @@ function App() {
   const [name, setName] = useState("");
   const [socket, setSocket] = useState(undefined);
   const [urlGameCode, setUrlGameCode] = useState(undefined);
+  const [hintsActive, setHintsActive] = useState(true);
 
   const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
 
@@ -130,10 +131,25 @@ function App() {
     };
 
   return (
-    <div className="App">
+    <div className={`App ${hintsActive ? '' : 'hidehints'}`}>
       <br/>
       <h3>Pseudonyms</h3>
-      <h6>Codenames online</h6>
+      <div className="row">
+        <div className="col-2"/>
+        <div className="col-8">
+          <h6>Codenames online</h6>
+        </div>
+        <div className="col-2">
+          {viewState === GAME &&
+            <div className="hint-toggle" onClick={() => setHintsActive(!hintsActive)}>
+              {hintsActive 
+              ? <img src="/lightbulb-on.svg"/>
+              : <img src="/lightbulb-off.svg"/>
+              }
+            </div>
+          }
+        </div>
+      </div>
       <hr/>
 
       {views[viewState]}

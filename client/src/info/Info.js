@@ -27,12 +27,12 @@ export default function Info(props) {
   }
 
   return (
-    <div id="info">
+    <div className="info">
       <button className={`btn ${open ? "btn-danger" : "btn-dark"}`} onClick={ () => setOpen(true) }>i</button>
-      <div id="modal" className={open ? "open" : "closed"}>
+      <div className={`infomodal ${open ? "open" : "closed"}`}>
         <p>{text}</p>
       </div>
-      <div id="cover" className={open ? "open" : "closed"} onClick={ () => setOpen(false) }/>
+      <div className={`cover ${open ? "open" : "closed"}`} onClick={ () => setOpen(false) }/>
     </div>
   );
 }
