@@ -25,9 +25,8 @@ import {
 } from '../utils/const';
 
 function Game(props) {
-  console.log('game')
   const [message, setMessage] = useState("");
-  const [phase, setPhase] = useState(LOBBY);
+  const [phase, setPhase] = useState(undefined);
 
   const [players, setPlayers] = useState([]);
   const [me, setMe] = useState(undefined);

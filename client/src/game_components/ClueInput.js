@@ -31,7 +31,7 @@ function ClueInput(props) {
           <div className="col-6 mb-2">
             <select className="form-control" defaultValue={0} onChange={ e => setCount(e.target.value) }>
               <option value={0} disabled>Clue count</option>
-              {[...Array(9).keys()].map(i => <option value={i + 1}>{i + 1}</option>)}
+              {[...Array(9).keys()].map(i => <option key={i} value={i + 1}>{i + 1}</option>)}
             </select>
           </div>
 

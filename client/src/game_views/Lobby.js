@@ -18,7 +18,6 @@ const timeLimitOptions = [
 ];
 
 function Lobby(props) {
-  console.log('lobyy');
   const [wordlists, setWordlists] = useState([]);
 
   const [wordlist, setWordlist] = useState('');
@@ -117,14 +116,14 @@ function Lobby(props) {
             <small>Turn limit</small>
             <Hint duet help="turnLimit"/>
             <select className="form-control gameoptions-select" value={turnLimit} onChange={ e => setTurnLimit(e.target.value) }>
-              {[...Array(11).keys()].map(i => <option value={i + 1}>{i + 1}</option>)}
+              {[...Array(11).keys()].map(i => <option key={i} value={i + 1}>{i + 1}</option>)}
             </select>
           </div>
           <div className="col-6">
             <small>Mistake limit</small>
             <Hint duet right help="mistakeLimit"/>
             <select className="form-control gameoptions-select" value={mistakeLimit} onChange={ e => setMistakeLimit(e.target.value) }>
-              {[...Array(12).keys()].map(i => <option value={i}>{i}</option>)}
+              {[...Array(12).keys()].map(i => <option key={i} value={i}>{i}</option>)}
             </select>
           </div>
         </div>

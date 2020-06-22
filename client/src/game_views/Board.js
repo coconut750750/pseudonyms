@@ -17,7 +17,6 @@ import {
 } from '../utils/const';
 
 function BoardView(props) {
-  console.log('board');
   const myTurn = () => {
     return props.me.team === props.turn;
   };

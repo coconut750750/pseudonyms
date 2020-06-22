@@ -11,7 +11,6 @@ import {
 } from '../utils/const';
 
 function Result(props) {
-  console.log('result');
   const renderBoard = () => {
     if (isClassic(props.type)) {
       return (
