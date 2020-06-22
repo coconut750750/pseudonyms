@@ -95,12 +95,15 @@ function BoardView(props) {
 
   return (
     <div>
+      <div>
+        {getTurnDescriptor()}
+      </div>
       <div className="row">
         <div className="col-5">
           {renderClue(RED)}
         </div>
         <div className="col-2">
-          {getTurnDescriptor()}
+          <br/>
           <br/>
         </div>
         <div className="col-5">
