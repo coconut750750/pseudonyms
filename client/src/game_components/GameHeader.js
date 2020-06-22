@@ -2,6 +2,7 @@ import React from 'react';
 
 import PlayerList from '../components/PlayerList';
 import Clock from '../game_components/Clock';
+import Info from '../info/Info';
 
 function GameHeader(props) {
   const getReds = () => {
@@ -14,17 +15,27 @@ function GameHeader(props) {
 
   const renderClassicScore = () => (
     <div className="row">
-      <div className="col-4"><h5>{`${props.score.red}`}</h5></div>
-      <div className="col-4"></div>
-      <div className="col-4"><h5>{`${props.score.blue}`}</h5></div>
+      <div className="col-5"><h5>{`${props.score.red}`}</h5></div>
+      <div className="col-2"></div>
+      <div className="col-5"><h5>{`${props.score.blue}`}</h5></div>
     </div>
   );
 
   const renderDuetScore = () => (
     <div className="row">
-      <div className="col-4"><h6>{`Words left: ${props.score.leftover}`}</h6></div>
-      <div className="col-4"></div>
-      <div className="col-4"><h6>{`Turns left: ${props.score.timer}`}<br/>{`Mistakes left: ${props.score.mistakes}`}</h6></div>
+      <div className="col-5">
+        <h6>
+          {`Words: ${props.score.leftover}`}<Info duet help="wordScore"/>
+        </h6>
+      </div>
+      <div className="col-2"></div>
+      <div className="col-5">
+        <h6>
+          {`Turns: ${props.score.timer}`}<Info duet help="turnLimit"/>
+          <br/>
+          {`Mistakes: ${props.score.mistakes}`}<Info duet help="mistakeScore"/>
+        </h6>
+      </div>
     </div>
   );
 
@@ -46,9 +57,9 @@ function GameHeader(props) {
     <div>
       {renderScore()}
       <div className="row">
-        <div className="col-4"><PlayerList players={getReds()}/></div>
-        <div className="col-4"><Clock socket={props.socket}/></div>
-        <div className="col-4"><PlayerList players={getBlues()}/></div>
+        <div className="col-5"><PlayerList players={getReds()}/></div>
+        <div className="col-2"><Clock socket={props.socket}/></div>
+        <div className="col-5"><PlayerList players={getBlues()}/></div>
       </div>
     </div>
   );

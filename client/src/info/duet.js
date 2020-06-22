@@ -1,0 +1,9 @@
+export const description = "Duet is the collaborative version of Pseudonyms Classic.";
+export const turnLimit = "Once players use up all their turns but still have green words left, Sudden Death starts. Players continue guessing without any more clues, and any incorrect guess ends the game.";
+export const mistakeLimit = "Once players use up all their mistakes, future mistakes cost 2 turns.";
+export const wordScore = "There are 15 distinct green words to guess; each team sees 9 and 3 overlap. The green words you see might not be green to the other team."; 
+export const wordDistribution = "Of the 9 green words you see, 3 appear green, 5 appear white, and 1 appears black to the other team. Of the 3 black words you see, 1 appears green, 1 appears white, and 1 appears black to the other team.";
+export const mistakeScore = "If you guess a white word, a badge of the other team's color appears on the word, indicating that the word appears white to them. That word might appear green to you, in which case the other team must guess it.";
+export const firstTurn = "Either team can give the first clue.";
+export const suddenDeath = "Any player can continue guessing without any more clues, and any incorrect guess ends the game.";
+export const resultsHelp = "The border of each word is the color the other team saw. A tile with no border indicates the word was white.";

@@ -1,3 +1,7 @@
+import React from 'react';
+
+import Info from '../info/Info';
+
 export const RED = "red";
 export const BLUE = "blue";
 export const FIRST_TURN = "ft";
@@ -31,15 +35,16 @@ export const classicTurnDescriptor = (turn) => `${turn.replace(/^\w/, c => c.toU
 
 export const duetTurnDescriptor = (turn, clueActive) => {
   if (turn === FIRST_TURN) {
-    return "First clue";
+    return <h6>{"First clue"}<Info duet help="firstTurn"/></h6>;
   } else if (turn === SUDDEN_DEATH) {
-    return "Sudden Death";
+    return <h6>{"Sudden Death"}<Info duet help="suddenDeath"/></h6>;
   }
+
   const teamName = turn.replace(/^\w/, c => c.toUpperCase());
   const otherTeamName = otherTeam(turn).replace(/^\w/, c => c.toUpperCase());
   if (!clueActive) {
-    return `${teamName} giving clue`;
+    return <h6>{`${teamName} giving clue`}</h6>;
   } else {
-    return `${otherTeamName} guessing`;
+    return <h6>{`${otherTeamName} guessing`}</h6>;
   }
 }

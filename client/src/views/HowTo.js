@@ -64,7 +64,11 @@ function HowTo(props) {
       <p>The mistake limit need not be the same as the turn limit. For example, players can play a game with a 9 turn limit, but a 2 mistake limit. Once they make two mistakes, future mistake costs 1 turn.</p>
 
       <h6>Sudden Death</h6>
-      <p>After the players run out of turns but still have green words to guess, they enter Sudden Death. They cannot give any more clues, but they can continue guessing. The way the teams guess is important. If a word appears green only to the red team, a player on the blue team MUST guess that word to be correct. If either team selects an incorrect guess, the game ends.</p>
+      <p>After the players run out of turns but still have green words to guess, they enter Sudden Death. They cannot give any more clues, but they can continue guessing. If a word appears green only to the red team, a player on the blue team MUST guess that word to be correct. If either team selects an incorrect guess, the game ends.</p>
+
+      <h6>Color Distribution</h6>
+      <p>Of the 9 green words one team sees, 3 appear green, 5 appear white, and 1 appears black to the other team.</p>
+      <p>Of the 3 black words one team sees, 1 appears green, 1 appears white, and 1 appears black to the other team.</p>
 
       <h6>The End</h6>
       <p>The game ends when all green words are revealed, or when the players run out of turns. The game can end early if a player selects a word that appears black to the opposite team.</p>

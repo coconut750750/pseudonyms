@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Info from '../info/Info';
+
 const style = {
     boxShadow: "0px 0px 8px 0px #21252999",
     cursor: "pointer",
@@ -18,19 +20,21 @@ function GameBadge(props) {
 
   return (
     <div className="row">
-      <h6 className="col-4">
+      <h6 className="col-5">
       Game code: <span onClick={() => copyLink()} className="badge badge-light" style={style}>{props.gameCode}</span>
       </h6>
 
-      <div className="col-4"/>
+      <div className="col-2"/>
       {props.typeChecks.classic() &&
-        <h6 className="col-4">
+        <h6 className="col-5">
         Game type: <span className="badge badge-primary">Classic</span>
+        <Info classic help="description"/>
         </h6>
       }
       {props.typeChecks.duet() &&
-        <h6 className="col-4">
+        <h6 className="col-5">
         Game type: <span className="badge badge-success">Duet</span>
+        <Info duet help="description"/>
         </h6>
       }
     </div>

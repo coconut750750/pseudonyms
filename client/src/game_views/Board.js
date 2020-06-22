@@ -49,9 +49,9 @@ function BoardView(props) {
 
   const getTurnDescriptor = () => {
     if (props.typeChecks.classic()) {
-      return <h6>{classicTurnDescriptor(props.turn)}</h6>;
+      return classicTurnDescriptor(props.turn);
     } else if (props.typeChecks.duet()) {
-      return <h6>{duetTurnDescriptor(props.turn, clueActive())}</h6>;
+      return duetTurnDescriptor(props.turn, clueActive());
     }
     return <div/>
   };

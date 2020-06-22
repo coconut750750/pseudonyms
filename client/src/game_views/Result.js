@@ -2,6 +2,7 @@ import React from 'react';
 
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
+import Info from '../info/Info';
 
 import { otherTeam } from '../utils/const';
 
@@ -42,7 +43,7 @@ function Result(props) {
 
   return (
     <div>
-      <h5>Results</h5>
+      <h5>Results<Info classic={props.typeChecks.classic()} duet={props.typeChecks.duet} help="resultsHelp"/></h5>
       {renderHeader()}
       <br/>
 
