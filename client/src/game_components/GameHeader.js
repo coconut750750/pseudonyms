@@ -35,9 +35,9 @@ function GameHeader(props) {
       <div className="col-2"></div>
       <div className="col-5">
         <h6>
-          {`Turns: ${props.score.timer}`}<Hint duet help="turnLimit"/>
+          {`Turns: ${props.score.timer}`}<Hint duet right help="turnLimit"/>
           <br/>
-          {`Mistakes: ${props.score.mistakes}`}<Hint duet help="mistakeScore"/>
+          {`Mistakes: ${props.score.mistakes}`}<Hint duet right help="mistakeScore"/>
         </h6>
       </div>
     </div>

@@ -29,7 +29,7 @@ export default function Hint(props) {
   return (
     <div className="hint">
       <button className={`btn ${open ? "btn-danger" : "btn-dark"}`} onClick={ () => setOpen(true) }>i</button>
-      <div className={`hintmodal ${open ? "open" : "closed"}`}>
+      <div className={`hintmodal ${open ? "open" : "closed"} ${props.right ? "right" : "left"}`}>
         <p>{text}</p>
       </div>
       <div className={`cover ${open ? "open" : "closed"}`} onClick={ () => setOpen(false) }/>

@@ -24,14 +24,15 @@ function BoardView(props) {
   };
 
   const renderClue = (team) => {
+    const hintRight = team === BLUE;
     if (props.turn === team) {
       return (
         <div>
           {clueActive() &&
-            <h6>{`${props.clue.word} : ${props.clue.count}`}<Hint help="clue"/></h6>
+            <h6>{`${props.clue.word} : ${props.clue.count}`}<Hint right={hintRight} help="clue"/></h6>
           }
           {props.guessesLeft &&
-            <h6>{`${props.guessesLeft} guesses left`}<Hint classic help="guessesLeft"/></h6>
+            <h6>{`${props.guessesLeft} guesses left`}<Hint classic right={hintRight} help="guessesLeft"/></h6>
           }
         </div>
       );
@@ -95,16 +96,16 @@ function BoardView(props) {
   return (
     <div>
       <div className="row">
-        <div className="col-4">
+        <div className="col-5">
           {renderClue(RED)}
         </div>
-        <div className="col-4">
+        <div className="col-2">
           {getTurnDescriptor()}
           <button type="button" className="btn btn-light btn-sm"
             disabled={!canEndTurn()}
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
         </div>
-        <div className="col-4">
+        <div className="col-5">
           {renderClue(BLUE)}
         </div>
       </div>

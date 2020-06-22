@@ -28,11 +28,17 @@
     border-radius: 4px;
     margin-top: 4px;
     margin-bottom: 4px;
-    left: 0;
-    transform: translateX(-80%) translateY(0%);
     min-width: 150px;
     z-index: 2;
     background-color: #fff;
+}
+
+.hintmodal.left { 
+    left: 0;
+}
+
+.hintmodal.right { 
+    right: 0;
 }
 
 .hintmodal.open {

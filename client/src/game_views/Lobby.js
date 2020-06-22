@@ -89,7 +89,7 @@ function Lobby(props) {
         </div>
         <div className="col-6">
           <small>Time for guess</small>
-          <Hint help="timeForGuess"/>
+          <Hint right help="timeForGuess"/>
           <select className="form-control gameoptions-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
             {options}
           </select>
@@ -111,7 +111,7 @@ function Lobby(props) {
           </div>
           <div className="col-6">
             <small>Mistake limit</small>
-            <Hint duet help="mistakeLimit"/>
+            <Hint duet right help="mistakeLimit"/>
             <select className="form-control gameoptions-select" value={mistakeLimit} onChange={ e => setMistakeLimit(e.target.value) }>
               {[...Array(12).keys()].map(i => <option value={i}>{i}</option>)}
             </select>
@@ -137,7 +137,7 @@ function Lobby(props) {
           {!useCustom &&
             <div>
               <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
-              <Hint help="customWords"/>
+              <Hint right help="customWords"/>
               <br/>
               {renderWordlistSelect()}
             </div>

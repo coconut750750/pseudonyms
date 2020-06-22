@@ -31,7 +31,7 @@ export const otherTeam = (team) => {
   return team === RED ? BLUE : RED;
 }
 
-export const classicTurnDescriptor = (turn) => `${turn.replace(/^\w/, c => c.toUpperCase())} turn`
+export const classicTurnDescriptor = (turn) => <h6>{turn.replace(/^\w/, c => c.toUpperCase())} turn</h6>;
 
 export const duetTurnDescriptor = (turn, clueActive) => {
   if (turn === FIRST_TURN) {

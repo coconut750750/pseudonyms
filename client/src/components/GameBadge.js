@@ -25,13 +25,13 @@ function GameBadge(props) {
       {props.typeChecks.classic() &&
         <h6 className="col-5">
         Game type: <span className="badge badge-primary">Classic</span>
-        <Hint classic help="description"/>
+        <Hint classic right help="description"/>
         </h6>
       }
       {props.typeChecks.duet() &&
         <h6 className="col-5">
         Game type: <span className="badge badge-success">Duet</span>
-        <Hint duet help="description"/>
+        <Hint duet right help="description"/>
         </h6>
       }
     </div>
