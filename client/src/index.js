@@ -32,10 +32,11 @@ function Index(props) {
   return (
     <Router>
       <Switch>
-        <Route path="/howto"><StaticHeader/><HowTo/></Route>
-        <Route path="/more"><StaticHeader/><MoreGames/></Route>
-        <Route path="/walkthrough"><StaticHeader/><Walkthrough/></Route>
-        <Route path="/"><App/></Route>
+        <Route exact path="/howto"><StaticHeader/><HowTo/></Route>
+        <Route exact path="/more"><StaticHeader/><MoreGames/></Route>
+        <Route exact path="/walkthrough"><StaticHeader/><Walkthrough/></Route>
+        <Route exact path="/:gamecode" component={App}></Route>
+        <Route exact path="/" component={App}></Route>
       </Switch>
       <Footer/>
     </Router>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
+import { useHistory } from "react-router-dom";
 import './App.css';
 
 import io from 'socket.io-client';
@@ -17,7 +18,8 @@ const CREATE_DUET = "create_duet";
 const JOIN = "join";
 const GAME = "game";
 
-function App() {
+function App(props) {
+  const history = useHistory();
   const [viewState, setViewState] = useState(HOME);
   const [gameCode, setGameCode] = useState("");
   const [name, setName] = useState("");
@@ -35,13 +37,13 @@ function App() {
     localStorage.setItem("tips", active);
   };
 
-  const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
-
-  window.addEventListener("popstate", e => {
-    window.location.href = '/';
-  });
+  const exitGame = (socket) => {
+    closeSocket(socket);
+    reset();
+  };
 
   const setGame = (gameCode, name, gameMode) => {
+    const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
     let socket = io(socketiohost);
     socket.on('end', data => {
       exitGame(socket);
@@ -58,25 +60,20 @@ function App() {
       setGameMode(gameMode);
       setViewState(GAME);
     });
-    window.history.pushState({}, 'Game', `/${gameCode}`);
+    history.push(`/${gameCode}`);
   };
 
-  const exitGame = (socket) => {
-    closeSocket(socket);
-    reset();
-  };
+  const goHome = useCallback(() => {
+    history.push('/');
+    setUrlGameCode(undefined);
+    setViewState(HOME);
+  }, [history]);
 
   const reset = useCallback(() => {
     goHome();
     setGameCode("");
     setName("");
-  }, []);
-
-  const goHome = () => {
-    window.history.pushState({}, 'Home', '/');
-    setUrlGameCode(undefined);
-    setViewState(HOME);
-  };
+  }, [goHome]);
 
   const closeSocket = (socket) => {
     socket.emit('exitGame', {});
@@ -88,9 +85,8 @@ function App() {
     if (viewState === HOME && socket !== undefined) {
       closeSocket(socket);
     }
-    if (viewState === HOME) {
-      const url = new URL(window.location.href);
-      const possibleGameCode = url.pathname.slice(1);
+    if (viewState === HOME && props.match.params.gamecode !== undefined) {
+      const possibleGameCode = props.match.params.gamecode;
       if (possibleGameCode.length !== 0) {
         checkCode(possibleGameCode).then(resp => {
           if (resp.valid) {
@@ -102,7 +98,7 @@ function App() {
         });
       } 
     }
-  }, [viewState, socket, reset]);
+  }, [viewState, socket, reset, props]);
 
   const views = {
     [HOME]:         <Home 
@@ -135,9 +131,7 @@ function App() {
       <h3>Pseudonyms</h3>
       <div className="row">
         <div className="col-2"/>
-        <div className="col-8">
-          <h6>Codenames online</h6>
-        </div>
+        <div className="col-8"><h6>Codenames online</h6></div>
         <div className="col-2">
           {viewState === GAME &&
             <div className="tip-toggle" onClick={() => setTipsActive(!tips)}>

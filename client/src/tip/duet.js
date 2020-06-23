@@ -1,4 +1,4 @@
-export const description = "Duet is a collaborative version of Pseudonyms. Find all 15 green words before you run out of time!";
+export const description = "Duet is a collaborative version of Pseudonyms. Find all 15 green words before time runs out!";
 export const turnLimit = "Once players reach the turn limit, no additional clues can be given. Players can continue guessing, but any incorrect guess ends the game.";
 export const mistakeLimit = "Each incorrect guess is a mistake. Once players reach the mistake limit, subsequent mistakes reduce the turn limit by 1.";
 export const wordScore = "There are 15 distinct green words to guess; each team sees 9 and 3 overlap. Note that green words you see might not be green to the other team."; 
