@@ -5,21 +5,15 @@ import './App.css';
 import io from 'socket.io-client';
 
 import Home from './views/Home';
-import HowTo from './views/HowTo';
 import Create from './views/Create';
 import Join from './views/Join';
 import Game from './views/Game';
 import Walkthrough from './views/Walkthrough';
-import MoreGames from './views/MoreGames';
-
-import Footer from './components/Footer';
 
 import { checkCode } from './api/register';
 
 const HOME = "home";
-const HOWTO = "howto";
 const WALKTHROUGH = "walkthrough";
-const MORE = "more";
 const CREATE_CLASSIC = "create_classic";
 const CREATE_DUET = "create_duet";
 const JOIN = "join";
@@ -117,14 +111,8 @@ function App() {
                       createClassicGame={ () => setViewState(CREATE_CLASSIC) } 
                       createDuetGame={ () => setViewState(CREATE_DUET) } 
                       joinGame={ () => setViewState(JOIN) }
-                      viewHowTo={ () => setViewState(HOWTO) }
-                      viewWalkthrough={ () => setViewState(WALKTHROUGH) }
-                      viewMoreGames={ () => setViewState(MORE) }/>,
+                      viewWalkthrough={ () => setViewState(WALKTHROUGH) }/>,
     [WALKTHROUGH]:  <Walkthrough
-                      goBack={ () => goHome() }/>,
-    [HOWTO]:        <HowTo
-                      goBack={ () => goHome() }/>,
-    [MORE]:         <MoreGames
                       goBack={ () => goHome() }/>,
     [CREATE_CLASSIC]: <Create
                         classic
@@ -169,8 +157,6 @@ function App() {
       <hr/>
 
       {views[viewState]}
-
-      <Footer/>
     </div>
   );
 }

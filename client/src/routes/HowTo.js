@@ -76,23 +76,25 @@ function HowTo(props) {
   );
 
   return (
-    <div className="text-left">
-      <h4>How To Play</h4>
+    <div>
+      <div className="text-left">
+        <h4>How To Play</h4>
 
-      <ul className="nav nav-tabs">
-        <li className="nav-item" style={{cursor: "pointer"}}>
-          <span className={type === CLASSIC ? "nav-link active" : "nav-link"} onClick={ () => setType(CLASSIC) }>Classic</span>
-        </li>
-        <li className="nav-item" style={{cursor: "pointer"}}>
-          <span className={type === DUET ? "nav-link active" : "nav-link "} onClick={ () => setType(DUET) }>Duet</span>
-        </li>
-      </ul>
+        <ul className="nav nav-tabs">
+          <li className="nav-item" style={{cursor: "pointer"}}>
+            <span className={type === CLASSIC ? "nav-link active" : "nav-link"} onClick={ () => setType(CLASSIC) }>Classic</span>
+          </li>
+          <li className="nav-item" style={{cursor: "pointer"}}>
+            <span className={type === DUET ? "nav-link active" : "nav-link "} onClick={ () => setType(DUET) }>Duet</span>
+          </li>
+        </ul>
 
-      <br/>
-      {type === CLASSIC && classicHowto}
-      {type === DUET && duetHowto}
+        <br/>
+        {type === CLASSIC && classicHowto}
+        {type === DUET && duetHowto}
 
-      <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
+        <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+      </div>
     </div>
   );
 }
