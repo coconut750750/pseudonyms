@@ -38,7 +38,7 @@ function Lobby(props) {
     } else {
       options = { ...options, customWords };
     }
-    if (isDuet(props.type)) {
+    if (isDuet(props.mode)) {
       options = { ...options, timers: turnLimit, mistakes: mistakeLimit };
     }
     props.socket.emit('startGame', { options: options });
@@ -49,19 +49,19 @@ function Lobby(props) {
   };
 
   useEffect(() => {
-    if (props.type !== undefined) {
+    if (props.mode !== undefined) {
       getWordlists().then(data => {
         ReactDOM.unstable_batchedUpdates(() => {
-          if (isClassic(props.type)) {
+          if (isClassic(props.mode)) {
             setWordlist("classic");
-          } else if (isDuet(props.type)) {
+          } else if (isDuet(props.mode)) {
             setWordlist("duet");
           }
           setWordlists(data);
         });
       });
     }
-  }, [props.type]);
+  }, [props.mode]);
 
   const renderWordlistSelect = () => {
     let options = [];
@@ -109,7 +109,7 @@ function Lobby(props) {
   }
 
   const renderDuetLimits = () => {
-    if (isDuet(props.type)) {
+    if (isDuet(props.mode)) {
       return (
         <div className="row">
           <div className="col-6">

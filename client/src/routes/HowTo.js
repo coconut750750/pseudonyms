@@ -4,7 +4,7 @@ const CLASSIC = "classic";
 const DUET = "duet";
 
 function HowTo(props) {
-  const [type, setType] = useState(CLASSIC);
+  const [mode, setMode] = useState(CLASSIC);
 
   const classicHowto = (
     <div>
@@ -82,16 +82,16 @@ function HowTo(props) {
 
         <ul className="nav nav-tabs">
           <li className="nav-item" style={{cursor: "pointer"}}>
-            <span className={type === CLASSIC ? "nav-link active" : "nav-link"} onClick={ () => setType(CLASSIC) }>Classic</span>
+            <span className={mode === CLASSIC ? "nav-link active" : "nav-link"} onClick={ () => setMode(CLASSIC) }>Classic</span>
           </li>
           <li className="nav-item" style={{cursor: "pointer"}}>
-            <span className={type === DUET ? "nav-link active" : "nav-link "} onClick={ () => setType(DUET) }>Duet</span>
+            <span className={mode === DUET ? "nav-link active" : "nav-link "} onClick={ () => setMode(DUET) }>Duet</span>
           </li>
         </ul>
 
         <br/>
-        {type === CLASSIC && classicHowto}
-        {type === DUET && duetHowto}
+        {mode === CLASSIC && classicHowto}
+        {mode === DUET && duetHowto}
 
         <a href="/"><button type="button" className="btn btn-light">Back</button></a>
       </div>

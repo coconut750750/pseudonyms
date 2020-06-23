@@ -19,7 +19,7 @@ function Create(props) {
       }
 
       const createSuccess = res => {
-        props.setGame(res.gameCode, name, res.type);
+        props.setGame(res.gameCode, name, res.mode);
       }
 
       if (props.duet) {

@@ -26,15 +26,15 @@ function GameBadge(props) {
       </h6>
 
       <div className="col-2"/>
-      {isClassic(props.type) &&
+      {isClassic(props.mode) &&
         <h6 className="col-5">
-        Game type: <span className="badge badge-primary">Classic</span>
+        Game mode: <span className="badge badge-primary">Classic</span>
         <Tip classic right help="description"/>
         </h6>
       }
-      {isDuet(props.type) &&
+      {isDuet(props.mode) &&
         <h6 className="col-5">
-        Game type: <span className="badge badge-success">Duet</span>
+        Game mode: <span className="badge badge-success">Duet</span>
         <Tip duet right help="description"/>
         </h6>
       }

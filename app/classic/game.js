@@ -32,7 +32,7 @@ class ClassicGame extends GameInterface {
     this.reset();
   }
 
-  type() {
+  mode() {
     return CLASSIC;
   }
 

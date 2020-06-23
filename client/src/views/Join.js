@@ -19,7 +19,7 @@ function Join(props) {
         return;
       }
 
-      props.join(gameCode, name, res.type);
+      props.join(gameCode, name, res.mode);
     });
   };
 

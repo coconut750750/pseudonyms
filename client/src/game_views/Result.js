@@ -12,7 +12,7 @@ import {
 
 function Result(props) {
   const renderBoard = () => {
-    if (isClassic(props.type)) {
+    if (isClassic(props.mode)) {
       return (
         <ClassicBoard
           revealWord={ (r, c) => {} }
@@ -21,7 +21,7 @@ function Result(props) {
           keycard={props.keycard}
           showKey={true}/>
       );
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return (
         <DuetBoard
           revealWord={ (r, c) => {} }
@@ -36,9 +36,9 @@ function Result(props) {
   };
 
   const renderHeader = () => {
-    if (isClassic(props.type)) {
+    if (isClassic(props.mode)) {
       return <h6>{`${props.winner.replace(/^\w/, c => c.toUpperCase())} wins!`}</h6>;
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return <h6>{props.winner ? "You win!" : "You lose"}</h6>;
     }
     return <div/>
@@ -46,7 +46,7 @@ function Result(props) {
 
   return (
     <div>
-      <h5>Results<Tip classic={isClassic(props.type)} duet={isDuet(props.type)} help="resultsHelp"/></h5>
+      <h5>Results<Tip classic={isClassic(props.mode)} duet={isDuet(props.mode)} help="resultsHelp"/></h5>
       {renderHeader()}
       <br/>
 

@@ -43,34 +43,34 @@ function BoardView(props) {
   };
 
   const canSubmitClue = () => {
-    if (isClassic(props.type)) {
+    if (isClassic(props.mode)) {
       return myTurn() && props.me.isCaptain() && !clueActive();
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return (myTurn() || firstTurn(props.turn)) && !clueActive();
     }
     return false;
   };
 
   const getTurnDescriptor = () => {
-    if (isClassic(props.type)) {
+    if (isClassic(props.mode)) {
       return classicTurnDescriptor(props.turn);
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return duetTurnDescriptor(props.turn, clueActive());
     }
     return <div/>
   };
 
   const canEndTurn = () => {
-    if (isClassic(props.type)) {
+    if (isClassic(props.mode)) {
       return clueActive() && myTurn();
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return clueActive() && !myTurn();
     }
     return false;
   };
 
   const renderBoard = () => {
-    if (isClassic(props.type)) {
+    if (isClassic(props.mode)) {
       return (
         <ClassicBoard
           revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }
@@ -80,7 +80,7 @@ function BoardView(props) {
           showKey={props.me.isCaptain()}
           canReveal={myTurn() && !props.me.isCaptain() && clueActive()}/>
       );
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return (
         <DuetBoard
           revealWord={ (r, c) => props.socket.emit('revealWord', {r, c}) }

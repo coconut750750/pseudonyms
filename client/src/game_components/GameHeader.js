@@ -54,9 +54,9 @@ function GameHeader(props) {
           <div className="col"><h5>Scoreboard loading...</h5></div>
         </div>
       );
-    } else if (isClassic(props.type)) {
+    } else if (isClassic(props.mode)) {
       return renderClassicScore();
-    } else if (isDuet(props.type)) {
+    } else if (isDuet(props.mode)) {
       return renderDuetScore();
     }
   }

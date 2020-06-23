@@ -13,7 +13,7 @@ router.post('/classic/create', (req, res) => {
   
   res.send({
     gameCode: `${game.code}`,
-    type: CLASSIC,
+    mode: CLASSIC,
   });
 });
 
@@ -24,7 +24,7 @@ router.post('/duet/create', (req, res) => {
   
   res.send({
     gameCode: `${game.code}`,
-    type: DUET,
+    mode: DUET,
   });
 });
 
@@ -47,7 +47,7 @@ router.get('/checkname', (req, res) => {
     } else if (game.playerExists(name) && !game.isActive(name)) {
       res.send({
         valid: true,
-        type: game.type(),
+        mode: game.mode(),
       });
     } else if (game.playerExists(name)) {
       res.send({ valid: false, message: 'This name has been taken' });
@@ -56,7 +56,7 @@ router.get('/checkname', (req, res) => {
     } else {
       res.send({
         valid: true,
-        type: game.type(),
+        mode: game.mode(),
       });
     }
   } else {

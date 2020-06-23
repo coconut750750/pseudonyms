@@ -21,7 +21,7 @@ function App() {
   const [viewState, setViewState] = useState(HOME);
   const [gameCode, setGameCode] = useState("");
   const [name, setName] = useState("");
-  const [gameType, setGameType] = useState("");
+  const [gameMode, setGameMode] = useState("");
   const [socket, setSocket] = useState(undefined);
   const [urlGameCode, setUrlGameCode] = useState(undefined);
   
@@ -41,7 +41,7 @@ function App() {
     window.location.href = '/';
   });
 
-  const setGame = (gameCode, name, gameType) => {
+  const setGame = (gameCode, name, gameMode) => {
     let socket = io(socketiohost);
     socket.on('end', data => {
       exitGame(socket);
@@ -55,7 +55,7 @@ function App() {
 
       setGameCode(gameCode);
       setName(name);
-      setGameType(gameType);
+      setGameMode(gameMode);
       setViewState(GAME);
     });
     window.history.pushState({}, 'Game', `/${gameCode}`);
@@ -125,7 +125,7 @@ function App() {
                       socket={socket}
                       gameCode={gameCode}
                       name={name}
-                      gameType={gameType}
+                      gameMode={gameMode}
                       exitGame={ () => exitGame(socket) }/>,
     };
 

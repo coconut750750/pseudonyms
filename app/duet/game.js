@@ -33,7 +33,7 @@ class DuetGame extends GameInterface {
     this.reset();
   }
 
-  type() {
+  mode() {
     return DUET;
   }
 

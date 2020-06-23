@@ -22,8 +22,8 @@ export const RESULT = "result";
 export const CLASSIC = "classic";
 export const DUET = "duet";
 
-export const isClassic = (type) => type === CLASSIC;
-export const isDuet = (type) => type === DUET;
+export const isClassic = (mode) => mode === CLASSIC;
+export const isDuet = (mode) => mode === DUET;
 
 export const redTurn = (turn) => turn === RED;
 export const blueTurn = (turn) => turn === BLUE;

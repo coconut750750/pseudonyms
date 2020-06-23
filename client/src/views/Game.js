@@ -134,7 +134,7 @@ function Game(props) {
 
   const game_views = {
     [LOBBY]: <Lobby 
-              type={props.gameType}
+              mode={props.gameMode}
               socket={props.socket}
               players={players}
               me={me}/>,
@@ -146,7 +146,7 @@ function Game(props) {
               players={players}
               me={me}/>,
     [BOARD]: <Board
-              type={props.gameType}
+              mode={props.gameMode}
               socket={props.socket}
               players={players}
               me={me}
@@ -157,7 +157,7 @@ function Game(props) {
               clue={clue}
               guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
-              type={props.gameType}
+              mode={props.gameMode}
               socket={props.socket}
               me={me}
               winner={winner}
@@ -169,13 +169,13 @@ function Game(props) {
   return (
     <div>
       <GameBadge
-        type={props.gameType}
+        mode={props.gameMode}
         gameCode={props.gameCode}
         copySuccess={() => setDisappearingMessage('Successfully copied shareable link!', 'alert-success')}/>
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
-        type={props.gameType}
+        mode={props.gameMode}
         socket={props.socket}
         players={players}
         score={score}/>
