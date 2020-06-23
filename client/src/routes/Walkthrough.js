@@ -37,7 +37,7 @@ function Walkthrough(props) {
           }
         </div>
       </div>
-      <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
+      <a href="/"><button type="button" className="btn btn-light">Back</button></a>
     </div>
   );
 }

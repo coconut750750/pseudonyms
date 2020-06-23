@@ -27,7 +27,7 @@ function Home(props) {
       <div className="btn-group-vertical">
         <button type="button" className="btn btn-light" onClick={props.joinGame}>Join Game</button>
         <a href="/howto"><button type="button" className="btn btn-light">How to Play</button></a>
-        <button type="button" className="btn btn-light" onClick={props.viewWalkthrough}>Walkthrough</button>
+        <a href="/walkthrough"><button type="button" className="btn btn-light">Walkthrough</button></a>
         <a href="/more"><button type="button" className="btn btn-light">More Games</button></a>
       </div>
 

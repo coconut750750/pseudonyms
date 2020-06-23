@@ -8,12 +8,10 @@ import Home from './views/Home';
 import Create from './views/Create';
 import Join from './views/Join';
 import Game from './views/Game';
-import Walkthrough from './views/Walkthrough';
 
 import { checkCode } from './api/register';
 
 const HOME = "home";
-const WALKTHROUGH = "walkthrough";
 const CREATE_CLASSIC = "create_classic";
 const CREATE_DUET = "create_duet";
 const JOIN = "join";
@@ -110,10 +108,7 @@ function App() {
     [HOME]:         <Home 
                       createClassicGame={ () => setViewState(CREATE_CLASSIC) } 
                       createDuetGame={ () => setViewState(CREATE_DUET) } 
-                      joinGame={ () => setViewState(JOIN) }
-                      viewWalkthrough={ () => setViewState(WALKTHROUGH) }/>,
-    [WALKTHROUGH]:  <Walkthrough
-                      goBack={ () => goHome() }/>,
+                      joinGame={ () => setViewState(JOIN) }/>,
     [CREATE_CLASSIC]: <Create
                         classic
                         goBack={ () => goHome() }

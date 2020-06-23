@@ -13,6 +13,7 @@ import {
 import App from './App';
 import HowTo from './routes/HowTo';
 import MoreGames from './routes/MoreGames';
+import Walkthrough from './routes/Walkthrough';
 import Footer from './components/Footer';
 
 ReactDOM.render(<Index />, document.getElementById('root'));
@@ -34,6 +35,7 @@ function Index(props) {
       <Switch>
         <Route path="/howto"><StaticHeader/><HowTo/></Route>
         <Route path="/more"><StaticHeader/><MoreGames/></Route>
+        <Route path="/walkthrough"><StaticHeader/><Walkthrough/></Route>
         <Route path="/"><App/></Route>
       </Switch>
       <Footer/>
