@@ -1,4 +1,4 @@
-const { RED, BLUE, PLAYER_ROLE, KEY_ROLE, NO_TEAM } = require('../common/const').classic;
+const { RED, BLUE, PLAYER_ROLE, CAPTAIN_ROLE, NO_TEAM } = require('../common/const').classic;
 const PlayerInterface = require('../common/player');
 
 class Player extends PlayerInterface {
@@ -21,12 +21,12 @@ class Player extends PlayerInterface {
     this.team = NO_TEAM;
   }
 
-  setKey() {
-    this.role = KEY_ROLE;
+  setCaptain() {
+    this.role = CAPTAIN_ROLE;
   }
 
-  isKey() {
-    return this.role === KEY_ROLE;
+  isCaptain() {
+    return this.role === CAPTAIN_ROLE;
   }
 
   resetRole() {
@@ -41,8 +41,8 @@ class Player extends PlayerInterface {
     };
   }
 
-  sendAsKey(event, data) {
-    if (this.socket !== undefined && this.role === KEY_ROLE) {
+  sendAsCaptain(event, data) {
+    if (this.socket !== undefined && this.role === CAPTAIN_ROLE) {
       this.socket.emit(event, data);
     }
   }

@@ -16,13 +16,13 @@ function PlayerBadge(props) {
   }
 
   const getRoleClass = () => {
-    return props.player.isKey() ? "key" : "player";
+    return props.player.isCaptain() ? "captain" : "player";
   };
 
   return (
     <div className={`badge m-2 ${getBadgeClass()} ${getRoleClass()}`}>
-      {props.player.isKey() &&
-        <img className="key-icon" src="/icon.svg" alt=""/>
+      {props.player.isCaptain() &&
+        <img className="captain-icon" src="/icon.svg" alt=""/>
       }
       
       { props.player.name }

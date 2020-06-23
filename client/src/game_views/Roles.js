@@ -8,26 +8,26 @@ function Roles(props) {
     return props.players.filter(p => p.isRed());
   };
 
-  const getRedKey = () => {
-    return props.players.filter(p => (p.isRed() && p.isKey()));
+  const getRedCaptain = () => {
+    return props.players.filter(p => (p.isRed() && p.isCaptain()));
   }
 
   const getBlues = () => {
     return props.players.filter(p => p.isBlue());
   };
 
-  const getBlueKey = () => {
-    return props.players.filter(p => (p.isBlue() && p.isKey()));
+  const getBlueCaptain = () => {
+    return props.players.filter(p => (p.isBlue() && p.isCaptain()));
   }
 
   const confirmReady = () => {
-    return getRedKey().length === 1 && getBlueKey().length === 1;
+    return getRedCaptain().length === 1 && getBlueCaptain().length === 1;
   };
 
   return (
     <div>
-      <h5>Elect Keys<Tip classic right help="keyRole"/></h5>
-      <h6>Each team must have one key</h6>
+      <h5>Elect Captains<Tip classic right help="captainRole"/></h5>
+      <h6>Each team must have one Captain</h6>
       <br/>
       
       <div className="row">
@@ -35,7 +35,7 @@ function Roles(props) {
           <PlayerList players={getReds()}/>
           {props.me.isRed() &&
             <button type="button" className="btn btn-light"
-              onClick={() => props.socket.emit('setKey', {})}>Elect</button>
+              onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
           }
 
         </div>
@@ -46,7 +46,7 @@ function Roles(props) {
           <PlayerList players={getBlues()}/>
           {props.me.isBlue() &&
             <button type="button" className="btn btn-light"
-              onClick={() => props.socket.emit('setKey', {})}>Elect</button>
+              onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
           }
         </div>
       </div>

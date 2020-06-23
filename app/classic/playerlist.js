@@ -15,26 +15,26 @@ class PlayerList extends PlayerListInterface {
     this.notifyUpdate();
   }
 
-  setKey(name) {
+  setCaptain(name) {
     for (var p of Object.values(this.players)) {
       if (p.isOnTeam(this.players[name].team)) {
         p.resetRole();
       }
     }
-    this.players[name].setKey();
+    this.players[name].setCaptain();
     this.notifyUpdate();
   }
 
-  enoughKeys() {
-    let hasRedKey = false;
-    let hasBlueKey = false;
+  enoughCaptains() {
+    let hasRedCaptain = false;
+    let hasBlueCaptain = false;
 
     for (var p of Object.values(this.players)) {
-      hasRedKey = hasRedKey || (p.isOnTeam(RED) && p.isKey());
-      hasBlueKey = hasBlueKey || (p.isOnTeam(BLUE) && p.isKey());
+      hasRedCaptain = hasRedCaptain || (p.isOnTeam(RED) && p.isCaptain());
+      hasBlueCaptain = hasBlueCaptain || (p.isOnTeam(BLUE) && p.isCaptain());
     }
 
-    return hasRedKey && hasBlueKey
+    return hasRedCaptain && hasBlueCaptain
   }
 }
 

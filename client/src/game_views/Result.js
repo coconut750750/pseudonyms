@@ -19,7 +19,7 @@ function Result(props) {
           board={props.board}
           reveals={props.reveals}
           keycard={props.keycard}
-          isKey={true}/>
+          showKey={true}/>
       );
     } else if (isDuet(props.type)) {
       return (
@@ -29,8 +29,7 @@ function Result(props) {
           reveals={props.reveals}
           keycard={props.keycard}
           team={props.me.team}
-          otherTeam={otherTeam(props.me.team)}
-          isKey={true}/>
+          otherTeam={otherTeam(props.me.team)}/>
       );
     }
     return <div/>

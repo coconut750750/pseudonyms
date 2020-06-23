@@ -1,13 +1,13 @@
-.badge.key {
+.badge.captain {
 }
 
-.badge img.key-icon {
+.badge img.captain-icon {
     height: 9px;
     margin-right: 4px;
     filter: invert(1);
 }
 
-.badge.badge-light img.key-icon {
+.badge.badge-light img.captain-icon {
     filter: invert(0);
 }
 

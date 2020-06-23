@@ -44,7 +44,7 @@ function BoardView(props) {
 
   const canSubmitClue = () => {
     if (isClassic(props.type)) {
-      return myTurn() && props.me.isKey() && !clueActive();
+      return myTurn() && props.me.isCaptain() && !clueActive();
     } else if (isDuet(props.type)) {
       return (myTurn() || firstTurn(props.turn)) && !clueActive();
     }
@@ -77,8 +77,8 @@ function BoardView(props) {
           board={props.board}
           reveals={props.reveals}
           keycard={props.keycard}
-          isKey={props.me.isKey()}
-          canReveal={myTurn() && !props.me.isKey() && clueActive()}/>
+          showKey={props.me.isCaptain()}
+          canReveal={myTurn() && !props.me.isCaptain() && clueActive()}/>
       );
     } else if (isDuet(props.type)) {
       return (
@@ -88,7 +88,6 @@ function BoardView(props) {
           reveals={props.reveals}
           keycard={props.keycard}
           team={props.me.team}
-          isKey={true}
           canReveal={(!myTurn() && clueActive()) || suddenDeath(props.turn)}/>
       );
     }

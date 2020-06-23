@@ -1,7 +1,7 @@
 function socketio(socket, game, name, player) {
-  socket.on('setKey', data => {
+  socket.on('setCaptain', data => {
     if (game.canSetRole()) {
-      game.setKey(name);
+      game.setCaptain(name);
     }
   });
 

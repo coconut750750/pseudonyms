@@ -15,7 +15,7 @@ const classic = {
   N_BLACK_TILES: 1,
 
   PLAYER_ROLE: "player",
-  KEY_ROLE: "key",
+  CAPTAIN_ROLE: "captain",
 };
 
 const duet = {

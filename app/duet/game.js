@@ -201,6 +201,7 @@ class DuetGame extends GameInterface {
 
     if (this.timersLeft <= 0) {
       this.turn = SUDDEN_DEATH;
+      this.stopTimer();
     } else {
       this.turn = this.turn === RED ? BLUE : RED;
       if (this.keycard.teamFinished(this.turn)) {

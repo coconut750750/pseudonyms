@@ -14,7 +14,7 @@ function ClassicTile(props) {
 
   const tileClass = () => {
     const revealClass = props.revealed ? "revealed" : "hidden";
-    const roleClass = props.isKey ? "key" : "player";
+    const roleClass = props.showKey ? "key" : "player";
     const activeClass = props.active ? "active" : "inactive";
     return `tile ${revealClass} ${roleClass} ${props.color} ${activeClass}`;
   };

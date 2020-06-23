@@ -25,8 +25,8 @@ class ClassicGame extends GameInterface {
 
     this.clues = new Clues( clue => this.notifyClue(clue) );
 
-    this.broadcastKeys = (event, data) => {
-      this.plist.getAll().forEach(p => p.sendAsKey(event, data));
+    this.broadcastCaptains = (event, data) => {
+      this.plist.getAll().forEach(p => p.sendAsCaptain(event, data));
     }
 
     this.reset();
@@ -74,8 +74,8 @@ class ClassicGame extends GameInterface {
     return this.phase === ROLES;
   }
 
-  setKey(name) {
-    this.plist.setKey(name);
+  setCaptain(name) {
+    this.plist.setCaptain(name);
   }
 
   canStart() {
@@ -113,12 +113,12 @@ class ClassicGame extends GameInterface {
   }
 
   canConfirmRoles() {
-    return this.plist.enoughKeys();
+    return this.plist.enoughCaptains();
   }
 
   confirmRoles() {
     if (!this.canConfirmRoles()) {
-      throw new Error("Not enough keys");
+      throw new Error("Not enough Captains");
     }
     this.phase = BOARD;
 
@@ -151,7 +151,7 @@ class ClassicGame extends GameInterface {
     if (!player.isOnTeam(this.turn)) {
       return false;
     }
-    if (!player.isKey()) {
+    if (!player.isCaptain()) {
       return false;
     }
     if (this.phase !== BOARD) {
@@ -175,7 +175,7 @@ class ClassicGame extends GameInterface {
   }
 
   canReveal(player) {
-    return player.isOnTeam(this.turn) && !player.isKey();
+    return player.isOnTeam(this.turn) && !player.isCaptain();
   }
 
   canEndTurn(player) {
@@ -259,7 +259,7 @@ class ClassicGame extends GameInterface {
   }
 
   notifyKeyChange() {
-    this.broadcastKeys('key', this.keycard.json());
+    this.broadcastCaptains('key', this.keycard.json());
   }
 
   notifyTurnChange() {
@@ -305,7 +305,7 @@ class ClassicGame extends GameInterface {
     if (this.keycard === undefined) {
       return;
     }
-    if (this.phase === RESULT || player.isKey()) {
+    if (this.phase === RESULT || player.isCaptain()) {
       player.send('key', this.keycard.json());
     }
   }

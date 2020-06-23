@@ -28,7 +28,7 @@ function ClassicBoard(props) {
         word={word}
         color={color}
         revealed={isRevealed}
-        isKey={props.isKey}
+        showKey={props.showKey}
         active={props.canReveal}
         reveal={ () => props.revealWord(r, c) }/>
     );

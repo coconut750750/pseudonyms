@@ -21,8 +21,8 @@ export default class Player {
     return this.team === "blue";
   }
 
-  isKey() {
-    return this.role === "key";
+  isCaptain() {
+    return this.role === "captain";
   }
 }
 
