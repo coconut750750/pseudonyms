@@ -3,11 +3,10 @@
 }
 
 .tip-toggle {
-    /*position: absolute;*/
-    height: 20px;
-    width: 20px;
+    height: 24px;
+    width: 24px;
     border-radius: 4px;
-    padding: 2px;
+    padding: 4px;
     box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 4px 1px;
     cursor: pointer;
 }
