@@ -134,6 +134,29 @@ describe('initiating a playerlist', () => {
     expect(plist.get("p2").isCaptain()).toBeTruthy();
   });
 
+  test('randomize captains', () => {
+    const plist = new PlayerList(() => {}, () => {});
+
+    plist.add("p1", undefined);
+    plist.add("p2", undefined);
+    plist.add("p3", undefined);
+    plist.add("p4", undefined);
+
+
+    plist.setTeam("p1", true);
+    plist.setTeam("p2", true);
+    plist.setTeam("p3", false);
+    plist.setTeam("p4", false);
+
+    plist.randomizeCaptain(plist.get("p1").team);
+    plist.randomizeCaptain(plist.get("p3").team);
+
+    expect(plist.get("p1").isCaptain() || plist.get("p2").isCaptain()).toBeTruthy();
+    expect(plist.get("p3").isCaptain() || plist.get("p4").isCaptain()).toBeTruthy();
+
+    expect(plist.enoughCaptains()).toBeTruthy();
+  });
+
   test('check if enough captains', () => {
     const plist = new PlayerList(() => {}, () => {});
     plist.add("p1", undefined);

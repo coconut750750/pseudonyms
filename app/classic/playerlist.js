@@ -15,6 +15,12 @@ class PlayerList extends PlayerListInterface {
     this.notifyUpdate();
   }
 
+  randomizeCaptain(team) {
+    const players = Object.values(this.players).filter(p => p.isOnTeam(team));
+    const r = Math.floor(Math.random() * players.length);
+    this.setCaptain(players[r].name);
+  }
+
   setCaptain(name) {
     for (var p of Object.values(this.players)) {
       if (p.isOnTeam(this.players[name].team)) {

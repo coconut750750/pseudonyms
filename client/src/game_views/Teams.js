@@ -24,25 +24,26 @@ function Teams(props) {
       <h5>Select Teams</h5>
       <h6>Each team must have at least two players</h6>
       <br/>
-      
+
       <div className="row">
         <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('selectTeam', { team: 'red' })}>Join Red</button>
-          <PlayerList players={getReds()}/>
         </div>
-
         <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('randomizeTeams', {})}>Randomize</button>
-          <PlayerList players={getUndecideds()}/>
         </div>
-
         <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
             onClick={() => props.socket.emit('selectTeam', { team: 'blue' })}>Join Blue</button>
-          <PlayerList players={getBlues()}/>
         </div>
+      </div>
+      
+      <div className="row">
+        <div className="col-4 p-0"><PlayerList players={getReds()}/></div>
+        <div className="col-4 p-0"><PlayerList players={getUndecideds()}/></div>
+        <div className="col-4 p-0"><PlayerList players={getBlues()}/></div>
       </div>
 
       <br/>

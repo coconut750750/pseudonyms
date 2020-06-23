@@ -5,6 +5,12 @@ function socketio(socket, game, name, player) {
     }
   });
 
+  socket.on('randomizeRoles', data => {
+    if (game.canSetRole()) {
+      game.randomizeRoles(player);
+    }
+  });
+
   socket.on('confirmRoles', data => {
     try {
       game.confirmRoles();

@@ -78,6 +78,10 @@ class ClassicGame extends GameInterface {
     this.plist.setCaptain(name);
   }
 
+  randomizeRoles(player) {
+    this.plist.randomizeCaptain(player.team);
+  }
+
   canStart() {
     return this.phase === LOBBY;
   }
