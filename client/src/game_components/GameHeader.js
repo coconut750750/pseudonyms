@@ -2,7 +2,7 @@ import React from 'react';
 
 import PlayerList from '../components/PlayerList';
 import Clock from '../game_components/Clock';
-import Hint from '../hint/Hint';
+import Tip from '../tip/Tip';
 import {
   isClassic,
   isDuet,
@@ -20,7 +20,7 @@ function GameHeader(props) {
   const renderClassicScore = () => (
     <div className="row">
       <div className="col-5">
-        <h5>{`${props.score.red}`}<Hint classic help="score"/></h5>
+        <h5>{`${props.score.red}`}<Tip classic help="score"/></h5>
       </div>
       <div className="col-2"></div>
       <div className="col-5">
@@ -33,15 +33,15 @@ function GameHeader(props) {
     <div className="row">
       <div className="col-5">
         <h6>
-          {`Words: ${props.score.leftover}`}<Hint duet help="wordScore"/>
+          {`Words: ${props.score.leftover}`}<Tip duet help="wordScore"/>
         </h6>
       </div>
       <div className="col-2"></div>
       <div className="col-5">
         <h6>
-          {`Turns: ${props.score.timer}`}<Hint duet right help="turnLimit"/>
+          {`Turns: ${props.score.timer}`}<Tip duet right help="turnLimit"/>
           <br/>
-          {`Mistakes: ${props.score.mistakes}`}<Hint duet right help="mistakeScore"/>
+          {`Mistakes: ${props.score.mistakes}`}<Tip duet right help="mistakeScore"/>
         </h6>
       </div>
     </div>

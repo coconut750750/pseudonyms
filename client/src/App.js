@@ -33,14 +33,14 @@ function App() {
   const [socket, setSocket] = useState(undefined);
   const [urlGameCode, setUrlGameCode] = useState(undefined);
   
-  if (localStorage.getItem("hints") === null) {
-    localStorage.setItem("hints", true);
+  if (localStorage.getItem("tips") === null) {
+    localStorage.setItem("tips", true);
   }
 
-  const [hints, setHints] = useState(localStorage.getItem("hints") === 'true');
-  const setHintsActive = (active) => {
-    setHints(active);
-    localStorage.setItem("hints", active);
+  const [tips, setTips] = useState(localStorage.getItem("tips") === 'true');
+  const setTipsActive = (active) => {
+    setTips(active);
+    localStorage.setItem("tips", active);
   };
 
   const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
@@ -147,7 +147,7 @@ function App() {
     };
 
   return (
-    <div className={`App ${hints ? '' : 'hidehints'}`}>
+    <div className={`App ${tips ? '' : 'hidetips'}`}>
       <br/>
       <h3>Pseudonyms</h3>
       <div className="row">
@@ -157,8 +157,8 @@ function App() {
         </div>
         <div className="col-2">
           {viewState === GAME &&
-            <div className="hint-toggle" onClick={() => setHintsActive(!hints)}>
-              {hints 
+            <div className="tip-toggle" onClick={() => setTipsActive(!tips)}>
+              {tips 
               ? <img alt="" src="/lightbulb-on.svg"/>
               : <img alt="" src="/lightbulb-off.svg"/>
               }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PlayerList from '../components/PlayerList';
-import Hint from '../hint/Hint';
+import Tip from '../tip/Tip';
 
 function Roles(props) {
   const getReds = () => {
@@ -26,7 +26,7 @@ function Roles(props) {
 
   return (
     <div>
-      <h5>Elect Keys<Hint classic right help="keyRole"/></h5>
+      <h5>Elect Keys<Tip classic right help="keyRole"/></h5>
       <h6>Each team must have one key</h6>
       <br/>
       

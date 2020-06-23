@@ -2,7 +2,7 @@ import React from 'react';
 
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
-import Hint from '../hint/Hint';
+import Tip from '../tip/Tip';
 
 import {
   isClassic,
@@ -47,7 +47,7 @@ function Result(props) {
 
   return (
     <div>
-      <h5>Results<Hint classic={isClassic(props.type)} duet={isDuet(props.type)} help="resultsHelp"/></h5>
+      <h5>Results<Tip classic={isClassic(props.type)} duet={isDuet(props.type)} help="resultsHelp"/></h5>
       {renderHeader()}
       <br/>
 

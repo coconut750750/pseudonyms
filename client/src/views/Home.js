@@ -9,7 +9,7 @@ function Home(props) {
         <div className="alert alert-success updates" role="alert">
           <p>New features!</p>
           <p>New game mode: Duet! Work with a group as small as 2 people to guess all green words. But be careful though, there are more black words.</p>
-          <p>Spend less time explaining rules, and more time playing, with Hints! Scattered around, Hints guide unexperienced players through the game. Click the "i" to read relevant rules. Veterans of the game can click the lightbulb turn them off.</p>
+          <p>Spend less time explaining rules, and more time playing, with Tips! Scattered around, Tips guide unexperienced players through the game. Click the "i" to read relevant rules. Veterans of the game can click the lightbulb turn them off.</p>
         </div>
       </div>
 
