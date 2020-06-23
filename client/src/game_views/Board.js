@@ -31,10 +31,10 @@ function BoardView(props) {
       return (
         <div>
           {clueActive() &&
-            <h6>{`${props.clue.word} : ${props.clue.count}`}<Tip right={hintRight} help="clue"/></h6>
+            <h6 className="m-0">{`${props.clue.word} : ${props.clue.count}`}<Tip right={hintRight} help="clue"/></h6>
           }
           {props.guessesLeft &&
-            <h6>{`${props.guessesLeft} guesses left`}<Tip classic right={hintRight} help="guessesLeft"/></h6>
+            <h6 className="m-0">{`${props.guessesLeft} guesses left`}<Tip classic right={hintRight} help="guessesLeft"/></h6>
           }
         </div>
       );

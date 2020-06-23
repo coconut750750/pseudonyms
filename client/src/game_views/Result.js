@@ -37,9 +37,9 @@ function Result(props) {
 
   const renderHeader = () => {
     if (isClassic(props.mode)) {
-      return <h6>{`${props.winner.replace(/^\w/, c => c.toUpperCase())} wins!`}</h6>;
+      return <h6 className="m-0">{`${props.winner.replace(/^\w/, c => c.toUpperCase())} wins!`}</h6>;
     } else if (isDuet(props.mode)) {
-      return <h6>{props.winner ? "You win!" : "You lose"}</h6>;
+      return <h6 className="m-0">{props.winner ? "You win!" : "You lose"}</h6>;
     }
     return <div/>
   };
