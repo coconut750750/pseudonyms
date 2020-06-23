@@ -106,7 +106,7 @@ describe('initiating a playerlist', () => {
     expect(plist.allAssignedTeam()).toBeTruthy();
   });
 
-  test('setting keys', () => {
+  test('setting captains', () => {
     const plist = new PlayerList(() => {}, () => {});
     plist.add("p1", undefined);
     plist.add("p2", undefined);
@@ -114,12 +114,12 @@ describe('initiating a playerlist', () => {
     plist.setTeam("p1", true);
     plist.setTeam("p2", false);
 
-    plist.setKey("p1");
+    plist.setCaptain("p1");
 
-    expect(plist.get("p1").isKey()).toBeTruthy();
+    expect(plist.get("p1").isCaptain()).toBeTruthy();
   });
 
-  test('set keys of one team multiple times', () => {
+  test('set captain of one team multiple times', () => {
     const plist = new PlayerList(() => {}, () => {});
     plist.add("p1", undefined);
     plist.add("p2", undefined);
@@ -127,14 +127,14 @@ describe('initiating a playerlist', () => {
     plist.setTeam("p1", true);
     plist.setTeam("p2", true);
 
-    plist.setKey("p1");
-    plist.setKey("p2");
+    plist.setCaptain("p1");
+    plist.setCaptain("p2");
 
-    expect(plist.get("p1").isKey()).toBeFalsy();
-    expect(plist.get("p2").isKey()).toBeTruthy();
+    expect(plist.get("p1").isCaptain()).toBeFalsy();
+    expect(plist.get("p2").isCaptain()).toBeTruthy();
   });
 
-  test('check if enough keys', () => {
+  test('check if enough captains', () => {
     const plist = new PlayerList(() => {}, () => {});
     plist.add("p1", undefined);
     plist.add("p2", undefined);
@@ -142,9 +142,9 @@ describe('initiating a playerlist', () => {
     plist.setTeam("p1", true);
     plist.setTeam("p2", false);
 
-    plist.setKey("p1");
-    plist.setKey("p2");
+    plist.setCaptain("p1");
+    plist.setCaptain("p2");
 
-    expect(plist.enoughKeys()).toBeTruthy();
+    expect(plist.enoughCaptains()).toBeTruthy();
   });
 });
