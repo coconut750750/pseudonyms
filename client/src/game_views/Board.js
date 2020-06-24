@@ -25,16 +25,39 @@ function BoardView(props) {
     return props.clue !== undefined;
   };
 
+  const canReveal = () => {
+    if (isClassic(props.mode)) {
+      return myTurn() && !props.me.isCaptain() && clueActive();
+    } else if (isDuet(props.mode)) {
+      return (!myTurn() && clueActive()) || suddenDeath(props.turn);
+    }
+    return false;
+  };
+
+  const canEndTurn = () => {
+    if (isClassic(props.mode)) {
+      return canReveal();
+    } else if (isDuet(props.mode)) {
+      return !myTurn() && clueActive();
+    }
+    return false;
+  };
+
   const renderClue = (team) => {
     const hintRight = team === BLUE;
     if (props.turn === team) {
       return (
         <div>
           {clueActive() &&
-            <h6 className="m-0">{`${props.clue.word} : ${props.clue.count}`}<Tip right={hintRight} help="clue"/></h6>
+            <h6 className="m-0">{`${props.clue.word} : ${props.clue.count}`}
+              {canReveal() && <Tip right={hintRight} help="teamClue"/>}
+              {!myTurn() && <Tip right={hintRight} help="otherClue"/>}
+            </h6>
           }
           {props.guessesLeft &&
-            <h6 className="m-0">{`${props.guessesLeft} guesses left`}<Tip classic right={hintRight} help="guessesLeft"/></h6>
+            <h6 className="m-0"><small>{`${props.guessesLeft} guesses left`}</small>
+              <Tip classic right={hintRight} help="guessesLeft"/>
+            </h6>
           }
         </div>
       );
@@ -60,15 +83,6 @@ function BoardView(props) {
     return <div/>
   };
 
-  const canEndTurn = () => {
-    if (isClassic(props.mode)) {
-      return clueActive() && myTurn();
-    } else if (isDuet(props.mode)) {
-      return clueActive() && !myTurn();
-    }
-    return false;
-  };
-
   const renderBoard = () => {
     if (isClassic(props.mode)) {
       return (
@@ -78,7 +92,7 @@ function BoardView(props) {
           reveals={props.reveals}
           keycard={props.keycard}
           showKey={props.me.isCaptain()}
-          canReveal={myTurn() && !props.me.isCaptain() && clueActive()}/>
+          canReveal={canReveal()}/>
       );
     } else if (isDuet(props.mode)) {
       return (
@@ -88,7 +102,7 @@ function BoardView(props) {
           reveals={props.reveals}
           keycard={props.keycard}
           team={props.me.team}
-          canReveal={(!myTurn() && clueActive()) || suddenDeath(props.turn)}/>
+          canReveal={canReveal()}/>
       );
     }
     return <div/>
@@ -117,8 +131,11 @@ function BoardView(props) {
 
       {canSubmitClue() && <ClueInput socket={props.socket}/>}
       {canEndTurn() &&
-        <button type="button" className="btn btn-light"
-          onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
+        <div>
+          <button type="button" className="btn btn-light"
+            onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
+          <Tip right help="endTurn"/>
+        </div>
       }
     </div>
   );
