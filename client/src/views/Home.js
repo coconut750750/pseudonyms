@@ -15,17 +15,21 @@ function Home(props) {
 
       <div className="button-row d-flex justify-content-around">
         <div>
-          <button type="button" className="btn btn-light" onClick={props.createClassicGame}>Create<br/>Classic Game</button>
+          <button type="button" className="btn btn-outline-dark" onClick={props.createClassicGame}>Create<br/>Classic Game</button>
           <p>Competitive<br/>4+ players</p>
         </div>
         <div>
-          <button type="button" className="btn btn-light" onClick={props.createDuetGame}>Create<br/>Duet Game</button>
+          <button type="button" className="btn btn-outline-dark" onClick={props.createDuetGame}>Create<br/>Duet Game</button>
           <p>Collaborative<br/>2+ players</p>
         </div>
       </div>
 
+      <div className="button-row d-flex justify-content-center">
+        <button type="button" className="btn btn-outline-dark" onClick={props.joinGame}>Join Game</button>
+      </div>
+      <br/>
+      
       <div className="btn-group-vertical">
-        <button type="button" className="btn btn-light" onClick={props.joinGame}>Join Game</button>
         <a class="btn btn-light" role="button" href="/howto">How to Play</a>
         <a class="btn btn-light" role="button" href="/walkthrough">Walkthrough</a>
         <a class="btn btn-light" role="button" href="/more">More Games</a>
