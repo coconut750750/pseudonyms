@@ -12,12 +12,12 @@ function HowTo(props) {
       <p>Pseudonyms Classic is a team-based board game based off of the popular board game Codenames. It requires at least 4 players.</p>
 
       <h6>Objective</h6>
-      <p>The objective of the game is for each team to correctly identify and reveal their respective words based on the clues given by their Spymaster or, in Pseudonyms, their “Captain”.</p>
+      <p>The objective of the game is for each team to correctly identify and reveal their respective words based on the clues given by their "Captain."</p>
 
       <h6>The Setup</h6>
       <p>Players are split into two teams, a red team and a blue team. Each team elects one player to be the Captain.</p>
       <p>When the game starts, 25 random words from a word list are chosen and placed in a 5 by 5 grid. Each word can be one of four colors: red, blue, black, and white. There are 8 or 9 red and blue words depending on the first team to play, 7 white words, and 1 black word. Only the Captains know the colors of each word.</p>
-      <p>One team is chosen at random to go first. That team will 9 words to identify; the other team will have 8. If a team reveals the black word, they automatically lose. </p>
+      <p>One team is chosen at random to go first. That team will 9 words to identify; the other team will have 8. </p>
 
       <h6>The Clue</h6>
       <p>The Captain will give their team a clue that consists of one word and one number. The word should relate to the words that the Captain's team must reveal. The number tells the Captain’s team how many words are related to the clue. </p>
@@ -26,7 +26,7 @@ function HowTo(props) {
 
       <h6>The Reveal</h6>
       <p>Once the Captain submits the clue, the other players on the team will have a chance to guess which words the Captain was trying to hint at. Each team can guess up to 1 more than the number given by their Captain, but if a player guesses incorrectly, i.e. revealing a word that is not their team color, their turn ends. The team can also end their turn whenever they want.</p>
-      <p>If a player reveals the last word for the other team, the other team wins. If a player reveals the black word, they lose.</p>
+      <p>If a player reveals the last word for the other team or reveals the black word, the other team wins.</p>
 
       <h6>The End</h6>
       <p>The game ends when all of words for one team are revealed. The game can end early if the black word is revealed.</p>
@@ -44,7 +44,7 @@ function HowTo(props) {
       <h6>The Setup</h6>
       <p>Players are split into two teams, a red team and a blue team. These teams are working together to identify all the correct words. Players on the red team will give clues for the players on the blue team to guess, and vice versa.</p>
       <p>When the game starts, 25 random words from a word list are chosen and placed in a 5 by 5 grid. Each team sees 9 green, 3 black, and 13 white words. Note that a word that appears green to the red team might be green, black, or white to the blue team.</p>
-      <p>Either team can go first to give a clue; then it alternates. If either team reveals a word that appears black to the opposite team, everyone loses. </p>
+      <p>Either team can go first to give a clue; then the turns alternate. </p>
 
       <h6>The Clue</h6>
       <p>A clue consists of one word and one number. Suppose the red team is giving a clue; anyone on the red team can do so. The word should relate to the words that appear green to the red team. The number tells the blue team how many words are related to the clue. </p>
@@ -55,13 +55,14 @@ function HowTo(props) {
       <p>Once the red team submits the clue, anyone on the blue team can guess which words the red team was trying to hint at. They blue team can guess as many words as they want and can end their turn whenever they want, but if a player guesses incorrectly, i.e. revealing a word that appears white to the red team (even if the word appears green to the blue team), the turn ends.</p>
 
       <h6>Incorrect Reveals</h6>
-      <p>As stated above, some words might appear green to one team, but white or black to another team. So, even if a player on the blue team guesses a word that appears green to them, that guess is incorrect if it appears white to the red team. The blue team cannot guess that word again, but the red team can still guess that word.</p>
-      <p>In this case, since the red team still needs to guess that word, Pseudonyms will indicate incorrect guesses with a badge on the tile. For example, if the blue team guesses an incorrect word, a RED badge will appear on that word, indicating that the red team sees that word as white.</p>
+      <p>A player on the blue team guesses incorrectly if the word does not appear green to the red team. The blue team cannot guess that word again, but the red team can still guess that word.</p>
+      <p>Pseudonyms will indicate incorrect guesses with a badge on the tile. In this case, since the word does not appear green to the red team, a RED badge will appear on that word.</p>
       <p>If both a red AND a blue badge appear on a word, that word appears white to both teams, and neither team can guess that word anymore. </p>
+      <p>If a player reveals a word that appears black to the other team, both teams lose.</p>
 
       <h6>Turn Limit and Mistake Limit</h6>
       <p>To keep the game challenging, you have the ability to select the turn and mistake limit of a game. The default limits are 9 turns and 9 mistakes, meaning if the players cannot guess all the green words within 9 turns, they lose.</p>
-      <p>The mistake limit need not be the same as the turn limit. For example, players can play a game with a 9 turn limit, but a 2 mistake limit. Once they make two mistakes, future mistake costs 1 turn.</p>
+      <p>The mistake limit need not be the same as the turn limit. For example, players can play a game with a 9 turn limit, but a 2 mistake limit. Once they make two mistakes, future mistakes cost one extra turn.</p>
 
       <h6>Sudden Death</h6>
       <p>After the players run out of turns but still have green words to guess, they enter Sudden Death. They cannot give any more clues, but they can continue guessing. If a word appears green only to the red team, a player on the blue team MUST guess that word to be correct. If either team selects an incorrect guess, the game ends.</p>
