@@ -11,6 +11,8 @@ This app was created to add more features that existing online Codenames games d
 
 ### Features
 
+- Duet mode: collaborative version of the game
+- Tips scattered around the game to guide newer players
 - Private rooms with shareable links
 - Custom wordlists
 - Adjustable time limit
