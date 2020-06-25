@@ -2,6 +2,9 @@ function socketio(socket, game, name, player) {
   socket.on('revealWord', data => {
     if (game.canSuddenDeathReveal()) {
       const { r, c } = data;
+      if (r === undefined || c === undefined) {
+        return;
+      }
       game.suddenDeathReveal(player, r, c);
     }
   });

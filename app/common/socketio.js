@@ -33,6 +33,9 @@ function socketio(socket, game, name, player) {
 
    socket.on('sendClue', data => {
     const { word, count } = data;
+    if (word === undefined || count === undefined) {
+      return;
+    }
     if (Number.isNaN(parseInt(count))) {
       return;
     }
@@ -48,6 +51,9 @@ function socketio(socket, game, name, player) {
   socket.on('revealWord', data => {
     if (game.canReveal(player)) {
       const { r, c } = data;
+      if (r === undefined || c === undefined) {
+        return;
+      }
       game.reveal(r, c);
     }
   });
