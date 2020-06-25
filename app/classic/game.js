@@ -108,6 +108,9 @@ class ClassicGame extends GameInterface {
   }
 
   confirmTeams() {
+    if (this.phase !== TEAMS) {
+      return;
+    }
     super.confirmTeams();
     if (!this.validTeamCount()) {
       throw new Error("At least 2 players must be on each team");
@@ -116,12 +119,15 @@ class ClassicGame extends GameInterface {
     this.notifyPhaseChange();
   }
 
-  canConfirmRoles() {
+  enoughCaptains() {
     return this.plist.enoughCaptains();
   }
 
   confirmRoles() {
-    if (!this.canConfirmRoles()) {
+    if (this.phase !== ROLES) {
+      return;
+    }
+    if (!this.enoughCaptains()) {
       throw new Error("Not enough Captains");
     }
     this.phase = BOARD;
@@ -179,11 +185,11 @@ class ClassicGame extends GameInterface {
   }
 
   canReveal(player) {
-    return player.isOnTeam(this.turn) && !player.isCaptain();
+    return player.isOnTeam(this.turn) && !player.isCaptain() && this.phase === BOARD;
   }
 
   canEndTurn(player) {
-    return this.clues.currentExists() && player.isOnTeam(this.turn);
+    return this.clues.currentExists() && this.canReveal(player);
   }
 
   reveal(r, c) {

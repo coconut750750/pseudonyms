@@ -100,6 +100,9 @@ class DuetGame extends GameInterface {
   }
 
   confirmTeams() {
+    if (this.phase !== TEAMS) {
+      return;
+    }
     super.confirmTeams();
     if (!this.validTeamCount()) {
       throw new Error("At least 1 player must be on each team");
@@ -161,11 +164,11 @@ class DuetGame extends GameInterface {
   }
 
   canReveal(player) {
-    return !player.isOnTeam(this.turn);
+    return !player.isOnTeam(this.turn) && this.phase === BOARD;
   }
 
   canEndTurn(player) {
-    return this.clues.currentExists() && !player.isOnTeam(this.turn);
+    return this.clues.currentExists() && this.canReveal(player);
   }
 
   reveal(r, c) {

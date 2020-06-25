@@ -9,7 +9,7 @@ function Home(props) {
         <div className="alert alert-success updates" role="alert">
           <p>New features!</p>
           <p>New game mode: Duet! This mode is made for 2+ players, as a collaborative twist on the classic game. But be careful, there are more black words.</p>
-          <p>Tips: Tips are designed to guide newer players through the game. Click on a Tip, which appears as an "i," to read relevant rules. Experienced players can click the lightbulb turn them off.</p>
+          <p>Tips: Tips are designed to guide newer players through the game. Click on a Tip, which appears as an "i," to read relevant rules. Experienced players can click the in-game lightbulb to turn them off.</p>
         </div>
       </div>
 
