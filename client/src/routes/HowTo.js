@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-const CLASSIC = "classic";
-const DUET = "duet";
+import { CLASSIC, DUET } from '../utils/const';
 
 function HowTo(props) {
   const [mode, setMode] = useState(CLASSIC);
@@ -89,8 +88,8 @@ function HowTo(props) {
             <span className={mode === DUET ? "nav-link active" : "nav-link "} onClick={ () => setMode(DUET) }>Duet</span>
           </li>
         </ul>
-
         <br/>
+
         {mode === CLASSIC && classicHowto}
         {mode === DUET && duetHowto}
 

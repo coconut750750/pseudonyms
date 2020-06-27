@@ -5,8 +5,9 @@ This app was created to add more features that existing online Codenames games d
 [Try it out!](https://pseudonyms.brandon-wang.com/)
 
 <div align="center">
-    <img src="client/public/images/lobby.png" alt="lobby" width="45%"/>
-    <img src="client/public/images/guess.png" alt="guess" width="45%"/>
+    <img src="client/public/walkthrough/home.png" alt="home" width="30%"/>
+    <img src="client/public/walkthrough/classic/lobby.png" alt="lobby" width="30%"/>
+    <img src="client/public/walkthrough/classic/guess.png" alt="guess" width="30%"/>
 </div>
 
 ### Features
