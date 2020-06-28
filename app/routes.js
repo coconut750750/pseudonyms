@@ -32,7 +32,7 @@ router.post('/feedback', feedbackLimiter, (req, res) => {
 });
 
 router.get('/stats', async (req, res) => {
-  const stats = await getStats(req.dbCollection);
+  const stats = await getStats(req.statsCollection);
   res.send(stats);
 })
 

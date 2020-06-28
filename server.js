@@ -33,7 +33,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(function(req, res, next) {
   req.gm = app.gm;
   req.io = app.io;
-  req.dbCollection = db.collection(dev ? "test" : "prod");
+  req.statsCollection = db.collection("stats");
   req.feedbackCollection = db.collection("feedback");
   next();
 });

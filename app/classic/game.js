@@ -21,7 +21,7 @@ const RESULT = 'result';
 class ClassicGame extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
-    this.dbCollection = options.dbCollection;
+    this.statsCollection = options.statsCollection;
 
     this.clues = new Clues( clue => this.notifyClue(clue) );
 
@@ -142,7 +142,7 @@ class ClassicGame extends GameInterface {
     this.notifyTurnChange();
     this.notifyScore();
     this.notifyPhaseChange();
-    incrementGameStarts(this.dbCollection);
+    incrementGameStarts(this.statsCollection);
 
     this.startClue();
   }
@@ -257,7 +257,7 @@ class ClassicGame extends GameInterface {
 
     this.gameStats.addTurn(this.keycard.redLeft, this.keycard.blueLeft);
     this.gameStats.endGame(matured, this.winner);
-    saveGame(this.dbCollection, this.plist.length(), this.gameoptions.wordlist, this.gameStats);
+    saveGame(this.statsCollection, this.plist.length(), this.gameoptions.wordlist, this.gameStats);
   }
 
   notifyPhaseChange() {

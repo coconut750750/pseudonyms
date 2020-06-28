@@ -8,7 +8,7 @@ const { CLASSIC, DUET } = require('./common/const');
 
 router.post('/classic/create', (req, res) => {
   let options = req.body;
-  options.dbCollection = req.dbCollection;
+  options.statsCollection = req.statsCollection;
   const game = req.gm.createClassicGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
@@ -19,7 +19,7 @@ router.post('/classic/create', (req, res) => {
 
 router.post('/duet/create', (req, res) => {
   let options = req.body;
-  options.dbCollection = req.dbCollection;
+  options.statsCollection = req.statsCollection;
   const game = req.gm.createDuetGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
   
   res.send({
