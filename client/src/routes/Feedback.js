@@ -19,6 +19,8 @@ export default function SubmitFeedback(props) {
       setDisappearingMessage("Successfully submitted!", "alert-success");
     }).catch((res) => {
       setDisappearingMessage(res.message, "alert-danger");
+    }).finally(() => {
+      textareaRef.current.value = "";
     });
   };
 
