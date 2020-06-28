@@ -15,7 +15,7 @@ router.get('/wordlists', (req, res) => {
 });
 
 const feedbackLimiter = rateLimit({
-  windowMs: 24 * 60 * 60 * 1000, // 1 day window
+  windowMs: 60 * 60 * 1000, // 1 hour window
   max: 3, // start blocking after 3 requests
   message: JSON.stringify({ message: "Too many feedback submissions from this IP, please try again tomorrow." }),
 });
