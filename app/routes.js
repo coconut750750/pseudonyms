@@ -23,7 +23,7 @@ const feedbackLimiter = rateLimit({
 router.post('/feedback', feedbackLimiter, (req, res) => {
   const { text } = req.body;
   if (text.length > 0) {
-    req.feedbackCollection.insert({
+    req.feedbackCollection.insertOne({
       text,
       time: new Date(),
     });
