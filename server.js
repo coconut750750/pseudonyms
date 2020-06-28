@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
   req.gm = app.gm;
   req.io = app.io;
   req.dbCollection = db.collection(dev ? "test" : "prod");
+  req.feedbackCollection = db.collection("feedback");
   next();
 });
 app.use("/register/", registerRouter);

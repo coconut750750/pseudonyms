@@ -13,6 +13,7 @@ import App from './App';
 import HowTo from './routes/HowTo';
 import MoreGames from './routes/MoreGames';
 import Walkthrough from './routes/Walkthrough';
+import SubmitFeedback from './routes/Feedback';
 import Footer from './components/Footer';
 
 ReactDOM.render(<Index />, document.getElementById('root'));
@@ -33,8 +34,9 @@ function Index(props) {
     <Router>
       <Switch>
         <Route exact path="/howto"><StaticHeader/><HowTo/></Route>
-        <Route exact path="/more"><StaticHeader/><MoreGames/></Route>
+        <Route exact path="/moregames"><StaticHeader/><MoreGames/></Route>
         <Route exact path="/walkthrough"><StaticHeader/><Walkthrough/></Route>
+        <Route exact path="/feedback"><StaticHeader/><SubmitFeedback/></Route>
         <Route exact path="/:gamecode" component={App}></Route>
         <Route exact path="/" component={App}></Route>
       </Switch>
