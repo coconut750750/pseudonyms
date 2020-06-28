@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import debounce from "lodash/debounce";
 
 import GameBadge from '../components/GameBadge';
+import WrappedMessage from '../components/WrappedMessage';
 
 import GameHeader from '../game_components/GameHeader';
 
@@ -24,8 +24,7 @@ import {
   RESULT,
 } from '../utils/const';
 
-function Game(props) {
-  const [message, setMessage] = useState("");
+function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess }) {
   const [phase, setPhase] = useState(undefined);
 
   const [players, setPlayers] = useState([]);
@@ -40,13 +39,6 @@ function Game(props) {
   const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState("");
 
-  const debounceDisappear = () => setMessage("");
-  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
-  const setDisappearingMessage = useCallback((string, cssClass) => {
-    setMessage({ string, class: cssClass });
-    disappearCallback();
-  }, [disappearCallback]);
-
   // on mount
   useEffect(() => {
     const reset = () => {
@@ -59,10 +51,10 @@ function Game(props) {
       setWinner("");
     }
 
-    // this will result in a 'players' message from server
-    props.socket.emit('joinGame', { name: props.name, gameCode: props.gameCode });
+    socket.emit('joinGame', { name: name, gameCode: gameCode });
 
-    props.socket.on('phase', data => {
+    socket.off('phase');
+    socket.on('phase', data => {
       ReactDOM.unstable_batchedUpdates(() => {
         setPhase(data.phase);
         if (data.phase === LOBBY) {
@@ -71,28 +63,33 @@ function Game(props) {
       });
     });
 
-    props.socket.on('players', data => {
+    socket.off('players');
+    socket.on('players', data => {
       ReactDOM.unstable_batchedUpdates(() => {
         const players = data.players.map(p => newPlayer(p));
-        const mePlayer = getMePlayer(players, props.name);
+        const mePlayer = getMePlayer(players, name);
         setPlayers(players);
         setMe(mePlayer)
       });
     });
 
-    props.socket.on('board', data => {
+    socket.off('board');
+    socket.on('board', data => {
       setBoard(newBoard(data.board));
     });
 
-    props.socket.on('key', data => {
+    socket.off('key');
+    socket.on('key', data => {
       setKey(newKey(data.keycard));
     });
 
-    props.socket.on('message', data => {
-      setDisappearingMessage(data.message, 'alert-danger');
+    socket.off('message');
+    socket.on('message', data => {
+      setError(data.message);
     });
 
-    props.socket.on('turn', data => {
+    socket.off('turn');
+    socket.on('turn', data => {
       const { turn } = data;
       ReactDOM.unstable_batchedUpdates(() => {
         setTurn(turn);
@@ -101,53 +98,57 @@ function Game(props) {
       });
     });
 
-    props.socket.on('clue', data => {
+    socket.off('clue');
+    socket.on('clue', data => {
       const { word, count } = data;
       setClue({ word, count });
     });
 
-    props.socket.on('guesses', data => {
+    socket.off('guesses');
+    socket.on('guesses', data => {
       const { guesses } = data;
       setGuessesLeft(guesses);
     });
 
-    props.socket.on('score', data => {
+    socket.off('score');
+    socket.on('score', data => {
       setScore(data);
     });
 
-    props.socket.on('winner', data => {
+    socket.off('winner');
+    socket.on('winner', data => {
       const { winner } = data;
       setWinner(winner);
     });
 
-    props.socket.emit('getReconnect', {});
+    socket.emit('getReconnect', {});
 
-  }, [props.gameCode, props.name, props.socket, setDisappearingMessage]);
+  }, [gameCode, name, socket, setError]);
 
   useEffect(() => {
-    props.socket.off('reveal');
-    props.socket.on('reveal', data => {
+    socket.off('reveal');
+    socket.on('reveal', data => {
       const newReveals = data.reveal;
       setReveals([...reveals, ...newReveals]);
     });
-  }, [props.socket, reveals]);
+  }, [socket, reveals]);
 
   const game_views = {
     [LOBBY]: <Lobby 
-              mode={props.gameMode}
-              socket={props.socket}
+              mode={gameMode}
+              socket={socket}
               players={players}
               me={me}/>,
     [TEAMS]: <Teams 
-              socket={props.socket}
+              socket={socket}
               players={players}/>,
     [ROLES]: <Roles
-              socket={props.socket}
+              socket={socket}
               players={players}
               me={me}/>,
     [BOARD]: <Board
-              mode={props.gameMode}
-              socket={props.socket}
+              mode={gameMode}
+              socket={socket}
               players={players}
               me={me}
               board={board}
@@ -157,8 +158,8 @@ function Game(props) {
               clue={clue}
               guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
-              mode={props.gameMode}
-              socket={props.socket}
+              mode={gameMode}
+              socket={socket}
               me={me}
               winner={winner}
               board={board}
@@ -169,14 +170,14 @@ function Game(props) {
   return (
     <div>
       <GameBadge
-        mode={props.gameMode}
-        gameCode={props.gameCode}
-        copySuccess={() => setDisappearingMessage('Successfully copied shareable link!', 'alert-success')}/>
+        mode={gameMode}
+        gameCode={gameCode}
+        copySuccess={() => setSuccess('Successfully copied shareable link!')}/>
 
       {(phase === BOARD || phase === RESULT) &&
       <GameHeader
-        mode={props.gameMode}
-        socket={props.socket}
+        mode={gameMode}
+        socket={socket}
         players={players}
         score={score}/>
       }
@@ -186,15 +187,11 @@ function Game(props) {
       {(phase !== LOBBY && phase !== BOARD) &&
         <div>
           <br/>
-          <button type="button" className="btn btn-light" onClick={ () => props.socket.emit('newGame', {}) }>Return to Lobby</button>
+          <button type="button" className="btn btn-light" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>
         </div>
       }
-
-      {message && <div className={`alert ${message.class} message`} role="alert">
-        {message.string}
-      </div>}
     </div>
   );
 }
 
-export default Game;
+export default WrappedMessage(Game);

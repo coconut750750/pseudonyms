@@ -1,20 +1,16 @@
-import React, { useState, useCallback } from 'react';
-import debounce from "lodash/debounce";
+import React, { useRef } from 'react';
 
 import { checkName, createClassicGame, createDuetGame } from '../api/register';
+import WrappedMessage from '../components/WrappedMessage';
 
 function Create(props) {
-  const [message, setMessage] = useState("");
-  const [name, setName] = useState("");
-
-  const debounceDisappear = () => setMessage("");
-  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
+  const nameInputRef = useRef();
 
   const create = async () => {
+    const name = nameInputRef.current.value;
     checkName(name).then(res => {
       if (!res.valid) {
-        setMessage(res.message);
-        disappearCallback();
+        props.setError(res.message);
         return;
       }
 
@@ -45,7 +41,7 @@ function Create(props) {
         e.preventDefault();
         create();
       } }>
-        <input type="text" className="form-control" placeholder="Enter your name" value={name} onChange={ e => setName(e.target.value) }/>
+        <input type="text" className="form-control" placeholder="Enter your name" ref={nameInputRef}/>
         <br />
 
         <div className="button-row d-flex justify-content-around">
@@ -53,12 +49,8 @@ function Create(props) {
           <button type="submit" className="btn btn-light">Create</button>
         </div>
       </form>
-
-      {message && <div className="alert alert-danger message" role="alert">
-        {message}
-      </div>}
     </div>
   )
 }
 
-export default Create;
+export default WrappedMessage(Create);

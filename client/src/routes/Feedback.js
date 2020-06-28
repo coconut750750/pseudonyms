@@ -1,24 +1,16 @@
-import React, { useState, useCallback, useRef } from 'react';
-import debounce from "lodash/debounce";
+import React, { useRef } from 'react';
 
 import { submitFeedback } from '../api/game';
+import WrappedMessage from '../components/WrappedMessage';
 
-export default function SubmitFeedback(props) {
-  const [message, setMessage] = useState(undefined);
-  const debounceDisappear = () => setMessage(undefined);
-  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
-  const setDisappearingMessage = useCallback((string, cssClass) => {
-    setMessage({ string, class: cssClass });
-    disappearCallback();
-  }, [disappearCallback]);
-
+function SubmitFeedback(props) {
   const textareaRef = useRef();
 
   const submit = (text) => {
     submitFeedback(textareaRef.current.value).then(() => {
-      setDisappearingMessage("Successfully submitted!", "alert-success");
+      props.setSuccess("Successfully submitted!");
     }).catch((res) => {
-      setDisappearingMessage(res.message, "alert-danger");
+      props.setError(res.message);
     }).finally(() => {
       textareaRef.current.value = "";
     });
@@ -38,10 +30,8 @@ export default function SubmitFeedback(props) {
         <a className="btn btn-light" role="button" href="/">Back</a>
         <button type="submit" className="btn btn-light" onClick={() => submit(textareaRef.current.value)}>Submit</button>
       </div>
-
-      {message && <div className={`alert ${message.class} message`} role="alert">
-        {message.string}
-      </div>}
     </div>
   );
 }
+
+export default WrappedMessage(SubmitFeedback);

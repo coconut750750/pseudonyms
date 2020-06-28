@@ -30,10 +30,10 @@ function Home(props) {
       <br/>
       
       <div className="btn-group-vertical">
-        <a class="btn btn-sm btn-light" role="button" href="/howto">How to Play</a>
-        <a class="btn btn-sm btn-light" role="button" href="/walkthrough">Walkthrough</a>
-        <a class="btn btn-sm btn-light" role="button" href="/feedback">Submit Feedback</a>
-        <a class="btn btn-sm btn-light" role="button" href="/moregames">More Games</a>
+        <a className="btn btn-sm btn-light" role="button" href="/howto">How to Play</a>
+        <a className="btn btn-sm btn-light" role="button" href="/walkthrough">Walkthrough</a>
+        <a className="btn btn-sm btn-light" role="button" href="/feedback">Submit Feedback</a>
+        <a className="btn btn-sm btn-light" role="button" href="/moregames">More Games</a>
       </div>
 
       <br/>

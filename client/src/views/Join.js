@@ -1,21 +1,18 @@
-import React, { useState, useCallback } from 'react';
-import debounce from "lodash/debounce";
+import React, { useRef } from 'react';
 
 import { checkName } from '../api/register';
+import WrappedMessage from '../components/WrappedMessage';
 
 function Join(props) {
-  const [message, setMessage] = useState("");
-  const [name, setName] = useState("");
-  const [gameCode, setGameCode] = useState(props.urlGameCode);
-
-  const debounceDisappear = () => setMessage("");
-  const disappearCallback = useCallback(debounce(debounceDisappear, 5000), []);
+  const nameInputRef = useRef();
+  const gameCodeInputRef = useRef();
 
   const joinGame = async () => {
+    const name = nameInputRef.current.value;
+    const gameCode = gameCodeInputRef.current.value;
     checkName(name, gameCode).then(res => {
       if (!res.valid) {
-        setMessage(res.message);
-        disappearCallback();
+        props.setError(res.message);
         return;
       }
 
@@ -31,14 +28,13 @@ function Join(props) {
         e.preventDefault();
         joinGame();
       } }>
-        <input type="text" className="form-control" placeholder="Enter game code (4 characters)" 
-          value={gameCode}
-          disabled={props.urlGameCode !== undefined}
-          onChange={ e => setGameCode(e.target.value.toLowerCase()) }/>
+        <input type="text" className="form-control" placeholder="Enter game code (4 characters)"
+          ref={gameCodeInputRef}
+          value={props.urlGameCode}
+          disabled={props.urlGameCode !== undefined}/>
         <br/>
-        <input type="text" className="form-control" placeholder="Enter your name" 
-          value={name} 
-          onChange={ e => setName(e.target.value) }/>
+        <input type="text" className="form-control" placeholder="Enter your name"
+          ref={nameInputRef}/>
         <br/>
 
         <div className="button-row d-flex justify-content-around">
@@ -46,12 +42,8 @@ function Join(props) {
           <button type="submit" className="btn btn-light">Join</button>
         </div>
       </form>
-
-      {message && <div className="alert alert-danger message" role="alert">
-        {message}
-      </div>}
     </div>
   );
 }
 
-export default Join;
+export default WrappedMessage(Join);
