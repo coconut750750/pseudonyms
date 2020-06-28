@@ -23,7 +23,7 @@ const dev = process.env.NODE_ENV === 'development';
 app.use(bodyParser.json());
 app.io = io;
 app.gm = new GameManager(dev);
-app.enable('trust proxy'); // for rate limiter
+app.set('trust proxy', '127.0.0.1'); // for rate limiter
 
 const mongoose = require('mongoose');
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
