@@ -31,6 +31,9 @@ export const firstTurn = (turn) => turn === FIRST_TURN;
 export const suddenDeath = (turn) => turn === SUDDEN_DEATH;
 
 export const otherTeam = (team) => {
+  if (team !== RED && team !== BLUE) {
+    return undefined;
+  }
   return team === RED ? BLUE : RED;
 }
 

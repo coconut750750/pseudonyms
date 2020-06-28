@@ -43,28 +43,6 @@ function BoardView(props) {
     return false;
   };
 
-  const renderClue = (team) => {
-    const hintRight = team === BLUE;
-    if (props.turn === team) {
-      return (
-        <div>
-          {clueActive() &&
-            <h6 className="m-0">{`${props.clue.word} : ${props.clue.count}`}
-              {canReveal() && <Tip right={hintRight} help="teamClue"/>}
-              {!myTurn() && <Tip right={hintRight} help="otherClue"/>}
-            </h6>
-          }
-          {props.guessesLeft &&
-            <h6 className="m-0"><small>{`${props.guessesLeft} guesses left`}</small>
-              <Tip classic right={hintRight} help="guessesLeft"/>
-            </h6>
-          }
-        </div>
-      );
-    }
-    return <div/>
-  };
-
   const canSubmitClue = () => {
     if (isClassic(props.mode)) {
       return myTurn() && props.me.isCaptain() && !clueActive();
@@ -79,6 +57,27 @@ function BoardView(props) {
       return classicTurnDescriptor(props.turn);
     } else if (isDuet(props.mode)) {
       return duetTurnDescriptor(props.turn, clueActive());
+    }
+    return <div/>
+  };
+
+  const renderClue = (team) => {
+    const tipRight = team === BLUE;
+    if (props.turn === team) {
+      return (
+        <div>
+          {clueActive() &&
+            <h6 className="m-0">{`${props.clue.word} : ${props.clue.count}`}
+              {canReveal() && <Tip right={tipRight} help="teamClue"/>}
+            </h6>
+          }
+          {props.guessesLeft &&
+            <h6 className="m-0"><small>{`${props.guessesLeft} guesses left`}</small>
+              <Tip classic right={tipRight} help="guessesLeft"/>
+            </h6>
+          }
+        </div>
+      );
     }
     return <div/>
   };
