@@ -58,7 +58,7 @@ p {
 
 /* walkthrough */
 #walkthrough img.screen {
-    width: 80%;
+    width: 100%;
     user-select: none; 
 }
 

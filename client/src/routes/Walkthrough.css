@@ -1,0 +1,35 @@
+
+.laptop {
+  display: inline-block;
+  position: relative;
+  width: 80%;
+  height: 50%;
+  background: #3f3f41;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 0 0 1px #d1d2d4;
+}
+
+.laptop::before {
+    content: '';
+    bottom: -5%;
+    background: #e6e8e7;
+    height: 5%;
+    width: 115%;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.laptop:after {
+    content: '';
+    top: 2%;
+    width: 3px;
+    height: 3px;
+    background: #e6e8e7;
+    border-radius: 50%;
+    position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+

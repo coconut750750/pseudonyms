@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { CLASSIC, DUET } from '../utils/const';
 
+import './Walkthrough.css';
+
 const classicScreens = ["lobby", "teams", "roles", "clue", "guess"];
 const duetScreens = ["lobby", "teams", "clue", "guess", "suddendeath"];
 const classicDescription = {
@@ -72,20 +74,27 @@ function Walkthrough(props) {
       </ul>
       <br/>
 
-      <small>{getDescription(mode, screen)}</small>
       <div className="justify-content-between">
         <div className="arrow" onClick={ () => goLeft(mode, screen) }>
           {screen > 0 &&
             <i id="left-arrow"></i>
           }
         </div>
-        <img className="screen" src={getImage(mode, screen)} alt={getScreen(mode, screen)}/>
+        
+        <div class="laptop">
+          <img className="screen" src={getImage(mode, screen)} alt={getScreen(mode, screen)}/>
+        </div>
+        
         <div className="arrow" onClick={ () => goRight(mode, screen) }>
           {screen < slides[mode].screens.length - 1 &&
             <i id="right-arrow"></i>
           }
         </div>
       </div>
+      <br/>
+      <small>{getDescription(mode, screen)}</small>
+      <br/>
+      <br/>
       <a href="/"><button type="button" className="btn btn-light">Back</button></a>
     </div>
   );
