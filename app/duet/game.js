@@ -168,6 +168,7 @@ class DuetGame extends GameInterface {
   }
 
   canReveal(player) {
+    // during sudden death, clue does not exist, so cannot regularly reveal
     return this.clues.currentExists() && player.assignedTeam() && !player.isOnTeam(this.turn) && this.phase === BOARD;
   }
 

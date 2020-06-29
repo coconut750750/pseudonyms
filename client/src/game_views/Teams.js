@@ -22,7 +22,7 @@ function Teams(props) {
   return (
     <div>
       <h5>Select Teams</h5>
-      <h6>Each team must have at least two players</h6>
+      <h6>Everyone must be on a team</h6>
       <br/>
 
       <div className="row">
