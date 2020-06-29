@@ -82,6 +82,7 @@ function GameHeader(props) {
 
   return (
     <div>
+      {renderSpectators()}
       {renderScore()}
       <div className="row">
         <div className="col-5"><PlayerList players={getReds()}/></div>
