@@ -1,3 +1,5 @@
+import { RED, BLUE, NO_TEAM } from '../utils/const';
+
 var _ = require('lodash');
 
 export default class Player {
@@ -10,15 +12,15 @@ export default class Player {
   }
 
   isRed() {
-    return this.team === "red";
+    return this.team === RED;
   }
 
   noTeam() {
-    return this.team === "";
+    return this.team === NO_TEAM;
   }
 
   isBlue() {
-    return this.team === "blue";
+    return this.team === BLUE;
   }
 
   isCaptain() {

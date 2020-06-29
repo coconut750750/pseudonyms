@@ -39,6 +39,7 @@ function Roles(props) {
         </div>
         <div className="col-4 p-0">
           <button type="button" className="btn btn-light"
+            disabled={props.me.noTeam()}
             onClick={() => props.socket.emit('randomizeRoles', {})}>Randomize</button>
         </div>
         <div className="col-4 p-0">

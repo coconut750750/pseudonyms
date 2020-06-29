@@ -8,7 +8,6 @@ import Tip from '../tip/Tip';
 import { 
   RED,
   BLUE,
-  NO_TEAM,
   isClassic,
   isDuet,
   firstTurn,
@@ -19,7 +18,7 @@ import {
 
 function BoardView(props) {
   const assignedTeam = () => {
-    return props.me.team !== NO_TEAM;
+    return !props.me.noTeam();
   };
 
   const myTurn = () => {
