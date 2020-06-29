@@ -164,7 +164,7 @@ class DuetGame extends GameInterface {
   }
 
   canReveal(player) {
-    return !player.isOnTeam(this.turn) && this.phase === BOARD;
+    return !player.isOnTeam(this.turn) && this.phase === BOARD && this.turn !== SUDDEN_DEATH;
   }
 
   canEndTurn(player) {
