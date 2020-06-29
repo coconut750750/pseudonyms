@@ -188,7 +188,6 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
 
       {(phase !== LOBBY && phase !== BOARD) &&
         <div>
-          <br/>
           <button type="button" className="btn btn-light" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>
         </div>
       }

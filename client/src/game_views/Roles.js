@@ -25,7 +25,7 @@ function Roles(props) {
   };
 
   return (
-    <div>
+    <div className="mb-2">
       <h5>Elect Captains<Tip classic right help="captainRole"/></h5>
       <h6>Each team must have one Captain</h6>
       <br/>
@@ -63,7 +63,6 @@ function Roles(props) {
         onClick={() => props.socket.emit('confirmRoles', {})}>
         Confirm Roles
       </button>
-
     </div>
   );
 }

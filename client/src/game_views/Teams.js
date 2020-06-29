@@ -20,7 +20,7 @@ function Teams(props) {
   };
 
   return (
-    <div>
+    <div className="mb-2">
       <h5>Select Teams</h5>
       <h6>Everyone must be on a team</h6>
       <br/>
@@ -53,7 +53,6 @@ function Teams(props) {
         onClick={() => props.socket.emit('confirmTeams', {})}>
         Confirm Teams
       </button>
-
     </div>
   );
 }
