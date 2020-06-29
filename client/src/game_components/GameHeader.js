@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PlayerList from '../components/PlayerList';
+import SpectatorList from '../components/SpectatorList';
 import Clock from '../game_components/Clock';
 import Tip from '../tip/Tip';
 import {
@@ -63,7 +64,21 @@ function GameHeader(props) {
     } else if (isDuet(props.mode)) {
       return renderDuetScore();
     }
-  }
+  };
+
+  const renderSpectators = () => {
+    const spectators = getSpectators();
+    if (spectators.length > 0) {
+      return (
+        <SpectatorList
+          socket={props.socket}
+          isAdmin={props.isAdmin}
+          players={spectators}/>
+      );
+    } else {
+      return <div/>;
+    }
+  };
 
   return (
     <div>
@@ -72,10 +87,6 @@ function GameHeader(props) {
         <div className="col-5"><PlayerList players={getReds()}/></div>
         <div className="col-2"><Clock socket={props.socket}/></div>
         <div className="col-5"><PlayerList players={getBlues()}/></div>
-      </div>
-      <div className="row">
-        <div className="col-7"></div>
-        <div className="col-5"><PlayerList players={getSpectators()}/></div>
       </div>
     </div>
   );

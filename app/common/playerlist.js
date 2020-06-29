@@ -39,11 +39,13 @@ class PlayerList {
   }
 
   deactivate(name) {
-    this.players[name].deactivate();
-    if (this.allDeactivated()) {
-      this.endGame();
-    } else {
-      this.notifyUpdate();
+    if (name in this.players) {
+      this.players[name].deactivate();
+      if (this.allDeactivated()) {
+        this.endGame();
+      } else {
+        this.notifyUpdate();
+      }
     }
   }
 
@@ -62,11 +64,11 @@ class PlayerList {
     if (name in this.players) {
       this.players[name].send('end', {});
       delete this.players[name];
-    }
-    if (this.allDeactivated()) {
-      this.endGame();
-    } else {
-      this.notifyUpdate();
+      if (this.allDeactivated()) {
+        this.endGame();
+      } else {
+        this.notifyUpdate();
+      }
     }
   }
 

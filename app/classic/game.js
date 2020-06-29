@@ -36,6 +36,10 @@ class ClassicGame extends GameInterface {
     return CLASSIC;
   }
 
+  canRemove(name) {
+    return (this.phase === BOARD || this.phase === RESULT) && !this.plist.get(name).assignedTeam();
+  }
+
   socketio(socket, game, name, player) {
     super.socketio(socket, game, name, player);
     socketio(socket, game, name, player);

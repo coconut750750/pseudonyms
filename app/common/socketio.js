@@ -71,9 +71,11 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('removePlayer', data => {
-    if (!game.started && player.isAdmin) {
-      const { name } = data;
-      game.removePlayer(name);
+    const { name } = data;
+    if (player.isAdmin) {
+      if (!game.hasStarted() || game.canRemove(name)) {
+        game.removePlayer(name);
+      }
     }
   });
 }

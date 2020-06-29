@@ -56,6 +56,10 @@ class Game extends GameInterface {
     return this.plist.isActive(name);
   }
 
+  canRemove(name) {
+    throw new Error('Game.canRemove() implemention required!');
+  }
+
   removePlayer(name) {
     this.plist.remove(name);
   }

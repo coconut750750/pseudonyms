@@ -40,7 +40,6 @@ class GameInterface {
   }
 
   hasStarted() {
-    // prevents new users from joining
     // prevents existing users from completely being removed
     throw new Error('Game.hasStarted() implemention required!');
   }

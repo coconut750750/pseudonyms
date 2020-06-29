@@ -178,6 +178,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
       <GameHeader
         mode={gameMode}
         socket={socket}
+        isAdmin={me.isAdmin}
         players={players}
         score={score}/>
       }

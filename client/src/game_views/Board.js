@@ -135,7 +135,7 @@ function BoardView(props) {
           {renderClue(BLUE)}
         </div>
       </div>
-
+      
       {renderBoard()}
 
       {canSubmitClue() && <ClueInput socket={props.socket}/>}

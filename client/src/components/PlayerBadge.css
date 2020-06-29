@@ -15,6 +15,10 @@
 
 }
 
+.badge button:focus {
+  outline: none;
+}
+
 .badge .badge-x {
     padding: 0;
     border: none;
@@ -25,10 +29,6 @@
 .badge .badge-x span {
     margin-left: 12px;
     margin-right: 4px;
-}
-
-.badge .badge-x span:hover {
-  opacity: 1;
 }
 
 .badge .badge-x span:before,
