@@ -168,7 +168,7 @@ class DuetGame extends GameInterface {
   }
 
   canEndTurn(player) {
-    return this.canReveal(player);
+    return this.canReveal(player) && this.turn !== SUDDEN_DEATH;
   }
 
   reveal(r, c) {

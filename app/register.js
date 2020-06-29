@@ -51,8 +51,6 @@ router.get('/checkname', (req, res) => {
       });
     } else if (game.playerExists(name)) {
       res.send({ valid: false, message: 'This name has been taken' });
-    } else if (game.hasStarted()) {
-      res.send({ valid: false, message: 'This game is closed' });
     } else {
       res.send({
         valid: true,
