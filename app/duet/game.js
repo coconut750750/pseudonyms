@@ -309,7 +309,7 @@ class DuetGame extends GameInterface {
     }
     if (this.phase === RESULT) {
       player.send('key', this.keycard.jsonMerged());
-    } else {
+    } else if (player.assignedTeam()) {
       player.send('key', this.keycard.json(player.team));
     }
   }

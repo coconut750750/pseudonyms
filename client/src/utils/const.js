@@ -4,6 +4,7 @@ import Tip from '../tip/Tip';
 
 export const RED = "red";
 export const BLUE = "blue";
+export const NO_TEAM = "";
 export const FIRST_TURN = "ft";
 export const SUDDEN_DEATH = "sd";
 

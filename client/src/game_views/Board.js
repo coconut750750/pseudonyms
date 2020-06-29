@@ -8,6 +8,7 @@ import Tip from '../tip/Tip';
 import { 
   RED,
   BLUE,
+  NO_TEAM,
   isClassic,
   isDuet,
   firstTurn,
@@ -17,6 +18,10 @@ import {
 } from '../utils/const';
 
 function BoardView(props) {
+  const assignedTeam = () => {
+    return props.me.team !== NO_TEAM;
+  };
+
   const myTurn = () => {
     return props.me.team === props.turn;
   };
@@ -26,28 +31,34 @@ function BoardView(props) {
   };
 
   const canReveal = () => {
-    if (isClassic(props.mode)) {
-      return myTurn() && !props.me.isCaptain() && clueActive();
-    } else if (isDuet(props.mode)) {
-      return (!myTurn() && clueActive()) || suddenDeath(props.turn);
+    if (assignedTeam()) {
+      if (isClassic(props.mode)) {
+        return myTurn() && !props.me.isCaptain() && clueActive();
+      } else if (isDuet(props.mode)) {
+        return (!myTurn() && clueActive()) || suddenDeath(props.turn);
+      }
     }
     return false;
   };
 
   const canEndTurn = () => {
-    if (isClassic(props.mode)) {
-      return canReveal();
-    } else if (isDuet(props.mode)) {
-      return !myTurn() && clueActive();
+    if (assignedTeam()) {
+      if (isClassic(props.mode)) {
+        return canReveal();
+      } else if (isDuet(props.mode)) {
+        return !myTurn() && clueActive();
+      }
     }
     return false;
   };
 
   const canSubmitClue = () => {
-    if (isClassic(props.mode)) {
-      return myTurn() && props.me.isCaptain() && !clueActive();
-    } else if (isDuet(props.mode)) {
-      return (myTurn() || firstTurn(props.turn)) && !clueActive();
+    if (assignedTeam()) {
+      if (isClassic(props.mode)) {
+        return myTurn() && props.me.isCaptain() && !clueActive();
+      } else if (isDuet(props.mode)) {
+        return (myTurn() || firstTurn(props.turn)) && !clueActive();
+      }
     }
     return false;
   };
