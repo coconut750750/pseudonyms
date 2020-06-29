@@ -133,6 +133,15 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
     });
   }, [socket, reveals]);
 
+  const gameHeader = (
+    <GameHeader
+      mode={gameMode}
+      socket={socket}
+      isAdmin={me?.isAdmin}
+      players={players}
+      score={score}/>
+  );
+
   const game_views = {
     [LOBBY]: <Lobby 
               mode={gameMode}
@@ -149,7 +158,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
     [BOARD]: <Board
               mode={gameMode}
               socket={socket}
-              players={players}
+              gameHeader={gameHeader}
               me={me}
               board={board}
               reveals={reveals}
@@ -160,6 +169,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
     [RESULT]: <Result
               mode={gameMode}
               socket={socket}
+              gameHeader={gameHeader}
               me={me}
               winner={winner}
               board={board}
@@ -173,15 +183,6 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
         mode={gameMode}
         gameCode={gameCode}
         copySuccess={() => setSuccess('Successfully copied shareable link!')}/>
-
-      {(phase === BOARD || phase === RESULT) &&
-      <GameHeader
-        mode={gameMode}
-        socket={socket}
-        isAdmin={me.isAdmin}
-        players={players}
-        score={score}/>
-      }
 
       {game_views[phase]}
 

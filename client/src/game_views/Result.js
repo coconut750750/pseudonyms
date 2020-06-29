@@ -46,7 +46,8 @@ function Result(props) {
 
   return (
     <div>
-      <h5>Results<Tip classic={isClassic(props.mode)} duet={isDuet(props.mode)} help="resultsHelp"/></h5>
+      <h5 className="mb-0">Results<Tip classic={isClassic(props.mode)} duet={isDuet(props.mode)} help="resultsHelp"/></h5>
+      {props.gameHeader}
       {renderHeader()}
       <br/>
 

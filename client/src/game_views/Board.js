@@ -120,9 +120,8 @@ function BoardView(props) {
 
   return (
     <div>
-      <div>
-        {getTurnDescriptor()}
-      </div>
+      {getTurnDescriptor()}
+      {props.gameHeader}
       <div className="row">
         <div className="col-5">
           {renderClue(RED)}
