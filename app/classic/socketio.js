@@ -1,14 +1,10 @@
 function socketio(socket, game, name, player) {
   socket.on('setCaptain', data => {
-    if (game.canSetRole()) {
-      game.setCaptain(name);
-    }
+    game.setCaptain(player);
   });
 
   socket.on('randomizeRoles', data => {
-    if (game.canSetRole()) {
-      game.randomizeRoles(player);
-    }
+    game.randomizeRoles(player);
   });
 
   socket.on('confirmRoles', data => {

@@ -70,16 +70,20 @@ class ClassicGame extends GameInterface {
     return this.phase === TEAMS;
   }
 
-  canSetRole() {
-    return this.phase === ROLES;
+  canSetRole(player) {
+    return this.phase === ROLES && player.assignedTeam();
   }
 
-  setCaptain(name) {
-    this.plist.setCaptain(name);
+  setCaptain(player) {
+    if (this.canSetRole(player)) {
+      this.plist.setCaptain(player.name);
+    }
   }
 
   randomizeRoles(player) {
-    this.plist.randomizeCaptain(player.team);
+    if (this.canSetRole(player)) {
+      this.plist.randomizeCaptain(player.team);
+    }
   }
 
   canStart() {
@@ -108,10 +112,10 @@ class ClassicGame extends GameInterface {
   }
 
   confirmTeams() {
+    super.confirmTeams();
     if (this.phase !== TEAMS) {
       return;
     }
-    super.confirmTeams();
     if (!this.validTeamCount()) {
       throw new Error("At least 2 players must be on each team");
     }
