@@ -6,7 +6,6 @@ function Footer() {
       <hr/>
       <small>built by <a href="https://brandon-wang.com" target="_blank" rel="noopener noreferrer">brandon wang</a></small>
       <br/>
-      <br/>
     </div>
   );
 }

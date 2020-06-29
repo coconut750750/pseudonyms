@@ -20,8 +20,7 @@ ReactDOM.render(<Index />, document.getElementById('root'));
 
 function StaticHeader(props) {
   return (
-    <div>
-      <br/>
+    <div id="header">
       <h3>Pseudonyms</h3>
       <h6>Codenames online</h6>
       <hr/>

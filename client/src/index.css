@@ -16,3 +16,11 @@ body {
     width: 90vw;
   }
 }
+
+#header h3 {
+    margin-top: 1rem;
+}
+
+#header h6 {
+    margin-bottom: 0;
+}

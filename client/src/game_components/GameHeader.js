@@ -17,6 +17,10 @@ function GameHeader(props) {
     return props.players.filter(p => p.isBlue());
   };
 
+  const getSpectators = () => {
+    return props.players.filter(p => p.noTeam());
+  };
+
   const renderClassicScore = () => (
     <div className="row">
       <div className="col-5">
@@ -33,7 +37,7 @@ function GameHeader(props) {
     <div className="row">
       <div className="col-5">
         <h6>
-          {`Words: ${props.score.leftover}`}<Tip duet help="wordScore"/>
+          {`Words left: ${props.score.leftover}`}<Tip duet help="wordScore"/>
         </h6>
       </div>
       <div className="col-2"></div>
@@ -68,6 +72,10 @@ function GameHeader(props) {
         <div className="col-5"><PlayerList players={getReds()}/></div>
         <div className="col-2"><Clock socket={props.socket}/></div>
         <div className="col-5"><PlayerList players={getBlues()}/></div>
+      </div>
+      <div className="row">
+        <div className="col-7"></div>
+        <div className="col-5"><PlayerList players={getSpectators()}/></div>
       </div>
     </div>
   );

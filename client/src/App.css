@@ -22,6 +22,11 @@ p {
     font-size: 12px;
 }
 
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 .button-row {
     width: 75%;
     margin: 0 auto;
