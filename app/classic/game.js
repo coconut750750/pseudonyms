@@ -158,7 +158,7 @@ class ClassicGame extends GameInterface {
   }
 
   canSendClue(player) {
-    if (!player.isOnTeam(this.turn)) {
+    if (!player.assignedTeam() || !player.isOnTeam(this.turn)) {
       return false;
     }
     if (!player.isCaptain()) {
@@ -185,7 +185,7 @@ class ClassicGame extends GameInterface {
   }
 
   canReveal(player) {
-    return this.clues.currentExists() && player.isOnTeam(this.turn) && !player.isCaptain() && this.phase === BOARD;
+    return this.clues.currentExists() && player.assignedTeam() && player.isOnTeam(this.turn) && !player.isCaptain() && this.phase === BOARD;
   }
 
   canEndTurn(player) {

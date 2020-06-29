@@ -141,7 +141,7 @@ class DuetGame extends GameInterface {
   }
 
   canSendClue(player) {
-    if (this.phase !== BOARD) {
+    if (this.phase !== BOARD || !player.assignedTeam()) {
       return false;
     }
     return this.turn === FIRST_TURN || player.isOnTeam(this.turn);
@@ -164,7 +164,7 @@ class DuetGame extends GameInterface {
   }
 
   canReveal(player) {
-    return this.clues.currentExists() && !player.isOnTeam(this.turn) && this.phase === BOARD;
+    return this.clues.currentExists() && player.assignedTeam() && !player.isOnTeam(this.turn) && this.phase === BOARD;
   }
 
   canEndTurn(player) {
@@ -215,8 +215,8 @@ class DuetGame extends GameInterface {
     this.notifyTurnChange();
   }
 
-  canSuddenDeathReveal() {
-    return this.phase === BOARD && this.turn === SUDDEN_DEATH;
+  canSuddenDeathReveal(player) {
+    return this.phase === BOARD && this.turn === SUDDEN_DEATH && player.assignedTeam();
   }
 
   suddenDeathReveal(player, r, c) {

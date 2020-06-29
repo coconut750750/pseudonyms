@@ -1,6 +1,6 @@
 function socketio(socket, game, name, player) {
   socket.on('revealWord', data => {
-    if (game.canSuddenDeathReveal()) {
+    if (game.canSuddenDeathReveal(player)) {
       const { r, c } = data;
       if (r === undefined || c === undefined) {
         return;
