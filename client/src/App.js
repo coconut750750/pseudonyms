@@ -5,6 +5,8 @@ import './App.css';
 
 import io from 'socket.io-client';
 
+import Header from './components/Header';
+
 import Home from './views/Home';
 import Create from './views/Create';
 import Join from './views/Join';
@@ -127,24 +129,17 @@ function App(props) {
 
   return (
     <div className={`App ${tips ? '' : 'hidetips'}`}>
-      <div id="header">
-        <h3>Pseudonyms</h3>
-        <div className="row">
-          <div className="col-2"/>
-          <div className="col-8"><h6>Codenames online</h6></div>
-          <div className="col-2">
-            {viewState === GAME &&
-              <div className="tip-toggle" onClick={() => setTipsActive(!tips)}>
-                {tips 
-                ? <img alt="" src="/lightbulb-on.svg"/>
-                : <img alt="" src="/lightbulb-off.svg"/>
-                }
-              </div>
-            }
-          </div>
-        </div>
-        <hr/>
-      </div>
+      <Header
+        tipToggle={
+          viewState === GAME &&
+            <div className="tip-toggle" onClick={() => setTipsActive(!tips)}>
+              {tips 
+              ? <img alt="" src="/lightbulb-on.svg"/>
+              : <img alt="" src="/lightbulb-off.svg"/>
+              }
+            </div>
+        }
+      />
 
       {views[viewState]}
     </div>

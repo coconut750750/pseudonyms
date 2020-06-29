@@ -1,11 +1,12 @@
 import React from 'react';
 
+import './Footer.css'
+
 function Footer() {
   return (
-    <div>
+    <div id="footer">
       <hr/>
       <small>built by <a href="https://brandon-wang.com" target="_blank" rel="noopener noreferrer">brandon wang</a></small>
-      <br/>
     </div>
   );
 }
