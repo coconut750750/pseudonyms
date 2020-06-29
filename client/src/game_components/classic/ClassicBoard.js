@@ -45,10 +45,8 @@ function ClassicBoard(props) {
   };
 
   return (
-    <div>
-      <div className="board">
-        {renderBoard()}
-      </div>
+    <div className="board mb-2">
+      {renderBoard()}
     </div>
   );
 }

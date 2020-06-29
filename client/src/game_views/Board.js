@@ -2,7 +2,10 @@ import React from 'react';
 
 import ClueInput from '../game_components/ClueInput';
 import ClassicBoard from '../game_components/classic/ClassicBoard';
+import ClassicTurn from '../game_components/classic/Turn';
 import DuetBoard from '../game_components/duet/DuetBoard';
+import DuetTurn from '../game_components/duet/Turn';
+
 import Tip from '../tip/Tip';
 
 import { 
@@ -12,8 +15,6 @@ import {
   isDuet,
   firstTurn,
   suddenDeath,
-  classicTurnDescriptor,
-  duetTurnDescriptor,
 } from '../utils/const';
 
 function BoardView(props) {
@@ -64,9 +65,9 @@ function BoardView(props) {
 
   const getTurnDescriptor = () => {
     if (isClassic(props.mode)) {
-      return classicTurnDescriptor(props.turn);
+      return <ClassicTurn turn={props.turn}/>;
     } else if (isDuet(props.mode)) {
-      return duetTurnDescriptor(props.turn, clueActive());
+      return <DuetTurn turn={props.turn} clueActive={clueActive()}/>;
     }
     return <div/>
   };
@@ -136,7 +137,6 @@ function BoardView(props) {
       </div>
 
       {renderBoard()}
-      <br/>
 
       {canSubmitClue() && <ClueInput socket={props.socket}/>}
       {canEndTurn() &&
