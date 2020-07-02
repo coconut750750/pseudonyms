@@ -265,7 +265,7 @@ class ClassicGame extends GameInterface {
 
     this.gameStats.addTurn(this.keycard.redLeft, this.keycard.blueLeft);
     this.gameStats.endGame(matured, this.winner);
-    saveGame(this.statsCollection, this.plist.length(), this.gameoptions.wordlist, this.gameStats);
+    saveGame(this.statsCollection, this.plist.getActivePlayers(), this.gameoptions.wordlist, this.gameStats);
   }
 
   notifyPhaseChange() {
