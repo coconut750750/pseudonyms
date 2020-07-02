@@ -74,8 +74,12 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('disconnect', data => {
-    if (game !== undefined && game.playerExists(name)) {
-      game.deactivatePlayer(name);
+    if (game !== undefined) {
+      if (game.playerExists(name)) {
+        game.deactivatePlayer(name);
+      } else if (game.canRemove(name)) {
+        game.removePlayer(name);
+      }
     }
   });
 });
