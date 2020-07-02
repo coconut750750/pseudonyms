@@ -15,7 +15,7 @@ class PlayerList extends PlayerListInterface {
     this.notifyUpdate();
   }
 
-  getActivePlayers() {
+  getNonSpectatorCount() {
     let count = 0;
     for (let p of Object.values(this.players)) {
       if (p.assignedTeam()) {
