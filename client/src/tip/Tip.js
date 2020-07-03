@@ -28,7 +28,7 @@ export default function Tip(props) {
 
   return (
     <div className="tip">
-      <button className={`btn ${open ? "btn-secondary" : "btn-light-gray"}`} onClick={ () => setOpen(true) }>i</button>
+      <button type="button" className={`btn ${open ? "btn-secondary" : "btn-light-gray"}`} onClick={ () => setOpen(true) }>i</button>
       <div className={`tipmodal ${open ? "open" : "closed"} ${props.right ? "right" : "left"}`}>
         <p>{text}</p>
       </div>

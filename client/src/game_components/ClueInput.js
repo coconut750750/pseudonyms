@@ -37,6 +37,7 @@ function ClueInput(props) {
 
           <div className="col">
             <button type="submit" className="btn btn-light" disabled={!submitReady()}>Submit</button>
+            {props.tip}
           </div>
         </div>
       </form>

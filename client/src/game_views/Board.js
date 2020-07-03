@@ -137,7 +137,12 @@ function BoardView(props) {
       
       {renderBoard()}
 
-      {canSubmitClue() && <ClueInput socket={props.socket}/>}
+      {canSubmitClue() && 
+        <ClueInput
+          socket={props.socket}
+          tip={<Tip right classic={isClassic(props.mode)} duet={isDuet(props.mode)} help="clueInput"/>}
+        />
+      }
       {canEndTurn() &&
         <div>
           <button type="button" className="btn btn-light"
