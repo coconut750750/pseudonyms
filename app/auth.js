@@ -86,10 +86,15 @@ module.exports = collection => {
     res.send({ valid: true, message: "Success" });
   });
 
+  router.post('/profile', (req, res) => {
+    res.send({
+      user: req.user,
+    });
+  });
+
   router.post('/user', (req, res) => {
     res.send({
-      valid: req.user !== undefined,
-      user: req.user,
+      username: req.user?.username,
     });
   });
 

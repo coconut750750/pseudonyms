@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { login } from '../api/auth';
+import { login, getUser } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
 
 function Login(props) {
@@ -9,17 +9,23 @@ function Login(props) {
   const passwordInputRef = useRef();
   const history = useHistory();
 
+  useEffect(() => {
+    getUser().then(res => {
+      if (res.username !== undefined) {
+        history.push('/')
+      }
+    });
+  });
+
   return (
     <div>
       <h4>Login</h4>
-
+      
       <form onSubmit={ (e) => {
           e.preventDefault();
           login(usernameInputRef.current.value, passwordInputRef.current.value)
-            .then(r => {
-              localStorage.setItem("user", JSON.stringify(r.user));
-              history.push('/');
-            }).catch(r => props.setError("Incorrect username or password."));
+            .then(r => history.push('/'))
+            .catch(r => props.setError("Incorrect username or password."));
         } }>
 
         <input type="name" className="form-control" placeholder="Enter username" ref={usernameInputRef}/>

@@ -13,6 +13,7 @@ import Join from './views/Join';
 import Game from './views/Game';
 
 import { checkCode } from './api/register';
+import { getUser } from './api/auth';
 
 const HOME = "home";
 const CREATE_CLASSIC = "create_classic";
@@ -28,8 +29,7 @@ function App(props) {
   const [gameMode, setGameMode] = useState("");
   const [socket, setSocket] = useState(undefined);
   const [urlGameCode, setUrlGameCode] = useState(undefined);
-  
-  const username = JSON.parse(localStorage.getItem("user"))?.username;
+  const [username, setUsername] = useState(undefined);
   
   if (localStorage.getItem("tips") === null) {
     localStorage.setItem("tips", true);
@@ -103,6 +103,12 @@ function App(props) {
       } 
     }
   }, [viewState, socket, reset, props]);
+
+  useEffect(() => {
+    getUser().then(res => {
+      setUsername(res.username)
+    });
+  }, []);
 
   const views = {
     [HOME]:         <Home 

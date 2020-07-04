@@ -10,13 +10,15 @@ import {
 } from "react-router-dom";
 
 import App from './App';
-import Login from './routes/Login';
 import HowTo from './routes/HowTo';
 import MoreGames from './routes/MoreGames';
 import Walkthrough from './routes/Walkthrough';
 import SubmitFeedback from './routes/Feedback';
 import Header from './components/Header';
 import Footer from './components/Footer';
+
+import Login from './routes/Login';
+import Register from './routes/Register';
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 
@@ -29,6 +31,7 @@ function Index(props) {
         <Route exact path="/walkthrough"><Header/><Walkthrough/></Route>
         <Route exact path="/feedback"><Header/><SubmitFeedback/></Route>
         <Route exact path="/login"><Header/><Login/></Route>
+        <Route exact path="/register"><Header/><Register/></Route>
         <Route exact path="/:gamecode" component={App}></Route>
         <Route exact path="/" component={App}></Route>
       </Switch>

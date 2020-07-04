@@ -7,6 +7,12 @@ export async function getUser() {
   });
 };
 
+export async function getProfile() {
+  return callApi('/auth/profile', {
+    method: "POST",
+  });
+};
+
 export async function login(username, password) {
   return callApi('/auth/login', {
     method: "POST",
