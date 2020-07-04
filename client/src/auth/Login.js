@@ -1,21 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { login, getUser } from '../api/auth';
+import { login } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
+import WithoutAuth from './WithoutAuth';
 
 function Login(props) {
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
   const history = useHistory();
-
-  useEffect(() => {
-    getUser().then(res => {
-      if (res.username !== undefined) {
-        history.push('/')
-      }
-    }).catch(res => {});
-  }, [history]);
 
   return (
     <div>
@@ -44,4 +37,4 @@ function Login(props) {
   );
 }
 
-export default WrappedMessage(Login);
+export default WrappedMessage(WithoutAuth(Login));

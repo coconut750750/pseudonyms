@@ -17,11 +17,11 @@ import SubmitFeedback from './routes/Feedback';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import Login from './routes/Login';
-import Register from './routes/Register';
-import Forgot from './routes/Forgot';
-import ForgotReturn from './routes/ForgotReturn';
-import Profile from './routes/Profile';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import Forgot from './auth/Forgot';
+import ForgotReturn from './auth/ForgotReturn';
+import Profile from './auth/Profile';
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 

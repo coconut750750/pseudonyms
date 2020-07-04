@@ -1,50 +1,37 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useRef } from 'react';
 
-import { getProfile, changePassword } from '../api/auth';
+import { changePassword } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
+import WithAuth from './WithAuth';
 
 function Profile(props) {
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
 
-  const [user, setUser] = useState(undefined);
-  const history = useHistory();
-
-  useEffect(() => {
-    getProfile().then(res => {
-      if (res.user === undefined) {
-        history.push('/login')
-      } else {
-        setUser(res.user);
-      }
-    }).catch(res => {});
-  }, [history]);
-
-  if (user !== undefined) {
+  if (props.user !== undefined) {
     return (
       <div>
-        <h4>{user?.username}</h4>
+        <h4>{props.user?.username}</h4>
         <br/>        
         
-        <h6>Ranking: {user.ranking}</h6>
-        <h6>Total Games Played: {user.games}</h6>
-        <h6>Wins: {user.wins}</h6>
+        <h6>Ranking: {props.user.ranking}</h6>
+        <h6>Total Games Played: {props.user.games}</h6>
+        <h6>Wins: {props.user.wins}</h6>
         <br/>
 
-        <h6>Email: {user.email}</h6>
-        <h6>Created: {user.created}</h6>
+        <h6>Email: {props.user.email}</h6>
+        <h6>Created: {props.user.created}</h6>
         <br/>
 
         <h6>Change Password</h6>
         <form onSubmit={ (e) => {
             e.preventDefault();
-            const password1 = passwordInputRef.current.value;
-            const password2 = confirmPasswordInputRef.current.value;
-            if (password1 !== password2) {
+            const password = passwordInputRef.current.value;
+            const confirmed = confirmPasswordInputRef.current.value;
+            if (password !== confirmed) {
               props.setError("Passwords must match.");
             } else {
-              changePassword(password1)
+              changePassword(password)
                 .then(r => {
                   props.setSuccess("Successfully updated password.");
                   passwordInputRef.current.value = "";
@@ -60,7 +47,7 @@ function Profile(props) {
           <br/>
 
           <div className="button-row d-flex justify-content-around">
-            <button type="submit" className="btn btn-light">Update Password</button>
+            <button type="submit" className="btn btn-light">Submit</button>
           </div>
         </form>
 
@@ -71,4 +58,4 @@ function Profile(props) {
   }
 }
 
-export default WrappedMessage(Profile);
+export default WrappedMessage(WithAuth(Profile));

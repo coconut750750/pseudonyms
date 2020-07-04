@@ -1,25 +1,19 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { forgotPassword, getUser } from '../api/auth';
+import { forgotPassword } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
+import WithoutAuth from './WithoutAuth';
 
 function ForgotPassword(props) {
   const emailInputRef = useRef();
   const history = useHistory();
 
-  useEffect(() => {
-    getUser().then(res => {
-      if (res.username !== undefined) {
-        history.push('/')
-      }
-    }).catch(res => {});
-  }, [history]);
-
   return (
     <div>
       <h4>Forgot Password</h4>
-      <h6>If your email exists, a password reset link will be sent to it (check your spam folder).</h6>
+      <h6>A password reset link will be sent to your email if an account is associated with it.</h6>
+      <h6>You may need to check your spam folder.</h6>
       
       <form onSubmit={ (e) => {
           e.preventDefault();
@@ -31,7 +25,7 @@ function ForgotPassword(props) {
         <br/>
 
         <div className="button-row d-flex justify-content-around">
-          <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+          <a href="/login"><button type="button" className="btn btn-light">Back</button></a>
           <button type="submit" className="btn btn-light">Send</button>
         </div>
       </form>
@@ -40,4 +34,4 @@ function ForgotPassword(props) {
   );
 }
 
-export default WrappedMessage(ForgotPassword);
+export default WrappedMessage(WithoutAuth(ForgotPassword));

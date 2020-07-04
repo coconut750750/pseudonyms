@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { getUser, register } from '../api/auth';
+import { register } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
+import WithoutAuth from './WithoutAuth';
 
 function Register(props) {
   const usernameInputRef = useRef();
@@ -10,14 +11,6 @@ function Register(props) {
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
   const history = useHistory();
-
-  useEffect(() => {
-    getUser().then(res => {
-      if (res.username !== undefined) {
-        history.push('/')
-      }
-    }).catch(res => {});
-  }, [history]);
 
   return (
     <div>
@@ -60,4 +53,4 @@ function Register(props) {
   );
 }
 
-export default WrappedMessage(Register);
+export default WrappedMessage(WithoutAuth(Register));
