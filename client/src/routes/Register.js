@@ -16,7 +16,7 @@ function Register(props) {
       if (res.username !== undefined) {
         history.push('/')
       }
-    });
+    }).catch(res => {});
   });
 
   return (

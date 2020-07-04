@@ -68,7 +68,7 @@ module.exports = collection => {
         from: 'no-reply@pseudonyms.com',
         to: email,
         subject: 'Pseudonyms Password Reset',
-        html: `Reset your password here: ${uuid}`,
+        html: `Reset your password here: ${uuid}. Link expires in 30 minutes.`,
       });
     } catch (err) {
     }
