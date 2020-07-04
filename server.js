@@ -36,10 +36,15 @@ const usersCollection = db.collection("users");
 
 require('./app/passport')(usersCollection);
 let passport = require('passport');
-let session = require('express-session')
-app.use(session({ secret: process.env.SECRET }));
+let session = require('express-session')({ secret: process.env.SECRET });
+app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
+
+let sharedsession = require("express-socket.io-session");
+app.io.use(sharedsession(session, {
+    autoSave:true
+})); 
 
 app.use(function(req, res, next) {
   req.gm = app.gm;
@@ -58,21 +63,15 @@ app.io.on('connect', function (socket) {
   var player;
 
   socket.on('joinGame', data => {
+    // console.log(socket.handshake.session?.passport?.user);
     name = data.name;
     game = app.gm.retrieveGame(data.gameCode);
     if (!(game instanceof GameInterface)) {
       return;
     }
     socket.join(data.gameCode);
-
-    if (game.playerExists(name)) {
-      game.activatePlayer(name, socket);
-    } else {
-      game.addPlayer(name, socket);
-    }
-    player = game.getPlayer(name);
-
-    game.socketio(socket, game, name, player);
+    
+    player = game.join(socket, name);
   });
 
   socket.on('exitGame', data => {

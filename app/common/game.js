@@ -28,6 +28,17 @@ class Game extends GameInterface {
     throw new Error('Game.canReset() implemention required!');
   }
 
+  join(socket, name) {
+    if (this.playerExists(name)) {
+      this.activatePlayer(name, socket);
+    } else {
+      this.addPlayer(name, socket);
+    }
+    const player = this.getPlayer(name);
+    this.socketio(socket, this, name, player);
+    return player;
+  }
+
   getPlayer(name) {
     return this.plist.get(name);
   }
