@@ -16,7 +16,7 @@ const validateEmail = (req, res, next) => {
 
 module.exports = collection => {
   const authSuccess = (req, res) => {
-    req.session.cookie.originalMaxAge = 10 * 1000; // Expires in 10 sec
+    req.session.cookie.originalMaxAge = 100 * 1000; // Expires in 100 sec
     res.send({
       valid: true,
       message: "success",
@@ -40,7 +40,15 @@ module.exports = collection => {
     });
   });
 
-  router.post('/login',passport.authenticate('local-login', {}), authSuccess);
+  router.post('/login', passport.authenticate('local-login', {}), authSuccess);
+
+  router.post('/logout', (req, res) => {
+    if (req.user !== undefined) {
+      req.logout();
+    }
+    res.send({ message: "Success" });
+  });
+
 
   router.post('/valid', (req, res) => {
     res.send({

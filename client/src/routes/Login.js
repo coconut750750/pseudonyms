@@ -1,7 +1,7 @@
 import React from 'react';
 import sha256 from 'js-sha256';
 
-import { login, register, secret } from '../api/auth';
+import { login, register, secret, logout } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
 
 function Login(props) {
@@ -31,6 +31,7 @@ function Login(props) {
       </div>
 
       <button type="button" onClick={ () => secret() }>secret</button>
+      <button type="button" onClick={ () => logout() }>logout</button>
       <button type="button" onClick={ () => register("usernasme", "email@me.com", sha256("passhash")).then(r => checkResponse(r)) }>register</button>
   </form>
 

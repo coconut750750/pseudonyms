@@ -18,10 +18,16 @@ export async function register(username, email, password) {
     },
     body: JSON.stringify({ username, password, email }),
   });
-}
+};
 
 export async function secret() {
   return callApi('/auth/valid', {
+    method: "POST",
+  });
+};
+
+export async function logout() {
+  return callApi('/auth/logout', {
     method: "POST",
   });
 };
