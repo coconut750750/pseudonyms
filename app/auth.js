@@ -55,9 +55,11 @@ module.exports = collection => {
     if (req.user !== undefined) {
       let { password } = req.body;
       await setPassword(collection, req.user.username, password);
-      res.send({ valid: true, message: "Success" });
+      return res.send({ valid: true, message: "Success" });
     }
-    res.send({ valid: false, message: "Not logged in." });
+    return res.status(400).send({
+       message: "Not logged in.",
+    });
   });
 
   router.post('/forgot', validateEmail, async (req, res) => {

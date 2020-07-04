@@ -1,13 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useHistory } from "react-router-dom";
 
-import { forgotReturn } from '../api/auth';
+import { getUser, forgotReturn } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
 
 function ForgotPassword(props) {
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
   const history = useHistory();
+
+  useEffect(() => {
+    getUser().then(res => {
+      if (res.username !== undefined) {
+        history.push('/')
+      }
+    }).catch(res => {});
+  }, [history]);
 
   return (
     <form onSubmit={ (e) => {
@@ -23,6 +31,7 @@ function ForgotPassword(props) {
         }
       } }>
 
+      <h4>Enter a new password</h4>
       <input type="password" className="form-control" placeholder="Enter new password" ref={passwordInputRef}/>
       <br/>
       <input type="password" className="form-control" placeholder="Confirm new password" ref={confirmPasswordInputRef}/>

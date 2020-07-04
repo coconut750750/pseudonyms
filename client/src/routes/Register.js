@@ -17,7 +17,7 @@ function Register(props) {
         history.push('/')
       }
     }).catch(res => {});
-  });
+  }, [history]);
 
   return (
     <div>

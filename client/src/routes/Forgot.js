@@ -13,8 +13,8 @@ function ForgotPassword(props) {
       if (res.username !== undefined) {
         history.push('/')
       }
-    });
-  });
+    }).catch(res => {});
+  }, [history]);
 
   return (
     <div>

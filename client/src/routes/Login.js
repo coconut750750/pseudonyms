@@ -15,7 +15,7 @@ function Login(props) {
         history.push('/')
       }
     }).catch(res => {});
-  });
+  }, [history]);
 
   return (
     <div>
