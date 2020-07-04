@@ -31,34 +31,26 @@ router.post('/duet/create', (req, res) => {
 router.get('/checkname', (req, res) => {
   const { name } = req.query;
   if (name === undefined) {
-    res.send({ valid: false, message: 'No name provided' });
-    return;
+    return res.status(400).send({ message: 'No name provided' });
   }
   if (name.length < MIN_NAME_LENGTH || name.length > MAX_NAME_LENGTH) {
-    res.send({ valid: false, message: `Your name must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters long` });
-    return;
+    return res.status(400).send({ message: `Your name must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters long` });
   }
 
   const { gameCode } = req.query;
   if (gameCode !== undefined) {
     const game = req.gm.retrieveGame(gameCode);
     if (game === undefined) {
-      res.send({ valid: false, message: 'Invalid game code' });
+      res.status(400).send({ message: 'Invalid game code' });
     } else if (game.playerExists(name) && !game.isActive(name)) {
-      res.send({
-        valid: true,
-        mode: game.mode(),
-      });
+      res.send({ mode: game.mode() });
     } else if (game.playerExists(name)) {
-      res.send({ valid: false, message: 'This name has been taken' });
+      res.status(400).send({ message: 'This name has been taken' });
     } else {
-      res.send({
-        valid: true,
-        mode: game.mode(),
-      });
+      res.send({ mode: game.mode() });
     }
   } else {
-    res.send({ valid: true });
+    res.send({});
   }
 });
 
@@ -66,9 +58,9 @@ router.get('/checkcode', (req, res) => {
   const { gameCode } = req.query;
   const game = req.gm.retrieveGame(gameCode);
   if (game != undefined) {
-    res.send({ valid: true });
+    res.send({});
   } else {
-    res.send({ valid: false, message: 'Invalid game code' });
+    res.status(400).send({ message: 'Invalid game code' });
   }
 });
 

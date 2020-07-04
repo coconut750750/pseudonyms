@@ -91,12 +91,10 @@ function App(props) {
       const possibleGameCode = props.match.params.gamecode;
       if (possibleGameCode.length !== 0) {
         checkCode(possibleGameCode).then(resp => {
-          if (resp.valid) {
-            setUrlGameCode(possibleGameCode);
-            setViewState(JOIN);
-          } else {
-            reset();
-          }
+          setUrlGameCode(possibleGameCode);
+          setViewState(JOIN);
+        }).catch(resp => {  
+          reset();
         });
       } 
     }
