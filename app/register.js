@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const MIN_NAME_LENGTH = 2;
-const MAX_NAME_LENGTH = 12;
-
+const { checkName } = require('./utils');
 const { CLASSIC, DUET } = require('./common/const');
 
 router.post('/classic/create', (req, res) => {
@@ -33,8 +31,10 @@ router.get('/checkname', (req, res) => {
   if (name === undefined) {
     return res.status(400).send({ message: 'No name provided' });
   }
-  if (name.length < MIN_NAME_LENGTH || name.length > MAX_NAME_LENGTH) {
-    return res.status(400).send({ message: `Your name must be between ${MIN_NAME_LENGTH} and ${MAX_NAME_LENGTH} characters long` });
+  try {
+    checkName(name);
+  } catch (err) {
+    return res.status(400).send({ message: err.message });
   }
 
   const { gameCode } = req.query;

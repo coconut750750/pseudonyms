@@ -5,6 +5,7 @@ const passport = require('passport');
 const sendmail = require('sendmail')({ silent: true });
 
 const { userSession, addUser, setPassword, generateResetToken, completeReset } = require('./db/users');
+const { checkName } = require('./utils');
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -25,6 +26,7 @@ module.exports = collection => {
     let { username, password, email } = req.body;
 
     try {
+      checkName(username);
       const newUser = await addUser(collection, username, email, password);
 
       req.login(newUser, err => {
