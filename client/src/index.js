@@ -25,6 +25,17 @@ import Profile from './auth/Profile';
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 
+function HeaderedComponent(Component) {
+  return (props) => {
+    return (
+      <div>
+        <Header/>
+        <Component {...props}/>
+      </div>
+    )
+  }
+}
+
 function Index(props) {
   return (
     <Router>
@@ -33,13 +44,13 @@ function Index(props) {
         <Route exact path="/moregames"><Header/><MoreGames/></Route>
         <Route exact path="/walkthrough"><Header/><Walkthrough/></Route>
         <Route exact path="/feedback"><Header/><SubmitFeedback/></Route>
-        <Route exact path="/login"><Header/><Login/></Route>
+        <Route exact path="/login" component={HeaderedComponent(Login)}></Route>
         <Route exact path="/register"><Header/><Register/></Route>
         <Route exact path="/forgot"><Header/><Forgot/></Route>
-        <Route exact path="/forgot/:rtoken" component={(props) => [<Header/>, <ForgotReturn {...props}/>]}></Route>
+        <Route exact path="/forgot/:rtoken" component={HeaderedComponent(ForgotReturn)}></Route>
         <Route exact path="/profile"><Header/><Profile/></Route>
         <Route exact path="/:gamecode" component={App}></Route>
-        <Route exact path="/" component={App}></Route>
+        <Route path="/" component={App}></Route>
       </Switch>
 
       <Footer/>

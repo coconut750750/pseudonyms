@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { getProfile } from '../api/auth';
 
-const WithAuth = WrappedComponent =>
+const WithAuth = (WrappedComponent, redirect) =>
   function WithAuthComponent(props) {
     const [user, setUser] = useState(undefined);
     const history = useHistory();
@@ -11,7 +11,7 @@ const WithAuth = WrappedComponent =>
     useEffect(() => {
       getProfile().then(res => {
         if (res.user === undefined) {
-          history.push('/login')
+          history.push({ pathname: '/login', state: { redirect }});
         } else {
           setUser(res.user);
         }

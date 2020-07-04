@@ -43,4 +43,4 @@ function Profile(props) {
   );
 }
 
-export default WrappedMessage(WithAuth(Profile));
+export default WrappedMessage(WithAuth(Profile, '/profile'));
