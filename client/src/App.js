@@ -18,6 +18,7 @@ import { getUser } from './api/auth';
 const HOME = "home";
 const CREATE_CLASSIC = "create_classic";
 const CREATE_DUET = "create_duet";
+const CREATE_RANKED = "create_ranked";
 const JOIN = "join";
 const GAME = "game";
 
@@ -108,10 +109,19 @@ function App(props) {
     });
   }, []);
 
+  const createRanked = useCallback(() => {
+    if (username === undefined) {
+      history.push('/login');
+    } else {
+      setViewState(CREATE_RANKED);
+    }
+  }, [username, history]);
+
   const views = {
     [HOME]:         <Home 
                       createClassicGame={ () => setViewState(CREATE_CLASSIC) } 
-                      createDuetGame={ () => setViewState(CREATE_DUET) } 
+                      createDuetGame={ () => setViewState(CREATE_DUET) }
+                      createRankedGame={createRanked}
                       joinGame={ () => setViewState(JOIN) }/>,
     [CREATE_CLASSIC]: <Create
                         classic
@@ -123,6 +133,11 @@ function App(props) {
                       username={username}
                       goBack={ () => goHome() }
                       setGame={setGame}/>,
+    [CREATE_RANKED]: <Create
+                        ranked
+                        username={username}
+                        goBack={ () => goHome() }
+                        setGame={setGame}/>,
     [JOIN]:         <Join
                       urlGameCode={urlGameCode}
                       username={username}

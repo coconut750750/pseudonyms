@@ -28,6 +28,12 @@ class Game extends GameInterface {
     throw new Error('Game.canReset() implemention required!');
   }
 
+  checkName(req, name) {
+    if (this.playerExists(name) && this.isActive(name)) {
+      throw new Error('This name has been taken');
+    }
+  }
+
   join(socket, name) {
     if (this.playerExists(name)) {
       this.activatePlayer(name, socket);

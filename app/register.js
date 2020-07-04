@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { checkName } = require('./utils');
-const { CLASSIC, DUET } = require('./common/const');
+const { CLASSIC, DUET, RANKED } = require('./common/const');
 
 router.post('/classic/create', (req, res) => {
   let options = req.body;
@@ -26,8 +26,23 @@ router.post('/duet/create', (req, res) => {
   });
 });
 
+router.post('/ranked/create', (req, res) => {
+  if (req.user === undefined) {
+    return res.status(400).send({ message: 'Must be logged in' });
+  }
+  let options = req.body;
+  options.statsCollection = req.statsCollection;
+  options.usersCollection = req.usersCollection;
+  const game = req.gm.createRankedGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
+  
+  res.send({
+    gameCode: `${game.code}`,
+    mode: RANKED,
+  });
+});
+
 router.get('/checkname', (req, res) => {
-  const name = req.user?.username || req.query;
+  const name = req.user?.username || req.query.name;
 
   if (name === undefined) {
     return res.status(400).send({ message: 'No name provided' });
@@ -43,12 +58,13 @@ router.get('/checkname', (req, res) => {
     const game = req.gm.retrieveGame(gameCode);
     if (game === undefined) {
       res.status(400).send({ message: 'Invalid game code' });
-    } else if (game.playerExists(name) && !game.isActive(name)) {
-      res.send({ mode: game.mode() });
-    } else if (game.playerExists(name)) {
-      res.status(400).send({ message: 'This name has been taken' });
     } else {
-      res.send({ mode: game.mode() });
+      try {
+        game.checkName(req, name);
+        res.send({ mode: game.mode() });
+      } catch (err) {
+        res.status(400).send({ message: err.message });
+      }
     }
   } else {
     res.send({});

@@ -20,6 +20,16 @@ export async function createDuetGame(options) {
   });
 }
 
+export async function createRankedGame(options) {
+  return callApi('/register/ranked/create', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(options),
+  });
+}
+
 export async function checkCode(gameCode) {
   return callApi(`/register/checkcode?gameCode=${gameCode}`);
 }

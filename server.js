@@ -51,6 +51,7 @@ app.use(function(req, res, next) {
   req.io = app.io;
   req.statsCollection = db.collection("stats");
   req.feedbackCollection = db.collection("feedback");
+  req.usersCollection = usersCollection;
   next();
 });
 app.use("/register/", registerRouter);
@@ -70,7 +71,7 @@ app.io.on('connect', function (socket) {
       return;
     }
     socket.join(data.gameCode);
-    
+
     player = game.join(socket, name);
   });
 

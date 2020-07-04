@@ -49,6 +49,7 @@ const duet = {
 
 module.exports = {
   CLASSIC: 'classic',
+  RANKED: 'ranked',
   classic,
   
   DUET: 'duet',

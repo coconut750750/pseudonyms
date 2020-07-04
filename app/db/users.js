@@ -115,7 +115,18 @@ async function completeReset(collection, resetToken, password) {
   if (now > expiry) {
     throw new Error("Reset link expired.")
   }
+}
 
+async function completeGame(collection, username, win, teamRank, opponentRank) {
+  await collection.findOneAndUpdate(
+    { username },
+    {
+      $inc: {
+        wins: win ? 1 : 0,
+        games: 1,
+      }
+    },
+  );
 }
 
 module.exports = {
@@ -126,4 +137,5 @@ module.exports = {
   setPassword,
   generateResetToken,
   completeReset,
+  completeGame,
 }

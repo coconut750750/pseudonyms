@@ -1,5 +1,6 @@
 const ClassicGame = require('./classic/game');
 const DuetGame = require('./duet/game');
+const RankedGame = require('./ranked/game');
 
 class Manager {
   constructor(dev) {
@@ -17,6 +18,13 @@ class Manager {
   createDuetGame(options, broadcast) {
     const code = this.generateCode();
     const newGame = new DuetGame(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
+    this.games[code] = newGame;
+    return newGame;
+  }
+
+  createRankedGame(options, broadcast) {
+    const code = this.generateCode();
+    const newGame = new RankedGame(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
     this.games[code] = newGame;
     return newGame;
   }

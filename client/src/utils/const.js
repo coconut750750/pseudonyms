@@ -17,9 +17,11 @@ export const BOARD = "board";
 export const RESULT = "result";
 
 export const CLASSIC = "classic";
+export const RANKED = "ranked";
 export const DUET = "duet";
 
-export const isClassic = (mode) => mode === CLASSIC;
+export const isClassic = (mode) => mode === CLASSIC || mode === RANKED;
+export const isRanked = (mode) => mode === RANKED;
 export const isDuet = (mode) => mode === DUET;
 
 export const redTurn = (turn) => turn === RED;

@@ -4,6 +4,7 @@ import Tip from '../tip/Tip';
 import {
   isClassic,
   isDuet,
+  isRanked,
 } from '../utils/const';
 
 import './GameBadge.css';
@@ -19,6 +20,30 @@ function GameBadge(props) {
     props.copySuccess();
   };
 
+  let gameModeBadge = <div/>
+  if (isRanked(props.mode)) {
+    gameModeBadge = (
+      <h6 className="col-5">
+      Game mode: <span className="badge badge-danger">Ranked</span>
+      <Tip classic right help="description"/>
+      </h6>
+    );
+  } else if (isClassic(props.mode)) {
+    gameModeBadge = (
+      <h6 className="col-5">
+      Game mode: <span className="badge badge-primary">Classic</span>
+      <Tip classic right help="description"/>
+      </h6>
+    );
+  } else if (isDuet(props.mode)) {
+    gameModeBadge = (
+      <h6 className="col-5">
+      Game mode: <span className="badge badge-success">Duet</span>
+      <Tip duet right help="description"/>
+      </h6>
+    );
+  }
+
   return (
     <div className="row">
       <h6 className="col-5">
@@ -26,18 +51,7 @@ function GameBadge(props) {
       </h6>
 
       <div className="col-2"/>
-      {isClassic(props.mode) &&
-        <h6 className="col-5">
-        Game mode: <span className="badge badge-primary">Classic</span>
-        <Tip classic right help="description"/>
-        </h6>
-      }
-      {isDuet(props.mode) &&
-        <h6 className="col-5">
-        Game mode: <span className="badge badge-success">Duet</span>
-        <Tip duet right help="description"/>
-        </h6>
-      }
+      {gameModeBadge}
     </div>
   );
 }
