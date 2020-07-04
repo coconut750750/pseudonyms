@@ -18,19 +18,14 @@ function Register(props) {
       
       <form onSubmit={ (e) => {
           e.preventDefault();
-          const password1 = passwordInputRef.current.value;
-          const password2 = confirmPasswordInputRef.current.value;
-          if (password1 !== password2) {
+          const password = passwordInputRef.current.value;
+          const confirmed = confirmPasswordInputRef.current.value;
+          if (password !== confirmed) {
             props.setError("Passwords must match.");
           } else {
-            register(usernameInputRef.current.value, emailInputRef.current.value, password1)
-              .then(r => {
-                if (r.valid) {
-                  history.push('/')
-                } else {
-                  props.setError(r.message);
-                }
-              })
+            register(usernameInputRef.current.value, emailInputRef.current.value, password)
+              .then(r => history.push('/'))
+              .catch(r => props.setError(r.message));
           }
         } }>
 

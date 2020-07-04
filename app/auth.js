@@ -10,7 +10,7 @@ const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\
 
 const validateEmail = (req, res, next) => {
   if (!emailRegex.test(req.body.email)) {
-    return res.send({ valid: false, message: 'Invalid email.' });
+    return res.status(400).send({ message: 'Invalid email.' });
   }
   next();
 }
@@ -32,13 +32,13 @@ module.exports = collection => {
 
       req.login(newUser, err => {
         if (err) {
-          res.send({ valid: false, message: 'Login failed. Try again. ' });
+          res.status(400).send({ message: 'Login failed. Try again.' });
         } else {
           authSuccess(req, res);
         }
       });
     } catch (err) {
-      res.send({ valid: false, message: err.message });
+      res.status(400).send({ message: err.message, });
     }
   });
 

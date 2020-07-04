@@ -18,7 +18,8 @@ function ForgotPassword(props) {
       <form onSubmit={ (e) => {
           e.preventDefault();
           forgotPassword(emailInputRef.current.value)
-            .then(r => history.push('/'));
+            .then(r => history.push('/'))
+            .catch(r => props.setError(r.message));
         } }>
 
         <input type="name" className="form-control" placeholder="Enter email" ref={emailInputRef}/>
