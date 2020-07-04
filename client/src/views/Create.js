@@ -9,20 +9,17 @@ function Create(props) {
   const create = async () => {
     const name = nameInputRef.current.value;
     checkName(name).then(res => {
-      if (!res.valid) {
-        props.setError(res.message);
-        return;
-      }
-
       const createSuccess = res => {
         props.setGame(res.gameCode, name, res.mode);
       }
 
-      if (props.duet) {
-        createDuetGame({}).then(createSuccess);
-      } else {
+      if (props.classic) {
         createClassicGame({}).then(createSuccess);
+      } else if (props.duet) {
+        createDuetGame({}).then(createSuccess);
       }
+    }).catch(res => {
+        props.setError(res.message);
     });
   }
 

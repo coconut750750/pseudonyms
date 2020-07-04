@@ -11,12 +11,9 @@ function Join(props) {
     const name = nameInputRef.current.value;
     const gameCode = gameCodeInputRef.current.value;
     checkName(name, gameCode).then(res => {
-      if (!res.valid) {
-        props.setError(res.message);
-        return;
-      }
-
       props.join(gameCode, name, res.mode);
+    }).catch(res => {
+      props.setError(res.message);
     });
   };
 
