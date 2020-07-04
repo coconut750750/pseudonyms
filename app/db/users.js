@@ -38,8 +38,19 @@ function userSession(user) {
   }
 }
 
+async function setPassword(collection, username, password) {
+  const passhash = bcrypt.hashSync(password, salt);
+  await collection.findOneAndUpdate(
+    { username },
+    {
+      $set: { passhash },
+    }
+  );
+}
+
 module.exports = {
   addUser,
   validPassword,
   findUser,
+  setPassword,
 }

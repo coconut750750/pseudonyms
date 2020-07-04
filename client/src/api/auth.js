@@ -31,3 +31,14 @@ export async function logout() {
     method: "POST",
   });
 };
+
+export async function changePassword(password) {
+  return callApi('/auth/change', {
+    method: "POST",
+      headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password }),
+
+  });
+};

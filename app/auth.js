@@ -3,7 +3,7 @@ const router = express.Router();
 
 let passport = require('passport');
 
-let { addUser } = require('./db/users');
+let { addUser, setPassword } = require('./db/users');
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -47,6 +47,15 @@ module.exports = collection => {
       req.logout();
     }
     res.send({ message: "Success" });
+  });
+
+  router.post('/change', async (req, res) => {
+    if (req.user !== undefined) {
+      let { password } = req.body;
+      await setPassword(collection, req.user.username, password);
+      res.send({ valid: true, message: "Success" });
+    }
+    res.send({ valid: false, message: "Not logged in." });
   });
 
 
