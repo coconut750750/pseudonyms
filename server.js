@@ -15,12 +15,14 @@ const GameInterface = require('./app/game');
 const GameManager = require('./app/manager');
 
 const registerRouter = require("./app/register");
-const gameRouter = require("./app/routes")
+const gameRouter = require("./app/routes");
+const authRouter = require("./app/auth");
 
 const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.io = io;
 app.gm = new GameManager(dev);
 app.set('trust proxy', true); // for rate limiter
@@ -29,6 +31,15 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const usersCollection = db.collection("users");
+
+require('./app/passport')(usersCollection);
+let passport = require('passport');
+let session = require('express-session')
+app.use(session({ secret: process.env.SECRET }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(function(req, res, next) {
   req.gm = app.gm;
@@ -39,6 +50,7 @@ app.use(function(req, res, next) {
 });
 app.use("/register/", registerRouter);
 app.use("/game/", gameRouter);
+app.use("/auth/", authRouter(usersCollection));
 
 app.io.on('connect', function (socket) {
   var game;

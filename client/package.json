@@ -6,6 +6,7 @@
   "author": "Brandon Wang",
   "license": "MIT",
   "dependencies": {
+    "js-sha256": "^0.9.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
