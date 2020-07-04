@@ -1,40 +1,38 @@
-import React from 'react';
-import sha256 from 'js-sha256';
+import React, { useRef } from 'react';
+import { useHistory } from "react-router-dom";
 
-import { login, register, secret, logout, changePassword } from '../api/auth';
+import { login } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
 
 function Login(props) {
-  const checkResponse = res => {
-    if (res.valid) {
-
-    } else {
-      props.setError(res.message);
-    }
-  }
+  const usernameInputRef = useRef();
+  const passwordInputRef = useRef();
+  const history = useHistory();
 
   return (
-    <form onSubmit={ (e) => {
-        e.preventDefault();
-        login("usernasme", sha256("newpass")).catch(r => props.setError("Incorrect username or password."));
-      } }>
-      <div>
-          <label>Username:</label>
-          <input type="text" name="username"/>
-      </div>
-      <div>
-          <label>Password:</label>
-          <input type="password" name="password"/>
-      </div>
-      <div>
-          <button type="submit">Login</button>
-      </div>
+    <div>
+      <h4>Login</h4>
 
-      <button type="button" onClick={ () => secret() }>secret</button>
-      <button type="button" onClick={ () => logout() }>logout</button>
-      <button type="button" onClick={ () => changePassword(sha256("newpass")) }>change</button>
-      <button type="button" onClick={ () => register("usernasme", "email@me.com", sha256("passhash")).then(r => checkResponse(r)) }>register</button>
-  </form>
+      <form onSubmit={ (e) => {
+          e.preventDefault();
+          login(usernameInputRef.current.value, passwordInputRef.current.value)
+            .then(r => {
+              localStorage.setItem("user", JSON.stringify(r.user));
+              history.push('/');
+            }).catch(r => props.setError("Incorrect username or password."));
+        } }>
+
+        <input type="name" className="form-control" placeholder="Enter username" ref={usernameInputRef}/>
+        <br/>
+        <input type="password" className="form-control" placeholder="Enter password" ref={passwordInputRef}/>
+        <br/>
+
+        <div className="button-row d-flex justify-content-around">
+          <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+          <button type="submit" className="btn btn-light">Login</button>
+        </div>
+      </form>
+    </div>
 
   );
 }

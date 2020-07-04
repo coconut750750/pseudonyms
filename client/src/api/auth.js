@@ -1,4 +1,11 @@
+import sha256 from 'js-sha256';
 import { callApi } from './api';
+
+export async function getUser() {
+  return callApi('/auth/user', {
+    method: "POST",
+  });
+};
 
 export async function login(username, password) {
   return callApi('/auth/login', {
@@ -6,7 +13,7 @@ export async function login(username, password) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password: sha256(password) }),
   });
 };
 
@@ -16,13 +23,7 @@ export async function register(username, email, password) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, password, email }),
-  });
-};
-
-export async function secret() {
-  return callApi('/auth/valid', {
-    method: "POST",
+    body: JSON.stringify({ username, password: sha256(password), email }),
   });
 };
 
@@ -38,7 +39,26 @@ export async function changePassword(password) {
       headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ password }),
-
+    body: JSON.stringify({ password: sha256(password) }),
   });
 };
+
+export async function forgotPassword(email) {
+  return callApi('/auth/forgot', {
+    method: "POST",
+      headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  });
+};
+
+export async function forgotReturn(resetToken, password) {
+  return callApi('/auth/forgot_return', {
+    method: "POST",
+      headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ resetToken, password: sha256(password) }),
+  });
+}

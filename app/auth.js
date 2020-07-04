@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-let passport = require('passport');
+const passport = require('passport');
+const sendmail = require('sendmail')({ silent: true });
 
-let { addUser, setPassword } = require('./db/users');
+const { userSession, addUser, setPassword, generateResetToken, completeReset } = require('./db/users');
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -16,28 +17,29 @@ const validateEmail = (req, res, next) => {
 
 module.exports = collection => {
   const authSuccess = (req, res) => {
-    req.session.cookie.originalMaxAge = 100 * 1000; // Expires in 100 sec
+    req.session.cookie.originalMaxAge = 30 * 24 * 60 * 60 * 1000; // Expires in 30 days
     res.send({
       valid: true,
-      message: "success",
+      user: userSession(req.user),
     });
   }
 
   router.post('/register', validateEmail, async (req, res) => {
     let { username, password, email } = req.body;
 
-    const newUser = await addUser(collection, username, email, password);
-    if (newUser === undefined) {
-      return res.send({ valid: false, message: 'Username taken.' });
-    }
+    try {
+      const newUser = await addUser(collection, username, email, password);
 
-    req.login(newUser, err => {
-      if (err) {
-        res.send({ valid: false, message: 'Login failed. Try again. ' });
-      } else {
-        authSuccess(req, res);
-      }
-    });
+      req.login(newUser, err => {
+        if (err) {
+          res.send({ valid: false, message: 'Login failed. Try again. ' });
+        } else {
+          authSuccess(req, res);
+        }
+      });
+    } catch (err) {
+      res.send({ valid: false, message: err.message });
+    }
   });
 
   router.post('/login', passport.authenticate('local-login', {}), authSuccess);
@@ -58,10 +60,36 @@ module.exports = collection => {
     res.send({ valid: false, message: "Not logged in." });
   });
 
+  router.post('/forgot', validateEmail, async (req, res) => {
+    let { email } = req.body;
+    try {
+      const uuid = await generateResetToken(collection, email);
+      sendmail({
+        from: 'no-reply@pseudonyms.com',
+        to: email,
+        subject: 'Pseudonyms Password Reset',
+        html: `Reset your password here: ${uuid}`,
+      });
+    } catch (err) {
+    }
 
-  router.post('/valid', (req, res) => {
+    res.send({ valid: true, message: "Success" });
+  });
+
+  router.post('/forgot_return', async (req, res) => {
+    let { resetToken, password } = req.body;
+    try {
+      await completeReset(collection, resetToken, password);
+    } catch (err) {
+      return res.send({ valid: false, message: err.message });
+    }
+    res.send({ valid: true, message: "Success" });
+  });
+
+  router.post('/user', (req, res) => {
     res.send({
       valid: req.user !== undefined,
+      user: req.user,
     });
   });
 

@@ -29,6 +29,8 @@ function App(props) {
   const [socket, setSocket] = useState(undefined);
   const [urlGameCode, setUrlGameCode] = useState(undefined);
   
+  const username = JSON.parse(localStorage.getItem("user"))?.username;
+  
   if (localStorage.getItem("tips") === null) {
     localStorage.setItem("tips", true);
   }
@@ -141,6 +143,7 @@ function App(props) {
         }
       />
 
+      {username}
       {views[viewState]}
     </div>
   );
