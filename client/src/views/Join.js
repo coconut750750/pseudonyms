@@ -31,7 +31,9 @@ function Join(props) {
           disabled={props.urlGameCode !== undefined}/>
         <br/>
         <input type="text" className="form-control" placeholder="Enter your name"
-          ref={nameInputRef}/>
+          ref={nameInputRef}
+          value={props.username}
+          disabled={props.username !== undefined}/>
         <br/>
 
         <div className="button-row d-flex justify-content-around">

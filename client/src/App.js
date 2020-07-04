@@ -115,14 +115,17 @@ function App(props) {
                       joinGame={ () => setViewState(JOIN) }/>,
     [CREATE_CLASSIC]: <Create
                         classic
+                        username={username}
                         goBack={ () => goHome() }
                         setGame={setGame}/>,
     [CREATE_DUET]:  <Create
                       duet
+                      username={username}
                       goBack={ () => goHome() }
                       setGame={setGame}/>,
     [JOIN]:         <Join
                       urlGameCode={urlGameCode}
+                      username={username}
                       goBack={ () => goHome() }
                       join={setGame}/>,
     [GAME]:         <Game

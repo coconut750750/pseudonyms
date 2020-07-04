@@ -27,7 +27,8 @@ router.post('/duet/create', (req, res) => {
 });
 
 router.get('/checkname', (req, res) => {
-  const { name } = req.query;
+  const name = req.user?.username || req.query;
+
   if (name === undefined) {
     return res.status(400).send({ message: 'No name provided' });
   }

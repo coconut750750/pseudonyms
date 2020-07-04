@@ -38,7 +38,10 @@ function Create(props) {
         e.preventDefault();
         create();
       } }>
-        <input type="text" className="form-control" placeholder="Enter your name" ref={nameInputRef}/>
+        <input type="text" className="form-control" placeholder="Enter your name"
+          ref={nameInputRef}
+          value={props.username}
+          disabled={props.username !== undefined}/>
         <br />
 
         <div className="button-row d-flex justify-content-around">
