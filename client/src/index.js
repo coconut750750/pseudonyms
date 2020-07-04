@@ -20,6 +20,7 @@ import Footer from './components/Footer';
 import Login from './routes/Login';
 import Register from './routes/Register';
 import Forgot from './routes/Forgot';
+import ForgotReturn from './routes/ForgotReturn';
 
 ReactDOM.render(<Index />, document.getElementById('root'));
 
@@ -34,6 +35,7 @@ function Index(props) {
         <Route exact path="/login"><Header/><Login/></Route>
         <Route exact path="/register"><Header/><Register/></Route>
         <Route exact path="/forgot"><Header/><Forgot/></Route>
+        <Route exact path="/forgot/:rtoken" component={(props) => [<Header/>,<ForgotReturn {...props}/>]}></Route>
         <Route exact path="/:gamecode" component={App}></Route>
         <Route exact path="/" component={App}></Route>
       </Switch>

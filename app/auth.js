@@ -68,7 +68,7 @@ module.exports = collection => {
         from: 'no-reply@pseudonyms.com',
         to: email,
         subject: 'Pseudonyms Password Reset',
-        html: `Reset your password here: ${uuid}. Link expires in 30 minutes.`,
+        html: `Reset your password here: https://pseudonyms.brandon-wang.com/forgot/${uuid}. Link expires in 30 minutes.`,
       });
     } catch (err) {
     }
@@ -81,7 +81,9 @@ module.exports = collection => {
     try {
       await completeReset(collection, resetToken, password);
     } catch (err) {
-      return res.send({ valid: false, message: err.message });
+      return res.status(400).send({
+         message: err.message,
+      });
     }
     res.send({ valid: true, message: "Success" });
   });

@@ -31,7 +31,7 @@ function Login(props) {
         <input type="name" className="form-control" placeholder="Enter username" ref={usernameInputRef}/>
         <br/>
         <input type="password" className="form-control" placeholder="Enter password" ref={passwordInputRef}/>
-        <a href="/"><h6 className="text-right mt-1">Forgot password?</h6></a>
+        <a href="/forgot"><h6 className="text-right mt-1">Forgot password?</h6></a>
         <br/>
 
         <div className="button-row d-flex justify-content-around">

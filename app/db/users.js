@@ -85,7 +85,14 @@ async function generateResetToken(collection, email) {
 }
 
 async function completeReset(collection, resetToken, password) {
+  if (resetToken === undefined) {
+    throw new Error("Invalid reset link.")   
+  }
+
   const user = await collection.findOne({ rtoken: resetToken });
+  if (user === null) {
+    throw new Error("Invalid reset link.")
+  }
   const now = new Date();
   const expiry = new Date(user.expiry);
 
