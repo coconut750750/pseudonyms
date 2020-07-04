@@ -18,10 +18,7 @@ const validateEmail = (req, res, next) => {
 module.exports = collection => {
   const authSuccess = (req, res) => {
     req.session.cookie.originalMaxAge = 30 * 24 * 60 * 60 * 1000; // Expires in 30 days
-    res.send({
-      valid: true,
-      user: userSession(req.user),
-    });
+    res.send({ user: userSession(req.user) });
   }
 
   router.post('/register', validateEmail, async (req, res) => {

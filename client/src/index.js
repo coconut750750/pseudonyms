@@ -45,7 +45,7 @@ function Index(props) {
         <Route exact path="/walkthrough"><Header/><Walkthrough/></Route>
         <Route exact path="/feedback"><Header/><SubmitFeedback/></Route>
         <Route exact path="/login" component={HeaderedComponent(Login)}></Route>
-        <Route exact path="/register"><Header/><Register/></Route>
+        <Route exact path="/register" component={HeaderedComponent(Register)}></Route>
         <Route exact path="/forgot"><Header/><Forgot/></Route>
         <Route exact path="/forgot/:rtoken" component={HeaderedComponent(ForgotReturn)}></Route>
         <Route exact path="/profile"><Header/><Profile/></Route>

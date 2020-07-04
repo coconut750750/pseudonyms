@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { login } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
@@ -29,9 +29,15 @@ function Login(props) {
         <br/>
 
         <div className="button-row d-flex justify-content-around">
-          <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+          <a href="/"><button type="button" className="btn btn-light">Home</button></a>
           <button type="submit" className="btn btn-light">Login</button>
         </div>
+
+        <Link to={{
+          pathname: '/register',
+          state: { redirect: props.location?.state?.redirect }
+        }}><h6 className="mt-1">New account?</h6></Link>
+
       </form>
     </div>
 
