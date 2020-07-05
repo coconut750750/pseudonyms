@@ -6,7 +6,7 @@ import './App.css';
 import io from 'socket.io-client';
 
 import Header from './components/Header';
-
+import UserButton from './auth/UserButton';
 import Home from './views/Home';
 import Create from './views/Create';
 import Join from './views/Join';
@@ -163,9 +163,9 @@ function App(props) {
               }
             </div>
         }
+        userButton={<UserButton username={username}/>}
       />
 
-      {username}
       {views[viewState]}
     </div>
   );
