@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TileText from '../TileText';
+
 import '../Tile.css';
 import './ClassicTile.css';
 
@@ -21,7 +23,7 @@ function ClassicTile(props) {
 
   return (
     <div className={tileClass()} onClick={ () => click() }>
-      <h6>{props.word}</h6>
+      <TileText text={props.word}/>
     </div>
   );
 }

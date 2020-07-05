@@ -1,5 +1,7 @@
 import React from 'react';
 
+import TileText from '../TileText';
+
 import '../Tile.css';
 import './DuetTile.css';
 
@@ -41,7 +43,7 @@ function DuetTile(props) {
       {tokens.includes(BLUE) &&
         <h4 className="token badge badge-primary"><span/></h4>
       }
-      <h6>{props.word}</h6>
+      <TileText text={props.word}/>
     </div>
   );
 }
