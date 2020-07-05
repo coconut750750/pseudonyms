@@ -21,7 +21,7 @@ export default function UserButton(props) {
   if (props.username === undefined) {
     return (
       <div className="user-btn">
-        <a href="/login"><h6>Login</h6></a>
+        <a href="/login"><h6 class="menu">Login</h6></a>
       </div>
     );
   } else {

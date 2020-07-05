@@ -2,6 +2,11 @@
     margin-top: 1rem;
 }
 
+#header a {
+    color: black;
+    text-decoration: none;
+}
+
 #header h6 {
     margin-bottom: 0;
 }
