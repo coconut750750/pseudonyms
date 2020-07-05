@@ -3,6 +3,7 @@ const salt = bcrypt.genSaltSync(parseInt(process.env.SALT));
 const { v4: uuidv4 } = require('uuid');
 
 const PASSWORD_RESET_EXPIRY = 30 * 60 * 1000;
+const INITIAL_RANKING = 1000;
 
 function userSession(user) {
   return {
@@ -31,7 +32,7 @@ async function addUser(collection, username, email, password) {
     passhash,
     email,
     created: new Date(),
-    ranking: 100,
+    ranking: INITIAL_RANKING,
     games: 0,
     wins: 0,
   });
@@ -117,13 +118,16 @@ async function completeReset(collection, resetToken, password) {
   }
 }
 
-async function completeGame(collection, username, win, teamRank, opponentRank) {
+async function completeGame(collection, username, win, newRank) {
   await collection.findOneAndUpdate(
     { username },
     {
       $inc: {
         wins: win ? 1 : 0,
         games: 1,
+      },
+      $set: {
+        ranking: newRank,
       }
     },
   );

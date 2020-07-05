@@ -54,7 +54,7 @@ module.exports = collection => {
     if (req.user !== undefined) {
       let { password } = req.body;
       await setPassword(collection, req.user.username, password);
-      return res.send({ valid: true, message: "Success" });
+      return res.send({ message: "Success" });
     }
     return res.status(400).send({
        message: "Not logged in.",
@@ -74,7 +74,7 @@ module.exports = collection => {
     } catch (err) {
     }
 
-    res.send({ valid: true, message: "Success" });
+    res.send({ message: "Success" });
   });
 
   router.post('/forgot_return', async (req, res) => {
@@ -86,7 +86,7 @@ module.exports = collection => {
          message: err.message,
       });
     }
-    res.send({ valid: true, message: "Success" });
+    res.send({ message: "Success" });
   });
 
   router.post('/profile', (req, res) => {
