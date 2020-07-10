@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import './App.css';
 
 import io from 'socket.io-client';
@@ -22,6 +22,8 @@ const JOIN = "join";
 const GAME = "game";
 
 function App(props) {
+  const { urlgamecode } = useParams();
+
   const history = useHistory();
   const [viewState, setViewState] = useState(HOME);
   const [gameCode, setGameCode] = useState("");
@@ -89,11 +91,10 @@ function App(props) {
     if (viewState === HOME && socket !== undefined) {
       closeSocket(socket);
     }
-    if (viewState === HOME && props.match.params.gamecode !== undefined) {
-      const possibleGameCode = props.match.params.gamecode;
-      if (possibleGameCode.length !== 0) {
-        checkCode(possibleGameCode).then(resp => {
-          setUrlGameCode(possibleGameCode);
+    if (viewState === HOME && urlgamecode !== undefined) {
+      if (urlgamecode.length !== 0) {
+        checkCode(urlgamecode).then(resp => {
+          setUrlGameCode(urlgamecode);
           setViewState(JOIN);
         }).catch(resp => {  
           reset();

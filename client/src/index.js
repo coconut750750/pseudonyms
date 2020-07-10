@@ -49,7 +49,7 @@ function Index(props) {
         <Route exact path="/forgot"><Header/><Forgot/></Route>
         <Route exact path="/forgot/:rtoken" component={HeaderedComponent(ForgotReturn)}></Route>
         <Route exact path="/profile"><Header/><Profile/></Route>
-        <Route exact path="/:gamecode" component={App}></Route>
+        <Route exact path="/:urlgamecode" component={App}></Route>
         <Route path="/" component={App}></Route>
       </Switch>
 

@@ -21,15 +21,15 @@ export default function UserButton(props) {
   if (props.username === undefined) {
     return (
       <div className="user-btn">
-        <a href="/login"><h6 class="menu">Login</h6></a>
+        <a href="/login"><h6 className="menu">Login</h6></a>
       </div>
     );
   } else {
     return (
       <div className="user-btn">
-        <div class="dropdown">
-          <h6 class="menu" onClick={openMenu}>{props.username}</h6>
-          <div class={`dropdown-content ${open ? "show" : "hide"}`}>
+        <div className="dropdown">
+          <h6 className="menu" onClick={openMenu}>{props.username}</h6>
+          <div className={`dropdown-content ${open ? "show" : "hide"}`}>
             <a href="/profile">Profile</a>
             <a onClick={ () => logout() } href="/">Logout</a>
           </div>
