@@ -64,8 +64,7 @@ app.io.on('connect', function (socket) {
   var player;
 
   socket.on('joinGame', data => {
-    // console.log(socket.handshake.session?.passport?.user);
-    name = data.name;
+    name = socket.handshake.session?.passport?.user?.username || data.name;
     game = app.gm.retrieveGame(data.gameCode);
     if (!(game instanceof GameInterface)) {
       return;
