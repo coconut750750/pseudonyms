@@ -75,7 +75,7 @@ router.get('/checkcode', (req, res) => {
   const { gameCode } = req.query;
   const game = req.gm.retrieveGame(gameCode);
   if (game != undefined) {
-    res.send({});
+    res.send({ mode: game.mode() });
   } else {
     res.status(400).send({ message: 'Invalid game code' });
   }

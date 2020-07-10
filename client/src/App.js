@@ -15,10 +15,9 @@ import Game from './views/Game';
 import { checkCode } from './api/register';
 import { getUser } from './api/auth';
 
+import { CLASSIC, RANKED, DUET } from './utils/const';
+
 const HOME = "home";
-const CREATE_CLASSIC = "create_classic";
-const CREATE_DUET = "create_duet";
-const CREATE_RANKED = "create_ranked";
 const JOIN = "join";
 const GAME = "game";
 
@@ -113,31 +112,31 @@ function App(props) {
     if (username === undefined) {
       history.push('/login');
     } else {
-      setViewState(CREATE_RANKED);
+      setViewState(RANKED);
     }
   }, [username, history]);
 
   const views = {
     [HOME]:         <Home 
-                      createClassicGame={ () => setViewState(CREATE_CLASSIC) } 
-                      createDuetGame={ () => setViewState(CREATE_DUET) }
+                      createClassicGame={ () => setViewState(CLASSIC) } 
+                      createDuetGame={ () => setViewState(DUET) }
                       createRankedGame={createRanked}
                       joinGame={ () => setViewState(JOIN) }/>,
-    [CREATE_CLASSIC]: <Create
-                        classic
-                        username={username}
-                        goBack={ () => goHome() }
-                        setGame={setGame}/>,
-    [CREATE_DUET]:  <Create
+    [CLASSIC]:      <Create
+                      classic
+                      username={username}
+                      goBack={ () => goHome() }
+                      setGame={setGame}/>,
+    [DUET]:         <Create
                       duet
                       username={username}
                       goBack={ () => goHome() }
                       setGame={setGame}/>,
-    [CREATE_RANKED]: <Create
-                        ranked
-                        username={username}
-                        goBack={ () => goHome() }
-                        setGame={setGame}/>,
+    [RANKED]:       <Create
+                      ranked
+                      username={username}
+                      goBack={ () => goHome() }
+                      setGame={setGame}/>,
     [JOIN]:         <Join
                       urlGameCode={urlGameCode}
                       username={username}
