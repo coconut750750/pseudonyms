@@ -29,7 +29,7 @@ function App(props) {
   const [gameData, setGameData] = useState({});
   const [username, setUsername] = useState(undefined);
 
-  const [tips, setTips] = useState(localStorage.getItem("tips") === 'true' | true);
+  const [tips, setTips] = useState((localStorage.getItem("tips") || 'true') === 'true');
   const setTipsActive = useCallback((active) => {
     setTips(active);
     localStorage.setItem("tips", active);
