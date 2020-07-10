@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import './App.css';
 
 import io from 'socket.io-client';
@@ -22,12 +22,12 @@ const GAME = "game";
 
 function App(props) {
   const history = useHistory();
+  const { urlgamecode } = useParams();
+
   const [viewState, setViewState] = useState(HOME);
-  const [gameCode, setGameCode] = useState("");
-  const [name, setName] = useState("");
-  const [gameMode, setGameMode] = useState("");
+  
+  const [gameInfo, setGameInfo] = useState({});
   const [socket, setSocket] = useState(undefined);
-  const [urlGameCode, setUrlGameCode] = useState(undefined);
   
   if (localStorage.getItem("tips") === null) {
     localStorage.setItem("tips", true);
@@ -56,10 +56,7 @@ function App(props) {
 
     ReactDOM.unstable_batchedUpdates(() => {
       setSocket(socket);
-
-      setGameCode(gameCode);
-      setName(name);
-      setGameMode(gameMode);
+      setGameInfo({ gameCode, name, gameMode });
       setViewState(GAME);
     });
     history.push(`/${gameCode}`);
@@ -67,14 +64,12 @@ function App(props) {
 
   const goHome = useCallback(() => {
     history.push('/');
-    setUrlGameCode(undefined);
     setViewState(HOME);
   }, [history]);
 
   const reset = useCallback(() => {
     goHome();
-    setGameCode("");
-    setName("");
+    setGameInfo({});
   }, [goHome]);
 
   const closeSocket = (socket) => {
@@ -87,11 +82,9 @@ function App(props) {
     if (viewState === HOME && socket !== undefined) {
       closeSocket(socket);
     }
-    if (viewState === HOME && props.match.params.gamecode !== undefined) {
-      const possibleGameCode = props.match.params.gamecode;
-      if (possibleGameCode.length !== 0) {
-        checkCode(possibleGameCode).then(resp => {
-          setUrlGameCode(possibleGameCode);
+    if (viewState === HOME && urlgamecode !== undefined) {
+      if (urlgamecode.length !== 0) {
+        checkCode(urlgamecode).then(resp => {
           setViewState(JOIN);
         }).catch(resp => {  
           reset();
@@ -114,14 +107,14 @@ function App(props) {
                       goBack={ () => goHome() }
                       setGame={setGame}/>,
     [JOIN]:         <Join
-                      urlGameCode={urlGameCode}
+                      urlGameCode={urlgamecode}
                       goBack={ () => goHome() }
                       join={setGame}/>,
     [GAME]:         <Game
                       socket={socket}
-                      gameCode={gameCode}
-                      name={name}
-                      gameMode={gameMode}
+                      gameCode={gameInfo.gameCode}
+                      name={gameInfo.name}
+                      gameMode={gameInfo.gameMode}
                       exitGame={ () => exitGame(socket) }/>,
     };
 

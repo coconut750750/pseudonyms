@@ -27,7 +27,7 @@ function Index(props) {
         <Route exact path="/moregames"><Header/><MoreGames/></Route>
         <Route exact path="/walkthrough"><Header/><Walkthrough/></Route>
         <Route exact path="/feedback"><Header/><SubmitFeedback/></Route>
-        <Route exact path="/:gamecode" component={App}></Route>
+        <Route exact path="/:urlgamecode" component={App}></Route>
         <Route exact path="/" component={App}></Route>
       </Switch>
       <Footer/>
