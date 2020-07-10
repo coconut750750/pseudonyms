@@ -27,7 +27,7 @@ function App(props) {
   const [viewState, setViewState] = useState(HOME);
   const [gameData, setGameData] = useState({});
 
-  const [tips, setTips] = useState(localStorage.getItem("tips") === 'true' | true);
+  const [tips, setTips] = useState((localStorage.getItem("tips") || 'true') === 'true');
   const setTipsActive = useCallback((active) => {
     setTips(active);
     localStorage.setItem("tips", active);
