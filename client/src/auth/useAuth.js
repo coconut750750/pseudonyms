@@ -33,7 +33,6 @@ function useProvideAuth() {
   };
 
   useEffect(() => {
-    console.log('here')
     auth.getUser().then(res => {
       setUser(res.user);
     }).catch(res => {
