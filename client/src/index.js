@@ -17,6 +17,7 @@ import SubmitFeedback from './routes/Feedback';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
+import { ProvideAuth } from "./auth/useAuth.js";
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Forgot from './auth/Forgot';
@@ -38,23 +39,25 @@ function HeaderedComponent(Component) {
 
 function Index(props) {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/howto"><Header/><HowTo/></Route>
-        <Route exact path="/moregames"><Header/><MoreGames/></Route>
-        <Route exact path="/walkthrough"><Header/><Walkthrough/></Route>
-        <Route exact path="/feedback"><Header/><SubmitFeedback/></Route>
-        <Route exact path="/login" component={HeaderedComponent(Login)}></Route>
-        <Route exact path="/register" component={HeaderedComponent(Register)}></Route>
-        <Route exact path="/forgot"><Header/><Forgot/></Route>
-        <Route exact path="/forgot/:rtoken" component={HeaderedComponent(ForgotReturn)}></Route>
-        <Route exact path="/profile"><Header/><Profile/></Route>
-        <Route exact path="/:urlgamecode" component={App}></Route>
-        <Route path="/" component={App}></Route>
-      </Switch>
+    <ProvideAuth>
+      <Router>
+        <Switch>
+          <Route exact path="/howto"><Header/><HowTo/></Route>
+          <Route exact path="/moregames"><Header/><MoreGames/></Route>
+          <Route exact path="/walkthrough"><Header/><Walkthrough/></Route>
+          <Route exact path="/feedback"><Header/><SubmitFeedback/></Route>
+          <Route exact path="/login" component={HeaderedComponent(Login)}></Route>
+          <Route exact path="/register" component={HeaderedComponent(Register)}></Route>
+          <Route exact path="/forgot"><Header/><Forgot/></Route>
+          <Route exact path="/forgot/:rtoken" component={HeaderedComponent(ForgotReturn)}></Route>
+          <Route exact path="/profile"><Header/><Profile/></Route>
+          <Route exact path="/:urlgamecode" component={App}></Route>
+          <Route path="/" component={App}></Route>
+        </Switch>
 
-      <Footer/>
-    </Router>
+        <Footer/>
+      </Router>
+    </ProvideAuth>
   );
 }
 

@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { getUser } from '../api/auth';
+import { useAuth } from "./useAuth.js";
 
 const WithoutAuth = WrappedComponent =>
   function WithoutAuthComponent(props) {
+    const auth = useAuth();
     const history = useHistory();
 
     useEffect(() => {
-      getUser().then(res => {
+      if (auth.user !== undefined) {
         history.push('/')
-      }).catch(res => {
-      });
-    }, [history]);
+      }
+    }, [auth, history]);
 
     return (
       <WrappedComponent {...props}/>

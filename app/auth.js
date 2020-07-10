@@ -103,7 +103,7 @@ module.exports = collection => {
       return res.status(400).send({});
     }
     res.send({
-      username: req.user.username,
+      user: req.user,
     });
   });
 

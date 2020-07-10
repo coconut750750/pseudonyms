@@ -13,7 +13,7 @@ import Join from './views/Join';
 import Game from './views/Game';
 
 import { checkCode } from './api/register';
-import { getUser } from './api/auth';
+import { useAuth } from "./auth/useAuth.js";
 
 import { CLASSIC, RANKED, DUET } from './utils/const';
 
@@ -22,12 +22,12 @@ const JOIN = "join";
 const GAME = "game";
 
 function App(props) {
+  const auth = useAuth();
   const history = useHistory();
   const { urlgamecode } = useParams();
 
   const [viewState, setViewState] = useState(HOME);
   const [gameData, setGameData] = useState({});
-  const [username, setUsername] = useState(undefined);
 
   const [tips, setTips] = useState((localStorage.getItem("tips") || 'true') === 'true');
   const setTipsActive = useCallback((active) => {
@@ -75,19 +75,13 @@ function App(props) {
     }
   }, [viewState, goHome, urlgamecode]);
 
-  useEffect(() => {
-    getUser().then(res => {
-      setUsername(res.username)
-    }).catch(res => {});
-  }, []);
-
   const createRanked = useCallback(() => {
-    if (username === undefined) {
+    if (auth.user === undefined) {
       history.push('/login');
     } else {
       setViewState(RANKED);
     }
-  }, [username, history]);
+  }, [auth, history]);
 
   const views = {
     [HOME]:         <Home 
@@ -97,22 +91,22 @@ function App(props) {
                       joinGame={ () => setViewState(JOIN) }/>,
     [CLASSIC]:      <Create
                       classic
-                      username={username}
+                      username={auth.user?.username}
                       goBack={goHome}
                       setGame={setGame}/>,
     [DUET]:         <Create
                       duet
-                      username={username}
+                      username={auth.user?.username}
                       goBack={goHome}
                       setGame={setGame}/>,
     [RANKED]:       <Create
                       ranked
-                      username={username}
+                      username={auth.user?.username}
                       goBack={goHome}
                       setGame={setGame}/>,
     [JOIN]:         <Join
                       urlGameCode={urlgamecode}
-                      username={username}
+                      username={auth.user?.username}
                       goBack={goHome}
                       join={setGame}/>,
     [GAME]:         <Game
@@ -135,7 +129,7 @@ function App(props) {
               }
             </div>
         }
-        userButton={<UserButton username={username}/>}
+        userButton={<UserButton username={auth.user?.username}/>}
       />
 
       {views[viewState]}

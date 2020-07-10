@@ -1,12 +1,14 @@
 import React, { useRef } from 'react';
 import { useHistory, Link } from "react-router-dom";
 
-import { register } from '../api/auth';
+import { useAuth } from "./useAuth.js";
+
 import WrappedMessage from '../components/WrappedMessage';
 import DoublePassword from './DoublePassword';
 import WithoutAuth from './WithoutAuth';
 
 function Register(props) {
+  const auth = useAuth();
   const usernameInputRef = useRef();
   const emailInputRef = useRef();
   const history = useHistory();
@@ -19,7 +21,7 @@ function Register(props) {
         setError={props.setError}
         submit={ password => {
           const redirect = props.location?.state?.redirect || '/';
-          register(usernameInputRef.current.value, emailInputRef.current.value, password)
+          auth.register(usernameInputRef.current.value, emailInputRef.current.value, password)
             .then(r => history.push(redirect))
             .catch(r => props.setError(r.message));
         }}
@@ -33,7 +35,7 @@ function Register(props) {
         }
         belowPassword={
           <div className="button-row d-flex justify-content-around">
-            <a href="/"><button type="button" className="btn btn-light">Home</button></a>
+            <Link to="/"><button type="button" className="btn btn-light">Home</button></Link>
             <button type="submit" className="btn btn-light">Register</button>
           </div>
         }

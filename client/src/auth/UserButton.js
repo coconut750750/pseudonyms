@@ -1,10 +1,12 @@
 import React, { useState, useCallback } from 'react';
+import { Link } from "react-router-dom";
 
-import { logout } from '../api/auth';
+import { useAuth } from "./useAuth.js";
 
 import './UserButton.css';
 
 export default function UserButton(props) {
+  const auth = useAuth();
   const [open, setOpen] = useState(false);
 
   const closeMenu = useCallback(() => {
@@ -21,7 +23,7 @@ export default function UserButton(props) {
   if (props.username === undefined) {
     return (
       <div className="user-btn">
-        <a href="/login" tabIndex="-1"><h6 className="menu">Login</h6></a>
+        <Link to="/login" tabIndex="-1"><h6 className="menu">Login</h6></Link>
       </div>
     );
   } else {
@@ -30,8 +32,8 @@ export default function UserButton(props) {
         <div className="dropdown">
           <h6 className="menu" onClick={openMenu}>{props.username}</h6>
           <div className={`dropdown-content ${open ? "show" : "hide"}`}>
-            <a href="/profile" tabIndex="-1">Profile</a>
-            <a onClick={ () => logout() } href="/" tabIndex="-1">Logout</a>
+            <Link to="/profile" tabIndex="-1">Profile</Link>
+            <Link onClick={ () => auth.logout() } to="/" tabIndex="-1">Logout</Link>
           </div>
         </div>
       </div>
