@@ -22,13 +22,12 @@ const JOIN = "join";
 const GAME = "game";
 
 function App(props) {
-  const { urlgamecode } = useParams();
-
   const history = useHistory();
   const { urlgamecode } = useParams();
 
   const [viewState, setViewState] = useState(HOME);
   const [gameData, setGameData] = useState({});
+  const [username, setUsername] = useState(undefined);
 
   const [tips, setTips] = useState(localStorage.getItem("tips") === 'true' | true);
   const setTipsActive = useCallback((active) => {
@@ -112,7 +111,7 @@ function App(props) {
                       goBack={goHome}
                       setGame={setGame}/>,
     [JOIN]:         <Join
-                      urlGameCode={urlGameCode}
+                      urlGameCode={urlgamecode}
                       username={username}
                       goBack={goHome}
                       join={setGame}/>,
