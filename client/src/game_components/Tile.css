@@ -15,15 +15,25 @@
     cursor: pointer;
 }
 
-.tile h6 {
+.tile .text,
+.tile .emoji {
     margin: 0;
     width: 100%;
-    padding: 0.5em;
+    padding-right: 0.5em;
+    padding-left: 0.5em;
     word-wrap: break-word;
 }
 
+.tile .emoji {
+    font-size: 32px;
+}
+
 @media only screen and (max-width: 700px) {
-  .tile h6 {
+  .tile .text {
     font-size: 2vw;
   }
+
+  .tile .emoji {
+    font-size: 4vw;
+}
 }

@@ -22,21 +22,15 @@
     background-color: #000000;
 }
 
-.tile.revealed h6 {
-    color: #ffffff;
-}
+.tile.revealed .text { color: #ffffff; }
+.tile.hidden.g .text { color: #28a745; }
+.tile.hidden.y .text { color: #999; }
+.tile.hidden.x .text { color: #000000; }
 
-.tile.hidden.g h6 {
-    color: #28a745;
-}
-
-.tile.hidden.y h6 {
-    color: #999;
-}
-
-.tile.hidden.x h6 {
-    color: #000000;
-}
+.tile.revealed .emoji {  }
+.tile.hidden.g .emoji { text-shadow: 0 0 12px #28a745, 0 0 12px #28a745; }
+.tile.hidden.y .emoji {  }
+.tile.hidden.x .emoji { text-shadow: 0 0 12px #000000, 0 0 12px #000000; }
 
 .tile.glow-g {
     border: 2px solid #28a745;

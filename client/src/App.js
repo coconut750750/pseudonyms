@@ -25,83 +25,56 @@ function App(props) {
   const { urlgamecode } = useParams();
 
   const history = useHistory();
-  const [viewState, setViewState] = useState(HOME);
-  const [gameCode, setGameCode] = useState("");
-  const [name, setName] = useState("");
-  const [gameMode, setGameMode] = useState("");
-  const [socket, setSocket] = useState(undefined);
-  const [urlGameCode, setUrlGameCode] = useState(undefined);
-  const [username, setUsername] = useState(undefined);
-  
-  if (localStorage.getItem("tips") === null) {
-    localStorage.setItem("tips", true);
-  }
+  const { urlgamecode } = useParams();
 
-  const [tips, setTips] = useState(localStorage.getItem("tips") === 'true');
-  const setTipsActive = (active) => {
+  const [viewState, setViewState] = useState(HOME);
+  const [gameData, setGameData] = useState({});
+
+  const [tips, setTips] = useState(localStorage.getItem("tips") === 'true' | true);
+  const setTipsActive = useCallback((active) => {
     setTips(active);
     localStorage.setItem("tips", active);
-  };
-
-  const exitGame = (socket) => {
-    closeSocket(socket);
-    reset();
-  };
-
-  const setGame = (gameCode, name, gameMode) => {
-    const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
-    let socket = io(socketiohost);
-    socket.on('end', data => {
-      exitGame(socket);
-    });
-    socket.on('disconnect', data => {
-      reset();
-    });
-
-    ReactDOM.unstable_batchedUpdates(() => {
-      setSocket(socket);
-
-      setGameCode(gameCode);
-      setName(name);
-      setGameMode(gameMode);
-      setViewState(GAME);
-    });
-    history.push(`/${gameCode}`);
-  };
+  }, []);
 
   const goHome = useCallback(() => {
     history.push('/');
-    setUrlGameCode(undefined);
     setViewState(HOME);
   }, [history]);
 
-  const reset = useCallback(() => {
-    goHome();
-    setGameCode("");
-    setName("");
-  }, [goHome]);
-
-  const closeSocket = (socket) => {
+  const closeSocket = useCallback((socket) => {
     socket.emit('exitGame', {});
     socket.disconnect();
-    setSocket(undefined);
-  };
+  }, []);
+
+  const setGame = useCallback((gameCode, name, gameMode) => {
+    const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
+    let socket = io(socketiohost);
+    socket.on('end', data => {
+      closeSocket(socket);
+    });
+    socket.on('disconnect', data => {
+      ReactDOM.unstable_batchedUpdates(() => {
+        setGameData({});
+        goHome();
+      });
+    });
+
+    ReactDOM.unstable_batchedUpdates(() => {
+      setGameData({ gameCode, name, gameMode, socket });
+      setViewState(GAME);
+    });
+    history.push(`/${gameCode}`);
+  }, [closeSocket, goHome, history]);
 
   useEffect(() => {
-    if (viewState === HOME && socket !== undefined) {
-      closeSocket(socket);
+    if (viewState === HOME && urlgamecode !== undefined && urlgamecode.length !== 0) {
+      checkCode(urlgamecode).then(resp => {
+        setViewState(JOIN);
+      }).catch(resp => {  
+        goHome();
+      });
     }
-    if (viewState === HOME && urlgamecode !== undefined) {
-      if (urlgamecode.length !== 0) {
-        checkCode(urlgamecode).then(resp => {
-          setUrlGameCode(urlgamecode);
-          setViewState(JOIN);
-        }).catch(resp => {  
-          reset();
-        });
-      } 
-    }
-  }, [viewState, socket, reset, props]);
+  }, [viewState, goHome, urlgamecode]);
 
   useEffect(() => {
     getUser().then(res => {
@@ -126,29 +99,29 @@ function App(props) {
     [CLASSIC]:      <Create
                       classic
                       username={username}
-                      goBack={ () => goHome() }
+                      goBack={goHome}
                       setGame={setGame}/>,
     [DUET]:         <Create
                       duet
                       username={username}
-                      goBack={ () => goHome() }
+                      goBack={goHome}
                       setGame={setGame}/>,
     [RANKED]:       <Create
                       ranked
                       username={username}
-                      goBack={ () => goHome() }
+                      goBack={goHome}
                       setGame={setGame}/>,
     [JOIN]:         <Join
                       urlGameCode={urlGameCode}
                       username={username}
-                      goBack={ () => goHome() }
+                      goBack={goHome}
                       join={setGame}/>,
     [GAME]:         <Game
-                      socket={socket}
-                      gameCode={gameCode}
-                      name={name}
-                      gameMode={gameMode}
-                      exitGame={ () => exitGame(socket) }/>,
+                      socket={gameData.socket}
+                      gameCode={gameData.gameCode}
+                      name={gameData.name}
+                      gameMode={gameData.gameMode}
+                      exitGame={ () => closeSocket(gameData.socket) }/>,
     };
 
   return (
