@@ -21,7 +21,7 @@ function userProfile(user) {
   return {
     username: user.username,
     email: user.email,
-    age: now - (new Date (user.created)),
+    age: `${Math.round((now - (new Date (user.created)))/(1000 * 60 * 60 * 24))} days`,
     ranking: user.ranking,
     games: user.games,
     wins: user.wins,

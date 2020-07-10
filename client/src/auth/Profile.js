@@ -20,7 +20,7 @@ function Profile(props) {
       <br/>
 
       <h6>Email: {props.user.email}</h6>
-      <h6>Created: {props.user.created}</h6>
+      <h6>Age: {props.user.age}</h6>
       <br/>
 
       <h6>Change Password</h6>
