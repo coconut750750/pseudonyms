@@ -89,12 +89,12 @@ module.exports = collection => {
     res.send({ message: "Success" });
   });
 
-  router.post('/profile', (req, res) => {
+  router.post('/profile', async (req, res) => {
     if (req.user === undefined) {
       return res.status(400).send({});
     }
     res.send({
-      user: userProfile(req.user),
+      user: await userProfile(collection, req.user.username),
     });
   });
 

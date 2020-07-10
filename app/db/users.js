@@ -10,13 +10,12 @@ function userSession(user) {
     username: user.username,
     email: user.email,
     created: user.created,
-    ranking: user.ranking,
-    games: user.games,
-    wins: user.wins,
   };
 }
 
-function userProfile(user) {
+async function userProfile(collection, username) {
+  const user = await findByUsername(collection, username)
+
   const now = new Date();
   return {
     username: user.username,
