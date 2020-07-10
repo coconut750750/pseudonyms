@@ -4,7 +4,7 @@ const router = express.Router();
 const passport = require('passport');
 const sendmail = require('sendmail')({ silent: true });
 
-const { userSession, addUser, setPassword, generateResetToken, completeReset } = require('./db/users');
+const { userSession, userProfile, addUser, setPassword, generateResetToken, completeReset } = require('./db/users');
 const { checkName } = require('./utils');
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -90,14 +90,20 @@ module.exports = collection => {
   });
 
   router.post('/profile', (req, res) => {
+    if (req.user === undefined) {
+      return res.status(400).send({});
+    }
     res.send({
-      user: req.user,
+      user: userProfile(req.user),
     });
   });
 
   router.post('/user', (req, res) => {
+    if (req.user === undefined) {
+      return res.status(400).send({});
+    }
     res.send({
-      username: req.user?.username,
+      username: req.user.username,
     });
   });
 

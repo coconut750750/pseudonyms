@@ -9,10 +9,9 @@ const WithoutAuth = WrappedComponent =>
 
     useEffect(() => {
       getUser().then(res => {
-        if (res.username !== undefined) {
-          history.push('/')
-        }
-      }).catch(res => {});
+        history.push('/')
+      }).catch(res => {
+      });
     }, [history]);
 
     return (

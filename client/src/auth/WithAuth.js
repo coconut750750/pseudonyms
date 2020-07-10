@@ -10,12 +10,10 @@ const WithAuth = (WrappedComponent, redirect) =>
 
     useEffect(() => {
       getProfile().then(res => {
-        if (res.user === undefined) {
-          history.push({ pathname: '/login', state: { redirect }});
-        } else {
-          setUser(res.user);
-        }
-      }).catch(res => {});
+        setUser(res.user);
+      }).catch(res => {
+        history.push({ pathname: '/login', state: { redirect }});
+      });
     }, [history]);
 
     return (

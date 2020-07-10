@@ -13,6 +13,18 @@ function userSession(user) {
     ranking: user.ranking,
     games: user.games,
     wins: user.wins,
+  };
+}
+
+function userProfile(user) {
+  const now = new Date();
+  return {
+    username: user.username,
+    email: user.email,
+    age: now - (new Date (user.created)),
+    ranking: user.ranking,
+    games: user.games,
+    wins: user.wins,
   }
 }
 
@@ -135,6 +147,7 @@ async function completeGame(collection, username, win, newRank) {
 
 module.exports = {
   userSession,
+  userProfile,
   addUser,
   validPassword,
   findByUsername,

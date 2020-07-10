@@ -106,7 +106,7 @@ function App(props) {
   useEffect(() => {
     getUser().then(res => {
       setUsername(res.username)
-    });
+    }).catch(res => {});
   }, []);
 
   const createRanked = useCallback(() => {

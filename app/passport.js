@@ -17,11 +17,10 @@ module.exports = collection => {
   ));
 
   passport.serializeUser(function(user, done) {
-    done(null, user.username);
+    done(null, userSession(user));
   });
 
-  passport.deserializeUser(async function(username, done) {
-    const user = await findByUsername(collection, username);  
-    done(null, userSession(user));
+  passport.deserializeUser(async function(usersession, done) {
+    done(null, usersession);
   });
 }
