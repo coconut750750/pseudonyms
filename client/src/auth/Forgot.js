@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 import { forgotPassword } from '../api/auth';
 import WrappedMessage from '../components/WrappedMessage';
@@ -26,7 +26,7 @@ function ForgotPassword(props) {
         <br/>
 
         <div className="button-row d-flex justify-content-around">
-          <a href="/login"><button type="button" className="btn btn-light">Back</button></a>
+          <Link to="/login"><button type="button" className="btn btn-light">Back</button></Link>
           <button type="submit" className="btn btn-light">Send</button>
         </div>
       </form>

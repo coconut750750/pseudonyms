@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import Donate from '../components/Donate';
 
@@ -34,10 +35,10 @@ function Home(props) {
       <br/>
       
       <div className="btn-group-vertical">
-        <a className="btn btn-sm btn-light" role="button" href="/howto">How to Play</a>
-        <a className="btn btn-sm btn-light" role="button" href="/walkthrough">Walkthrough</a>
-        <a className="btn btn-sm btn-light" role="button" href="/feedback">Submit Feedback</a>
-        <a className="btn btn-sm btn-light" role="button" href="/moregames">More Games</a>
+        <Link className="btn btn-sm btn-light" role="button" to="/howto">How to Play</Link>
+        <Link className="btn btn-sm btn-light" role="button" to="/walkthrough">Walkthrough</Link>
+        <Link className="btn btn-sm btn-light" role="button" to="/feedback">Submit Feedback</Link>
+        <Link className="btn btn-sm btn-light" role="button" to="/moregames">More Games</Link>
       </div>
 
       <br/>

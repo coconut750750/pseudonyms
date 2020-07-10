@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { Link } from "react-router-dom";
 
 import { submitFeedback } from '../api/game';
 import WrappedMessage from '../components/WrappedMessage';
@@ -27,7 +28,7 @@ function SubmitFeedback(props) {
       <br/>
 
       <div className="button-row d-flex justify-content-around">
-        <a className="btn btn-light" role="button" href="/">Back</a>
+        <Link className="btn btn-light" role="button" to="/">Back</Link>
         <button type="submit" className="btn btn-light" onClick={() => submit(textareaRef.current.value)}>Submit</button>
       </div>
     </div>
