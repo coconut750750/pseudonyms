@@ -4,7 +4,8 @@ const router = express.Router();
 const passport = require('passport');
 const sendmail = require('sendmail')({ silent: true });
 
-const { userSession, userProfile, addUser, setPassword, generateResetToken, completeReset } = require('./db/users');
+const { userSession, addUser, setPassword, generateResetToken, completeReset } = require('./db/users');
+const { userProfile } = require('./db/profiles');
 const { checkName } = require('./utils');
 
 const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

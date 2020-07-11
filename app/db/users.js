@@ -2,8 +2,17 @@ const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(parseInt(process.env.SALT));
 const { v4: uuidv4 } = require('uuid');
 
+const { newProfile } = require('./profiles');
+
 const PASSWORD_RESET_EXPIRY = 30 * 60 * 1000;
-const INITIAL_RANKING = 1000;
+
+async function findByUsername(collection, username) {
+  return await collection.findOne({ username });
+}
+
+async function findByEmail(collection, email) {
+  return await collection.findOne({ email });
+}
 
 function userSession(user) {
   return {
@@ -11,20 +20,6 @@ function userSession(user) {
     email: user.email,
     created: user.created,
   };
-}
-
-async function userProfile(collection, username) {
-  const user = await findByUsername(collection, username)
-
-  const now = new Date();
-  return {
-    username: user.username,
-    email: user.email,
-    age: `${Math.round((now - (new Date (user.created)))/(1000 * 60 * 60 * 24))} days`,
-    ranking: user.ranking,
-    games: user.games,
-    wins: user.wins,
-  }
 }
 
 async function addUser(collection, username, email, password) {
@@ -38,28 +33,12 @@ async function addUser(collection, username, email, password) {
   }
 
   const passhash = bcrypt.hashSync(password, salt);
-  await collection.insertOne({
-    username,
-    passhash,
-    email,
-    created: new Date(),
-    ranking: INITIAL_RANKING,
-    games: 0,
-    wins: 0,
-  });
+  await collection.insertOne(newProfile(username, passhash, email));
   return await findByUsername(collection, username);
 }
 
 function validPassword(user, password) {
   return bcrypt.compareSync(password, user.passhash);
-}
-
-async function findByUsername(collection, username) {
-  return await collection.findOne({ username });
-}
-
-async function findByEmail(collection, email) {
-  return await collection.findOne({ email });
 }
 
 async function setPassword(collection, username, password) {
@@ -146,7 +125,6 @@ async function completeGame(collection, username, win, newRank) {
 
 module.exports = {
   userSession,
-  userProfile,
   addUser,
   validPassword,
   findByUsername,
