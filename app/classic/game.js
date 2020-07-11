@@ -19,8 +19,8 @@ const BOARD = 'board';
 const RESULT = 'result';
 
 class ClassicGame extends GameInterface {
-  constructor(code, onEmpty, options, broadcast) {
-    super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
+  constructor(code, onEmpty, options, broadcast, PlayerListClass) {
+    super(code, onEmpty, options, broadcast, PlayerListClass || PlayerList, MIN_PLAYERS);
     this.statsCollection = options.statsCollection;
 
     this.clues = new Clues( clue => this.notifyClue(clue) );

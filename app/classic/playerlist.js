@@ -4,8 +4,8 @@ const { RED, BLUE } = require('../common/const').classic;
 const PlayerListInterface = require('../common/playerlist');
 
 class PlayerList extends PlayerListInterface {
-  constructor(notifyUpdate, endGame) {
-    super(Player, notifyUpdate, endGame);
+  constructor(notifyUpdate, endGame, PlayerClass) {
+    super(notifyUpdate, endGame, PlayerClass || Player);
   }
 
   resetRoles() {

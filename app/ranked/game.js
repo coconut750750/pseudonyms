@@ -1,4 +1,5 @@
 const ClassicGame = require("../classic/game");
+const PlayerList = require("./playerlist");
 
 const { findByUsername, completeGame } = require('../db/users');
 const c = require('../common/const');
@@ -7,8 +8,9 @@ const { RED, BLUE } = c.classic;
 
 class RankedGame extends ClassicGame {
   constructor(code, onEmpty, options, broadcast) {
-    super(code, onEmpty, options, broadcast);
+    super(code, onEmpty, options, broadcast, PlayerList);
     this.usersCollection = options.usersCollection;
+    this.plist.setCollection(this.usersCollection);
   }
 
   mode() {

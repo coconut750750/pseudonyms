@@ -1,10 +1,10 @@
 var _ = require('lodash');
 
 class PlayerList {
-  constructor(PlayerClass, notifyUpdate, endGame) {
-    this.PlayerClass = PlayerClass;
+  constructor(notifyUpdate, endGame, PlayerClass) {
     this.notifyUpdate = notifyUpdate;
     this.endGame = endGame;
+    this.PlayerClass = PlayerClass;
     this.players = {};
   }
 
@@ -24,12 +24,16 @@ class PlayerList {
     return name in this.players;
   }
 
-  add(name, socket) {
+  silent_add(name, socket) {
     this.players[name] = new this.PlayerClass(
       name,
       socket,
       this.length() === 0
     );
+  }
+
+  add(name, socket) {
+    this.silent_add(name, socket);
     this.notifyUpdate();
   }
 

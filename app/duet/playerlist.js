@@ -4,7 +4,7 @@ const PlayerListInterface = require('../common/playerlist');
 
 class PlayerList extends PlayerListInterface {
   constructor(notifyUpdate, endGame) {
-    super(Player, notifyUpdate, endGame);
+    super(notifyUpdate, endGame, Player);
   }
 }
 
