@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useAuth } from "./useAuth.js";
 
@@ -10,7 +10,6 @@ function Login(props) {
   const auth = useAuth();
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
-  const history = useHistory();
 
   return (
     <div>

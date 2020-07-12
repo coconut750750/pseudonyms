@@ -68,7 +68,7 @@ function App(props) {
   useEffect(() => {
     if (viewState === HOME && urlgamecode !== undefined && urlgamecode.length !== 0) {
       checkCode(urlgamecode).then(resp => {
-        if (resp.mode == RANKED && auth.user === undefined) {
+        if (resp.mode === RANKED && auth.user === undefined) {
           history.push({ pathname: '/login', state: { redirect: `/${urlgamecode}` }});
         } else {
           setViewState(JOIN);
@@ -77,7 +77,7 @@ function App(props) {
         goHome();
       });
     }
-  }, [viewState, goHome, urlgamecode, auth]);
+  }, [viewState, goHome, urlgamecode, history, auth]);
 
   const createRanked = useCallback(() => {
     if (auth.user === undefined) {
