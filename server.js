@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 var bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 require('dotenv').config();
 var app = express();
@@ -31,18 +33,21 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+const MongoStore = require('connect-mongo')(session);
 
 const usersCollection = db.collection("users");
 
 require('./app/passport')(usersCollection);
-let passport = require('passport');
-let session = require('express-session')({ secret: process.env.SECRET });
-app.use(session);
+const appSession = session({
+  secret: process.env.SECRET,
+  store: new MongoStore({ mongooseConnection: db })
+});
+app.use(appSession);
 app.use(passport.initialize());
 app.use(passport.session());
 
 let sharedsession = require("express-socket.io-session");
-app.io.use(sharedsession(session, {
+app.io.use(sharedsession(appSession, {
     autoSave:true
 })); 
 
