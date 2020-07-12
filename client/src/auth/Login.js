@@ -19,8 +19,10 @@ function Login(props) {
       <form onSubmit={ (e) => {
           e.preventDefault();
           const redirect = props.location?.state?.redirect || '/';
+          props.setRedirect(redirect);
+
           auth.login(usernameInputRef.current.value, passwordInputRef.current.value)
-            .then(r => history.push(redirect))
+            .then(r => {})
             .catch(r => props.setError("Incorrect username or password."));
         } }>
 

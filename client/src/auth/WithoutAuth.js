@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useAuth } from "./useAuth.js";
@@ -7,15 +7,18 @@ const WithoutAuth = WrappedComponent =>
   function WithoutAuthComponent(props) {
     const auth = useAuth();
     const history = useHistory();
+    const [redirect, setRedirect] = useState('/');
 
     useEffect(() => {
       if (auth.user !== undefined) {
-        history.push('/')
+        history.push(redirect)
       }
-    }, [auth, history]);
+    }, [auth, history, redirect]);
 
     return (
-      <WrappedComponent {...props}/>
+      <WrappedComponent
+        setRedirect={setRedirect}
+        {...props}/>
     );
   };
 

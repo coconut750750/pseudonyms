@@ -21,8 +21,10 @@ function Register(props) {
         setError={props.setError}
         submit={ password => {
           const redirect = props.location?.state?.redirect || '/';
+          props.setRedirect(redirect);
+
           auth.register(usernameInputRef.current.value, emailInputRef.current.value, password)
-            .then(r => history.push(redirect))
+            .then(r => {})
             .catch(r => props.setError(r.message));
         }}
         abovePassword={

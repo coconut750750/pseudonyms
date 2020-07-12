@@ -68,12 +68,16 @@ function App(props) {
   useEffect(() => {
     if (viewState === HOME && urlgamecode !== undefined && urlgamecode.length !== 0) {
       checkCode(urlgamecode).then(resp => {
-        setViewState(JOIN);
+        if (resp.mode == RANKED && auth.user === undefined) {
+          history.push({ pathname: '/login', state: { redirect: `/${urlgamecode}` }});
+        } else {
+          setViewState(JOIN);
+        }
       }).catch(resp => {  
         goHome();
       });
     }
-  }, [viewState, goHome, urlgamecode]);
+  }, [viewState, goHome, urlgamecode, auth]);
 
   const createRanked = useCallback(() => {
     if (auth.user === undefined) {
