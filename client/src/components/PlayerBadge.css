@@ -60,7 +60,7 @@
 .name-badge .profile {
   display: none;
   position: absolute;
-  background: black;
+  background: inherit;
   border-radius: .25rem;
   padding: .25em .4em;
 
