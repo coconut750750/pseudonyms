@@ -71,7 +71,7 @@ class RankedGame extends ClassicGame {
     const dominanceWeight = Math.pow(user.ranking / teamRank, Math.pow(-1, actual));
     const delta = 30 * confidenceWeight * (actual - p);
 
-    const newRank = user.ranking + delta * dominanceWeight;
+    const newRank = Math.max(user.ranking + delta * dominanceWeight, 0);
     return Math.round(newRank);
   }
 
