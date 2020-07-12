@@ -78,16 +78,16 @@ class RankedGame extends ClassicGame {
   async updateRanks(winner) {
     const users = await this.getUserData();
     const teamRanks = await this.getTeamRanks(users);
-    this.plist.getAll().forEach(p => {
+    Promise.all(this.plist.getAll().map(async p => {
       if (p.isOnTeam(RED) || p.isOnTeam(BLUE)) {
         const win = p.isOnTeam(winner);
         const teamRank = teamRanks[p.team];
         const opponentRank = p.isOnTeam(RED) ? teamRanks[BLUE] : teamRanks[RED];
 
         const newRank = this.calculateNewRank(users[p.name], p, teamRank, opponentRank, win);
-        completeGame(this.usersCollection, p.name, win, newRank);
+        return await completeGame(this.usersCollection, p.name, win, newRank);
       }
-    });
+    })).then(() => this.plist.reloadProfiles());
   }
 }
 

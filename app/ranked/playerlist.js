@@ -15,6 +15,10 @@ class PlayerList extends ClassicPlayerList {
     this.silent_add(name, socket);
     this.players[name].loadProfile(this.collection).then(() => this.notifyUpdate());
   }
+
+  reloadProfiles() {
+    Promise.all(this.getAll().map(p => p.loadProfile(this.collection))).then(() => this.notifyUpdate());
+  }
 }
 
 module.exports = PlayerList;
