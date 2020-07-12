@@ -20,7 +20,13 @@ function PlayerBadge(props) {
   };
 
   return (
-    <div className={`badge m-1 ${getBadgeClass()} ${getRoleClass()}`}>
+    <div className={`name-badge badge m-1 ${getBadgeClass()} ${getRoleClass()}`}>
+      {props.player.profile !== undefined &&
+        <div className="profile">
+          {props.player.profile.ranking}
+        </div>
+      }
+
       {props.player.isCaptain() &&
         <img className="captain-icon" src="/icon.svg" alt=""/>
       }

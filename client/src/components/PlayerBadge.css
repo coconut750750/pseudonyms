@@ -1,38 +1,42 @@
-.badge.captain {
+.name-badge {
+    position: relative;
 }
 
-.badge img.captain-icon {
+.name-badge.captain {
+}
+
+.name-badge img.captain-icon {
     height: 9px;
     margin-right: 4px;
     filter: invert(1);
 }
 
-.badge.badge-light img.captain-icon {
+.name-badge.badge-light img.captain-icon {
     filter: invert(0);
 }
 
-.badge.player {
+.name-badge.player {
 
 }
 
-.badge button:focus {
+.name-badge button:focus {
   outline: none;
 }
 
-.badge .badge-x {
+.name-badge .badge-x {
     padding: 0;
     border: none;
     background-color: #00000000;
     cursor: pointer;
 }
 
-.badge .badge-x span {
+.name-badge .badge-x span {
     margin-left: 12px;
     margin-right: 4px;
 }
 
-.badge .badge-x span:before,
-.badge .badge-x span:after {
+.name-badge .badge-x span:before,
+.name-badge .badge-x span:after {
   position: absolute;
   content: ' ';
   height: 12px;
@@ -40,15 +44,32 @@
   background-color: #fff;
 }
 
-.badge.badge-light .badge-x span:before,
-.badge.badge-light .badge-x span:after {
+.name-badge.badge-light .badge-x span:before,
+.name-badge.badge-light .badge-x span:after {
   background-color: #333;
 }
 
-.badge .badge-x span:before {
+.name-badge .badge-x span:before {
   transform: rotate(45deg);
 }
 
-.badge .badge-x span:after {
+.name-badge .badge-x span:after {
   transform: rotate(-45deg);
+}
+
+.name-badge .profile {
+  display: none;
+  position: absolute;
+  background: black;
+  border-radius: .25rem;
+  padding: .25em .4em;
+
+  left: 50%;
+  top: 100%;
+  width: inherit;
+  transform: translateX(-50%);
+}
+
+.name-badge:hover .profile {
+  display: block;
 }

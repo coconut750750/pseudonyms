@@ -33,7 +33,7 @@ export default function UserButton(props) {
           <h6 className="menu" onClick={openMenu}>{props.username}</h6>
           <div className={`dropdown-content ${open ? "show" : "hide"}`}>
             <Link to="/profile" tabIndex="-1">Profile</Link>
-            <Link onClick={ () => auth.logout() } to="/" tabIndex="-1">Logout</Link>
+            <a onClick={ () => auth.logout() } href="/" tabIndex="-1">Logout</a>
           </div>
         </div>
       </div>

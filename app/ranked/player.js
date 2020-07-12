@@ -14,7 +14,7 @@ class Player extends ClassicPlayer {
   json() {
     return {
       ...super.json(),
-      ...this.profile,
+      profile: { ...this.profile },
     };
   }
 }
