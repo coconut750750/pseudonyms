@@ -5,8 +5,6 @@ import './App.css';
 
 import io from 'socket.io-client';
 
-import Header from './components/Header';
-
 import Home from './views/Home';
 import Create from './views/Create';
 import Join from './views/Join';
@@ -15,9 +13,6 @@ import Game from './views/Game';
 import { checkCode } from './api/register';
 
 const HOME = "home";
-const CREATE_CLASSIC = "create_classic";
-const CREATE_DUET = "create_duet";
-const JOIN = "join";
 const GAME = "game";
 
 function App(props) {
@@ -25,13 +20,8 @@ function App(props) {
   const { urlgamecode } = useParams();
 
   const [viewState, setViewState] = useState(HOME);
+  const [urlCode, setURLCode] = useState(undefined);
   const [gameData, setGameData] = useState({});
-
-  const [tips, setTips] = useState((localStorage.getItem("tips") || 'true') === 'true');
-  const setTipsActive = useCallback((active) => {
-    setTips(active);
-    localStorage.setItem("tips", active);
-  }, []);
 
   const goHome = useCallback(() => {
     history.push('/');
@@ -66,52 +56,28 @@ function App(props) {
   useEffect(() => {
     if (viewState === HOME && urlgamecode !== undefined && urlgamecode.length !== 0) {
       checkCode(urlgamecode).then(resp => {
-        setViewState(JOIN);
+        setURLCode(urlgamecode);
       }).catch(resp => {  
         goHome();
       });
     }
-  }, [viewState, goHome, urlgamecode]);
+  }, [viewState, goHome, urlgamecode, history]);
 
   const views = {
-    [HOME]:         <Home 
-                      createClassicGame={ () => setViewState(CREATE_CLASSIC) } 
-                      createDuetGame={ () => setViewState(CREATE_DUET) } 
-                      joinGame={ () => setViewState(JOIN) }/>,
-    [CREATE_CLASSIC]: <Create
-                        classic
-                        goBack={goHome}
-                        setGame={setGame}/>,
-    [CREATE_DUET]:  <Create
-                      duet
-                      goBack={goHome}
-                      setGame={setGame}/>,
-    [JOIN]:         <Join
-                      urlGameCode={urlgamecode}
-                      goBack={goHome}
-                      join={setGame}/>,
-    [GAME]:         <Game
-                      socket={gameData.socket}
-                      gameCode={gameData.gameCode}
-                      name={gameData.name}
-                      gameMode={gameData.gameMode}
-                      exitGame={ () => closeSocket(gameData.socket) }/>,
+    [HOME]: <Home 
+              join={<Join urlGameCode={urlCode} goBack={goHome} join={setGame}/>}
+              classic={<Create classic goBack={goHome} setGame={setGame}/>} 
+              duet={<Create duet goBack={goHome} setGame={setGame}/>}/>,
+    [GAME]: <Game
+              socket={gameData.socket}
+              gameCode={gameData.gameCode}
+              name={gameData.name}
+              gameMode={gameData.gameMode}
+              exitGame={ () => closeSocket(gameData.socket) }/>,
     };
 
   return (
-    <div className={`App ${tips ? '' : 'hidetips'}`}>
-      <Header
-        tipToggle={
-          viewState === GAME &&
-            <div className="tip-toggle" onClick={() => setTipsActive(!tips)}>
-              {tips 
-              ? <img alt="" src="/lightbulb-on.svg"/>
-              : <img alt="" src="/lightbulb-off.svg"/>
-              }
-            </div>
-        }
-      />
-
+    <div className="App">
       {views[viewState]}
     </div>
   );

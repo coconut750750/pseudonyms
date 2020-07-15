@@ -1,11 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
 import { checkName } from '../api/register';
-import WrappedMessage from '../components/WrappedMessage';
 
 function Join(props) {
   const nameInputRef = useRef();
   const gameCodeInputRef = useRef();
+  const [error, setError] = useState("");
 
   const joinGame = async () => {
     const name = nameInputRef.current.value;
@@ -13,14 +13,12 @@ function Join(props) {
     checkName(name, gameCode).then(res => {
       props.join(gameCode, name, res.mode);
     }).catch(res => {
-      props.setError(res.message);
+      setError(res.message);
     });
   };
 
   return (
     <div>
-      <h4>Join Game</h4>
-
       <form onSubmit={ (e) => {
         e.preventDefault();
         joinGame();
@@ -38,9 +36,10 @@ function Join(props) {
           <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
           <button type="submit" className="btn btn-light">Join</button>
         </div>
+        <p className="form-error">{error}</p>
       </form>
     </div>
   );
 }
 
-export default WrappedMessage(Join);
+export default Join;

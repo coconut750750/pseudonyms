@@ -1,3 +1,35 @@
 #footer {
-    margin-bottom: 1rem;
+    padding-top: 1rem;
+    height: 75px;
+    background: linear-gradient(rgb(231, 231, 231) 0%, rgb(244, 244, 244) 5%, rgb(255, 255, 255) 10%);
+}
+
+#footer-content {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.footer-links,
+.footer-links:hover {
+    color: black;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.footer-links::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: width 0.3s;
+}
+
+.footer-links:hover::after {
+  width: 100%;
+}
+
+.footer-links p {
+    margin-bottom: 0;
 }

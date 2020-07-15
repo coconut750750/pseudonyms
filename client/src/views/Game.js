@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
 import GameBadge from '../components/GameBadge';
@@ -38,6 +38,12 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   const [guessesLeft, setGuessesLeft] = useState(undefined);
   const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState("");
+
+  const [tips, setTips] = useState((localStorage.getItem("tips") || 'true') === 'true');
+  const setTipsActive = useCallback((active) => {
+    setTips(active);
+    localStorage.setItem("tips", active);
+  }, []);
 
   // on mount
   useEffect(() => {
@@ -178,10 +184,12 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   };
 
   return (
-    <div>
+    <div className={tips ? '' : 'hidetips'}>
       <GameBadge
         mode={gameMode}
         gameCode={gameCode}
+        tips={tips}
+        setTipsActive={setTipsActive}
         copySuccess={() => setSuccess('Successfully copied shareable link!')}/>
 
       {game_views[phase]}

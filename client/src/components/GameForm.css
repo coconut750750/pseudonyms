@@ -1,0 +1,60 @@
+.game-form {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+}
+
+.game-form .tabs {
+    width: 100%;
+}
+
+.game-form .tabs .tab {
+    padding: 0;
+}
+
+.game-form .tabs .tab {
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    line-height: 1em;
+    padding: 0.5rem 0;
+    text-align: center;
+    border-bottom: 2px solid transparent;
+}
+
+.game-form .tabs .tab.selected {
+    border-bottom: 2px solid black;
+}
+
+.game-form .tabs .tab.unselected:hover {
+    border-bottom: 2px solid #aaa;
+}
+
+.game-form .tab-content {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    min-height: 225px;
+}
+
+.game-form .tab-content .form {
+    position: absolute;
+    padding-top: 2rem;
+    width: 80%;    
+    max-width: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.game-form .tab-content .show {
+    opacity: 1;
+}
+
+.game-form .tab-content .hidden {
+    opacity: 0;
+    left: 100%;
+    appearance: none;
+    width: 0;
+}

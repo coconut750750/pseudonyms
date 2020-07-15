@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import GameForm from '../components/GameForm';
+
 import { CLASSIC, DUET } from '../utils/const';
 
 function HowTo(props) {
@@ -76,7 +78,7 @@ function HowTo(props) {
   );
 
   return (
-    <div>
+    <div className="skinny">
       <div className="text-left">
         <h4>How To Play</h4>
 

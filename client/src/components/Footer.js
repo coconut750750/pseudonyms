@@ -1,12 +1,23 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import './Footer.css'
 
 function Footer() {
   return (
     <div id="footer">
-      <hr/>
-      <small>built by <a href="https://brandon-wang.com" target="_blank" rel="noopener noreferrer">brandon wang</a></small>
+      <div id="footer-content">
+        <div className="button-row d-flex justify-content-center">
+          <div className="col text-center">
+            <Link className="footer-links" to="/feedback"><small>Submit feedback</small></Link>
+            <br/>
+            <a className="footer-links" target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/brandonwang"><small>Buy me a pizza</small></a>
+          </div>
+          <div className="col text-center">
+            <small>Built by <a className="footer-links" href="Buy me a pizza://brandon-wang.com" target="_blank" rel="noopener noreferrer" tabIndex="-1">Brandon Wang</a></small>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,21 +1,5 @@
 .App {
-    
-}
-
-.tip-toggle {
-    height: 24px;
-    width: 24px;
-    border-radius: 4px;
-    padding: 4px;
-    box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 4px 1px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.tip-toggle img {
-    vertical-align: text-top;
-    height: 12.8px;
-    transform: rotate(180deg);
+    height: 100%;
 }
 
 p {
@@ -27,44 +11,36 @@ hr {
     margin-bottom: 0.5rem;
 }
 
-.button-row {
-    width: 75%;
-    margin: 0 auto;
+.row {
+    margin-right: 0;
+    margin-left: 0;
 }
 
-.button-row > * {
-    width: 30%;
+.button-row>* {
     white-space: normal
 }
 
-.button-row > * > button {
-    width: 100%;
+.button-row>*>button {
     white-space: normal
 }
 
-/* home */
-#home .updates {
-    width: 60%;
+.elevated {
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0px 4px 10px 0px #aaa;
+    padding: 1rem;
 }
 
-@media only screen and (max-width: 700px) {
-  #home .updates {
-    width: 100%;
-  }
-
-  .button-row {
-    width: 100%;
-  }
-}
-
-#home .main-btn {
-    border-color: black;
+.skinny {
+    margin: auto;
+    padding: 1rem;
+    max-width: 700px;
 }
 
 /* walkthrough */
 #walkthrough img.screen {
     width: 100%;
-    user-select: none; 
+    user-select: none;
 }
 
 #walkthrough .arrow {
@@ -92,4 +68,11 @@ hr {
 
 .message {
     margin-top: 20px;
+    box-shadow: 0 4px 8px 2px #00000022;
+}
+
+.form-error {
+    color: red;
+    font-size: 75%;
+    min-height: 12px;
 }

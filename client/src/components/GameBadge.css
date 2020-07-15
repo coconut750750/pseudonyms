@@ -1,3 +1,25 @@
+.game-badge-row {
+    position: relative;
+}
+
+.tip-toggle {
+    position: absolute;
+    right: 0;
+    height: 24px;
+    width: 24px;
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 4px 1px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.tip-toggle img {
+    vertical-align: text-top;
+    height: 12.8px;
+    transform: rotate(180deg);
+}
+
 .gamecode {
     box-shadow: 0px 0px 8px 0px #21252999;
     cursor: pointer;

@@ -7,12 +7,15 @@ body {
 
 #root {
     text-align: center;
-    width: 700px;
     margin: 0 auto;
 }
 
-@media only screen and (max-width: 700px) {
-  #root {
-    width: 90vw;
-  }
+.outer {
+    margin: 0 auto;
+    padding-right: 2vw;
+    padding-left: 2vw;
+}
+
+.non-footer {
+    min-height: calc(100vh - 75px);
 }

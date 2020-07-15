@@ -89,15 +89,15 @@ function Lobby(props) {
     }
 
     return (
-      <div className="row">
-        <div className="col-6">
+      <div className="row m-2">
+        <div className="col-12">
           <small>Time for clue</small>
           <Tip help="timeForClue"/>
           <select className="form-control gameoptions-select" value={clueLimit} onChange={ e => setClueLimit(e.target.value) }>
             {options}
           </select>
         </div>
-        <div className="col-6">
+        <div className="col-12">
           <small>Time for guess</small>
           <Tip right help="timeForGuess"/>
           <select className="form-control gameoptions-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
@@ -111,7 +111,7 @@ function Lobby(props) {
   const renderDuetLimits = () => {
     if (isDuet(props.mode)) {
       return (
-        <div className="row">
+        <div className="row m-2">
           <div className="col-6">
             <small>Turn limit</small>
             <Tip duet help="turnLimit"/>
@@ -136,10 +136,6 @@ function Lobby(props) {
   }
 
   const renderGameOptions = () => {
-    if (!canRenderAdmin()) {
-      return undefined;
-    }
-
     return (
       <div>
         <h6>Game Settings</h6>
@@ -161,13 +157,9 @@ function Lobby(props) {
               <small>Enter each word on a separate line</small>
             </div>
           }
-          <br/>
 
           {renderTimeLimit()}
-          <br/>
           {renderDuetLimits()}
-
-          <br/>
         </div>
       </div>
     );
@@ -177,27 +169,35 @@ function Lobby(props) {
     <div>
       <h5>Lobby</h5>
       <h6>Click the game code for a shareable link!</h6>
-      <h6>Waiting for players...</h6>
 
-      <PlayerList
-        players={props.players}
-        remove={ canRenderAdmin() ? ((player) => props.socket.emit('removePlayer', { name: player.name })) : undefined }
-        removeExempt={props.me}/>
-      <br/>
+      <div className="row d-flex justify-content-center">
+        <div className="col-md-6">
+          <h6>Waiting for players...</h6>
 
-      {renderGameOptions()}
+          <PlayerList
+            players={props.players}
+            remove={ canRenderAdmin() ? ((player) => props.socket.emit('removePlayer', { name: player.name })) : undefined }
+            removeExempt={props.me}/>
+          <br/>
+        </div>
 
-      <div className="button-row d-flex justify-content-around">
-        <button type="button" className="btn btn-light"
+        {canRenderAdmin() &&
+          <div className="col-md-6">
+            {renderGameOptions()}
+          </div>
+        }
+      </div>
+
+      <div className="button-row d-flex justify-content-center">
+        <button type="button" className="btn btn-light m-2"
           onClick={ () => exitGame() }>
           {canRenderAdmin() ? "End Game" : "Leave Game"}
         </button>
         
         {canRenderAdmin() &&
-          <button type="button" className="btn btn-light" onClick={ () => startGame() }>Start Game</button>
+          <button type="button" className="btn btn-light m-2" onClick={ () => startGame() }>Start Game</button>
         }
       </div>
-
     </div>
   );
 }
