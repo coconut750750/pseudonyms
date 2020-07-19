@@ -25,44 +25,48 @@ function Roles(props) {
   };
 
   return (
-    <div className="mb-2">
+    <div className="fill-height mb-2">
       <h5>Elect Captains<Tip classic right help="captainRole"/></h5>
       <h6>Each team must have one Captain</h6>
+
+      <div>
+        <button type="button" className="btn"
+          disabled={props.me.noTeam()}
+          onClick={() => props.socket.emit('randomizeRoles', {})}>Randomize</button>
+      </div>
       <br/>
       
-      <div className="row">
-        <div className="col-4 p-0">
-          {props.me.isRed() &&
-            <button type="button" className="btn btn-light"
-              onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
-          }
+      <div className="expand-height">
+        <div className="row">
+          <div className="col-4 p-0">
+            {props.me.isRed() &&
+              <button type="button" className="btn"
+                onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
+            }
+          </div>
+          <div className="col-4"/>
+          <div className="col-4 p-0">
+            {props.me.isBlue() &&
+              <button type="button" className="btn"
+                onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
+            }
+          </div>
         </div>
-        <div className="col-4 p-0">
-          <button type="button" className="btn btn-light"
-            disabled={props.me.noTeam()}
-            onClick={() => props.socket.emit('randomizeRoles', {})}>Randomize</button>
-        </div>
-        <div className="col-4 p-0">
-          {props.me.isBlue() &&
-            <button type="button" className="btn btn-light"
-              onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
-          }
+
+        <div className="row">
+          <div className="col-4 p-0"><PlayerList vertical players={getReds()}/></div>
+          <div className="col-4 p-0"/>
+          <div className="col-4 p-0"><PlayerList vertical players={getBlues()}/></div>
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-4 p-0"><PlayerList players={getReds()}/></div>
-        <div className="col-4 p-0"/>
-        <div className="col-4 p-0"><PlayerList players={getBlues()}/></div>
+      <div>
+        <button type="button" className="btn"
+          disabled={!confirmReady()}
+          onClick={() => props.socket.emit('confirmRoles', {})}>
+          Confirm Roles
+        </button>
       </div>
-
-      <br/>
-
-      <button type="button" className="btn btn-light"
-        disabled={!confirmReady()}
-        onClick={() => props.socket.emit('confirmRoles', {})}>
-        Confirm Roles
-      </button>
     </div>
   );
 }

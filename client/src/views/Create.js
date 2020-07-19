@@ -1,10 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 
+import TextInput from '../input_components/TextInput';
 import { checkName, createClassicGame, createDuetGame } from '../api/register';
+import { CLASSIC, DUET } from '../utils/const';
+
+import "./Create.css";
 
 function Create(props) {
   const nameInputRef = useRef();
   const [error, setError] = useState("");
+  const [gameMode, setMode] = useState(CLASSIC);
 
   const create = async () => {
     const name = nameInputRef.current.value;
@@ -13,9 +18,9 @@ function Create(props) {
         props.setGame(res.gameCode, name, res.mode);
       }
 
-      if (props.classic) {
+      if (gameMode === CLASSIC) {
         createClassicGame({}).then(createSuccess);
-      } else if (props.duet) {
+      } else if (gameMode === DUET) {
         createDuetGame({}).then(createSuccess);
       }
     }).catch(res => {
@@ -29,13 +34,21 @@ function Create(props) {
         e.preventDefault();
         create();
       } }>
-        <input type="text" className="form-control" placeholder="Enter your name" ref={nameInputRef}/>
+        <div className="btn-group btn-group-toggle mt-4">
+          <label className={`game-mode-radio ${gameMode === CLASSIC ? 'selected' : 'unselected'}`} onClick={() => setMode(CLASSIC)}>
+            <input type="radio" name="options" id="option1" autocomplete="off"/> Classic
+          </label>
+          <label className={`game-mode-radio ${gameMode === DUET ? 'selected' : 'unselected'}`} onClick={() => setMode(DUET)}>
+            <input type="radio" name="options" id="option2" autocomplete="off"/> Duet
+          </label>
+        </div>
+
+        <TextInput
+          label={"Name:"}
+          ref={nameInputRef}/>
         <br />
 
-        <div className="button-row d-flex justify-content-around">
-          <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
-          <button type="submit" className="btn btn-light">Create</button>
-        </div>
+        <button type="submit" className="btn mb-2">Create</button>
         <p className="form-error">{error}</p>
       </form>
     </div>

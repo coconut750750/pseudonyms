@@ -22,19 +22,17 @@ ReactDOM.render(<Index />, document.getElementById('root'));
 function Index(props) {
   return (
     <Router>
-      <div className="non-footer">
-        <Header/>
+      <Header/>
 
-        <div className="outer">
-          <Switch>
-            <Route exact path="/howto"><HowTo/></Route>
-            <Route exact path="/moregames"><MoreGames/></Route>
-            <Route exact path="/walkthrough"><Walkthrough/></Route>
-            <Route exact path="/feedback"><SubmitFeedback/></Route>
-            <Route exact path="/:urlgamecode" component={App}></Route>
-            <Route path="/" component={App}></Route>
-          </Switch>
-        </div>
+      <div className="outer">
+        <Switch>
+          <Route exact path="/howto"><HowTo/></Route>
+          <Route exact path="/moregames"><MoreGames/></Route>
+          <Route exact path="/walkthrough"><Walkthrough/></Route>
+          <Route exact path="/feedback"><SubmitFeedback/></Route>
+          <Route exact path="/:urlgamecode" component={App}></Route>
+          <Route path="/" component={App}></Route>
+        </Switch>
       </div>
 
       <Footer/>

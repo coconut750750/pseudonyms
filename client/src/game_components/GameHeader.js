@@ -24,11 +24,11 @@ function GameHeader(props) {
 
   const renderClassicScore = () => (
     <div className="row">
-      <div className="col-5">
+      <div className="col-4">
         <h5>{`${props.score.red}`}<Tip classic help="score"/></h5>
       </div>
-      <div className="col-2"></div>
-      <div className="col-5">
+      <div className="col-4"></div>
+      <div className="col-4">
         <h5>{`${props.score.blue}`}</h5>
       </div>
     </div>
@@ -36,13 +36,13 @@ function GameHeader(props) {
 
   const renderDuetScore = () => (
     <div className="row">
-      <div className="col-5">
+      <div className="col-4">
         <h6>
           {`Words left: ${props.score.leftover}`}<Tip duet help="wordScore"/>
         </h6>
       </div>
-      <div className="col-2"></div>
-      <div className="col-5">
+      <div className="col-4"></div>
+      <div className="col-4">
         <h6>
           {`Turns: ${props.score.timer}`}<Tip duet right help="turnLimit"/>
           <br/>
@@ -85,9 +85,9 @@ function GameHeader(props) {
       {renderSpectators()}
       {renderScore()}
       <div className="row">
-        <div className="col-5"><PlayerList players={getReds()}/></div>
-        <div className="col-2"><Clock socket={props.socket}/></div>
-        <div className="col-5"><PlayerList players={getBlues()}/></div>
+        <div className="col-4"><PlayerList players={getReds()}/></div>
+        <div className="col-4"><Clock socket={props.socket}/></div>
+        <div className="col-4"><PlayerList players={getBlues()}/></div>
       </div>
     </div>
   );

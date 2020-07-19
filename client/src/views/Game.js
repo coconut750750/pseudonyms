@@ -184,7 +184,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   };
 
   return (
-    <div className={tips ? '' : 'hidetips'}>
+    <div id="game-view" className={`fill-height ${tips ? '' : 'hidetips'} mb-2`}>
       <GameBadge
         mode={gameMode}
         gameCode={gameCode}
@@ -196,7 +196,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
 
       {(phase !== LOBBY && phase !== BOARD) &&
         <div>
-          <button type="button" className="btn btn-light" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>
+          <button type="button" className="btn" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>
         </div>
       }
     </div>

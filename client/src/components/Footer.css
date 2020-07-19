@@ -10,6 +10,14 @@
     margin: 0 auto;
 }
 
+#built-by {
+    color: var(--unselected-color);
+}
+
+#built-by a {
+    color: var(--unselected-color);
+}
+
 .footer-links,
 .footer-links:hover {
     color: black;

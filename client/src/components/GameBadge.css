@@ -12,6 +12,7 @@
     box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 4px 1px;
     cursor: pointer;
     user-select: none;
+    z-index: 1;
 }
 
 .tip-toggle img {

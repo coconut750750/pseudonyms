@@ -1,15 +1,17 @@
 import React, { useState, useCallback } from "react";
 import debounce from "lodash/debounce";
 
+import './WrappedMessage.css';
+
 const WrappedMessage = WrappedComponent =>
   function Message(props) {
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
+    const [message, setMessage] = useState(undefined);
+    const [messageClass, setMessageClass] = useState(undefined);
 
-    const disappearTime = 5000;
+    const disappearTime = 2000;
     const debounceDisappear = () => {
-      setError(null);
-      setSuccess(null);
+      setMessage(undefined);
+      setMessageClass(undefined);
     };
     const disappearCallback = useCallback(
       debounce(debounceDisappear, disappearTime),
@@ -17,31 +19,30 @@ const WrappedMessage = WrappedComponent =>
     );
 
     const setErrorMessage = useCallback(message => {
-      setSuccess(null);
-      setError(message);
+      setMessage(message);
+      setMessageClass("alert-danger");
       disappearCallback();
     }, [disappearCallback]);
 
     const setSuccessMessage = useCallback(message => {
-      setError(null);
-      setSuccess(message);
+      setMessage(message);
+      setMessageClass("alert-success");
       disappearCallback();
     }, [disappearCallback]);
 
     return (
-      <div>
+      <div className="wrapped-message">
         <WrappedComponent
           {...props}
           setError={setErrorMessage}
           setSuccess={setSuccessMessage}
         />
 
-        {success && <div className={`alert alert-success message`} role="alert">
-          {success}
-        </div>}
-        {error && <div className={`alert alert-danger message`} role="alert">
-          {error}
-        </div>}
+        <div className="message-wrapper" onClick={ () => debounceDisappear() }>
+          {message && <div className={`alert ${messageClass} message`} role="alert">
+            {message}
+          </div>}
+        </div>
       </div>
     );
   };

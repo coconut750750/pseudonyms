@@ -20,39 +20,42 @@ function Teams(props) {
   };
 
   return (
-    <div className="mb-2">
+    <div className="fill-height mb-2">
       <h5>Select Teams</h5>
       <h6>Everyone must be on a team</h6>
-      <br/>
 
-      <div className="row">
-        <div className="col-4 p-0">
-          <button type="button" className="btn btn-light"
-            onClick={() => props.socket.emit('selectTeam', { team: 'red' })}>Join Red</button>
-        </div>
-        <div className="col-4 p-0">
-          <button type="button" className="btn btn-light"
+      <div className="">
+        <div className="p-0 m-2">
+          <button type="button" className="btn"
             onClick={() => props.socket.emit('randomizeTeams', {})}>Randomize</button>
         </div>
+        <div className="p-0"><PlayerList players={getUndecideds()}/></div>
+      </div>
+      <br/>
+
+      <div className="row expand-height">
         <div className="col-4 p-0">
-          <button type="button" className="btn btn-light"
+          <button type="button" className="btn"
+            onClick={() => props.socket.emit('selectTeam', { team: 'red' })}>Join Red</button>
+          <PlayerList vertical players={getReds()}/>
+        </div>
+        <div className="col-4"><br/></div>
+        <div className="col-4 p-0">
+          <button type="button" className="btn"
             onClick={() => props.socket.emit('selectTeam', { team: 'blue' })}>Join Blue</button>
+          <PlayerList vertical players={getBlues()}/>
         </div>
       </div>
       
-      <div className="row">
-        <div className="col-4 p-0"><PlayerList players={getReds()}/></div>
-        <div className="col-4 p-0"><PlayerList players={getUndecideds()}/></div>
-        <div className="col-4 p-0"><PlayerList players={getBlues()}/></div>
-      </div>
-
       <br/>
 
-      <button type="button" className="btn btn-light"
-        disabled={!confirmReady()}
-        onClick={() => props.socket.emit('confirmTeams', {})}>
-        Confirm Teams
-      </button>
+      <div>
+        <button type="button" className="btn"
+          disabled={!confirmReady()}
+          onClick={() => props.socket.emit('confirmTeams', {})}>
+          Confirm Teams
+        </button>
+      </div>
     </div>
   );
 }

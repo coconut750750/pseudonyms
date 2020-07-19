@@ -1,0 +1,23 @@
+.game-mode-radio {
+    cursor: pointer;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    border-radius: 4px;
+    margin-left: 2px;
+    margin-right: 2px;
+    user-select: none;
+}
+
+.game-mode-radio.selected {
+    color: var(--selected-color);
+}
+
+.game-mode-radio.unselected {
+    color: var(--unselected-color);
+}
+
+.game-mode-radio input[type=radio] {
+    position: absolute;
+    clip: rect(0,0,0,0);
+    pointer-events: none;
+}

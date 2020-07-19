@@ -13,7 +13,7 @@ export default function Clock(props) {
 
   return (
     <div>
-      <h5>{time}</h5>
+      <h5 className="m-0">{time}</h5>
     </div>
   );
 }

@@ -1,3 +1,30 @@
+#walkthrough img.screen {
+    width: 100%;
+    user-select: none;
+}
+
+#walkthrough .arrow {
+    width: 10%;
+    display: inline-block;
+}
+
+#walkthrough #left-arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+    transform: rotate(135deg);
+}
+
+#walkthrough #right-arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+    transform: rotate(-45deg);
+}
 
 .laptop {
   display: inline-block;

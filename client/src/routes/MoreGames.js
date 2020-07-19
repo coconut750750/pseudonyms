@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const games = [
   {name: "Connoisseurs", description: "Based on Cards Against Humanity", link: "https://connoisseurs.brandon-wang.com/"},
@@ -10,7 +11,7 @@ const games = [
 
 export default function MoreGames(props) {
   return (
-    <div id="moregames">
+    <div className="skinny">
       <h4>More Games</h4>
       <br/>
 
@@ -22,7 +23,7 @@ export default function MoreGames(props) {
         </div>
       ))}
 
-      <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+      <Link className="btn" role="button" to="/">Back</Link>
     </div>
   )
 }

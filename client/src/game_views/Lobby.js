@@ -14,7 +14,7 @@ const timeLimitOptions = [
   { value: 60, display: "1 minute"},
   { value: 120, display: "2 minutes"},
   { value: 300, display: "5 minutes"},
-  { value: 0, display: "Unlimited"}
+  { value: 0, display: "unlimited"}
 ];
 
 function Lobby(props) {
@@ -70,7 +70,7 @@ function Lobby(props) {
     }
 
     return (
-      <select className="form-control gameoptions-select" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
+      <select className="form-control gameoptions-select mb-2" value={wordlist} onChange={ e => setWordlist(e.target.value) }>
         {options}
       </select>
     );
@@ -89,15 +89,15 @@ function Lobby(props) {
     }
 
     return (
-      <div className="row m-2">
-        <div className="col-12">
+      <div>
+        <div className="m-2">
           <small>Time for clue</small>
           <Tip help="timeForClue"/>
           <select className="form-control gameoptions-select" value={clueLimit} onChange={ e => setClueLimit(e.target.value) }>
             {options}
           </select>
         </div>
-        <div className="col-12">
+        <div className="m-2">
           <small>Time for guess</small>
           <Tip right help="timeForGuess"/>
           <select className="form-control gameoptions-select" value={guessLimit} onChange={ e => setGuessLimit(e.target.value) }>
@@ -111,15 +111,15 @@ function Lobby(props) {
   const renderDuetLimits = () => {
     if (isDuet(props.mode)) {
       return (
-        <div className="row m-2">
-          <div className="col-6">
+        <div className="row">
+          <div className="col-md m-2">
             <small>Turn limit</small>
             <Tip duet help="turnLimit"/>
             <select className="form-control gameoptions-select" value={turnLimit} onChange={ e => setTurnLimit(e.target.value) }>
               {[...Array(11).keys()].map(i => <option key={i} value={i + 1}>{i + 1}</option>)}
             </select>
           </div>
-          <div className="col-6">
+          <div className="col-md m-2">
             <small>Mistake limit</small>
             <Tip duet right help="mistakeLimit"/>
             <select className="form-control gameoptions-select" value={mistakeLimit} onChange={ e => setMistakeLimit(e.target.value) }>
@@ -142,7 +142,7 @@ function Lobby(props) {
         <div className="">
           {!useCustom &&
             <div>
-              <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
+              <button type="button" className="btn btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
               <Tip right help="customWords"/>
               <br/>
               {renderWordlistSelect()}
@@ -151,7 +151,7 @@ function Lobby(props) {
 
           {useCustom &&
             <div>
-              <button type="button" className="btn btn-light btn-sm wordlist-toggle" onClick={ () => setUseCustom(false) }>Use Standard Wordlists</button>
+              <button type="button" className="btn btn-sm wordlist-toggle" onClick={ () => setUseCustom(false) }>Use Standard Wordlists</button>
               <br/>
               {renderWordlistUpload()}
               <small>Enter each word on a separate line</small>
@@ -166,15 +166,16 @@ function Lobby(props) {
   };
 
   return (
-    <div>
+    <div className="fill-height">
       <h5>Lobby</h5>
       <h6>Click the game code for a shareable link!</h6>
 
-      <div className="row d-flex justify-content-center">
+      <div className="row m-2 d-flex justify-content-center">
         <div className="col-md-6">
           <h6>Waiting for players...</h6>
 
           <PlayerList
+            vertical
             players={props.players}
             remove={ canRenderAdmin() ? ((player) => props.socket.emit('removePlayer', { name: player.name })) : undefined }
             removeExempt={props.me}/>
@@ -188,15 +189,18 @@ function Lobby(props) {
         }
       </div>
 
-      <div className="button-row d-flex justify-content-center">
-        <button type="button" className="btn btn-light m-2"
+      {props.message}
+
+      <div className="mt-3">
+        {canRenderAdmin() &&
+          <button type="button" className="btn" onClick={ () => startGame() }>Start Game</button>
+        }
+      </div>
+      <div className="mt-3">
+        <button type="button" className="btn"
           onClick={ () => exitGame() }>
           {canRenderAdmin() ? "End Game" : "Leave Game"}
         </button>
-        
-        {canRenderAdmin() &&
-          <button type="button" className="btn btn-light m-2" onClick={ () => startGame() }>Start Game</button>
-        }
       </div>
     </div>
   );

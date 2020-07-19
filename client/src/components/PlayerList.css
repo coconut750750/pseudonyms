@@ -1,0 +1,13 @@
+.player-list.horizontal {
+    flex-direction: row;
+}
+
+.player-list.vertical {
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 768px) {
+    .player-list.vertical {
+        flex-direction: row;
+    }
+}

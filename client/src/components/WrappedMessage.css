@@ -1,0 +1,33 @@
+.wrapped-message {
+    all: inherit;
+    position: relative;
+}
+
+.message-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    width: auto;
+    z-index: 1;
+}
+
+.message-wrapper:hover {
+    opacity: 0.66;
+}
+
+.message {
+    margin: 20px;
+    box-shadow: 0 4px 8px 2px #00000022;
+    animation: fade-in 0.3s linear;
+    opacity: 1;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}

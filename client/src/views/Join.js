@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 
+import TextInput from '../input_components/TextInput';
+
 import { checkName } from '../api/register';
 
 function Join(props) {
@@ -23,19 +25,19 @@ function Join(props) {
         e.preventDefault();
         joinGame();
       } }>
-        <input type="text" className="form-control" placeholder="Enter game code (4 characters)"
+
+        <TextInput
+          label={"Game Code:"}
           ref={gameCodeInputRef}
           value={props.urlGameCode}
           disabled={props.urlGameCode !== undefined}/>
-        <br/>
-        <input type="text" className="form-control" placeholder="Enter your name"
+
+        <TextInput
+          label={"Name:"}
           ref={nameInputRef}/>
         <br/>
 
-        <div className="button-row d-flex justify-content-around">
-          <button type="button" className="btn btn-light" onClick={props.goBack}>Back</button>
-          <button type="submit" className="btn btn-light">Join</button>
-        </div>
+        <button type="submit" className="btn mb-2">Join</button>
         <p className="form-error">{error}</p>
       </form>
     </div>

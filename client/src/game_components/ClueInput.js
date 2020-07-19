@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import TextInput from '../input_components/TextInput';
+
 function ClueInput(props) {
   const [clue, setClue] = useState("");
   const [count, setCount] = useState(0);
@@ -23,9 +25,12 @@ function ClueInput(props) {
         e.preventDefault();
         sendClue();
       } }>
-        <div className="row">
+        <div className="row align-items-end">
           <div className="col-6 mb-2">
-            <input type="text" className="form-control" placeholder="Enter clue" value={clue} onChange={ e => onChangeClue(e.target.value) }/>
+            <TextInput
+              label={"Clue:"}
+              value={clue} 
+              onChange={ e => onChangeClue(e.target.value) }/>
           </div>
 
           <div className="col-6 mb-2">
@@ -36,7 +41,7 @@ function ClueInput(props) {
           </div>
 
           <div className="col">
-            <button type="submit" className="btn btn-light" disabled={!submitReady()}>Submit</button>
+            <button type="submit" className="btn" disabled={!submitReady()}>Submit</button>
             {props.tip}
           </div>
         </div>

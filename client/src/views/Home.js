@@ -19,16 +19,15 @@ function Home(props) {
         </div>
         <div className="col-md-6 text-center">
           <GameForm
-            tabLabels={["Join", "Classic", "Duet"]}
-            tabs={[props.join, props.classic, props.duet]}
+            tabLabels={["Join", "Create"]}
+            tabs={[props.join, props.create]}
           />
 
           <br/>
           
           <div className="btn-group-horizontal">
-            <Link className="btn btn-sm btn-light m-2" role="button" to="/howto">How to Play</Link>
-            <Link className="btn btn-sm btn-light m-2" role="button" to="/walkthrough">Walkthrough</Link>
-            <Link className="btn btn-sm btn-light m-2" role="button" to="/moregames">More Games</Link>
+            <Link className="btn btn-sm m-2" role="button" to="/howto">How to Play</Link>
+            <Link className="btn btn-sm m-2" role="button" to="/walkthrough">Walkthrough</Link>
           </div>
         </div>
       </div>

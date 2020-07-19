@@ -26,6 +26,7 @@ function App(props) {
   const goHome = useCallback(() => {
     history.push('/');
     setViewState(HOME);
+    setURLCode(undefined);
   }, [history]);
 
   const closeSocket = useCallback((socket) => {
@@ -65,9 +66,8 @@ function App(props) {
 
   const views = {
     [HOME]: <Home 
-              join={<Join urlGameCode={urlCode} goBack={goHome} join={setGame}/>}
-              classic={<Create classic goBack={goHome} setGame={setGame}/>} 
-              duet={<Create duet goBack={goHome} setGame={setGame}/>}/>,
+              join={<Join urlGameCode={urlCode} join={setGame}/>}
+              create={<Create setGame={setGame}/>}/>,
     [GAME]: <Game
               socket={gameData.socket}
               gameCode={gameData.gameCode}

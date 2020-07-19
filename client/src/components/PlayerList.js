@@ -2,14 +2,18 @@ import React from 'react';
 
 import PlayerBadge from './PlayerBadge';
 
+import './PlayerList.css';
+
 function PlayerList(props) {
   return (
-    <div className="d-flex justify-content-center player-list" style={{ flexWrap: "wrap" }}>
+    <div className={`player-list d-flex justify-content-center ${props.vertical ? "vertical" : "horizontal"}`} style={{ flexWrap: "wrap" }}>
       {props.players.map( player => 
-        <PlayerBadge
-          key={player.name}
-          player={player}
-          remove={props.removeExempt === player ? undefined : props.remove}/>
+        <div>
+          <PlayerBadge
+            key={player.name}
+            player={player}
+            remove={props.removeExempt === player ? undefined : props.remove}/>
+        </div>
       )}
     </div>
   );

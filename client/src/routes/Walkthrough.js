@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CLASSIC, DUET } from '../utils/const';
 
@@ -95,7 +96,7 @@ function Walkthrough(props) {
       <small>{getDescription(mode, screen)}</small>
       <br/>
       <br/>
-      <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+      <Link className="btn" role="button" to="/">Back</Link>
     </div>
   );
 }

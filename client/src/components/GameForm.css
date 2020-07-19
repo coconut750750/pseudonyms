@@ -10,6 +10,9 @@
 
 .game-form .tabs .tab {
     padding: 0;
+    /*border-top-left-radius: 4px;*/
+    /*border-top-right-radius: 4px;*/
+    /*box-shadow: 1px -2px 1px 1px #00000022;*/
 }
 
 .game-form .tabs .tab {
@@ -22,12 +25,18 @@
     border-bottom: 2px solid transparent;
 }
 
+.game-form .tabs .tab.unselected {
+    color: var(--unselected-color);
+}
+
 .game-form .tabs .tab.selected {
-    border-bottom: 2px solid black;
+    color: var(--selected-color);
+    border-bottom: 2px solid var(--selected-color);
+    z-index: 1;
 }
 
 .game-form .tabs .tab.unselected:hover {
-    border-bottom: 2px solid #aaa;
+    border-bottom: 2px solid var(--unselected-color);
 }
 
 .game-form .tab-content {
@@ -36,25 +45,35 @@
     appearance: none;
     display: block;
     width: 100%;
-    min-height: 225px;
+    min-height: 250px;
+    overflow: hidden;
+    position: relative;
+    padding-top: 0.25rem;
 }
 
 .game-form .tab-content .form {
+    margin-top: 1rem;
     position: absolute;
-    padding-top: 2rem;
     width: 80%;    
     max-width: 500px;
     left: 50%;
     transform: translateX(-50%);
+    opacity: 1;
+    animation: slide-in 0.3s ease-in;
 }
 
 .game-form .tab-content .show {
-    opacity: 1;
 }
 
 .game-form .tab-content .hidden {
-    opacity: 0;
-    left: 100%;
-    appearance: none;
-    width: 0;
+    display: none;
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(-75%) translateX(-50%);
+        opacity: 0;
+    }
+    to {
+    }
 }

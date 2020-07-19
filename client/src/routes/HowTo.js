@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-
-import GameForm from '../components/GameForm';
+import { Link } from 'react-router-dom';
 
 import { CLASSIC, DUET } from '../utils/const';
 
@@ -95,7 +94,7 @@ function HowTo(props) {
         {mode === CLASSIC && classicHowto}
         {mode === DUET && duetHowto}
 
-        <a href="/"><button type="button" className="btn btn-light">Back</button></a>
+        <Link className="btn" role="button" to="/">Back</Link>
       </div>
     </div>
   );

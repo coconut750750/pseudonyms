@@ -123,14 +123,14 @@ function BoardView(props) {
       {getTurnDescriptor()}
       {props.gameHeader}
       <div className="row">
-        <div className="col-5">
+        <div className="col-4">
           {renderClue(RED)}
         </div>
-        <div className="col-2">
+        <div className="col-4">
           <br/>
           <br/>
         </div>
-        <div className="col-5">
+        <div className="col-4">
           {renderClue(BLUE)}
         </div>
       </div>
@@ -145,7 +145,7 @@ function BoardView(props) {
       }
       {canEndTurn() &&
         <div>
-          <button type="button" className="btn btn-light"
+          <button type="button" className="btn"
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
           <Tip right help="endTurn"/>
         </div>

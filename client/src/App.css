@@ -1,5 +1,8 @@
 .App {
-    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 p {
@@ -9,6 +12,12 @@ p {
 hr {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+}
+
+#game-view {
+    max-width: 900px;
+    margin: auto;
+    width: 100%;
 }
 
 .row {
@@ -26,8 +35,8 @@ hr {
 
 .elevated {
     overflow: hidden;
-    border-radius: 4px;
-    box-shadow: 0px 4px 10px 0px #aaa;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 20px 0px var(--shadow-color);
     padding: 1rem;
 }
 
@@ -37,42 +46,48 @@ hr {
     max-width: 700px;
 }
 
-/* walkthrough */
-#walkthrough img.screen {
-    width: 100%;
-    user-select: none;
+.fill-height {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
-#walkthrough .arrow {
-    width: 10%;
-    display: inline-block;
-}
-
-#walkthrough #left-arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    cursor: pointer;
-    transform: rotate(135deg);
-}
-
-#walkthrough #right-arrow {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    cursor: pointer;
-    transform: rotate(-45deg);
-}
-
-.message {
-    margin-top: 20px;
-    box-shadow: 0 4px 8px 2px #00000022;
+.expand-height {
+    flex: 1 1 auto;
 }
 
 .form-error {
     color: red;
     font-size: 75%;
     min-height: 12px;
+}
+
+input:focus,
+select:focus,
+.form-control:focus {
+    border-color: var(--selected-color);
+    box-shadow: 0 0 0 0.5px var(--selected-color);
+}
+
+.btn {
+    background-color: #f8f9fa;
+    color: black;
+    /*box-shadow: 4px 4px 8px 2px var(--shadow-color);*/
+    /*box-shadow: 0 0 0 1px #ced4da;*/
+}
+
+.btn:hover {
+    background-color: #fefefe;
+    color: black;
+    box-shadow: 0 0 10px 2px var(--shadow-color);
+}
+
+.btn:active {
+    background-color: #f8f8f8;
+    color: black;
+    box-shadow: 0 0 10px 2px var(--shadow-color);
+}
+
+.btn:focus {
+    box-shadow: 0 0 10px 2px var(--shadow-color);
 }

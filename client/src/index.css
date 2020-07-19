@@ -8,14 +8,18 @@ body {
 #root {
     text-align: center;
     margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    
+    --unselected-color: #aaaaaaff;
+    --selected-color: #000000ff;
+    --shadow-color: #aaaaaa55;
 }
 
 .outer {
-    margin: 0 auto;
     padding-right: 2vw;
     padding-left: 2vw;
-}
-
-.non-footer {
-    min-height: calc(100vh - 75px);
+    flex: 1 1 auto;
+    display: flex;
 }

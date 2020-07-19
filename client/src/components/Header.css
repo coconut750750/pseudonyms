@@ -6,10 +6,7 @@
     margin-bottom: 0;
 }
 
-#header h3 {
+#header a {
     color: black;
-}
-
-#header h3::hover {
     text-decoration: none;
 }
