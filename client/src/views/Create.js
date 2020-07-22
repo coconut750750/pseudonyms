@@ -34,7 +34,7 @@ function Create(props) {
         e.preventDefault();
         create();
       } }>
-        <div className="btn-group btn-group-toggle mt-4">
+        <div className="btn-group btn-group-toggle mt-2">
           <label className={`game-mode-radio ${gameMode === CLASSIC ? 'selected' : 'unselected'}`} onClick={() => setMode(CLASSIC)}>
             <input type="radio" name="options" id="option1" autocomplete="off"/> Classic
           </label>
@@ -42,6 +42,8 @@ function Create(props) {
             <input type="radio" name="options" id="option2" autocomplete="off"/> Duet
           </label>
         </div>
+
+        <div><small>{gameMode === CLASSIC ? "4+ players" : "2+ players"}</small></div>
 
         <TextInput
           label={"Name:"}
