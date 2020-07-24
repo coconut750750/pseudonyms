@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 
-import TextInput from '../input_components/TextInput';
+import TextInput from '../..//input_components/TextInput';
 
-import { checkName } from '../api/register';
+import { checkName } from '../../api/register';
 
 function Join(props) {
   const nameInputRef = useRef();

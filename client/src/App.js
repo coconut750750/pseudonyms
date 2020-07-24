@@ -6,8 +6,6 @@ import './App.css';
 import io from 'socket.io-client';
 
 import Home from './views/Home';
-import Create from './views/Create';
-import Join from './views/Join';
 import Game from './views/Game';
 
 import { checkCode } from './api/register';
@@ -66,8 +64,8 @@ function App(props) {
 
   const views = {
     [HOME]: <Home 
-              join={<Join urlGameCode={urlCode} join={setGame}/>}
-              create={<Create setGame={setGame}/>}/>,
+              urlCode={urlCode}
+              setGame={setGame}/>,
     [GAME]: <Game
               socket={gameData.socket}
               gameCode={gameData.gameCode}

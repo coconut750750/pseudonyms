@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-// import Donate from '../components/Donate';
 import GameForm from '../components/GameForm';
 
 import './Home.css';
@@ -19,8 +18,8 @@ function Home(props) {
         </div>
         <div className="col-md-6 text-center">
           <GameForm
-            tabLabels={["Join", "Create"]}
-            tabs={[props.join, props.create]}
+            urlCode={props.urlCode}
+            setGame={props.setGame}
           />
 
           <br/>

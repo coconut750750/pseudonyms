@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 
-import TextInput from '../input_components/TextInput';
-import { checkName, createClassicGame, createDuetGame } from '../api/register';
-import { CLASSIC, DUET } from '../utils/const';
+import TextInput from '../../input_components/TextInput';
+import { checkName, createClassicGame, createDuetGame } from '../..//api/register';
+import { CLASSIC, DUET } from '../..//utils/const';
 
 import "./Create.css";
 
