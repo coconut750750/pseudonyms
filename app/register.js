@@ -7,9 +7,7 @@ const MAX_NAME_LENGTH = 12;
 const { CLASSIC, DUET } = require('./common/const');
 
 router.post('/classic/create', (req, res) => {
-  let options = req.body;
-  options.statsCollection = req.statsCollection;
-  const game = req.gm.createClassicGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
+  const game = req.gm.createClassicGame();
   
   res.send({
     gameCode: `${game.code}`,
@@ -18,9 +16,7 @@ router.post('/classic/create', (req, res) => {
 });
 
 router.post('/duet/create', (req, res) => {
-  let options = req.body;
-  options.statsCollection = req.statsCollection;
-  const game = req.gm.createDuetGame(req.body, (code, event, data) => req.io.to(code).emit(event, data));
+  const game = req.gm.createDuetGame();
   
   res.send({
     gameCode: `${game.code}`,

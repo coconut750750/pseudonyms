@@ -2,21 +2,46 @@ const ClassicGame = require('./classic/game');
 const DuetGame = require('./duet/game');
 
 class Manager {
-  constructor(dev) {
+  constructor(dev, io, statsCollection) {
     this.games = {};
     this.dev = dev;
+    this.io = io;
+    this.statsCollection = statsCollection;
+
+    this.broadcast = (code) => (event, data) => io.to(code).emit(event, data);
+    this.options = { statsCollection: this.statsCollection };
+
+    if (dev) {
+      const code = 'ffff';
+      this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+
+      for (let name of ['11', '22', '33', '44']) {
+        this.games[code].addPlayer(name, undefined);
+      }
+      this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic' })
+      this.games[code].randomizeTeams();
+      this.games[code].confirmTeams();
+      this.games[code].randomizeRoles(this.games[code].getPlayer('11'));
+      this.games[code].randomizeRoles(this.games[code].getPlayer('22'));
+      this.games[code].randomizeRoles(this.games[code].getPlayer('33'));
+      this.games[code].confirmRoles();
+
+      for (let name of ['11', '22', '33']) {
+        this.games[code].deactivatePlayer(name);
+      }
+    }
   }
 
-  createClassicGame(options, broadcast) {
+  createClassicGame() {
     const code = this.generateCode();
-    const newGame = new ClassicGame(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
+    const newGame = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
     this.games[code] = newGame;
     return newGame;
   }
 
-  createDuetGame(options, broadcast) {
+  createDuetGame() {
     const code = this.generateCode();
-    const newGame = new DuetGame(code, () => this.endGame(code), options, (event, data) => broadcast(code, event, data));
+    const newGame = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code));
     this.games[code] = newGame;
     return newGame;
   }

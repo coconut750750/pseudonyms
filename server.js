@@ -20,15 +20,15 @@ const gameRouter = require("./app/routes")
 const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
 
-app.use(bodyParser.json());
-app.io = io;
-app.gm = new GameManager(dev);
-app.set('trust proxy', true); // for rate limiter
-
 const mongoose = require('mongoose');
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+app.use(bodyParser.json());
+app.io = io;
+app.gm = new GameManager(dev, app.io, db.collection('stats'));
+app.set('trust proxy', true); // for rate limiter
 
 app.use(function(req, res, next) {
   req.gm = app.gm;
