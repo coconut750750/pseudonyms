@@ -21,9 +21,8 @@ const RESULT = 'result';
 class ClassicGame extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
-    this.statsCollection = options.statsCollection;
 
-    this.clues = new Clues( clue => this.notifyClue(clue) );
+    this.clues = new Clues( () => this.notifyClue() );
 
     this.broadcastCaptains = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsCaptain(event, data));
@@ -150,7 +149,7 @@ class ClassicGame extends GameInterface {
     this.notifyTurnChange();
     this.notifyScore();
     this.notifyPhaseChange();
-    incrementGameStarts(this.statsCollection);
+    incrementGameStarts(this.options.statsCollection);
 
     this.startClue();
   }
@@ -265,7 +264,7 @@ class ClassicGame extends GameInterface {
 
     this.gameStats.addTurn(this.keycard.redLeft, this.keycard.blueLeft);
     this.gameStats.endGame(matured, this.winner);
-    saveGame(this.statsCollection, this.plist.getNonSpectatorCount(), this.gameoptions.wordlist, this.gameStats);
+    saveGame(this.options.statsCollection, this.plist.getNonSpectatorCount(), this.gameoptions.wordlist, this.gameStats);
   }
 
   notifyPhaseChange() {
@@ -284,8 +283,8 @@ class ClassicGame extends GameInterface {
     this.broadcast('turn', { turn: this.turn });
   }
 
-  notifyClue(clue) {
-    this.broadcast('clue', clue.json());
+  notifyClue() {
+    this.broadcast('clues', this.clues.json());
   }
 
   notifyScore() {
@@ -335,9 +334,7 @@ class ClassicGame extends GameInterface {
   }
 
   reconnectSendClue(player) {
-    if (this.clues.currentExists()) {
-      player.send('clue', this.clues.getCurrent().json());
-    }
+    player.send('clues', this.clues.json());
   }
 
   reconnectSendGuessesLeft(player) {

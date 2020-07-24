@@ -20,7 +20,7 @@ class DuetGame extends GameInterface {
   constructor(code, onEmpty, options, broadcast) {
     super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
 
-    this.clues = new Clues( clue => this.notifyClue(clue) );
+    this.clues = new Clues( () => this.notifyClue() );
 
     this.broadcastReds = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data));
@@ -279,8 +279,8 @@ class DuetGame extends GameInterface {
     this.broadcast('turn', { turn: this.turn });
   }
 
-  notifyClue(clue) {
-    this.broadcast('clue', clue.json());
+  notifyClue() {
+    this.broadcast('clues', this.clues.json());
   }
 
   notifyScore() {
@@ -326,9 +326,7 @@ class DuetGame extends GameInterface {
   }
 
   reconnectSendClue(player) {
-    if (this.clues.currentExists()) {
-      player.send('clue', this.clues.getCurrent().json());
-    }
+    player.send('clues', this.clues.json());
   }
 
   reconnectSendScore(player) {

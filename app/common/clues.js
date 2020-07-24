@@ -19,8 +19,8 @@ class Clues {
   add(word, count, team) {
     const clue = new Clue(word, count, team);
     this.clues.push(clue);
-    this.notifyClue(clue);
     this.currentClue = clue;
+    this.notifyClue();
   }
 
   getCurrent() {
@@ -36,7 +36,7 @@ class Clues {
   }
 
   json() {
-    let res = { clues: [] };
+    let res = { current: this.getCurrent()?.json(), clues: [] };
     for (var clue of this.clues) {
       res.clues.push(clue.json());
     }

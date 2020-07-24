@@ -104,10 +104,10 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
       });
     });
 
-    socket.off('clue');
-    socket.on('clue', data => {
-      const { word, count } = data;
-      setClue({ word, count });
+    socket.off('clues');
+    socket.on('clues', data => {
+      const { clues, current } = data;
+      setClue(current);
     });
 
     socket.off('guesses');
@@ -184,7 +184,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   };
 
   return (
-    <div id="game-view" className={`fill-height ${tips ? '' : 'hidetips'} mb-2`}>
+    <div id="game" className={`fill-height ${tips ? '' : 'hidetips'} mb-2`}>
       <GameBadge
         mode={gameMode}
         gameCode={gameCode}
@@ -192,7 +192,9 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
         setTipsActive={setTipsActive}
         copySuccess={() => setSuccess('Successfully copied shareable link!')}/>
 
-      {game_views[phase]}
+      <div id="game-view">
+        {game_views[phase]}
+      </div>
 
       {(phase !== LOBBY && phase !== BOARD) &&
         <div>
