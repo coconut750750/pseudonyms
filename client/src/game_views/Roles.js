@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PlayerList from '../components/PlayerList';
-import Tip from '../tip/Tip';
+import Tip from '../components/Tip';
 
 function Roles(props) {
   const getReds = () => {

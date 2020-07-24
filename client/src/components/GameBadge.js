@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Tip from '../tip/Tip';
+import Tip from './Tip';
 import {
   isClassic,
   isDuet,

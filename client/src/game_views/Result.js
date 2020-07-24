@@ -2,7 +2,7 @@ import React from 'react';
 
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
-import Tip from '../tip/Tip';
+import Tip from '../components/Tip';
 
 import {
   isClassic,

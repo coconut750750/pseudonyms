@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import PlayerList from '../components/PlayerList';
-import Tip from '../tip/Tip';
+import Tip from '../components/Tip';
 
 import { getWordlists } from '../api/game';
 import { isClassic, isDuet } from '../utils/const';

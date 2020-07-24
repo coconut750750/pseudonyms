@@ -3,7 +3,7 @@ import React from 'react';
 import PlayerList from '../components/PlayerList';
 import SpectatorList from '../components/SpectatorList';
 import Clock from '../game_components/Clock';
-import Tip from '../tip/Tip';
+import Tip from '../components/Tip';
 import {
   isClassic,
   isDuet,

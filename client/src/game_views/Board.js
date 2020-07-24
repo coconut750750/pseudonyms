@@ -6,7 +6,7 @@ import ClassicTurn from '../game_components/classic/Turn';
 import DuetBoard from '../game_components/duet/DuetBoard';
 import DuetTurn from '../game_components/duet/Turn';
 
-import Tip from '../tip/Tip';
+import Tip from '../components/Tip';
 
 import { 
   RED,

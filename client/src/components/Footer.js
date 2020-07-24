@@ -15,7 +15,7 @@ function Footer() {
             <a className="footer-links" target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/brandonwang"><small>Buy me a pizza</small></a>
           </div>
           <div className="col text-center">
-            <Link className="footer-links" to="/moregames"><small>More Games</small></Link>
+            <Link className="footer-links" to="/moregames"><small>More games</small></Link>
           </div>
         </div>
         <div id="built-by" className="text-center">

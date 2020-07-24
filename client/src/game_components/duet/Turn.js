@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FIRST_TURN, SUDDEN_DEATH, otherTeam } from '../../utils/const';
 
-import Tip from '../../tip/Tip';
+import Tip from '../../components/Tip';
 
 export default function duetTurnDescriptor({ turn, clueActive }) {
   let text = "";
