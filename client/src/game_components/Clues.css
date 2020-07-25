@@ -1,0 +1,11 @@
+.clue-container.red .clue {
+    color: #dc3545;
+}
+
+.clue-container.blue .clue {
+    color: #007bff;
+}
+
+.clue-container {
+    min-height: 40px;
+}

@@ -35,6 +35,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   const [key, setKey] = useState(undefined);
   const [turn, setTurn] = useState("");
   const [clue, setClue] = useState(undefined);
+  const [clueHistory, setClueHistory] = useState([]);
   const [guessesLeft, setGuessesLeft] = useState(undefined);
   const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState("");
@@ -107,7 +108,10 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
     socket.off('clues');
     socket.on('clues', data => {
       const { clues, current } = data;
-      setClue(current);
+      ReactDOM.unstable_batchedUpdates(() => {
+        setClue(current);
+        setClueHistory(clues);
+      });
     });
 
     socket.off('guesses');
@@ -171,6 +175,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
               keycard={key}
               turn={turn}
               clue={clue}
+              clueHistory={clueHistory}
               guessesLeft={guessesLeft}/>,
     [RESULT]: <Result
               mode={gameMode}

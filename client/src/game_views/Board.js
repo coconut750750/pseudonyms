@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Clues from '../game_components/Clues';
 import ClueInput from '../game_components/ClueInput';
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import ClassicTurn from '../game_components/classic/Turn';
@@ -9,15 +10,11 @@ import DuetTurn from '../game_components/duet/Turn';
 import Tip from '../components/Tip';
 
 import { 
-  RED,
-  BLUE,
   isClassic,
   isDuet,
   firstTurn,
   suddenDeath,
 } from '../utils/const';
-
-import './Board.css';
 
 function BoardView(props) {
   const assignedTeam = () => {
@@ -74,23 +71,6 @@ function BoardView(props) {
     return <div/>
   };
 
-  const renderClue = () => {
-    return (
-      <div className={`justify-content-center clue-container ${props.clue?.team}`}>
-        {clueActive() &&
-          <h6 className="m-0 clue">{`${props.clue.word} : ${props.clue.count}`}
-            {canReveal() && <Tip help="teamClue"/>}
-          </h6>
-        }
-        {props.guessesLeft &&
-          <h6 className="m-0"><small>{`${props.guessesLeft} guesses left`}</small>
-            <Tip classic help="guessesLeft"/>
-          </h6>
-        }
-      </div>
-    );
-  };
-
   const renderBoard = () => {
     if (isClassic(props.mode)) {
       return (
@@ -120,7 +100,13 @@ function BoardView(props) {
     <div>
       {getTurnDescriptor()}
       {props.gameHeader}
-      {renderClue()}
+      <Clues
+        clue={props.clue}
+        clueHistory={props.clueHistory}
+        guessesLeft={props.guessesLeft}
+        clueActive={clueActive()}
+        canReveal={canReveal()}
+      />
       
       {renderBoard()}
 
