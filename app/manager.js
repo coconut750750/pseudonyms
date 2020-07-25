@@ -12,25 +12,8 @@ class Manager {
     this.options = { statsCollection: this.statsCollection };
 
     if (dev) {
-      const code = 'ffff';
-      this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
-
-      for (let name of ['11', '22', '33', '44']) {
-        this.games[code].addPlayer(name, undefined);
-      }
-      this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic' })
-      this.games[code].setTeam('11', true)
-      this.games[code].setTeam('22', true)
-      this.games[code].setTeam('33', false)
-      this.games[code].setTeam('44', false)
-      this.games[code].confirmTeams();
-      this.games[code].setCaptain(this.games[code].getPlayer('11'));
-      this.games[code].setCaptain(this.games[code].getPlayer('33'));
-      this.games[code].confirmRoles();
-
-      for (let name of ['11', '22', '33']) {
-        this.games[code].deactivatePlayer(name);
-      }
+      this.devClassic();
+      this.devDuet();
     }
   }
 
@@ -65,6 +48,43 @@ class Manager {
       }
     } while (this.games[code]);
     return code;
+  }
+
+  devClassic() {
+    const code = 'cccc';
+    this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+
+    for (let name of ['11', '22', '33', '44']) {
+      this.games[code].addPlayer(name, undefined);
+    }
+    this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic' })
+    this.games[code].setTeam('11', true)
+    this.games[code].setTeam('22', true)
+    this.games[code].setTeam('33', false)
+    this.games[code].setTeam('44', false)
+    this.games[code].confirmTeams();
+    this.games[code].setCaptain(this.games[code].getPlayer('11'));
+    this.games[code].setCaptain(this.games[code].getPlayer('33'));
+    this.games[code].confirmRoles();
+
+    for (let name of ['11', '22', '33']) {
+      this.games[code].deactivatePlayer(name);
+    }
+  }
+
+  devDuet() {
+    const code = 'dddd';
+    this.games[code] = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+
+    for (let name of ['11', '22']) {
+      this.games[code].addPlayer(name, undefined);
+    }
+    this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic', timers: 9, mistakes: 9 })
+    this.games[code].setTeam('11', true)
+    this.games[code].setTeam('22', false)
+    this.games[code].confirmTeams();
+
+    this.games[code].deactivatePlayer('11');
   }
 }
 
