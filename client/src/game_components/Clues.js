@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import Tip from '../components/Tip';
+import UpDownArrow from '../input_components/UpDownArrow';
+import Clue from './Clue';
 
 import './Clues.css';
 
-export default function Clues({ clue, clueHistory, guessesLeft, clueActive, canReveal }) {
+export default function Clues({ clueHistory }) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className={`justify-content-center clue-container ${clue?.team}`}>
-      {clueActive &&
-        <h6 className="m-0 clue">{`${clue.word} : ${clue.count}`}
-          {canReveal && <Tip help="teamClue"/>}
-        </h6>
-      }
-      {guessesLeft &&
-        <h6 className="m-0"><small>{`${guessesLeft} guesses left`}</small>
-          <Tip classic help="guessesLeft"/>
-        </h6>
-      }
+    <div className="justify-content-center">
+      <div className="all-clues mb-2">
+        <div className="all-clue-toggle" onClick={ () => setOpen(!open) }>
+          <p className="m-0">All Clues ({clueHistory.length}):<UpDownArrow up={open}/></p>
+        </div>
+        <div className={open ? "open" : "closed"}>
+          {clueHistory.slice().reverse().map(c => <Clue clue={c}/>)}
+        </div>
+      </div>
     </div>
   );
 }

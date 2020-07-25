@@ -1,11 +1,11 @@
-.clue-container.red .clue {
-    color: #dc3545;
+.all-clue-toggle {
+    cursor: pointer;
 }
 
-.clue-container.blue .clue {
-    color: #007bff;
+.all-clues .open {
+    display: block;
 }
 
-.clue-container {
-    min-height: 40px;
+.all-clues .closed {
+    display: none;
 }

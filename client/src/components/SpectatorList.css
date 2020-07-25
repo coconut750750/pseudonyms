@@ -6,14 +6,7 @@
 }
 
 .spectator-toggle {
-    background: none;
-    border: none;
-    display: block;
     cursor: pointer;
-}
-
-.spectator-toggle p {
-    margin: 0;
 }
 
 .spectator-toggle:focus p {
@@ -21,34 +14,4 @@
 
 .spectator-toggle:focus {
     box-shadow: none;
-}
-
-.spectator-toggle p span.down {
-    display: inline;
-    position: absolute;
-    width: 0;
-    height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    border-top: .3em solid;
-    border-right: .3em solid transparent;
-    border-bottom: 0;
-    border-left: .3em solid transparent;
-    margin-top: 8px;
-}
-
-.spectator-toggle p span.up {
-    display: inline;
-    position: absolute;
-    width: 0;
-    height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    border-bottom: .3em solid;
-    border-right: .3em solid transparent;
-    border-top: 0;
-    border-left: .3em solid transparent;
-    margin-top: 8px;
 }
