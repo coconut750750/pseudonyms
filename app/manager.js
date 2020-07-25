@@ -19,11 +19,13 @@ class Manager {
         this.games[code].addPlayer(name, undefined);
       }
       this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic' })
-      this.games[code].randomizeTeams();
+      this.games[code].setTeam('11', true)
+      this.games[code].setTeam('22', true)
+      this.games[code].setTeam('33', false)
+      this.games[code].setTeam('44', false)
       this.games[code].confirmTeams();
-      this.games[code].randomizeRoles(this.games[code].getPlayer('11'));
-      this.games[code].randomizeRoles(this.games[code].getPlayer('22'));
-      this.games[code].randomizeRoles(this.games[code].getPlayer('33'));
+      this.games[code].setCaptain(this.games[code].getPlayer('11'));
+      this.games[code].setCaptain(this.games[code].getPlayer('33'));
       this.games[code].confirmRoles();
 
       for (let name of ['11', '22', '33']) {
