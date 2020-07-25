@@ -9,6 +9,7 @@
     background: none;
     border: none;
     display: block;
+    cursor: pointer;
 }
 
 .spectator-toggle p {

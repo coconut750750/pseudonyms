@@ -18,9 +18,9 @@ export default function SpectatorList({ socket, players, isAdmin }) {
     return (
       <div className="spectator-list">
         <div className="row justify-content-center">
-          <button class="btn p-0 spectator-toggle" type="button" onClick={ () => setOpen(!open) }>
+          <div class="p-0 spectator-toggle" onClick={ () => setOpen(!open) }>
             <p>Spectators: {n}<span className={open ? "up" : "down"}/></p>
-          </button>
+          </div>
         </div>
         <div className={open ? "open" : "closed"}>
           <PlayerList
