@@ -22,37 +22,43 @@ function GameHeader(props) {
     return props.players.filter(p => p.noTeam());
   };
 
-  const renderClassicScore = () => (
+  const reds = <PlayerList players={getReds()}/>;
+  const clock = <Clock socket={props.socket}/>;
+  const blues = <PlayerList players={getBlues()}/>;
+
+  const renderClassicHeader = () => (
     <div className="row">
-      <div className="col-4">
+      <div className="col-5">
         <h5>{`${props.score.red}`}<Tip classic help="score"/></h5>
+        {reds}
       </div>
-      <div className="col-4"></div>
-      <div className="col-4">
+      <div className="col-2 p-0">{clock}</div>
+      <div className="col-5">
         <h5>{`${props.score.blue}`}</h5>
+        {blues}
       </div>
     </div>
   );
 
-  const renderDuetScore = () => (
+  const renderDuetHeader = () => (
     <div className="row">
-      <div className="col-4">
-        <h6>
-          {`Words left: ${props.score.leftover}`}<Tip duet help="wordScore"/>
-        </h6>
+      <div className="col-5">
+        <h6>{`Words left: ${props.score.leftover}`}<Tip duet help="wordScore"/></h6>
+        {reds}
       </div>
-      <div className="col-4"></div>
-      <div className="col-4">
+      <div className="col-2 p-0">{clock}</div>
+      <div className="col-5">
         <h6>
           {`Turns: ${props.score.timer}`}<Tip duet right help="turnLimit"/>
           <br/>
           {`Mistakes: ${props.score.mistakes}`}<Tip duet right help="mistakeScore"/>
         </h6>
+        {blues}
       </div>
     </div>
   );
 
-  const renderScore = () => {
+  const renderHeader = () => {
     if (props.score === undefined) {
       return (
         <div className="row">
@@ -60,9 +66,9 @@ function GameHeader(props) {
         </div>
       );
     } else if (isClassic(props.mode)) {
-      return renderClassicScore();
+      return renderClassicHeader();
     } else if (isDuet(props.mode)) {
-      return renderDuetScore();
+      return renderDuetHeader();
     }
   };
 
@@ -83,12 +89,7 @@ function GameHeader(props) {
   return (
     <div>
       {renderSpectators()}
-      {renderScore()}
-      <div className="row">
-        <div className="col-4"><PlayerList players={getReds()}/></div>
-        <div className="col-4"><Clock socket={props.socket}/></div>
-        <div className="col-4"><PlayerList players={getBlues()}/></div>
-      </div>
+      {renderHeader()}
     </div>
   );
 }

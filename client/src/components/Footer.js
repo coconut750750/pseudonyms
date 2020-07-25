@@ -12,10 +12,10 @@ function Footer() {
             <Link className="footer-links" to="/feedback"><small>Submit feedback</small></Link>
           </div>
           <div className="col text-center">
-            <a className="footer-links" target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/brandonwang"><small>Buy me a pizza</small></a>
+            <Link className="footer-links" to="/moregames"><small>More games</small></Link>
           </div>
           <div className="col text-center">
-            <Link className="footer-links" to="/moregames"><small>More games</small></Link>
+            <a className="footer-links" target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/brandonwang"><small>Support me</small></a>
           </div>
         </div>
         <div id="built-by" className="text-center">

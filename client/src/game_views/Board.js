@@ -17,6 +17,8 @@ import {
   suddenDeath,
 } from '../utils/const';
 
+import './Board.css';
+
 function BoardView(props) {
   const assignedTeam = () => {
     return !props.me.noTeam();
@@ -72,25 +74,21 @@ function BoardView(props) {
     return <div/>
   };
 
-  const renderClue = (team) => {
-    const tipRight = team === BLUE;
-    if (props.turn === team) {
-      return (
-        <div>
-          {clueActive() &&
-            <h6 className="m-0">{`${props.clue.word} : ${props.clue.count}`}
-              {canReveal() && <Tip right={tipRight} help="teamClue"/>}
-            </h6>
-          }
-          {props.guessesLeft &&
-            <h6 className="m-0"><small>{`${props.guessesLeft} guesses left`}</small>
-              <Tip classic right={tipRight} help="guessesLeft"/>
-            </h6>
-          }
-        </div>
-      );
-    }
-    return <div/>
+  const renderClue = () => {
+    return (
+      <div className={`justify-content-center clue-container ${props.clue?.team}`}>
+        {clueActive() &&
+          <h6 className="m-0 clue">{`${props.clue.word} : ${props.clue.count}`}
+            {canReveal() && <Tip help="teamClue"/>}
+          </h6>
+        }
+        {props.guessesLeft &&
+          <h6 className="m-0"><small>{`${props.guessesLeft} guesses left`}</small>
+            <Tip classic help="guessesLeft"/>
+          </h6>
+        }
+      </div>
+    );
   };
 
   const renderBoard = () => {
@@ -122,18 +120,7 @@ function BoardView(props) {
     <div>
       {getTurnDescriptor()}
       {props.gameHeader}
-      <div className="row">
-        <div className="col-4">
-          {renderClue(RED)}
-        </div>
-        <div className="col-4">
-          <br/>
-          <br/>
-        </div>
-        <div className="col-4">
-          {renderClue(BLUE)}
-        </div>
-      </div>
+      {renderClue()}
       
       {renderBoard()}
 
