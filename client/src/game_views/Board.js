@@ -122,9 +122,8 @@ function BoardView(props) {
       {props.gameHeader}
       {renderCurrentClue()}
 
-      <Clues clueHistory={props.clueHistory}/>
-      
       {renderBoard()}
+      <Clues clueHistory={props.clueHistory}/>
 
       {canSubmitClue() && 
         <ClueInput
@@ -133,7 +132,7 @@ function BoardView(props) {
         />
       }
       {canEndTurn() &&
-        <div>
+        <div className="mt-2">
           <button type="button" className="btn"
             onClick={ () => props.socket.emit('endTurn', {}) }>End turn</button>
           <Tip right help="endTurn"/>

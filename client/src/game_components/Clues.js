@@ -10,7 +10,7 @@ export default function Clues({ clueHistory }) {
 
   return (
     <div className="justify-content-center">
-      <div className="all-clues mb-2">
+      <div className="all-clues">
         <div className="all-clue-toggle" onClick={ () => setOpen(!open) }>
           <p className="m-0">All Clues ({clueHistory.length}):<UpDownArrow up={open}/></p>
         </div>

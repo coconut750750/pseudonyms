@@ -84,13 +84,15 @@ select:focus,
 
 .btn:hover {
     background-color: #fefefe;
-    color: black;
     box-shadow: 0 0 10px 2px var(--shadow-color);
+}
+
+.btn:hover:disabled {
+    box-shadow: none;
 }
 
 .btn:active {
     background-color: #f8f8f8;
-    color: black;
     box-shadow: 0 0 10px 2px var(--shadow-color);
 }
 

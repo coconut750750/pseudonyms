@@ -54,6 +54,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
       setKey(undefined);
       setTurn("");
       setClue(undefined);
+      setClueHistory([]);
       setScore(undefined);
       setWinner("");
     }
@@ -197,7 +198,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
         setTipsActive={setTipsActive}
         copySuccess={() => setSuccess('Successfully copied shareable link!')}/>
 
-      <div id="game-view">
+      <div id="game-view" className="fill-height">
         {game_views[phase]}
       </div>
 
