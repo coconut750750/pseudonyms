@@ -54,7 +54,7 @@ class Manager {
     const code = 'cccc';
     this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
 
-    for (let name of ['11', '22', '33', '44']) {
+    for (let name of ['11', '22', '33', '44', '55']) {
       this.games[code].addPlayer(name, undefined);
     }
     this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic' })
@@ -62,12 +62,13 @@ class Manager {
     this.games[code].setTeam('22', true)
     this.games[code].setTeam('33', false)
     this.games[code].setTeam('44', false)
+    this.games[code].setTeam('55', false)
     this.games[code].confirmTeams();
     this.games[code].setCaptain(this.games[code].getPlayer('11'));
     this.games[code].setCaptain(this.games[code].getPlayer('33'));
     this.games[code].confirmRoles();
 
-    for (let name of ['11', '22', '33']) {
+    for (let name of ['11', '22', '33', '44']) {
       this.games[code].deactivatePlayer(name);
     }
   }
@@ -76,15 +77,17 @@ class Manager {
     const code = 'dddd';
     this.games[code] = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code));
 
-    for (let name of ['11', '22']) {
+    for (let name of ['11', '22', '33']) {
       this.games[code].addPlayer(name, undefined);
     }
     this.games[code].start({ clueLimit: 0, guessLimit: 0, wordlist: 'classic', timers: 9, mistakes: 9 })
     this.games[code].setTeam('11', true)
     this.games[code].setTeam('22', false)
+    this.games[code].setTeam('33', false)
     this.games[code].confirmTeams();
 
     this.games[code].deactivatePlayer('11');
+    this.games[code].deactivatePlayer('22');
   }
 }
 
