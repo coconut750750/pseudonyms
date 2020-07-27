@@ -20,7 +20,7 @@ function ClueInput(props) {
   };
 
   return (
-    <div>
+    <div className="skinny">
       <form onSubmit={ (e) => {
         e.preventDefault();
         sendClue();

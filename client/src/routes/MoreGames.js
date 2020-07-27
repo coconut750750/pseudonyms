@@ -11,7 +11,7 @@ const games = [
 
 export default function MoreGames(props) {
   return (
-    <div className="skinny">
+    <div className="skinny p-3">
       <h4>More Games</h4>
       <br/>
 

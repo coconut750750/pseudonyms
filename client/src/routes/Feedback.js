@@ -18,7 +18,7 @@ function SubmitFeedback(props) {
   };
 
   return (
-    <div className="skinny">
+    <div className="skinny p-3">
       <h4>Submit Feedback</h4>
 
       <h6>Thanks for playing Pseudonyms!</h6>

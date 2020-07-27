@@ -62,7 +62,7 @@ function Walkthrough(props) {
   };
 
   return (
-    <div id="walkthrough" className="skinny">
+    <div id="walkthrough" className="skinny p-3">
       <h4>Walkthrough</h4>
 
       <ul className="nav nav-tabs">

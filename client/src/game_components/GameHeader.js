@@ -87,7 +87,7 @@ function GameHeader(props) {
   };
 
   return (
-    <div>
+    <div className="skinny">
       {renderSpectators()}
       {renderHeader()}
     </div>

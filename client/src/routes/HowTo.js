@@ -80,7 +80,7 @@ function HowTo(props) {
   );
 
   return (
-    <div className="skinny">
+    <div className="skinny p-3">
       <div className="text-left">
         <h4>How To Play</h4>
 
