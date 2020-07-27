@@ -122,8 +122,15 @@ function BoardView(props) {
       {props.gameHeader}
       {renderCurrentClue()}
 
-      {renderBoard()}
-      <Clues clueHistory={props.clueHistory}/>
+      <div className="row d-flex justify-content-center">
+        <div className="col-xl"/>
+        <div className="col-xl">
+          {renderBoard()}
+        </div>
+        <div className="col-xl">
+          <Clues clueHistory={props.clueHistory}/>
+        </div>
+      </div>
 
       {canSubmitClue() && 
         <ClueInput
