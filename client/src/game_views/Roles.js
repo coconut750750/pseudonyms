@@ -25,7 +25,7 @@ function Roles(props) {
   };
 
   return (
-    <div className="fill-height mb-2">
+    <div className="fill-height mb-2 skinny">
       <h5>Elect Captains<Tip classic right help="captainRole"/></h5>
       <h6>Each team must have one Captain</h6>
 

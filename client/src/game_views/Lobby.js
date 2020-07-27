@@ -166,7 +166,7 @@ function Lobby(props) {
   };
 
   return (
-    <div className="fill-height">
+    <div className="fill-height skinny">
       <h5>Lobby</h5>
       <h6>Click the game code for a shareable link!</h6>
 

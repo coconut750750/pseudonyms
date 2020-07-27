@@ -20,7 +20,7 @@ function Teams(props) {
   };
 
   return (
-    <div className="fill-height mb-2">
+    <div className="fill-height mb-2 skinny">
       <h5>Select Teams</h5>
       <h6>Everyone must be on a team</h6>
 
