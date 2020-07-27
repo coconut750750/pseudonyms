@@ -1,12 +1,16 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-require('dotenv').config();
+const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
+const dev = process.env.NODE_ENV === 'development';
+
 var app = express();
-
 var server = require('http').Server(app);
-var io = require('socket.io')(server, {
+app.io = require('socket.io')(server, {
   pingInterval: 10000,
   pingTimeout: 30000
 });
@@ -14,19 +18,11 @@ var io = require('socket.io')(server, {
 const GameInterface = require('./app/game');
 const GameManager = require('./app/manager');
 
-const registerRouter = require("./app/register");
-const gameRouter = require("./app/routes")
-
-const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
-const dev = process.env.NODE_ENV === 'development';
-
-const mongoose = require('mongoose');
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
-app.io = io;
 app.gm = new GameManager(dev, app.io, db.collection('stats'));
 app.set('trust proxy', true); // for rate limiter
 
@@ -37,9 +33,14 @@ app.use(function(req, res, next) {
   req.feedbackCollection = db.collection("feedback");
   next();
 });
+
+// ROUTES
+const registerRouter = require("./app/register");
+const gameRouter = require("./app/routes");
 app.use("/register/", registerRouter);
 app.use("/game/", gameRouter);
 
+// SOCKET IO SETUP
 app.io.on('connect', function (socket) {
   var game;
   var name;

@@ -48,10 +48,9 @@ function Create(props) {
         <TextInput
           label={"Name:"}
           ref={nameInputRef}/>
-        <br />
 
-        <button type="submit" className="btn mb-2">Create</button>
         <p className="form-error">{error}</p>
+        <button type="submit" className="btn mb-2">Create</button>
       </form>
     </div>
   )

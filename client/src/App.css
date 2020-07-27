@@ -62,12 +62,6 @@ hr {
     flex: 1 1 auto;
 }
 
-.form-error {
-    color: red;
-    font-size: 75%;
-    min-height: 12px;
-}
-
 input:focus,
 select:focus,
 .form-control:focus {
@@ -78,13 +72,12 @@ select:focus,
 .btn {
     background-color: #f8f9fa;
     color: black;
-    /*box-shadow: 4px 4px 8px 2px var(--shadow-color);*/
-    /*box-shadow: 0 0 0 1px #ced4da;*/
 }
 
 .btn:hover {
     background-color: #fefefe;
     box-shadow: 0 0 10px 2px var(--shadow-color);
+    color: black;
 }
 
 .btn:hover:disabled {
@@ -98,4 +91,5 @@ select:focus,
 
 .btn:focus {
     box-shadow: 0 0 10px 2px var(--shadow-color);
+    color: black;
 }

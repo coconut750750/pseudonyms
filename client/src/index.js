@@ -12,7 +12,7 @@ import {
 import App from './App';
 import HowTo from './routes/HowTo';
 import MoreGames from './routes/MoreGames';
-import Walkthrough from './routes/Walkthrough';
+// import Walkthrough from './routes/Walkthrough';
 import SubmitFeedback from './routes/Feedback';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -28,7 +28,6 @@ function Index(props) {
         <Switch>
           <Route exact path="/howto"><HowTo/></Route>
           <Route exact path="/moregames"><MoreGames/></Route>
-          <Route exact path="/walkthrough"><Walkthrough/></Route>
           <Route exact path="/feedback"><SubmitFeedback/></Route>
           <Route exact path="/:urlgamecode" component={App}></Route>
           <Route path="/" component={App}></Route>

@@ -35,10 +35,9 @@ function Join(props) {
         <TextInput
           label={"Name:"}
           ref={nameInputRef}/>
-        <br/>
 
-        <button type="submit" className="btn mb-2">Join</button>
         <p className="form-error">{error}</p>
+        <button type="submit" className="btn mb-2">Join</button>
       </form>
     </div>
   );

@@ -15,18 +15,21 @@ function HowTo(props) {
       <p>The objective of the game is for each team to correctly identify and reveal their respective words based on the clues given by their "Captain."</p>
 
       <h6>The Setup</h6>
-      <p>Players are split into two teams, a red team and a blue team. Each team elects one player to be the Captain.</p>
-      <p>When the game starts, 25 random words from a word list are chosen and placed in a 5 by 5 grid. Each word can be one of four colors: red, blue, black, and white. There are 8 or 9 red and blue words depending on the first team to play, 7 white words, and 1 black word. Only the Captains know the colors of each word.</p>
-      <p>One team is chosen at random to go first. That team will 9 words to identify; the other team will have 8. </p>
+      <p>Players are split into two teams, a red team and a blue team. Each team elects one player to be the Captain (more on the Captain's role later).</p>
+
+      <h6>The Start</h6>
+      <p>25 random words from a word list are chosen and placed in a 5 by 5 grid. Each word can be one of four colors: red, blue, black, and white. At first, only the Captains know the colors.</p>
+      <p>9 words will have the color of the team that goes first, which is chosen at random; 8 words will have the color of the other team. 7 words are white, and 1 word is black.</p>
 
       <h6>The Clue</h6>
-      <p>The Captain will give their team a clue that consists of one word and one number. The word should relate to the words that the Captain's team must reveal. The number tells the Captain’s team how many words are related to the clue. </p>
-      <p>For example, the clue tree: 2 can refer to the words "nut" and "bark"</p>
+      <p>On their turn, Captains give their team a clue that consists of one word and one number. The word should relate to the words of the Captain's team color. The number tells the Captain’s team how many words are related to the clue. </p>
+      <p>For example, the clue tree: 2 can refer to the words "nut" and "bark."</p>
       <p>Rules about what clues are valid are up to you, but Pseudonyms will discourage multi-word clues by restricting the use of spaces and prevent the Captain from giving a clue that exists on the board. </p>
 
       <h6>The Reveal</h6>
-      <p>Once the Captain submits the clue, the other players on the team will have a chance to guess which words the Captain was trying to hint at. Each team can guess up to 1 more than the number given by their Captain, but if a player guesses incorrectly, i.e. revealing a word that is not their team color, their turn ends. The team can also end their turn whenever they want.</p>
-      <p>If a player reveals the last word for the other team or reveals the black word, the other team wins.</p>
+      <p>Once the Captain submits the clue, other players on the team will have a chance to guess which words the Captain is trying to hint at. When a word is chosen, the color of the word is revealed to everyone.</p>
+      <p>There is a limit to the number of guesses the team can make, and if a player guesses incorrectly, i.e. revealing a word that is not their team color, their turn ends. The team can also end their turn whenever they want.</p>
+      <p>If a player reveals the black word, their team instantly loses.</p>
 
       <h6>The End</h6>
       <p>The game ends when all of words for one team are revealed. The game can end early if the black word is revealed.</p>

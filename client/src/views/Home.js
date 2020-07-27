@@ -24,9 +24,8 @@ function Home(props) {
 
           <br/>
           
-          <div className="btn-group-horizontal">
-            <Link className="btn btn-sm m-2" role="button" to="/howto">How to Play</Link>
-            <Link className="btn btn-sm m-2" role="button" to="/walkthrough">Walkthrough</Link>
+          <div>
+            <Link className="btn btn-sm m-1" role="button" to="/howto">How to Play</Link>
           </div>
         </div>
       </div>

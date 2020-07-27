@@ -142,7 +142,7 @@ function Lobby(props) {
         <div className="">
           {!useCustom &&
             <div>
-              <button type="button" className="btn btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use Custom Wordlist</button>
+              <button type="button" className="btn btn-sm wordlist-toggle" onClick={ () => setUseCustom(true) }>Use a Custom Wordlist</button>
               <Tip right help="customWords"/>
               <br/>
               {renderWordlistSelect()}
@@ -151,7 +151,7 @@ function Lobby(props) {
 
           {useCustom &&
             <div>
-              <button type="button" className="btn btn-sm wordlist-toggle" onClick={ () => setUseCustom(false) }>Use Standard Wordlists</button>
+              <button type="button" className="btn btn-sm wordlist-toggle" onClick={ () => setUseCustom(false) }>Use a Standard Wordlist</button>
               <br/>
               {renderWordlistUpload()}
               <small>Enter each word on a separate line</small>
