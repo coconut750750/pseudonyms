@@ -76,7 +76,7 @@ function BoardView(props) {
 
   const renderCurrentClue = () => {
     return (
-      <div className="justify-content-center clue-container">
+      <div className="justify-content-center clue-container mb-1">
         {clueActive() &&
           <Clue
             clue={props.clue}

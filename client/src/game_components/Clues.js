@@ -15,7 +15,7 @@ export default function Clues({ clueHistory }) {
           <p className="m-0">All Clues ({clueHistory.length}):<UpDownArrow up={open}/></p>
         </div>
         <div className={open ? "open" : "closed"}>
-          {clueHistory.slice().reverse().map(c => <Clue clue={c}/>)}
+          {clueHistory.slice().reverse().map(c => <Clue clue={c} small/>)}
         </div>
       </div>
     </div>
