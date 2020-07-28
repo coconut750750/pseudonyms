@@ -1,12 +1,14 @@
 const GameInterface = require("../common/game")
+const Clues = require("../common/clues");
+const WordList = require("../common/wordlist");
+const { GameError } = require("../common/gameerror");
+
 const socketio = require("./socketio");
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
-const Clues = require("../common/clues");
-const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
-const { incrementGameStarts, saveGame, getStats, GameStats } = require("./analytics");
+const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
 
 const c = require('../common/const');
 const { CLASSIC } = c;
@@ -99,7 +101,7 @@ class ClassicGame extends GameInterface {
 
   start(options) {
     if (!this.enoughPlayers()) {
-      throw new Error(`At least ${MIN_PLAYERS} players required to start`);
+      throw new GameError(`At least ${MIN_PLAYERS} players required to start`);
     }
     
     this.gameoptions = new GameOptions(options);
@@ -120,7 +122,7 @@ class ClassicGame extends GameInterface {
       return;
     }
     if (!this.validTeamCount()) {
-      throw new Error("At least 2 players must be on each team");
+      throw new GameError("At least 2 players must be on each team");
     }
     this.phase = ROLES;
     this.notifyPhaseChange();
@@ -135,7 +137,7 @@ class ClassicGame extends GameInterface {
       return;
     }
     if (!this.enoughCaptains()) {
-      throw new Error("Not enough Captains");
+      throw new GameError("Not enough Captains");
     }
     this.phase = BOARD;
 
@@ -183,7 +185,7 @@ class ClassicGame extends GameInterface {
 
   addClue(player, word, count) {
     if (!this.validClue(word)) {
-      throw new Error("Invalid Clue");
+      throw new GameError("Invalid Clue");
     }
     this.clues.add(word, count, this.turn);
     this.guessesLeft = parseInt(count) + 1;

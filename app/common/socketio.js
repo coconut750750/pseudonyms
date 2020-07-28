@@ -1,12 +1,13 @@
+const { tryCatch } = require("../common/gameerror");
+
 function socketio(socket, game, name, player) {
   socket.on('startGame', data => {
     if (game.canStart() && player.isAdmin) {
       const { options } = data;
-      try {
-        game.start(options);
-      } catch (err) {
-        socket.emit('message', { message: err.message });
-      }
+      tryCatch(
+        () => game.start(options),
+        (err) => socket.emit('message', { message: err.message }),
+      );
     }
   });
 
@@ -24,11 +25,10 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('confirmTeams', data => {
-    try {
-      game.confirmTeams();
-    } catch (err) {
-      socket.emit('message', { message: err.message });
-    }
+    tryCatch(
+      () => game.confirmTeams(),
+      (err) => socket.emit('message', { message: err.message }),
+    );
   });
 
    socket.on('sendClue', data => {
@@ -39,13 +39,14 @@ function socketio(socket, game, name, player) {
     if (Number.isNaN(parseInt(count))) {
       return;
     }
-    try {
-      if (game.canSendClue(player)) {
-        game.addClue(player, word, parseInt(count));
-      }
-    } catch (err) {
-      socket.emit('message', { message: err.message });
-    }
+    tryCatch(
+      () => {
+        if (game.canSendClue(player)) {
+          game.addClue(player, word, parseInt(count));
+        }
+      },
+      (err) => socket.emit('message', { message: err.message }),
+    );
   });
 
   socket.on('revealWord', data => {

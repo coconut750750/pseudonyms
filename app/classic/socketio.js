@@ -1,3 +1,5 @@
+const { tryCatch } = require("../common/gameerror");
+
 function socketio(socket, game, name, player) {
   socket.on('setCaptain', data => {
     game.setCaptain(player);
@@ -8,11 +10,10 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('confirmRoles', data => {
-    try {
-      game.confirmRoles();
-    } catch (err) {
-      socket.emit('message', { message: err.message });
-    }
+    tryCatch(
+      () => game.confirmRoles(),
+      (err) => socket.emit('message', { message: err.message }),
+    );
   });
 
   // retrieving info for reconnected clients

@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require("path");
 
+const { GameError } = require("./gameerror");
 const { MIN_WORDS } = require('./const');
 
 function wordsFromFile(wordfile) {
@@ -18,7 +19,7 @@ class WordList {
       this.loadString(customWords);
     }
     if (this.words.length < MIN_WORDS) {
-      throw new Error(`Please provide at least ${MIN_WORDS} words`);
+      throw new GameError(`Please provide at least ${MIN_WORDS} words`);
     }
   }
 

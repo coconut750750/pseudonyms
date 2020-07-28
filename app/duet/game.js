@@ -1,10 +1,12 @@
 const GameInterface = require("../common/game")
+const Clues = require("../common/clues");
+const WordList = require("../common/wordlist");
+const { GameError } = require("../common/gameerror");
+
 const socketio = require("./socketio");
 const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
-const Clues = require("../common/clues");
-const WordList = require("../common/wordlist");
 const GameOptions = require("./gameoptions");
 
 const c = require('../common/const');
@@ -85,7 +87,7 @@ class DuetGame extends GameInterface {
 
   start(options) {
     if (!this.enoughPlayers()) {
-      throw new Error(`At least ${MIN_PLAYERS} players required to start`);
+      throw new GameError(`At least ${MIN_PLAYERS} players required to start`);
     }
     
     this.gameoptions = new GameOptions(options);
@@ -109,7 +111,7 @@ class DuetGame extends GameInterface {
     }
     super.confirmTeams();
     if (!this.validTeamCount()) {
-      throw new Error("At least 1 player must be on each team");
+      throw new GameError("At least 1 player must be on each team");
     }
     this.startBoard();
   }
@@ -157,7 +159,7 @@ class DuetGame extends GameInterface {
 
   addClue(player, word, count) {
     if (!this.validClue(word)) {
-      throw new Error("Invalid Clue");
+      throw new GameError("Invalid Clue");
     }
     if (this.turn === FIRST_TURN) {
       this.turn = player.team;
