@@ -48,7 +48,7 @@ hr {
 .skinny {
     width: 100%;
     max-width: 900px;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .fill-height {
