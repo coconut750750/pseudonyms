@@ -7,6 +7,7 @@ const {
   GREEN_TILE, 
   WHITE_TILE, 
   BLACK_TILE, 
+  N_GREEN_TILES,
   N_GREEN_GREEN_TILES,
   N_WHITE_WHITE_TILES,
   N_BLACK_BLACK_TILES,
@@ -28,7 +29,7 @@ function shuffle(a) {
 class KeyCard {
   constructor() {
     this.tiles = [];
-    this.leftover = 15;
+    this.leftover = N_GREEN_TILES;
     this.teamLeftover = {
       [RED]: 9,
       [BLUE]: 9,

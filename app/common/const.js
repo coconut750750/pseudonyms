@@ -30,6 +30,8 @@ const duet = {
   WHITE_TILE: 'y',
   BLACK_TILE: 'x',
 
+  N_GREEN_TILES: 15,
+  
   N_GREEN_GREEN_TILES: 3,
   N_WHITE_WHITE_TILES: 7,
   N_BLACK_BLACK_TILES: 1,
