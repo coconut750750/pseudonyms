@@ -23,7 +23,6 @@ class Board extends BoardInterface {
   }
 
   reveal(r, c) {
-    
     if (this.isRevealed(r, c)) {
       return;
     }
