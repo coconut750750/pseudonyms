@@ -1,7 +1,6 @@
 export default class Board {
   constructor() {
     this.tiles = [];
-    this.colors = [];
     this.width = 0;
     this.height = 0;
   }
@@ -9,12 +8,10 @@ export default class Board {
   load(tiles) {
     for (var row of tiles) {
       this.tiles.push([]);
-      this.colors.push([]);
 
       for (var col of row) {
         var lastIndex = this.tiles.length - 1;
         this.tiles[lastIndex].push(col.word);
-        this.colors[lastIndex].push('');
       }
     }
 
@@ -24,10 +21,6 @@ export default class Board {
 
   get(r, c) {
     return this.tiles[r][c];
-  }
-
-  getColor(r, c) {
-    return this.colors[r][c];
   }
 }
 
