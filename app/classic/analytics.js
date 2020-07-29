@@ -1,8 +1,8 @@
-const TOTAL_COUNT_QUERY = { type: "total" };
-const TOTAL_STARTS_QUERY = { type: "starts" };
-const WORDLIST_COUNT_QUERY = { type: "wordlist" };
-const PLAYERS_COUNT_QUERY = { type: "players" };
-const MATURE_QUERY = { type: "mature" };
+const TOTAL_COMPLETE_QUERY = { type: "classic_total" };
+const TOTAL_STARTS_QUERY = { type: "classic_starts" };
+const WORDLIST_COUNT_QUERY = { type: "classic_wordlist" };
+const PLAYERS_COUNT_QUERY = { type: "classic_players" };
+const MATURE_QUERY = { type: "classic_mature" };
 const { RED, BLUE, N_START_TILES, N_OTHER_TILES } = require("../common/const").classic;
 
 class GameStats {
@@ -57,7 +57,7 @@ function incrementGameStarts(collection) {
 
 function incrementGameCount(collection) {
   collection.findOneAndUpdate(
-    TOTAL_COUNT_QUERY,
+    TOTAL_COMPLETE_QUERY,
     {
       $inc: { count: 1 },
     },
@@ -136,17 +136,17 @@ function saveGame(collection, numPlayers, wordlist, matureStats) {
 }
 
 async function getStats(collection) {
-  const totalCountDoc = await collection.findOne(TOTAL_COUNT_QUERY);
+  const totalCompleteDoc = await collection.findOne(TOTAL_COMPLETE_QUERY);
   const gameStartsDoc = await collection.findOne(TOTAL_STARTS_QUERY);
   const wordlistDoc = await collection.findOne(WORDLIST_COUNT_QUERY);
   const playerCountDoc = await collection.findOne(PLAYERS_COUNT_QUERY);
   const matureGamesDoc = await collection.findOne(MATURE_QUERY);
 
-  if (!gameStartsDoc || !totalCountDoc || !wordlistDoc || !playerCountDoc || !matureGamesDoc) {
+  if (!gameStartsDoc || !totalCompleteDoc || !wordlistDoc || !playerCountDoc || !matureGamesDoc) {
     return {};
   }
 
-  const n = totalCountDoc.count;
+  const n = totalCompleteDoc.count;
   const m = matureGamesDoc.count;
   delete wordlistDoc["_id"];
   delete wordlistDoc["type"];
@@ -157,7 +157,7 @@ async function getStats(collection) {
     wordlistDistribution: wordlistDoc,
     averagePlayersPerGame: playerCountDoc.count / n,
     matureGames: {
-      count: matureGamesDoc.count / n,
+      count: m / n,
       firstTeamWinPercent: matureGamesDoc.firstTeamWins / m,
       secondTeamWinPercent: matureGamesDoc.secondTeamWins / m,
       averageTimePerGame: matureGamesDoc.totalTimeTaken / m,
