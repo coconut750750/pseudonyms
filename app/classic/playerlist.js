@@ -15,16 +15,6 @@ class PlayerList extends PlayerListInterface {
     this.notifyUpdate();
   }
 
-  getNonSpectatorCount() {
-    let count = 0;
-    for (let p of Object.values(this.players)) {
-      if (p.assignedTeam()) {
-        count += 1;
-      }
-    }
-    return count
-  }
-
   randomizeCaptain(team) {
     const players = Object.values(this.players).filter(p => p.isOnTeam(team));
     const r = Math.floor(Math.random() * players.length);

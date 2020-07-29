@@ -128,6 +128,16 @@ class PlayerList {
     }
     return count
   }
+
+  getNonSpectatorCount() {
+    let count = 0;
+    for (let p of Object.values(this.players)) {
+      if (p.assignedTeam()) {
+        count += 1;
+      }
+    }
+    return count
+  }
 }
 
 module.exports = PlayerList;
