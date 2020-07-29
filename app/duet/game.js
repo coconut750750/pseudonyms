@@ -8,6 +8,7 @@ const Board = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
 const GameOptions = require("./gameoptions");
+const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
 
 const c = require('../common/const');
 const { DUET } = c;
@@ -60,6 +61,7 @@ class DuetGame extends GameInterface {
     this.turn = undefined;
     this.win = false;
     this.clues.clear();
+    this.gameStats = new GameStats();
 
     this.timersLeft = 0;
     this.mistakesLeft = 0;
@@ -122,12 +124,14 @@ class DuetGame extends GameInterface {
     this.turn = FIRST_TURN;
     this.keycard = new KeyCard();
     this.board = new Board(this.wordlist, (r, c, team) => this.notifyReveal(r, c, team));
+    this.gameStats.startGame();
 
     this.notifyKeyChange();
     this.notifyBoardChange();
     this.notifyTurnChange();
     this.notifyScore();
     this.notifyPhaseChange();
+    incrementGameStarts(this.options.statsCollection);
 
     this.startClue();
 
@@ -220,6 +224,7 @@ class DuetGame extends GameInterface {
       this.startClue();
     }
     this.notifyTurnChange();
+    this.gameStats.addTurn(this.keycard.leftover);
   }
 
   canSuddenDeathReveal(player) {
@@ -252,6 +257,10 @@ class DuetGame extends GameInterface {
     this.notifyWin();
     this.notifyFinalReveal();
     this.notifyPhaseChange();
+
+    this.gameStats.addTurn(this.keycard.leftover);
+    this.gameStats.endGame(win);
+    saveGame(this.options.statsCollection, this.plist.getNonSpectatorCount(), this.gameoptions.wordlist, win);
   }
 
   getRevealsData() {

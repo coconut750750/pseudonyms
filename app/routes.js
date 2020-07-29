@@ -8,7 +8,8 @@ const path = require("path");
 const wordlistPath = path.join(__dirname, `./common/wordfiles/`);
 const files = fs.readdirSync(wordlistPath);
 
-const { getStats } = require("./classic/analytics");
+const { getStats: classicStats } = require("./classic/analytics");
+const { getStats: duetStats } = require("./duet/analytics");
 
 router.get('/wordlists', (req, res) => {
   res.send(files);
@@ -32,8 +33,12 @@ router.post('/feedback', feedbackLimiter, (req, res) => {
 });
 
 router.get('/stats', async (req, res) => {
-  const stats = await getStats(req.statsCollection);
-  res.send(stats);
+  const classic = await classicStats(req.statsCollection);
+  const duet = await duetStats(req.statsCollection);
+  res.send({
+    classic,
+    duet,
+  });
 })
 
 module.exports = router;
