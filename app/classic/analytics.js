@@ -85,7 +85,10 @@ function updateNumPlayerCount(collection, numPlayers) {
   collection.findOneAndUpdate(
     PLAYERS_COUNT_QUERY,
     {
-      $inc: { count: numPlayers },
+      $inc: {
+        count: 1,
+        players: numPlayers,
+      },
     },
     {
       new: true,
@@ -142,28 +145,23 @@ async function getStats(collection) {
   const playerCountDoc = await collection.findOne(PLAYERS_COUNT_QUERY);
   const matureGamesDoc = await collection.findOne(MATURE_QUERY);
 
-  if (!gameStartsDoc || !totalCompleteDoc || !wordlistDoc || !playerCountDoc || !matureGamesDoc) {
-    return {};
-  }
-
-  const n = totalCompleteDoc.count;
-  const m = matureGamesDoc.count;
-  delete wordlistDoc["_id"];
-  delete wordlistDoc["type"];
+  const m = matureGamesDoc?.count;
+  delete wordlistDoc?.["_id"];
+  delete wordlistDoc?.["type"];
 
   return {
-    totalGames: n,
-    gamesStarted: gameStartsDoc.count,
+    totalGames: totalCompleteDoc?.count,
+    gamesStarted: gameStartsDoc?.count,
     wordlistDistribution: wordlistDoc,
-    averagePlayersPerGame: playerCountDoc.count / n,
+    averagePlayersPerGame: playerCountDoc?.players / playerCountDoc?.count,
     matureGames: {
-      count: m / n,
-      firstTeamWinPercent: matureGamesDoc.firstTeamWins / m,
-      secondTeamWinPercent: matureGamesDoc.secondTeamWins / m,
-      averageTimePerGame: matureGamesDoc.totalTimeTaken / m,
-      averageTurnsPerGame: matureGamesDoc.totalTurnsTaken / m,
-      firstTeamScoreTrend: Object.values(matureGamesDoc.firstTeamScoreTrend).sort().reverse().map(s => s / m),
-      secondTeamScoreTrend: Object.values(matureGamesDoc.secondTeamScoreTrend).sort().reverse().map(s => s / m),
+      count: m,
+      firstTeamWinPercent: matureGamesDoc?.firstTeamWins / m,
+      secondTeamWinPercent: matureGamesDoc?.secondTeamWins / m,
+      averageTimePerGame: matureGamesDoc?.totalTimeTaken / m,
+      averageTurnsPerGame: matureGamesDoc?.totalTurnsTaken / m,
+      firstTeamScoreTrend: Object.values(matureGamesDoc?.firstTeamScoreTrend).sort().reverse().map(s => s / m),
+      secondTeamScoreTrend: Object.values(matureGamesDoc?.secondTeamScoreTrend).sort().reverse().map(s => s / m),
     }
   };
 }

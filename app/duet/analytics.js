@@ -119,19 +119,15 @@ async function getStats(collection) {
   const playerCountDoc = await collection.findOne(PLAYERS_COUNT_QUERY);
   const winsDoc = await collection.findOne(WINS_QUERY);
 
-  if (!gameStartsDoc || !totalCountDoc || !wordlistDoc || !playerCountDoc || !winsDoc) {
-    return {};
-  }
-
-  delete wordlistDoc["_id"];
-  delete wordlistDoc["type"];
+  delete wordlistDoc?.["_id"];
+  delete wordlistDoc?.["type"];
 
   return {
-    totalGames: totalCountDoc.count,
-    gamesStarted: gameStartsDoc.count,
+    totalGames: totalCountDoc?.count,
+    gamesStarted: gameStartsDoc?.count,
     wordlistDistribution: wordlistDoc,
-    averagePlayersPerGame: playerCountDoc.players / playerCountDoc.count,
-    winPercent: winsDoc.wins / winsDoc.count,
+    averagePlayersPerGame: playerCountDoc?.players / playerCountDoc?.count,
+    winPercent: winsDoc?.wins / winsDoc?.count,
   };
 }
 
