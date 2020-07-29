@@ -12,8 +12,8 @@ function Home(props) {
         <div className="col-md-6 text-center">
           <div className="alert alert-success updates" role="alert">
             <p>New features!</p>
-            <p>Revamped UI. I made some changes to the user interface, and better support for mobile. Let me know what's working and what's not by leaving feedback below.</p>
-            <p>New game mode: Duet! This mode is made for 2+ players, as a collaborative twist on the classic game. But be careful, there are more black words.</p>
+            <p>Revamped UI: Made some changes to the user interface and added better support for mobile. Let me know what's working and what's not by leaving feedback below!</p>
+            <p>Clue history: Added a new component next to the board to track the clues that have been given. </p>
           </div>
         </div>
         <div className="col-md-6 text-center">
