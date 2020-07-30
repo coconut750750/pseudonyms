@@ -7,7 +7,7 @@ import ClassicHowTo from '../components/HowTo/classic';
 import DuetHowTo from '../components/HowTo/duet';
 
 function HowTo(props) {
-  const [mode, setMode] = useState(DUET);
+  const [mode, setMode] = useState(CLASSIC);
 
   return (
     <div id="howto" className="p-3">

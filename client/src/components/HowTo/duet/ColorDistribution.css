@@ -1,9 +1,9 @@
 .tile-icon {
     display: inline-block;
     border: 1.2px solid rgba(0, 0, 0,.25);
-    border-radius: .15rem;
+    /*border-radius: .1rem;*/
     line-height: 1.2vw;
-    height: 1.5vw;
+    height: 1.75vw;
     width: 2.25vw;
     min-height: 0.65rem;
     min-width: 0.8rem;

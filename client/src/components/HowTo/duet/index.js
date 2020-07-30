@@ -27,7 +27,7 @@ export default function DuetHowTo(props) {
         <br/>
 
         <h5>The Start</h5>
-        <h6>25 random words from a word list are chosen and placed in a 5 by 5 grid. Each team sees 9 green, 3 black, and 13 white words. However, a word's color need not be the same for both teams.</h6>
+        <h6>25 random words from a word list are chosen and placed in a 5 by 5 grid. Each team sees 9 green, 3 black, and 13 white words. The pattern of colors each teams sees are different.</h6>
         <br/>
         {renderHelpBoard()}
         <h6>Either team can go first to give a clue; then the turns alternate. </h6>
@@ -44,7 +44,7 @@ export default function DuetHowTo(props) {
         <br/>
         {renderHelpBoard({ reveal: true })}
         <h6>There is no limit to the number of guesses a team can make. But, if a player guesses incorrectly, i.e. revealing a word that does not appear green to the clue-giving team, their turn ends. The team can also end their turn whenever they want.</h6>
-        <h6>If a player guesses a word that does not appear green to the other team, a badge will appear on that word of the other team's color, indicating the word appears white to the other team. The other team can still guess that word during their turn</h6>
+        <h6>If a player guesses a word that appears white to the other team, a badge of the other team's color will appear on that word. The other team can still guess that word during their turn</h6>
         <h6>If both a red and blue badge appear on a word, neither team can guess that word anymore. </h6>
         <br/>
         {renderHelpBoard({ reveal: true, incorrectReveal: true })}
@@ -53,7 +53,7 @@ export default function DuetHowTo(props) {
 
         <h5>Turn Limit and Mistake Limit</h5>
         <h6>To keep the game challenging, there are configurable limits to the number of turns and allowed mistakes to the game. The default limits are 9 turns and 9 mistakes, meaning if the players cannot guess all the green words within 9 turns, they lose.</h6>
-        <h6>The mistake limit can't be more than the turn limit, but also doesn't need to equal the turn limit. For example, players can play a game with a 9 turn limit, but a 2 mistake limit. Once they make two mistakes, future mistakes cost one extra turn.</h6>
+        <h6>The mistake limit can't be more than the turn limit. If players reach the mistake limit, subsequent mistakes cost one turn.</h6>
         <br/>
 
         <h5>Sudden Death</h5>
