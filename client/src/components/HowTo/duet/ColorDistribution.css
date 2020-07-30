@@ -1,0 +1,24 @@
+.tile-icon {
+    display: inline-block;
+    border: 1.2px solid rgba(0, 0, 0,.25);
+    border-radius: .15rem;
+    line-height: 1.2vw;
+    height: 1.5vw;
+    width: 2.25vw;
+    min-height: 0.65rem;
+    min-width: 0.8rem;
+    margin-right: 0.25em;
+    font-size: 1rem;
+}
+
+.tile-icon.y {
+    background-color: #f8f8f8;
+}
+
+.tile-icon.g {
+    background-color: #28a745;
+}
+
+.tile-icon.x {
+    background-color: #000000;
+}
