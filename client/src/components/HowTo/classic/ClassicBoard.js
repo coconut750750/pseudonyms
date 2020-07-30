@@ -37,15 +37,23 @@ const keycard = (() => {
   return newKey(keycard);
 })();
 
-const reveals = (() => {
+const basicReveals = () => {
   return [[0, 2], [1, 4]].map(([r, c]) => ({r, c, color: keycard.get(r, c)}));
-})();
+};
 
-const allReveals = (() => {
+const allReveals = () => {
   return [[0, 2], [1, 4], [0, 0], [0, 1], [4, 4], [2, 2], [4, 0], [0, 3], [1, 3], [2, 0], [3, 3], [2, 4], [3, 2], [4, 1], [4, 2], [1, 1], [4, 3]].map(([r, c]) => ({r, c, color: keycard.get(r, c)}));
-})();
+};
 
 export default function HowToClassicBoard({ captainView, toggleCaptainView, reveal, revealAll }) {
+  let reveals = [];
+  if (reveal) {
+    reveals = reveals.concat(basicReveals());
+  }
+  if (revealAll) {
+    reveals = reveals.concat(allReveals());
+  }
+  
   return (
     <div className="how-to-classic-board">
       <div className="row d-flex justify-content-center align-items-center">
@@ -55,7 +63,7 @@ export default function HowToClassicBoard({ captainView, toggleCaptainView, reve
       <ClassicBoard
         revealWord={ () => {} }
         board={board}
-        reveals={reveal ? reveals : (revealAll ? allReveals : [])}
+        reveals={reveals}
         keycard={captainView ? keycard : undefined}
         showKey={captainView}
         canReveal={false}/>

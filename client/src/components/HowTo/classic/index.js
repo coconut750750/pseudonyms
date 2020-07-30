@@ -27,8 +27,8 @@ export default function ClassicHowTo(props) {
         <br/>
   
         <h5>The Clue</h5>
-        <h6>On their turn, Captains give their team a clue that consists of one word and one number. The word should relate to the words of the Captain's team color. The number tells the Captain’s team how many words are related to the clue. </h6>
-        <h6>For example, the clue cards: 2 could refer to the words "play," and "deck."</h6>
+        <h6>During their turn, Captains give their team a clue that consists of one word and one number. The clue should relate to the words of the Captain's team color. The number tells the Captain’s team how many words are related to the clue. </h6>
+        <h6>For example, the clue cards: 2 could refer to the words "play" and "deck."</h6>
         <h6>Rules about what clues are valid are up to you, but Pseudonyms will discourage multi-word clues by restricting the use of spaces and prevent the Captain from giving a clue that exists on the board. </h6>
         <br/>
   
@@ -50,7 +50,7 @@ export default function ClassicHowTo(props) {
   };
 
   return (
-    <div className="skinny row d-flex justify-content-between">
+    <div className="skinny">
       {renderText()}
     </div>
   );
