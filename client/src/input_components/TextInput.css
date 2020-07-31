@@ -28,5 +28,5 @@
 
 .form-group.md .form-control:disabled {
     color: var(--unselected-color);
-    background-color: unset;
+    background-color: white;
 }

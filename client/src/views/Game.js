@@ -190,7 +190,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   };
 
   return (
-    <div id="game" className={`fill-height ${tips ? '' : 'hidetips'} mb-2`}>
+    <div id="game" className={`fill-height ${tips ? '' : 'hidetips'} pb-2`}>
       <GameBadge
         mode={gameMode}
         gameCode={gameCode}
