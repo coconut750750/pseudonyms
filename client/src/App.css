@@ -25,6 +25,10 @@ hr {
     margin-right: auto;
 }
 
+#howto {
+    width: 100%;
+}
+
 .row {
     margin-right: 0;
     margin-left: 0;

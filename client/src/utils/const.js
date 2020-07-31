@@ -1,3 +1,5 @@
+export const BOARD_SIZE = 5;
+
 export const RED = "red";
 export const BLUE = "blue";
 export const NO_TEAM = "";
