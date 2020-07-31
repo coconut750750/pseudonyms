@@ -40,14 +40,14 @@ function Roles(props) {
         <div className="row">
           <div className="col-4 p-0">
             {props.me.isRed() &&
-              <button type="button" className="btn"
+              <button type="button" className="btn mb-2"
                 onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
             }
           </div>
           <div className="col-4"/>
           <div className="col-4 p-0">
             {props.me.isBlue() &&
-              <button type="button" className="btn"
+              <button type="button" className="btn mb-2"
                 onClick={() => props.socket.emit('setCaptain', {})}>Elect</button>
             }
           </div>

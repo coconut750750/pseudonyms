@@ -35,13 +35,13 @@ function Teams(props) {
 
       <div className="row expand-height">
         <div className="col-4 p-0">
-          <button type="button" className="btn"
+          <button type="button" className="btn mb-2"
             onClick={() => props.socket.emit('selectTeam', { team: 'red' })}>Join Red</button>
           <PlayerList vertical players={getReds()}/>
         </div>
         <div className="col-4"><br/></div>
         <div className="col-4 p-0">
-          <button type="button" className="btn"
+          <button type="button" className="btn mb-2"
             onClick={() => props.socket.emit('selectTeam', { team: 'blue' })}>Join Blue</button>
           <PlayerList vertical players={getBlues()}/>
         </div>
