@@ -6,6 +6,15 @@ const { MIN_WORDS } = require('./const');
 
 function wordsFromFile(wordfile) {
   const filepath = path.join(__dirname, `./wordfiles/${wordfile}`);
+  if (!fs.existsSync(filepath)) {
+    throw new GameError("Provided wordlist is not a valid option");
+  }
+
+  const stats = fs.statSync(filepath);
+  if (!stats.isFile()) {
+    throw new GameError("Provided wordlist is not a valid option");
+  }
+
   const contents = fs.readFileSync(filepath, 'utf8');
   const words = contents.trim().toLowerCase().split(/\r?\n/);
   return words;
