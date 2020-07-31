@@ -61,7 +61,7 @@ export default function DuetHowTo(props) {
         <br/>
 
         <h5>Color Distribution</h5>
-        <h6>The color of the words follows this disgram. This could help you figure out what colors the other team sees.</h6>
+        <h6>The color of the words follows this diagram. This could help you figure out what colors the other team sees.</h6>
         <h6>One team sees the top row; the other team sees the bottom row.</h6>
         <br/>
         <ColorDistribution/>
