@@ -7,4 +7,4 @@ export const mistakeScore = "If the other team guesses incorrectly, a badge of y
 export const clueInput = "Think of a one-word clue that can point to multiple green words. Then enter the number of words that relate to this clue.";
 export const firstTurn = "Either team can give the first clue.";
 export const suddenDeath = "Any player can continue guessing without additional clues. An incorrect guess ends the game.";
-export const resultsHelp = "The border of each word is the color the other team saw. A tile with no border indicates the word was white.";
+export const resultsHelp = "The border of each word is the color the other team sees. A borderless word appears white to the other team.";

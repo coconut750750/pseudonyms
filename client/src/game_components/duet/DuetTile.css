@@ -45,3 +45,8 @@
     border: 2px solid #000000;
     /*box-shadow: #000000 0px 0px 0px 2px;*/
 }
+
+.dark .tile.glow-x {
+    border: 2px solid #f8f8f8;
+    /*box-shadow: #f8f8f844 0px 0px 0px 2px;*/
+}
