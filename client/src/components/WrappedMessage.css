@@ -1,6 +1,7 @@
 .wrapped-message {
     height: 100%;
     position: relative;
+    flex: inherit;
 }
 
 .message-wrapper {
