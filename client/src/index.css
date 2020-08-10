@@ -5,10 +5,9 @@ body {
     --shadow-color: #aaaaaa55;
     --strong-shadow-color: #21252999;
     --text-color: #000000ff;
-
     --button-color: #f8f9fa;
     --button-hover-color: #fefefe;
-
+    --tile-color: #f8f8f8;
     --border-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -19,10 +18,9 @@ body.dark {
     --shadow-color: #78787855;
     --strong-shadow-color: #d1d6da99;
     --text-color: #edededff;
-
     --button-color: #14171b;
     --button-hover-color: #1c1c1c;
-
+    --tile-color: #484848;
     --border-color: rgba(237, 237, 237, 0.1);
 }
 
