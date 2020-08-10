@@ -1,3 +1,7 @@
+.game-form-create small {
+    color: var(--text-color);
+}
+
 .game-mode-radio {
     cursor: pointer;
     padding-right: 1rem;

@@ -73,14 +73,14 @@ select:focus,
 }
 
 .btn {
-    background-color: #f8f9fa;
-    color: black;
+    background-color: var(--button-color);
+    color: var(--text-color);
 }
 
 .btn:hover {
-    background-color: #fefefe;
+    background-color: var(--button-hover-color);
     box-shadow: 0 0 10px 2px var(--shadow-color);
-    color: black;
+    color: var(--text-color);
 }
 
 .btn:hover:disabled {
@@ -88,11 +88,11 @@ select:focus,
 }
 
 .btn:active {
-    background-color: #f8f8f8;
+    background-color: var(--button-color);
     box-shadow: 0 0 10px 2px var(--shadow-color);
 }
 
 .btn:focus {
     box-shadow: 0 0 10px 2px var(--shadow-color);
-    color: black;
+    color: var(--text-color);
 }

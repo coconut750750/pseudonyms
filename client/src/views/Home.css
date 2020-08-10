@@ -5,6 +5,13 @@
     flex-direction: row;
 }
 
+.dark #home .alert {
+    /* bootstrap alert-dark theme */
+    color: #1b1e21;
+    background-color: #d6d8d9;
+    border-color: #c6c8ca;
+}
+
 @media only screen and (max-width: 700px) {
     #home > div {
         flex-direction: column;

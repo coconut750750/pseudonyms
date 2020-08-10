@@ -1,3 +1,15 @@
+.form-control {
+    color: #495057;
+    background-color: var(--background-color);
+    border: 1px solid #ced4da;
+}
+
+.dark .form-control {
+    color: #cbd0d4;
+    background-color: var(--background-color);
+    border: 1px solid #495560;
+}
+
 .form-group.md {
     text-align: left !important;
     margin-bottom: 0;
@@ -9,7 +21,7 @@
     height: 12px;
     left: 6px;
     position: relative;
-    background-color: white;
+    background-color: var(--background-color);
     padding: 0px 5px 0px 5px;
     font-size: 0.9em;
     color: var(--unselected-color);
@@ -23,10 +35,10 @@
 }
 
 .form-group.md:focus-within label{
-    color: black;
+    color: var(--text-color);
 }
 
 .form-group.md .form-control:disabled {
     color: var(--unselected-color);
-    background-color: white;
+    background-color: var(--background-color);
 }

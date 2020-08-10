@@ -1,5 +1,7 @@
 import React from 'react';
 
+import DarkModeToggle from './DarkModeToggle';
+
 import './Header.css';
 
 export default function Header(props) {
@@ -15,7 +17,9 @@ export default function Header(props) {
             </div>
           </h2>
         </a></div>
-        <div className="col-2 d-flex justify-content-center flex-column"></div>
+        <div className="col-2 d-flex justify-content-center flex-column">
+          <DarkModeToggle/>
+        </div>
       </div>
 
       <div className="row">

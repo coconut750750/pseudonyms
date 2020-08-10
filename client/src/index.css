@@ -3,6 +3,11 @@ body {
   font-family: 'Roboto Mono', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+}
+
+body.dark {
+  background-color: #121212;
 }
 
 #root {
@@ -12,9 +17,25 @@ body {
     flex-flow: column;
     min-height: 100vh;
     
+    --background-color: #ffffff;
     --unselected-color: #aaaaaaff;
     --selected-color: #000000ff;
     --shadow-color: #aaaaaa55;
+    --text-color: #000000ff;
+
+    --button-color: #f8f9fa;
+    --button-hover-color: #fefefe;
+}
+
+.dark #root {
+    --background-color: #121212;
+    --unselected-color: #787878ff;
+    --selected-color: #edededff;
+    --shadow-color: #78787855;
+    --text-color: #edededff;
+
+    --button-color: #14171b;
+    --button-hover-color: #1c1c1c;
 }
 
 .outer {
@@ -22,4 +43,8 @@ body {
     padding-left: 2vw;
     flex: 1 1 auto;
     display: flex;
+}
+
+.dark hr {
+    border-color: rgba(237, 237, 237, 0.1);
 }

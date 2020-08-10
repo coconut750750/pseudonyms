@@ -4,6 +4,10 @@
     background: linear-gradient(rgb(231, 231, 231) 0%, rgb(244, 244, 244) 5%, rgb(255, 255, 255) 10%);
 }
 
+.dark #footer {
+    background: linear-gradient(rgb(42, 42, 42) 0%, rgb(29, 29, 29) 5%, rgb(18, 18, 18) 10%);
+}
+
 #footer-content {
     width: 100%;
     max-width: 700px;
@@ -20,7 +24,7 @@
 
 .footer-links,
 .footer-links:hover {
-    color: black;
+    color: var(--text-color);
     display: inline-block;
     text-decoration: none;
 }
@@ -30,7 +34,7 @@
     display: block;
     width: 0;
     height: 2px;
-    background: black;
+    background: var(--text-color);
     transition: width 0.3s;
 }
 
