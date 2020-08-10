@@ -29,7 +29,7 @@ function Create(props) {
   }
 
   return (
-    <div className="game-form-create">
+    <div>
       <form onSubmit={ (e) => {
         e.preventDefault();
         create();

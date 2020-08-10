@@ -6,10 +6,6 @@
     margin-bottom: 0;
 }
 
-#header {
-    color: var(--text-color);
-}
-
 #header a {
     text-decoration: none;
 }
