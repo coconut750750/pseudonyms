@@ -30,12 +30,10 @@ function GameHeader(props) {
     <div className="row">
       <div className="col-5">
         <h5>{`${props.score.red}`}<Tip classic help="score"/></h5>
-        {reds}
       </div>
       <div className="col-2 p-0">{clock}</div>
       <div className="col-5">
         <h5>{`${props.score.blue}`}</h5>
-        {blues}
       </div>
     </div>
   );
@@ -44,7 +42,6 @@ function GameHeader(props) {
     <div className="row">
       <div className="col-5">
         <h6>{`Words left: ${props.score.leftover}`}<Tip duet help="wordScore"/></h6>
-        {reds}
       </div>
       <div className="col-2 p-0">{clock}</div>
       <div className="col-5">
@@ -53,7 +50,6 @@ function GameHeader(props) {
           <br/>
           {`Mistakes: ${props.score.mistakes}`}<Tip duet right help="mistakeScore"/>
         </h6>
-        {blues}
       </div>
     </div>
   );
@@ -71,6 +67,18 @@ function GameHeader(props) {
       return renderDuetHeader();
     }
   };
+
+  const renderPlayers = () => (
+    <div className="row">
+      <div className="col-5">
+        {reds}
+      </div>
+      <div className="col-2 p-0"/>
+      <div className="col-5">
+        {blues}
+      </div>
+    </div>
+  );
 
   const renderSpectators = () => {
     const spectators = getSpectators();
@@ -90,6 +98,7 @@ function GameHeader(props) {
     <div className="skinny">
       {renderSpectators()}
       {renderHeader()}
+      {renderPlayers()}
     </div>
   );
 }
