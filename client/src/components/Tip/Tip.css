@@ -17,7 +17,7 @@
 }
 
 .tipmodal {
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid var(--border-color);
     position: absolute;
     padding: 4px;
     border-radius: 4px;

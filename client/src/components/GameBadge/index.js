@@ -1,10 +1,13 @@
 import React from 'react';
 
-import Tip from './Tip';
+import Tip from '../Tip';
 import {
   isClassic,
   isDuet,
-} from '../utils/const';
+} from '../../utils/const';
+
+import { ReactComponent as LightOn } from './lightbulb-on.svg';
+import { ReactComponent as LightOff } from './lightbulb-off.svg';
 
 import './GameBadge.css';
 
@@ -39,7 +42,7 @@ function GameBadge(props) {
   return (
     <div className="game-badge-row row" style={{}}>
       <div className="tip-toggle" onClick={() => props.setTipsActive(!props.tips)}>
-        {props.tips  ? <img alt="" src="/lightbulb-on.svg"/> : <img alt="" src="/lightbulb-off.svg"/>}
+        { props.tips ? <LightOn /> : <LightOff /> }
       </div>
       <h6 className="col-md">
       Game code: <span onClick={() => copyLink()} className="gamecode badge badge-light">{props.gameCode}</span>

@@ -3,10 +3,13 @@ body {
     --unselected-color: #aaaaaaff;
     --selected-color: #000000ff;
     --shadow-color: #aaaaaa55;
+    --strong-shadow-color: #21252999;
     --text-color: #000000ff;
 
     --button-color: #f8f9fa;
     --button-hover-color: #fefefe;
+
+    --border-color: rgba(0, 0, 0, 0.1);
 }
 
 body.dark {
@@ -14,10 +17,13 @@ body.dark {
     --unselected-color: #787878ff;
     --selected-color: #edededff;
     --shadow-color: #78787855;
+    --strong-shadow-color: #d1d6da99;
     --text-color: #edededff;
 
     --button-color: #14171b;
     --button-hover-color: #1c1c1c;
+
+    --border-color: rgba(237, 237, 237, 0.1);
 }
 
 body {
@@ -44,6 +50,6 @@ body {
     display: flex;
 }
 
-.dark hr {
-    border-color: rgba(237, 237, 237, 0.1);
+hr {
+    border-color: var(--border-color);
 }

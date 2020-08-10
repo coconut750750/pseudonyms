@@ -8,20 +8,21 @@
     height: 24px;
     width: 24px;
     border-radius: 4px;
-    padding: 4px;
-    box-shadow: rgba(33, 37, 41, 0.6) 0px 0px 4px 1px;
+    padding: 4px;/*d1d6da*/
+    box-shadow: var(--strong-shadow-color) 0px 0px 4px 1px;
     cursor: pointer;
     user-select: none;
     z-index: 1;
 }
 
-.tip-toggle img {
+.tip-toggle svg {
+    color: var(--text-color);
     vertical-align: text-top;
     height: 12.8px;
     transform: rotate(180deg);
 }
 
 .gamecode {
-    box-shadow: 0px 0px 8px 0px #21252999;
+    box-shadow: 0px 0px 8px 0px var(--strong-shadow-color);
     cursor: pointer;
 }
