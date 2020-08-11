@@ -18,7 +18,7 @@
 }
 
 .message {
-    margin: 20px;
+    margin: 1vw;
     box-shadow: 0 4px 8px 2px #00000022;
     animation: fade-in 0.3s linear;
     opacity: 1;

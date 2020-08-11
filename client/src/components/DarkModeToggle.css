@@ -3,5 +3,8 @@
     right: 0;
     top: 0;
     padding-right: 1vw;
-    padding-top: 1vw;
+}
+
+#dark-mode-toggle .switch {
+    margin: 0;
 }
