@@ -12,8 +12,8 @@ function Home(props) {
         <div className="col-md-6 text-center">
           <div className="alert alert-success updates" role="alert">
             <p>New features!</p>
-            <p>Revamped UI: Made some changes to the user interface and added better support for mobile. Let me know what's working and what's not by leaving feedback below!</p>
             <p>Clue history: Added a new component next to the board to track the clues that have been given. </p>
+            <p style={{color: 'black'}}>Dark Mode!!! Try the toggle in the upper right corner.</p>
           </div>
         </div>
         <div className="col-md-6 text-center">

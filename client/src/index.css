@@ -9,6 +9,7 @@ body {
     --button-hover-color: #fefefe;
     --tile-color: #f8f8f8;
     --border-color: rgba(0, 0, 0, 0.1);
+    --strong-border-color: rgba(0, 0, 0, 0.2);
 }
 
 body.dark {
@@ -22,6 +23,7 @@ body.dark {
     --button-hover-color: #1c1c1c;
     --tile-color: #f8f8f844;
     --border-color: rgba(237, 237, 237, 0.1);
+    --strong-border-color: rgba(237, 237, 237, 0.2);
 }
 
 body {
