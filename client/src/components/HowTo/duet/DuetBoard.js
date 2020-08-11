@@ -72,6 +72,7 @@ const allReveals = () => {
 
 export default function HowToDuetBoard({ blueTeamView, toggleTeamView, reveal, incorrectReveal, revealAll }) {
   let reveals = [];
+  let otherTeam = undefined;
   if (reveal) {
     reveals = reveals.concat(basicReveals());
   }
@@ -80,6 +81,7 @@ export default function HowToDuetBoard({ blueTeamView, toggleTeamView, reveal, i
   }
   if (revealAll) {
     reveals = reveals.concat(allReveals());
+    otherTeam = blueTeamView ? RED : BLUE;
   }
 
   return (
@@ -94,7 +96,8 @@ export default function HowToDuetBoard({ blueTeamView, toggleTeamView, reveal, i
         board={board}
         reveals={reveals}
         keycard={keycard}
-        canReveal={false}/>
+        canReveal={false}
+        otherTeam={otherTeam}/>
     </div>
   );
 }
