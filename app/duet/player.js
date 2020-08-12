@@ -2,8 +2,8 @@ const { RED, BLUE, NO_TEAM } = require('../common/const').duet;
 const PlayerInterface = require('../common/player');
 
 class Player extends PlayerInterface {
-  constructor(name, socket, isAdmin) {
-    super(name, socket, isAdmin);
+  constructor(name, sid, isAdmin) {
+    super(name, sid, isAdmin);
 
     this.team = NO_TEAM;
   }
@@ -27,9 +27,9 @@ class Player extends PlayerInterface {
     };
   }
 
-  sendAsTeam(team, event, data) {
-    if (this.socket !== undefined && this.team === team) {
-      this.socket.emit(event, data);
+  sendAsTeam(team, event, data, emitter) {
+    if (this.team === team) {
+      this.send(event, data, emitter);
     }
   }
 }

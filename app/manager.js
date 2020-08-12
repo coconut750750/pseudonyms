@@ -9,6 +9,7 @@ class Manager {
     this.statsCollection = statsCollection;
 
     this.broadcast = (code) => (event, data) => io.to(code).emit(event, data);
+    this.emitter = (id, event, data) => io.to(id).emit(event, data);
     this.options = { statsCollection: this.statsCollection };
 
     if (dev) {
@@ -19,14 +20,14 @@ class Manager {
 
   createClassicGame() {
     const code = this.generateCode();
-    const newGame = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+    const newGame = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
     this.games[code] = newGame;
     return newGame;
   }
 
   createDuetGame() {
     const code = this.generateCode();
-    const newGame = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+    const newGame = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
     this.games[code] = newGame;
     return newGame;
   }
@@ -52,7 +53,7 @@ class Manager {
 
   devClassic() {
     const code = 'cccc';
-    this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+    this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
 
     for (let name of ['11', '22', '33', '44', '55']) {
       this.games[code].addPlayer(name, undefined);
@@ -75,7 +76,7 @@ class Manager {
 
   devDuet() {
     const code = 'dddd';
-    this.games[code] = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code));
+    this.games[code] = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
 
     for (let name of ['11', '22', '33']) {
       this.games[code].addPlayer(name, undefined);

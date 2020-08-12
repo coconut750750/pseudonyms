@@ -2,8 +2,8 @@ const GameInterface = require("../game");
 const socketio = require("./socketio");
 
 class Game extends GameInterface {
-  constructor(code, onEmpty, options, broadcast, PlayerListClass, minPlayers) {
-    super(code, onEmpty, options, broadcast);
+  constructor(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
+    super(code, onEmpty, options, broadcast, emitter);
 
     this.plist = new PlayerListClass(
       () => this.notifyPlayerUpdate(),
@@ -40,12 +40,12 @@ class Game extends GameInterface {
     return this.plist.exists(name);
   }
 
-  addPlayer(name, socket) {
-    this.plist.add(name, socket);
+  addPlayer(name, sid) {
+    this.plist.add(name, sid);
   }
 
-  activatePlayer(name, socket) {
-    this.plist.activate(name, socket);
+  activatePlayer(name, sid) {
+    this.plist.activate(name, sid);
   }
 
   deactivatePlayer(name) {

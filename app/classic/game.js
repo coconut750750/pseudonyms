@@ -21,13 +21,13 @@ const BOARD = 'board';
 const RESULT = 'result';
 
 class ClassicGame extends GameInterface {
-  constructor(code, onEmpty, options, broadcast) {
-    super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
+  constructor(code, onEmpty, options, broadcast, emitter) {
+    super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
 
     this.clues = new Clues( () => this.notifyClue() );
 
     this.broadcastCaptains = (event, data) => {
-      this.plist.getAll().forEach(p => p.sendAsCaptain(event, data));
+      this.plist.getAll().forEach(p => p.sendAsCaptain(event, data, this.emitter));
     }
 
     this.reset();
@@ -315,8 +315,8 @@ class ClassicGame extends GameInterface {
   // send data for disconnected users
   reconnectSendBoard(player) {
     if (this.board !== undefined) {
-      player.send('board', this.board.json());
-      player.send('reveal', { reveal: this.getRevealsData() });
+      player.send('board', this.board.json(), this.emitter);
+      player.send('reveal', { reveal: this.getRevealsData() }, this.emitter);
     }
   }
 
@@ -325,35 +325,35 @@ class ClassicGame extends GameInterface {
       return;
     }
     if (this.phase === RESULT || player.isCaptain()) {
-      player.send('key', this.keycard.json());
+      player.send('key', this.keycard.json(), this.emitter);
     }
   }
 
   reconnectSendTurn(player) {
     if (this.turn !== undefined) {
-      player.send('turn', { turn: this.turn });
+      player.send('turn', { turn: this.turn }, this.emitter);
     }
   }
 
   reconnectSendClue(player) {
-    player.send('clues', this.clues.json());
+    player.send('clues', this.clues.json(), this.emitter);
   }
 
   reconnectSendGuessesLeft(player) {
     if (this.clues.currentExists()) {
-      player.send('guesses', { guesses: this.guessesLeft });
+      player.send('guesses', { guesses: this.guessesLeft }, this.emitter);
     }
   }
 
   reconnectSendScore(player) {
     if (this.keycard !== undefined && (this.phase === BOARD || this.phase === RESULT)) {
-      player.send('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
+      player.send('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft }, this.emitter);
     }
   }
 
   reconnectSendWinner(player) {
     if (this.phase === RESULT && this.winner !== undefined) {
-      player.send('winner', { winner: this.winner });
+      player.send('winner', { winner: this.winner }, this.emitter);
     }
   }
 }

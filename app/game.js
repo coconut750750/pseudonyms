@@ -1,9 +1,10 @@
 class GameInterface {
-  constructor(code, onEmpty, options, broadcast) {
+  constructor(code, onEmpty, options, broadcast, emitter) {
     this.code = code;
     this.onEmpty = onEmpty;
     this.options = options;
     this.broadcast = broadcast;
+    this.emitter = emitter;
   }
 
   playerExists(name) {
@@ -15,7 +16,7 @@ class GameInterface {
     throw new Error('Game.getPlayer() implemention required!');
   }
 
-  addPlayer(name, socket) {
+  addPlayer(name, sid) {
     throw new Error('Game.addPlayer() implemention required!');
   }
 
@@ -27,7 +28,7 @@ class GameInterface {
     throw new Error('Game.isActive() implemention required!');
   }
 
-  activatePlayer(name, socket) {
+  activatePlayer(name, sid) {
     throw new Error('Game.activatePlayer() implemention required!');
   }
 

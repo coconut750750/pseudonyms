@@ -24,17 +24,17 @@ class PlayerList {
     return name in this.players;
   }
 
-  add(name, socket) {
+  add(name, sid) {
     this.players[name] = new this.PlayerClass(
       name,
-      socket,
+      sid,
       this.length() === 0
     );
     this.notifyUpdate();
   }
 
-  activate(name, socket) {
-    this.players[name].activate(socket);
+  activate(name, sid) {
+    this.players[name].activate(sid);
     this.notifyUpdate();
   }
 

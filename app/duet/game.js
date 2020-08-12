@@ -20,17 +20,17 @@ const BOARD = 'board';
 const RESULT = 'result';
 
 class DuetGame extends GameInterface {
-  constructor(code, onEmpty, options, broadcast) {
-    super(code, onEmpty, options, broadcast, PlayerList, MIN_PLAYERS);
+  constructor(code, onEmpty, options, broadcast, emitter) {
+    super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
 
     this.clues = new Clues( () => this.notifyClue() );
 
     this.broadcastReds = (event, data) => {
-      this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data));
+      this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data, this.emitter));
     };
 
     this.broadcastBlues = (event, data) => {
-      this.plist.getAll().forEach(p => p.sendAsTeam(BLUE, event, data));
+      this.plist.getAll().forEach(p => p.sendAsTeam(BLUE, event, data, this.emitter));
     };
 
     this.reset();
@@ -314,8 +314,8 @@ class DuetGame extends GameInterface {
   // send data for disconnected users
   reconnectSendBoard(player) {
     if (this.board !== undefined) {
-      player.send('board', this.board.json());
-      player.send('reveal', { reveal: this.getRevealsData() });
+      player.send('board', this.board.json(), this.emitter);
+      player.send('reveal', { reveal: this.getRevealsData() }, this.emitter);
     }
   }
 
@@ -324,31 +324,31 @@ class DuetGame extends GameInterface {
       return;
     }
     if (this.phase === RESULT) {
-      player.send('key', this.keycard.jsonMerged());
+      player.send('key', this.keycard.jsonMerged(), this.emitter);
     } else if (player.assignedTeam()) {
-      player.send('key', this.keycard.json(player.team));
+      player.send('key', this.keycard.json(player.team), this.emitter);
     }
   }
 
   reconnectSendTurn(player) {
     if (this.turn !== undefined) {
-      player.send('turn', { turn: this.turn });
+      player.send('turn', { turn: this.turn }, this.emitter);
     }
   }
 
   reconnectSendClue(player) {
-    player.send('clues', this.clues.json());
+    player.send('clues', this.clues.json(), this.emitter);
   }
 
   reconnectSendScore(player) {
     if (this.keycard !== undefined && (this.phase === BOARD || this.phase === RESULT)) {
-      player.send('score', { leftover: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
+      player.send('score', { leftover: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft }, this.emitter);
     }
   }
 
   reconnectSendWin(player) {
     if (this.phase === RESULT && this.winner !== undefined) {
-      player.send('winner', { winner: this.win });
+      player.send('winner', { winner: this.win }, this.emitter);
     }
   }
 }

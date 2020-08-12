@@ -55,9 +55,9 @@ app.io.on('connect', function (socket) {
     socket.join(data.gameCode);
 
     if (game.playerExists(name)) {
-      game.activatePlayer(name, socket);
+      game.activatePlayer(name, socket.id);
     } else {
-      game.addPlayer(name, socket);
+      game.addPlayer(name, socket.id);
     }
     player = game.getPlayer(name);
 

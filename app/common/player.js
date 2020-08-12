@@ -1,19 +1,19 @@
 class Player {
-  constructor(name, socket, isAdmin) {
+  constructor(name, sid, isAdmin) {
     this.name = name;
-    this.socket = socket;
+    this.sid = sid;
     this.isAdmin = isAdmin;
     this.active = true;
   }
 
-  activate(socket) {
+  activate(sid) {
     this.active = true;
-    this.socket = socket;
+    this.sid = sid;
   }
 
   deactivate() {
     this.active = false;
-    this.socket = undefined;
+    this.sid = undefined;
   }
 
   isOnTeam(team) {
@@ -28,9 +28,9 @@ class Player {
     };
   }
 
-  send(event, data) {
-    if (this.socket !== undefined) {
-      this.socket.emit(event, data);
+  send(event, data, emitter) {
+    if (this.sid !== undefined) {
+      emitter(this.sid, event, data);
     }
   }
 }

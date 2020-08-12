@@ -2,8 +2,8 @@ const { RED, BLUE, PLAYER_ROLE, CAPTAIN_ROLE, NO_TEAM } = require('../common/con
 const PlayerInterface = require('../common/player');
 
 class Player extends PlayerInterface {
-  constructor(name, socket, isAdmin) {
-    super(name, socket, isAdmin);
+  constructor(name, sid, isAdmin) {
+    super(name, sid, isAdmin);
 
     this.team = NO_TEAM;
     this.role = PLAYER_ROLE;
@@ -41,9 +41,9 @@ class Player extends PlayerInterface {
     };
   }
 
-  sendAsCaptain(event, data) {
-    if (this.socket !== undefined && this.role === CAPTAIN_ROLE) {
-      this.socket.emit(event, data);
+  sendAsCaptain(event, data, emitter) {
+    if (this.role === CAPTAIN_ROLE) {
+      this.send(event, data, emitter);
     }
   }
 }
