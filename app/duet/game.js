@@ -154,9 +154,6 @@ class DuetGame extends GameInterface {
     if (this.phase !== BOARD) {
       return false;
     }
-    if (this.clues.currentExists()) {
-      return false;
-    }
     if (!player.assignedTeam()) {
       return false;
     }
@@ -170,6 +167,9 @@ class DuetGame extends GameInterface {
   addClue(player, word, count) {
     if (!this.validClue(word)) {
       throw new GameError("Invalid Clue");
+    }
+    if (this.clues.currentExists()) {
+      return false;
     }
     if (this.turn === FIRST_TURN) {
       this.turn = player.team;

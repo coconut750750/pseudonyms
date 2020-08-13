@@ -170,9 +170,6 @@ class ClassicGame extends GameInterface {
     if (this.phase !== BOARD) {
       return false;
     }
-    if (this.clues.currentExists()) {
-      return false;
-    }
     return player.assignedTeam() && player.isOnTeam(this.turn) && player.isCaptain();
   }
 
@@ -183,6 +180,9 @@ class ClassicGame extends GameInterface {
   addClue(player, word, count) {
     if (!this.validClue(word)) {
       throw new GameError("Invalid Clue");
+    }
+    if (this.clues.currentExists()) {
+      return false;
     }
     this.clues.add(word, count, this.turn);
     this.guessesLeft = parseInt(count) + 1;
