@@ -167,16 +167,13 @@ class ClassicGame extends GameInterface {
   }
 
   canSendClue(player) {
-    if (!player.assignedTeam() || !player.isOnTeam(this.turn)) {
-      return false;
-    }
-    if (!player.isCaptain()) {
-      return false;
-    }
     if (this.phase !== BOARD) {
       return false;
     }
-    return true;
+    if (this.clues.currentExists()) {
+      return false;
+    }
+    return player.assignedTeam() && player.isOnTeam(this.turn) && player.isCaptain();
   }
 
   validClue(word) {

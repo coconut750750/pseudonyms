@@ -151,7 +151,13 @@ class DuetGame extends GameInterface {
   }
 
   canSendClue(player) {
-    if (this.phase !== BOARD || !player.assignedTeam()) {
+    if (this.phase !== BOARD) {
+      return false;
+    }
+    if (this.clues.currentExists()) {
+      return false;
+    }
+    if (!player.assignedTeam()) {
       return false;
     }
     return this.turn === FIRST_TURN || player.isOnTeam(this.turn);
