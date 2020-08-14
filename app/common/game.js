@@ -1,9 +1,11 @@
 const GameInterface = require("../game");
+const Clues = require("../common/clues");
 const socketio = require("./socketio");
 
 class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
     super(code, onEmpty, options, broadcast, emitter);
+    this.clues = new Clues( () => this.notifyClue() );
 
     this.plist = new PlayerListClass(
       () => this.notifyPlayerUpdate(),

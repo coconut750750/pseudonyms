@@ -1,5 +1,4 @@
 const GameInterface = require("../common/game")
-const Clues = require("../common/clues");
 const WordList = require("../common/wordlist");
 const { GameError } = require("../common/gameerror");
 
@@ -23,8 +22,6 @@ const RESULT = 'result';
 class ClassicGame extends GameInterface {
   constructor(code, onEmpty, options, broadcast, emitter) {
     super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
-
-    this.clues = new Clues( () => this.notifyClue() );
 
     this.broadcastCaptains = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsCaptain(event, data, this.emitter));

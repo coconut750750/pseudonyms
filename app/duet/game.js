@@ -1,5 +1,4 @@
 const GameInterface = require("../common/game")
-const Clues = require("../common/clues");
 const WordList = require("../common/wordlist");
 const { GameError } = require("../common/gameerror");
 
@@ -22,8 +21,6 @@ const RESULT = 'result';
 class DuetGame extends GameInterface {
   constructor(code, onEmpty, options, broadcast, emitter) {
     super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
-
-    this.clues = new Clues( () => this.notifyClue() );
 
     this.broadcastReds = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data, this.emitter));
