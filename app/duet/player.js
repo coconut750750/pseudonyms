@@ -1,7 +1,22 @@
-const { RED, BLUE, NO_TEAM } = require('../common/const').duet;
-const PlayerInterface = require('../common/player');
+const mongoose = require('mongoose');
 
-class Player extends PlayerInterface {
+const { RED, BLUE, NO_TEAM } = require('../common/const').duet;
+const { PlayerClass, PlayerSchema } = require('../common/player');
+
+class DuetPlayerSchema extends PlayerSchema {
+  constructor() {
+    super(arguments);
+    this.add({
+      team: {
+        type: String,
+        enum : [RED, BLUE, NO_TEAM],
+        default: NO_TEAM,
+      },
+    })
+  }
+}
+
+class DuetPlayer extends PlayerClass {
   constructor(name, sid, isAdmin) {
     super(name, sid, isAdmin);
 
@@ -34,4 +49,8 @@ class Player extends PlayerInterface {
   }
 }
 
-module.exports = Player;
+const schema = new DuetPlayerSchema();
+schema.loadClass(DuetPlayer);
+const DuetPlayerModel = mongoose.model(DuetPlayer, schema);
+
+module.exports = DuetPlayerModel;

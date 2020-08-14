@@ -1,7 +1,27 @@
-const { RED, BLUE, PLAYER_ROLE, CAPTAIN_ROLE, NO_TEAM } = require('../common/const').classic;
-const PlayerInterface = require('../common/player');
+const mongoose = require('mongoose');
 
-class Player extends PlayerInterface {
+const { RED, BLUE, PLAYER_ROLE, CAPTAIN_ROLE, NO_TEAM } = require('../common/const').classic;
+const { PlayerClass, PlayerSchema } = require('../common/player');
+
+class ClassicPlayerSchema extends PlayerSchema {
+  constructor() {
+    super(arguments);
+    this.add({
+      team: {
+        type: String,
+        enum : [RED, BLUE, NO_TEAM],
+        default: NO_TEAM,
+      },
+      role: {
+        type: String,
+        enum : [PLAYER_ROLE, CAPTAIN_ROLE],
+        default: PLAYER_ROLE,
+      },
+    })
+  }
+}
+
+class ClassicPlayer extends PlayerClass {
   constructor(name, sid, isAdmin) {
     super(name, sid, isAdmin);
 
@@ -48,4 +68,8 @@ class Player extends PlayerInterface {
   }
 }
 
-module.exports = Player;
+const schema = new ClassicPlayerSchema();
+schema.loadClass(ClassicPlayer);
+const ClassicPlayerModel = mongoose.model(ClassicPlayer, schema);
+
+module.exports = ClassicPlayerModel;

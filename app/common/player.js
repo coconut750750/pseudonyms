@@ -1,5 +1,21 @@
-class Player {
+const mongoose = require('mongoose');
+
+class PlayerSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      name: {type: String, required: true},
+      sid: {type: String, required: false},
+      isAdmin: {type: Boolean, required: false},
+      active: {type: Boolean, required: false},
+    });
+  }
+}
+
+class PlayerClass extends mongoose.Model {
   constructor(name, sid, isAdmin) {
+    super();
     this.name = name;
     this.sid = sid;
     this.isAdmin = isAdmin;
@@ -35,4 +51,7 @@ class Player {
   }
 }
 
-module.exports = Player;
+module.exports = {
+  PlayerClass,
+  PlayerSchema,
+};
