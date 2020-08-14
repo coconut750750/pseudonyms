@@ -84,3 +84,7 @@
     min-height: 36px;
     margin-bottom: 6px;
 }
+
+.game-code-input input[type="text"] {
+    text-transform: lowercase;
+}

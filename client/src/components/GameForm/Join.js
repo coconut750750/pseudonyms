@@ -11,7 +11,7 @@ function Join(props) {
 
   const joinGame = async () => {
     const name = nameInputRef.current.value;
-    const gameCode = gameCodeInputRef.current.value;
+    const gameCode = gameCodeInputRef.current.value.toLowerCase();
     checkName(name, gameCode).then(res => {
       props.join(gameCode, name, res.mode);
     }).catch(res => {
@@ -26,11 +26,13 @@ function Join(props) {
         joinGame();
       } }>
 
-        <TextInput
-          label={"Game Code:"}
-          ref={gameCodeInputRef}
-          value={props.urlGameCode}
-          disabled={props.urlGameCode !== undefined}/>
+        <div className="game-code-input">
+          <TextInput
+            label={"Game Code:"}
+            ref={gameCodeInputRef}
+            value={props.urlGameCode}
+            disabled={props.urlGameCode !== undefined}/>
+        </div>
 
         <TextInput
           label={"Name:"}
