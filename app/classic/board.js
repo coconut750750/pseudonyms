@@ -5,7 +5,6 @@ const BoardInterface = require("../common/board")
 class Board extends BoardInterface {
   constructor(wordlist, notifyReveal, sendAllReveals) {
     super(wordlist);
-    this.revealed = [];
     this.revealedInts = [];
 
     this.jsonObj = this.genJson();
@@ -26,13 +25,8 @@ class Board extends BoardInterface {
     if (this.isRevealed(r, c)) {
       return;
     }
-    this.revealed.push([r, c]);
     this.revealedInts.push(this.coordToIndex(r, c));
     this.notifyReveal(r, c);
-  }
-
-  sendReveals() {
-    this.sendAllReveals(this.revealed);
   }
 }
 

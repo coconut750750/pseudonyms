@@ -237,8 +237,8 @@ class ClassicGame extends GameInterface {
 
   getRevealsData() {
     let data = [];
-    for (var rev of this.board.revealed) {
-      const [r, c] = rev;
+    for (let rev of this.board.revealedInts) {
+      const [r, c] = this.board.indexToCoord(rev);
       data.push({ r, c, color: this.keycard.getTile(r, c) });
     }
     return data;
