@@ -8,7 +8,7 @@ const socketio = require("./socketio");
 const { DuetBoardModel, DuetBoardSchema } = require("./board");
 const KeyCard = require("./keycard");
 const { DuetPlayerListModel, DuetPlayerListSchema } = require("./playerlist");
-const GameOptions = require("./gameoptions");
+const { DuetGameOptionsSchema, DuetGameOptionsModel } = require("./gameoptions");
 const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
 
 const c = require('../common/const');
@@ -35,6 +35,7 @@ class DuetSchema extends GameSchema {
       win: Boolean,
       timersLeft: Number,
       mistakesLeft: Number,
+      gameoptions: DuetGameOptionsSchema,
     });
   }
 }
@@ -110,7 +111,7 @@ class DuetGame extends GameClass {
       throw new GameError(`At least ${MIN_PLAYERS} players required to start`);
     }
     
-    this.gameoptions = new GameOptions(options);
+    this.gameoptions = new DuetGameOptionsModel(options);
     this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
 
     this.timersLeft = this.gameoptions.timers;

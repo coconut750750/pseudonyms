@@ -9,7 +9,7 @@ const socketio = require("./socketio");
 const { ClassicBoardModel, ClassicBoardSchema } = require("./board");
 const KeyCard = require("./keycard");
 const { ClassicPlayerListModel, ClassicPlayerListSchema } = require("./playerlist");
-const GameOptions = require("./gameoptions");
+const { ClassicGameOptionsSchema, ClassicGameOptionsModel } = require("./gameoptions");
 const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
 
 const c = require('../common/const');
@@ -36,6 +36,7 @@ class ClassicSchema extends GameSchema {
       turn: String,
       guessesLeft: Number,
       winner: String,
+      gameoptions: ClassicGameOptionsSchema,
     });
   }
 }
@@ -122,7 +123,7 @@ class ClassicGame extends GameClass {
       throw new GameError(`At least ${MIN_PLAYERS} players required to start`);
     }
     
-    this.gameoptions = new GameOptions(options);
+    this.gameoptions = new ClassicGameOptionsModel(options);
     this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
 
     this.started = true;
