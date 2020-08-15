@@ -7,8 +7,7 @@ class PlayerList extends mongoose.Model{
     this.players = new Map();
   }
 
-  setup(PlayerClass, notifyUpdate, endGame) {
-    this.PlayerClass = PlayerClass;
+  setup(notifyUpdate, endGame) {
     this.notifyUpdate = notifyUpdate;
     this.endGame = endGame;
   }
@@ -29,12 +28,12 @@ class PlayerList extends mongoose.Model{
     return this.players.has(name);
   }
 
+  createPlayer(name, sid) {
+    throw new Error('PlayerList.createPlayer() implemention required!');
+  }
+
   add(name, sid) {
-    this.players.set(name, new this.PlayerClass(
-      name,
-      sid,
-      this.length() === 0
-    ));
+    this.players.set(name, this.createPlayer(name, sid));
     this.notifyUpdate();
   }
 

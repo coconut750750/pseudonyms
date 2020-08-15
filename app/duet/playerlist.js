@@ -29,7 +29,15 @@ class DuetPlayerListClass extends PlayerListInterface {
   }
 
   setup(notifyUpdate, endGame) {
-    super.setup(DuetPlayerModel, notifyUpdate, endGame);
+    super.setup(notifyUpdate, endGame);
+  }
+
+  createPlayer(name, sid) {
+    return new DuetPlayerModel(
+      name,
+      sid,
+      this.length() === 0
+    )
   }
 }
 

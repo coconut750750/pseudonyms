@@ -30,7 +30,15 @@ class ClassicPlayerListClass extends PlayerListInterface {
   }
 
   setup(notifyUpdate, endGame) {
-    super.setup(ClassicPlayerModel, notifyUpdate, endGame);
+    super.setup(notifyUpdate, endGame);
+  }
+
+  createPlayer(name, sid) {
+    return new ClassicPlayerModel(
+      name,
+      sid,
+      this.length() === 0
+    )
   }
 
   resetRoles() {
