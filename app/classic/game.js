@@ -60,7 +60,7 @@ class ClassicGame extends GameClass {
   }
 
   setup(code, onEmpty, options, broadcast, emitter) {
-    super.setup(code, onEmpty, options, broadcast, emitter, ClassicPlayerListModel, MIN_PLAYERS);
+    super.setup(code, onEmpty, options, broadcast, emitter, ClassicPlayerListModel);
 
     this.broadcastCaptains = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsCaptain(event, data, this.emitter));
@@ -71,6 +71,10 @@ class ClassicGame extends GameClass {
 
   mode() {
     return CLASSIC;
+  }
+
+  minPlayers() {
+    return MIN_PLAYERS;
   }
 
   canRemove(name) {

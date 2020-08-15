@@ -59,7 +59,7 @@ class DuetGame extends GameClass {
   }
 
   setup(code, onEmpty, options, broadcast, emitter) {
-    super.setup(code, onEmpty, options, broadcast, emitter, DuetPlayerListModel, MIN_PLAYERS);
+    super.setup(code, onEmpty, options, broadcast, emitter, DuetPlayerListModel);
 
     this.broadcastReds = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data, this.emitter));
@@ -74,6 +74,10 @@ class DuetGame extends GameClass {
 
   mode() {
     return DUET;
+  }
+
+  minPlayers() {
+    return MIN_PLAYERS;
   }
 
   canRemove(name) {

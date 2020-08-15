@@ -7,7 +7,6 @@ class GameSchema extends AbstractGameSchema {
   constructor() {
     super(arguments);
     this.add({
-      minPlayers: Number,
       clues: {
         type: CluesSchema,
         _id : false,
@@ -21,10 +20,9 @@ class GameClass extends GameInterface {
     super();
   }
 
-  setup(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
+  setup(code, onEmpty, options, broadcast, emitter, PlayerListClass) {
     this.clues = new CluesModel();
     this.plist = new PlayerListClass();
-    this.minPlayers = minPlayers;
     this.setupCallbacks(code, onEmpty, options, broadcast, emitter)
   }
 
@@ -39,6 +37,10 @@ class GameClass extends GameInterface {
 
   mode() {
     throw new Error('Game.mode() implemention required!');
+  }
+
+  minPlayers() {
+    throw new Error('Game.minPlayers() implemention required!');
   }
 
   socketio(socket, game, name, player) {
@@ -58,7 +60,7 @@ class GameClass extends GameInterface {
   }
 
   enoughPlayers() {
-    return this.plist.getAll().length >= this.minPlayers;
+    return this.plist.getAll().length >= this.minPlayers();
   }
 
   playerExists(name) {
