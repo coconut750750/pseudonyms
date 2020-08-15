@@ -1,5 +1,5 @@
-const ClassicGame = require('./classic/game');
-const DuetGame = require('./duet/game');
+const { ClassicGameModel } = require('./classic/game');
+const { DuetGameModel } = require('./duet/game');
 
 class Manager {
   constructor(dev, io, statsCollection) {
@@ -20,15 +20,17 @@ class Manager {
 
   createClassicGame() {
     const code = this.generateCode();
-    const newGame = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    const newGame = new ClassicGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
     this.games[code] = newGame;
+    newGame.save();
     return newGame;
   }
 
   createDuetGame() {
     const code = this.generateCode();
-    const newGame = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    const newGame = new DuetGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
     this.games[code] = newGame;
+    newGame.save();
     return newGame;
   }
 
@@ -53,7 +55,7 @@ class Manager {
 
   devClassic() {
     const code = 'cccc';
-    this.games[code] = new ClassicGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    this.games[code] = new ClassicGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
 
     for (let name of ['11', '22', '33', '44', '55']) {
       this.games[code].addPlayer(name, undefined);
@@ -72,11 +74,12 @@ class Manager {
     for (let name of ['11', '22', '33', '44']) {
       this.games[code].deactivatePlayer(name);
     }
+    this.games[code].save();
   }
 
   devDuet() {
     const code = 'dddd';
-    this.games[code] = new DuetGame(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    this.games[code] = new DuetGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
 
     for (let name of ['11', '22', '33']) {
       this.games[code].addPlayer(name, undefined);
@@ -89,6 +92,7 @@ class Manager {
 
     this.games[code].deactivatePlayer('11');
     this.games[code].deactivatePlayer('22');
+    this.games[code].save();
   }
 }
 
