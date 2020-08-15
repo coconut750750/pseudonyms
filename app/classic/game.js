@@ -1,9 +1,12 @@
-const GameInterface = require("../common/game")
+const mongoose = require('mongoose');
+
+const { GameClass, GameSchema } = require("../common/game")
 const WordList = require("../common/wordlist");
 const { GameError } = require("../common/gameerror");
+const { CluesModel, CluesSchema } = require("../common/clues");
 
 const socketio = require("./socketio");
-const Board = require("./board");
+const { ClassicBoardModel, ClassicBoardSchema } = require("./board");
 const KeyCard = require("./keycard");
 const PlayerList = require("./playerlist");
 const GameOptions = require("./gameoptions");
@@ -19,7 +22,21 @@ const ROLES = 'roles';
 const BOARD = 'board';
 const RESULT = 'result';
 
-class ClassicGame extends GameInterface {
+class ClassicSchema extends GameSchema {
+  constructor() {
+    super(arguments);
+    this.add({
+      started: {
+        type: Boolean,
+        default: false,
+      },
+      phase: String,
+      board: ClassicBoardSchema,
+    });
+  }
+}
+
+class ClassicGame extends GameClass {
   constructor(code, onEmpty, options, broadcast, emitter) {
     super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
 
@@ -140,7 +157,7 @@ class ClassicGame extends GameInterface {
 
     this.keycard = new KeyCard();
     this.turn = this.keycard.start;
-    this.board = new Board(this.wordlist, (r, c) => this.notifyReveal(r, c));
+    this.board = new ClassicBoardModel(this.wordlist, (r, c) => this.notifyReveal(r, c));
     this.gameStats.startGame(this.turn);
 
     this.notifyKeyChange();
@@ -351,4 +368,12 @@ class ClassicGame extends GameInterface {
   }
 }
 
-module.exports = ClassicGame;
+let classicSchema = new ClassicSchema();
+classicSchema.loadClass(ClassicGame);
+
+let ClassicGameModel = mongoose.model(ClassicGame, classicSchema, 'games');
+
+module.exports = {
+  ClassicGameModel,
+  ClassicGameSchema: classicSchema,
+};

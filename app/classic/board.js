@@ -45,4 +45,7 @@ const schema = new ClassicBoardSchema();
 schema.loadClass(ClassicBoardClass);
 const ClassicBoardModel = mongoose.model(ClassicBoardClass, schema);
 
-module.exports = ClassicBoardModel;
+module.exports = {
+  ClassicBoardModel,
+  ClassicBoardSchema: schema,
+};
