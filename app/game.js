@@ -11,8 +11,11 @@ class AbstractGameSchema extends mongoose.Schema {
 }
 
 class GameInterface extends mongoose.Model {
-  constructor(code, onEmpty, options, broadcast, emitter) {
+  constructor() {
     super();
+  }
+
+  setup(code, onEmpty, options, broadcast, emitter) {
     this.code = code;
     this.onEmpty = onEmpty;
     this.options = options;
