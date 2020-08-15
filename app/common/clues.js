@@ -1,5 +1,5 @@
-var _ = require('lodash');
-var Clue = require('./clue');
+const _ = require('lodash');
+const { ClueModel } = require('./clue');
 
 class Clues {
   constructor(notifyClue) {
@@ -9,7 +9,7 @@ class Clues {
 
   clear() {
     this.clues = [];
-    this.currentClue = undefined;
+    this.currentActive = false;
   }
 
   length() {
@@ -17,9 +17,9 @@ class Clues {
   }
 
   add(word, count, team) {
-    const clue = new Clue(word, count, team);
+    const clue = new ClueModel(word, count, team);
     this.clues.push(clue);
-    this.currentClue = clue;
+    this.currentActive = true;
     this.notifyClue();
   }
 
@@ -28,15 +28,16 @@ class Clues {
   }
 
   currentExists() {
-    return this.currentClue !== undefined;
+    return this.currentActive;
   }
 
   resetCurrent() {
-    this.currentClue = undefined;
+    this.currentActive = false;
   }
 
   json() {
-    let res = { current: this.getCurrent()?.json(), clues: [] };
+    const current = this.currentExists() ? this.clues[this.clues.length - 1] : undefined;
+    let res = { current: current?.json(), clues: [] };
     for (var clue of this.clues) {
       res.clues.push(clue.json());
     }
