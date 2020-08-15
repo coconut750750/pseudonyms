@@ -13,7 +13,6 @@ class CluesSchema extends mongoose.Schema {
         _id : false,
       }],
       currentActive: Boolean,
-      notifyClue: Object,
     });
   }
 }
@@ -22,10 +21,6 @@ class Clues extends mongoose.Model {
   constructor() {
     super();
     this.clear();
-  }
-
-  setup(notifyClue) {
-    this.notifyClue = notifyClue;
   }
 
   clear() {
@@ -41,7 +36,6 @@ class Clues extends mongoose.Model {
     const clue = new ClueModel(word, count, team);
     this.clues.push(clue);
     this.currentActive = true;
-    this.notifyClue();
   }
 
   getCurrent() {

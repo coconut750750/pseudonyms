@@ -28,7 +28,6 @@ class GameClass extends GameInterface {
 
   setupCallbacks(code, onEmpty, options, broadcast, emitter) {
     super.setup(code, onEmpty, options, broadcast, emitter);
-    this.clues.setup( () => this.notifyClue() );
     this.plist.setup(
       () => this.notifyPlayerUpdate(),
       () => this.delete(),

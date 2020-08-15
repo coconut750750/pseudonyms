@@ -215,6 +215,8 @@ class DuetGame extends GameClass {
       this.notifyTurnChange();
     }
     this.clues.add(word, count, this.turn);
+    this.notifyClue();
+    
     this.startGuess();
   }
 

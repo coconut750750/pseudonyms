@@ -224,6 +224,8 @@ class ClassicGame extends GameClass {
       return false;
     }
     this.clues.add(word, count, this.turn);
+    this.notifyClue();
+    
     this.guessesLeft = parseInt(count) + 1;
     this.notifyGuessesLeft();
     this.startGuess();
