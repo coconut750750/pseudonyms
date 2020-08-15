@@ -16,10 +16,13 @@ class CluesSchema extends mongoose.Schema {
 }
 
 class Clues extends mongoose.Model {
-  constructor(notifyClue) {
+  constructor() {
     super();
-    this.notifyClue = notifyClue;
     this.clear();
+  }
+
+  setup(notifyClue) {
+    this.notifyClue = notifyClue;
   }
 
   clear() {
