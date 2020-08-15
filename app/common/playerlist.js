@@ -2,12 +2,15 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 
 class PlayerList extends mongoose.Model{
-  constructor(PlayerClass, notifyUpdate, endGame) {
+  constructor() {
     super();
+    this.players = new Map();
+  }
+
+  setup(PlayerClass, notifyUpdate, endGame) {
     this.PlayerClass = PlayerClass;
     this.notifyUpdate = notifyUpdate;
     this.endGame = endGame;
-    this.players = new Map();
   }
 
   length() {

@@ -21,8 +21,12 @@ class DuetPlayerListSchema extends mongoose.Schema {
 }
 
 class DuetPlayerListClass extends PlayerListInterface {
-  constructor(notifyUpdate, endGame) {
-    super(DuetPlayerModel, notifyUpdate, endGame);
+  constructor() {
+    super();
+  }
+
+  setup(notifyUpdate, endGame) {
+    super.setup(DuetPlayerModel, notifyUpdate, endGame);
   }
 }
 

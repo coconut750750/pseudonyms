@@ -22,8 +22,12 @@ class ClassicPlayerListSchema extends mongoose.Schema {
 }
 
 class ClassicPlayerListClass extends PlayerListInterface {
-  constructor(notifyUpdate, endGame) {
-    super(ClassicPlayerModel, notifyUpdate, endGame);
+  constructor() {
+    super();
+  }
+
+  setup(notifyUpdate, endGame) {
+    super.setup(ClassicPlayerModel, notifyUpdate, endGame);
   }
 
   resetRoles() {
