@@ -72,4 +72,7 @@ const schema = new ClassicPlayerSchema();
 schema.loadClass(ClassicPlayer);
 const ClassicPlayerModel = mongoose.model(ClassicPlayer, schema);
 
-module.exports = ClassicPlayerModel;
+module.exports = {
+  ClassicPlayerSchema: schema,
+  ClassicPlayerModel,
+};

@@ -53,4 +53,7 @@ const schema = new DuetPlayerSchema();
 schema.loadClass(DuetPlayer);
 const DuetPlayerModel = mongoose.model(DuetPlayer, schema);
 
-module.exports = DuetPlayerModel;
+module.exports = {
+  DuetPlayerSchema: schema,
+  DuetPlayerModel,
+};
