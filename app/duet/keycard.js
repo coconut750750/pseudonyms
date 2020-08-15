@@ -36,7 +36,6 @@ class KeyCard {
     };
 
     this.generate();
-    this.jsonObj = this.genJson();
   }
 
   generate() {
@@ -89,29 +88,29 @@ class KeyCard {
     return this.getTile(r, c, team) === GREEN_TILE;
   }
 
-  genJson() {
-    let result = { [RED]: [], [BLUE]: [], merged: [] };
+  json(team) {
+    let result = { keycard: [] };
     for (let r = 0; r < BOARD_LEN; r++) {
-      result[RED].push([])
-      result[BLUE].push([])
-      result.merged.push([])
+      result.keycard.push([])
       for (let c = 0; c < BOARD_LEN; c++) {
-        const redColor = this.getTile(r, c, RED);
-        const blueColor = this.getTile(r, c, BLUE);
-        result[RED][r].push({ color: { red: redColor } });
-        result[BLUE][r].push({ color: { blue: blueColor } });
-        result.merged[r].push({ color: { red: redColor, blue: blueColor } });
+        const color = this.getTile(r, c, team);
+        result.keycard[r].push({ color: { [team]: color } });
       }
     }
     return result;
   }
 
-  json(team) {
-    return { keycard: this.jsonObj[team] };
-  }
-
   jsonMerged() {
-    return { keycard: this.jsonObj.merged };
+    let result = { keycard: [] };
+    for (let r = 0; r < BOARD_LEN; r++) {
+      result.keycard.push([])
+      for (let c = 0; c < BOARD_LEN; c++) {
+        const redColor = this.getTile(r, c, RED);
+        const blueColor = this.getTile(r, c, BLUE);
+        result.keycard[r].push({ color: { red: redColor, blue: blueColor } });
+      }
+    }
+    return result;
   }
 }
 

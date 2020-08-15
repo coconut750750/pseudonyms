@@ -26,7 +26,6 @@ class KeyCard {
     this.start = Math.floor(Math.random() * 2) === 0 ? RED : BLUE;
     this.tiles = [];
     this.generate();
-    this.jsonObj = this.genJson();
   }
 
   generate() {
@@ -77,19 +76,15 @@ class KeyCard {
     return this.getTile(r, c) === BLUE_TILE;
   }
 
-  genJson() {
-    var result = { keycard : [] };
-    for (var r = 0; r < BOARD_LEN; r++) {
+  json() {
+    let result = { keycard : [] };
+    for (let r = 0; r < BOARD_LEN; r++) {
       result.keycard.push([])
-      for (var c = 0; c < BOARD_LEN; c++) {
+      for (let c = 0; c < BOARD_LEN; c++) {
         result.keycard[r].push({ color: this.getTile(r, c) });
       }
     }
     return result;
-  }
-
-  json() {
-    return this.jsonObj;
   }
 }
 
