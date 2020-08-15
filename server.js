@@ -49,9 +49,9 @@ app.io.on('connect', function (socket) {
   var name;
   var player;
 
-  socket.on('joinGame', data => {
+  socket.on('joinGame', async data => {
     name = data.name;
-    game = app.gm.retrieveGame(data.gameCode);
+    game = await app.gm.retrieveGame(data.gameCode);
     if (!(game instanceof GameInterface)) {
       return;
     }
@@ -65,6 +65,7 @@ app.io.on('connect', function (socket) {
     player = game.getPlayer(name);
 
     game.socketio(socket, game, name, player);
+    socket.emit('ready', {});
   });
 
   socket.on('exitGame', data => {

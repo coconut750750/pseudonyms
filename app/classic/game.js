@@ -211,7 +211,6 @@ class ClassicGame extends GameClass {
     this.guessesLeft = parseInt(count) + 1;
     this.notifyGuessesLeft();
     this.startGuess();
-    this.save();
   }
 
   canReveal(player) {

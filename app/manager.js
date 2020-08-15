@@ -1,5 +1,6 @@
 const { ClassicGameModel } = require('./classic/game');
 const { DuetGameModel } = require('./duet/game');
+const { GameModel } = require('./common/game');
 
 class Manager {
   constructor(dev, io, statsCollection) {
@@ -20,7 +21,8 @@ class Manager {
 
   createClassicGame() {
     const code = this.generateCode();
-    const newGame = new ClassicGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    const newGame = new ClassicGameModel();
+    newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
     this.games[code] = newGame;
     newGame.save();
     return newGame;
@@ -28,14 +30,20 @@ class Manager {
 
   createDuetGame() {
     const code = this.generateCode();
-    const newGame = new DuetGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    const newGame = new DuetGameModel();
+    newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
     this.games[code] = newGame;
     newGame.save();
     return newGame;
   }
 
-  retrieveGame(code) {
-    return this.games[code];
+  async retrieveGame(code) {
+    let game = await GameModel.findOne({ code });
+    if (game === null) {
+      return undefined;
+    }
+    game.setupCallbacks(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    return game;
   }
 
   endGame(code) {
@@ -55,7 +63,8 @@ class Manager {
 
   devClassic() {
     const code = 'cccc';
-    this.games[code] = new ClassicGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    this.games[code] = new ClassicGameModel();
+    this.games[code].setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
 
     for (let name of ['11', '22', '33', '44', '55']) {
       this.games[code].addPlayer(name, undefined);
@@ -79,7 +88,8 @@ class Manager {
 
   devDuet() {
     const code = 'dddd';
-    this.games[code] = new DuetGameModel(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    this.games[code] = new DuetGameModel();
+    this.games[code].setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
 
     for (let name of ['11', '22', '33']) {
       this.games[code].addPlayer(name, undefined);

@@ -24,7 +24,7 @@ router.post('/duet/create', (req, res) => {
   });
 });
 
-router.get('/checkname', (req, res) => {
+router.get('/checkname', async (req, res) => {
   const { name } = req.query;
   if (name === undefined) {
     return res.status(400).send({ message: 'No name provided' });
@@ -35,7 +35,7 @@ router.get('/checkname', (req, res) => {
 
   const { gameCode } = req.query;
   if (gameCode !== undefined) {
-    const game = req.gm.retrieveGame(gameCode);
+    const game = await req.gm.retrieveGame(gameCode);
     if (game === undefined) {
       res.status(400).send({ message: 'Invalid game code' });
     } else if (game.playerExists(name) && !game.isActive(name)) {
@@ -50,9 +50,9 @@ router.get('/checkname', (req, res) => {
   }
 });
 
-router.get('/checkcode', (req, res) => {
+router.get('/checkcode', async (req, res) => {
   const { gameCode } = req.query;
-  const game = req.gm.retrieveGame(gameCode);
+  const game = await req.gm.retrieveGame(gameCode);
   if (game != undefined) {
     res.send({});
   } else {

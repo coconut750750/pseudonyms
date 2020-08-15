@@ -59,8 +59,6 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
       setWinner("");
     }
 
-    socket.emit('joinGame', { name: name, gameCode: gameCode });
-
     socket.off('phase');
     socket.on('phase', data => {
       ReactDOM.unstable_batchedUpdates(() => {
@@ -132,8 +130,12 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
       setWinner(winner);
     });
 
-    socket.emit('getReconnect', {});
+    socket.off('ready');
+    socket.on('ready', data => {
+      socket.emit('getReconnect', {});
+    });
 
+    socket.emit('joinGame', { name: name, gameCode: gameCode });
   }, [gameCode, name, socket, setError]);
 
   useEffect(() => {

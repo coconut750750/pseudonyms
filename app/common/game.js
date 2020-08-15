@@ -21,14 +21,19 @@ class GameClass extends GameInterface {
   }
 
   setup(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
-    super.setup(code, onEmpty, options, broadcast, emitter);
-    this.clues = new CluesModel( () => this.notifyClue() );
+    this.clues = new CluesModel();
+    this.plist = new PlayerListClass();
+    this.minPlayers = minPlayers;
+    this.setupCallbacks(code, onEmpty, options, broadcast, emitter)
+  }
 
-    this.plist = new PlayerListClass(
+  setupCallbacks(code, onEmpty, options, broadcast, emitter) {
+    super.setup(code, onEmpty, options, broadcast, emitter);
+    this.clues.setup( () => this.notifyClue() );
+    this.plist.setup(
       () => this.notifyPlayerUpdate(),
       () => this.delete(),
     );
-    this.minPlayers = minPlayers;
   }
 
   mode() {
