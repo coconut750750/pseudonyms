@@ -15,11 +15,14 @@ app.io = require('socket.io')(server, {
   pingTimeout: 30000
 });
 
-const GameInterface = require('./app/game');
+const { GameInterface } = require('./app/game');
 const GameManager = require('./app/manager');
 
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
+if (dev) {
+  db.dropCollection('games');
+}
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.json());
