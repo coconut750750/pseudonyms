@@ -1,8 +1,20 @@
-const GameOptionsInterface = require("../common/gameoptions");
+const mongoose = require('mongoose');
+
+const { GameOptionsSchema, GameOptionsClass } = require("../common/gameoptions");
 const { MAX_TIMER_TOKENS } = require("../common/const").duet;
 const { GameError } = require("../common/gameerror");
 
-class GameOptions extends GameOptionsInterface {
+class DuetGameOptionsSchema extends GameOptionsSchema {
+  constructor() {
+    super(arguments);
+    this.add({
+      timers: Number,
+      mistakes: Number,
+    })
+  }
+}
+
+class DuetGameOptions extends GameOptionsClass {
   constructor(options) {
     const { clueLimit, guessLimit, wordlist, customWords, timers, mistakes } = options;
     
@@ -29,4 +41,11 @@ class GameOptions extends GameOptionsInterface {
   }
 }
 
-module.exports = GameOptions;
+const schema = new DuetGameOptionsSchema();
+schema.loadClass(DuetGameOptions);
+const DuetGameOptionsModel = mongoose.model(DuetGameOptions, schema);
+
+module.exports = {
+  DuetGameOptionsSchema: schema,
+  DuetGameOptionsModel,
+};

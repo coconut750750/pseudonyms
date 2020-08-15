@@ -1,10 +1,19 @@
-const GameOptionsInterface = require("../common/gameoptions");
+const mongoose = require('mongoose');
 
-class GameOptions extends GameOptionsInterface{
+const { GameOptionsSchema, GameOptionsClass } = require("../common/gameoptions");
+
+class ClassicGameOptions extends GameOptionsClass{
   constructor(options) {
     const { clueLimit, guessLimit, wordlist, customWords } = options;
     super(clueLimit, guessLimit, wordlist, customWords)
   }
 }
 
-module.exports = GameOptions;
+const schema = new GameOptionsSchema();
+schema.loadClass(ClassicGameOptions);
+const ClassicGameOptionsModel = mongoose.model(ClassicGameOptions, schema);
+
+module.exports = {
+  ClassicGameOptionsSchema: schema,
+  ClassicGameOptionsModel,
+};
