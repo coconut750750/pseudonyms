@@ -9,6 +9,9 @@ class ClassicBoardSchema extends BoardSchema {
     super();
     this.add({
       revealedInts: [Number],
+      jsonObj: Object,
+      notifyReveal: Object,
+      sendAllReveals: Object,
     });
   }
 }

@@ -22,7 +22,9 @@ class DuetBoardSchema extends BoardSchema {
       revealedMatrix: [[{
         type: String,
         enum: [RED, BLUE],
-      }]]
+      }]],
+      jsonObj: Object,
+      notifyReveal: Object,
     });
   }
 }
