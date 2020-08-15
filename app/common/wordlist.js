@@ -4,8 +4,11 @@ const path = require("path");
 const { GameError } = require("./gameerror");
 const { MIN_WORDS } = require('./const');
 
+const basePath = path.join(__dirname, `./wordfiles/`);
+
 function wordsFromFile(wordfile) {
-  const filepath = path.join(__dirname, `./wordfiles/${wordfile}`);
+  const safeSuffix = path.normalize(wordfile).replace(/^(\.\.(\/|\\|$))+/, '');
+  const filepath = path.join(basePath, safeSuffix);
   if (!fs.existsSync(filepath)) {
     throw new GameError("Provided wordlist is not a valid option");
   }

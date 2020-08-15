@@ -182,16 +182,10 @@ class ClassicGame extends GameClass {
   }
 
   canSendClue(player) {
-    if (!player.assignedTeam() || !player.isOnTeam(this.turn)) {
-      return false;
-    }
-    if (!player.isCaptain()) {
-      return false;
-    }
     if (this.phase !== BOARD) {
       return false;
     }
-    return true;
+    return player.assignedTeam() && player.isOnTeam(this.turn) && player.isCaptain();
   }
 
   validClue(word) {
@@ -201,6 +195,9 @@ class ClassicGame extends GameClass {
   addClue(player, word, count) {
     if (!this.validClue(word)) {
       throw new GameError("Invalid Clue");
+    }
+    if (this.clues.currentExists()) {
+      return false;
     }
     this.clues.add(word, count, this.turn);
     this.guessesLeft = parseInt(count) + 1;
