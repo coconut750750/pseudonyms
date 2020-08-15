@@ -8,7 +8,10 @@ class CluesSchema extends mongoose.Schema {
     super(arguments);
     mongoose.Schema.apply(this, arguments);
     this.add({
-      clues: [ClueSchema],
+      clues: [{
+        type: ClueSchema,
+        _id : false,
+      }],
       currentActive: Boolean,
       notifyClue: Object,
     });

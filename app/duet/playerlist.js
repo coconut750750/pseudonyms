@@ -14,7 +14,10 @@ class DuetPlayerListSchema extends mongoose.Schema {
       endGame: Object,
       players: {
         type: Map,
-        of: DuetPlayerSchema,
+        of: {
+          type: DuetPlayerSchema,
+          _id : false,
+        },
       },
     });
   }

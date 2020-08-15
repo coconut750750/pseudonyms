@@ -29,14 +29,26 @@ class DuetSchema extends GameSchema {
         default: false,
       },
       phase: String,
-      board: DuetBoardSchema,
-      plist: DuetPlayerListSchema,
+      board: {
+        type: DuetBoardSchema,
+        _id : false,
+      },
+      plist: {
+        type: DuetPlayerListSchema,
+        _id : false,
+      },
       turn: String,
       win: Boolean,
       timersLeft: Number,
       mistakesLeft: Number,
-      gameoptions: DuetGameOptionsSchema,
-      keycard: DuetKeyCardSchema,
+      gameoptions: {
+        type: DuetGameOptionsSchema,
+        _id : false,
+      },
+      keycard: {
+        type: DuetKeyCardSchema,
+        _id : false,
+      },
     });
   }
 }

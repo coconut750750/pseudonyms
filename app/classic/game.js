@@ -31,13 +31,25 @@ class ClassicSchema extends GameSchema {
         default: false,
       },
       phase: String,
-      board: ClassicBoardSchema,
-      plist: ClassicPlayerListSchema,
+      board: {
+        type: ClassicBoardSchema,
+        _id : false,
+      },
+      plist: {
+        type: ClassicPlayerListSchema,
+        _id : false,
+      },
       turn: String,
       guessesLeft: Number,
       winner: String,
-      gameoptions: ClassicGameOptionsSchema,
-      keycard: ClassicKeyCardSchema,
+      gameoptions: {
+        type: ClassicGameOptionsSchema,
+        _id : false,
+      },
+      keycard: {
+        type: ClassicKeyCardSchema,
+        _id : false,
+      },
     });
   }
 }

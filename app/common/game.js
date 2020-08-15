@@ -10,6 +10,7 @@ class GameSchema extends AbstractGameSchema {
       minPlayers: Number,
       clues: {
         type: CluesSchema,
+        _id : false,
       },
     });
   }

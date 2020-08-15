@@ -15,7 +15,10 @@ class ClassicPlayerListSchema extends mongoose.Schema {
       endGame: Object,
       players: {
         type: Map,
-        of: ClassicPlayerSchema,
+        of: {
+          type: ClassicPlayerSchema,
+          _id : false,
+        },
       },
     });
   }
