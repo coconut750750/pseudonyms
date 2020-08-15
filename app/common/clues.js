@@ -10,7 +10,7 @@ class CluesSchema extends mongoose.Schema {
     this.add({
       clues: [ClueSchema],
       currentActive: Boolean,
-      notifyClue: mongoose.Schema.Types.Mixed,
+      notifyClue: Object,
     });
   }
 }
