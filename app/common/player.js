@@ -7,8 +7,8 @@ class PlayerSchema extends mongoose.Schema {
     this.add({
       name: {type: String, required: true},
       sid: {type: String, required: false},
-      isAdmin: {type: Boolean, required: false},
-      active: {type: Boolean, required: false},
+      isAdmin: {type: Boolean, required: true},
+      active: {type: Boolean, required: true},
     });
   }
 }
