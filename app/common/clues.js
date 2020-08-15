@@ -60,9 +60,7 @@ class Clues extends mongoose.Model {
   }
 }
 
-const schema = new CluesSchema({
-  strict: false
-});
+const schema = new CluesSchema();
 schema.loadClass(Clues);
 const CluesModel = mongoose.model(Clues, schema);
 

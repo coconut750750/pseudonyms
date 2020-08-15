@@ -110,9 +110,7 @@ class ClassicKeyCard extends mongoose.Model{
   }
 }
 
-const schema = new ClassicKeyCardSchema({
-  strict: false
-});
+const schema = new ClassicKeyCardSchema();
 schema.loadClass(ClassicKeyCard);
 const ClassicKeyCardModel = mongoose.model(ClassicKeyCard, schema);
 
