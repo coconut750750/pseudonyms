@@ -7,10 +7,6 @@ class PlayerList extends mongoose.Model{
     this.players = new Map();
   }
 
-  setup(endGame) {
-    this.endGame = endGame;
-  }
-
   length() {
     return this.players.size;
   }
@@ -39,16 +35,15 @@ class PlayerList extends mongoose.Model{
     this.players.get(name).activate(sid);
   }
 
-  deactivate(name) {
+  deactivate(name, notify, endGame) {
     if (this.players.has(name)) {
       this.players.get(name).deactivate();
       if (this.allDeactivated()) {
-        this.endGame();
+        endGame();
       } else {
-        return true;
+        notify()
       }
     }
-    return false;
   }
 
   allDeactivated() {
@@ -62,17 +57,16 @@ class PlayerList extends mongoose.Model{
     return this.players.get(name).active;
   }
 
-  removePlayer(name, emitter) {
+  removePlayer(name, emitter, notify, endGame) {
     if (this.players.has(name)) {
       this.players.get(name).send('end', {}, emitter);
       this.players.delete(name);
       if (this.allDeactivated()) {
-        this.endGame();
+        endGame();
       } else {
-        return true;
+        notify();
       }
     }
-    return false;
   }
 
   resetTeams() {

@@ -28,9 +28,6 @@ class GameClass extends GameInterface {
 
   setupCallbacks(code, onEmpty, options, broadcast, emitter) {
     super.setup(code, onEmpty, options, broadcast, emitter);
-    this.plist.setup(
-      () => this.delete(),
-    );
   }
 
   mode() {
@@ -76,9 +73,7 @@ class GameClass extends GameInterface {
   }
 
   deactivatePlayer(name) {
-    if (this.plist.deactivate(name)) {
-      this.notifyPlayerUpdate();
-    }
+    this.plist.deactivate(name, () => this.notifyPlayerUpdate(), () => this.delete())
   }
 
   isActive(name) {
@@ -90,9 +85,7 @@ class GameClass extends GameInterface {
   }
 
   removePlayer(name) {
-    if (this.plist.removePlayer(name, this.emitter)) {
-      this.notifyPlayerUpdate();
-    }
+    this.plist.removePlayer(name, this.emitter, () => this.notifyPlayerUpdate(), () => this.delete())
   }
 
   resetTeams() {

@@ -10,8 +10,6 @@ class ClassicPlayerListSchema extends mongoose.Schema {
     super();
     mongoose.Schema.apply(this, arguments);
     this.add({
-      PlayerClass: Object,
-      endGame: Object,
       players: {
         type: Map,
         of: {
@@ -26,10 +24,6 @@ class ClassicPlayerListSchema extends mongoose.Schema {
 class ClassicPlayerListClass extends PlayerListInterface {
   constructor() {
     super();
-  }
-
-  setup(endGame) {
-    super.setup(endGame);
   }
 
   createPlayer(name, sid) {
