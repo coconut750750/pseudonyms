@@ -1,4 +1,6 @@
-const GameInterface = require("../common/game")
+const mongoose = require('mongoose');
+
+const { GameClass, GameSchema } = require("../common/game")
 const WordList = require("../common/wordlist");
 const { GameError } = require("../common/gameerror");
 
@@ -18,7 +20,20 @@ const TEAMS = 'teams';
 const BOARD = 'board';
 const RESULT = 'result';
 
-class DuetGame extends GameInterface {
+class DuetSchema extends GameSchema {
+  constructor() {
+    super(arguments);
+    this.add({
+      started: {
+        type: Boolean,
+        default: false,
+      },
+      phase: String,
+    });
+  }
+}
+
+class DuetGame extends GameClass {
   constructor(code, onEmpty, options, broadcast, emitter) {
     super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
 
@@ -346,4 +361,11 @@ class DuetGame extends GameInterface {
   }
 }
 
-module.exports = DuetGame;
+let schema = new DuetSchema();
+schema.loadClass(DuetGame);
+let DuetGameModel = mongoose.model(DuetGame, schema, 'games');
+
+module.exports = {
+  DuetGameSchema: schema,
+  DuetGameModel,
+};
