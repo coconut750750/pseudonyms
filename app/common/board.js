@@ -46,7 +46,7 @@ class BoardClass extends mongoose.Model {
     return [Math.floor(index / BOARD_LEN), index % BOARD_LEN];
   }
 
-  genJson(board) {
+  json() {
     var result = { board : [] };
     for (var r = 0; r < BOARD_LEN; r++) {
       result.board.push([])
@@ -55,10 +55,6 @@ class BoardClass extends mongoose.Model {
       }
     }
     return result;
-  }
-
-  json() {
-    return this.jsonObj;
   }
 }
 
