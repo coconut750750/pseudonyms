@@ -5,11 +5,12 @@ const { ClueModel, ClueSchema } = require('./clue');
 
 class CluesSchema extends mongoose.Schema {
   constructor() {
-    super();
+    super(arguments);
     mongoose.Schema.apply(this, arguments);
     this.add({
       clues: [ClueSchema],
       currentActive: Boolean,
+      notifyClue: mongoose.Schema.Types.Mixed,
     });
   }
 }
@@ -59,12 +60,13 @@ class Clues extends mongoose.Model {
   }
 }
 
-const schema = new CluesSchema();
+const schema = new CluesSchema({
+  strict: false
+});
 schema.loadClass(Clues);
 const CluesModel = mongoose.model(Clues, schema);
 
-
 module.exports = {
-  CluesModel,
-  CluesSchema,
+  CluesModel: Clues,
+  CluesSchema: schema,
 };

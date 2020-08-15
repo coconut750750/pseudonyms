@@ -29,4 +29,7 @@ const schema = new ClueSchema();
 schema.loadClass(Clue);
 const ClueModel = mongoose.model(Clue, schema);
 
-module.exports = ClueModel;
+module.exports = {
+  ClueModel,
+  ClueSchema: schema,
+};
