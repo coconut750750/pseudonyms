@@ -70,4 +70,7 @@ const schema = new DuetBoardSchema();
 schema.loadClass(DuetBoardClass);
 const DuetBoardModel = mongoose.model(DuetBoardClass, schema);
 
-module.exports = DuetBoardModel;
+module.exports = {
+  DuetBoardSchema: schema,
+  DuetBoardModel,
+};
