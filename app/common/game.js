@@ -152,6 +152,11 @@ class Game extends GameInterface {
     this.broadcast('time', { time });
   }
 
+  notifyClue() {
+    console.log(this.clues.json())
+    this.broadcast('clues', this.clues.json());
+  }
+
   delete() {
     clearInterval(this.timer);
     this.broadcast('end', {});

@@ -287,10 +287,6 @@ class DuetGame extends GameInterface {
     this.broadcast('turn', { turn: this.turn });
   }
 
-  notifyClue() {
-    this.broadcast('clues', this.clues.json());
-  }
-
   notifyScore() {
     this.broadcast('score', { leftover: this.keycard.leftover, mistakes: this.mistakesLeft, timer: this.timersLeft });
   }

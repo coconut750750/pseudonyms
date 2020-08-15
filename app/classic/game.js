@@ -282,10 +282,6 @@ class ClassicGame extends GameInterface {
     this.broadcast('turn', { turn: this.turn });
   }
 
-  notifyClue() {
-    this.broadcast('clues', this.clues.json());
-  }
-
   notifyScore() {
     this.broadcast('score', { red: this.keycard.redLeft, blue: this.keycard.blueLeft });
   }
