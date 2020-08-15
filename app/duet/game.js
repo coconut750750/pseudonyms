@@ -75,7 +75,6 @@ class DuetGame extends GameClass {
     this.gameoptions = undefined;
     this.phase = LOBBY;
     this.keycard = undefined;
-    this.wordlist = undefined;
     this.board = undefined;
     this.turn = undefined;
     this.win = false;
@@ -112,8 +111,6 @@ class DuetGame extends GameClass {
     }
     
     this.gameoptions = new DuetGameOptionsModel(options);
-    this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
-
     this.timersLeft = this.gameoptions.timers;
     this.mistakesLeft = this.gameoptions.mistakes;
 
@@ -142,7 +139,9 @@ class DuetGame extends GameClass {
 
     this.turn = FIRST_TURN;
     this.keycard = new KeyCard();
-    this.board = new DuetBoardModel(this.wordlist, (r, c, team) => this.notifyReveal(r, c, team));
+
+    const wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
+    this.board = new DuetBoardModel(wordlist, (r, c, team) => this.notifyReveal(r, c, team));
     this.gameStats.startGame();
 
     this.notifyKeyChange();

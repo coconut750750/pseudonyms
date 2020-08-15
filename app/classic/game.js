@@ -72,7 +72,6 @@ class ClassicGame extends GameClass {
     this.gameoptions = undefined;
     this.phase = LOBBY;
     this.keycard = undefined;
-    this.wordlist = undefined;
     this.board = undefined;
     this.turn = undefined;
     this.guessesLeft = 0;
@@ -124,8 +123,6 @@ class ClassicGame extends GameClass {
     }
     
     this.gameoptions = new ClassicGameOptionsModel(options);
-    this.wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
-
     this.started = true;
     this.phase = TEAMS;
     this.notifyPhaseChange();
@@ -162,7 +159,9 @@ class ClassicGame extends GameClass {
 
     this.keycard = new KeyCard();
     this.turn = this.keycard.start;
-    this.board = new ClassicBoardModel(this.wordlist, (r, c) => this.notifyReveal(r, c));
+
+    const wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
+    this.board = new ClassicBoardModel(wordlist, (r, c) => this.notifyReveal(r, c));
     this.gameStats.startGame(this.turn);
 
     this.notifyKeyChange();
