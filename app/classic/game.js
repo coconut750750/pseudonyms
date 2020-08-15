@@ -7,7 +7,7 @@ const { CluesModel, CluesSchema } = require("../common/clues");
 
 const socketio = require("./socketio");
 const { ClassicBoardModel, ClassicBoardSchema } = require("./board");
-const KeyCard = require("./keycard");
+const { ClassicKeyCardModel, ClassicKeyCardSchema } = require("./keycard");
 const { ClassicPlayerListModel, ClassicPlayerListSchema } = require("./playerlist");
 const { ClassicGameOptionsSchema, ClassicGameOptionsModel } = require("./gameoptions");
 const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
@@ -37,6 +37,7 @@ class ClassicSchema extends GameSchema {
       guessesLeft: Number,
       winner: String,
       gameoptions: ClassicGameOptionsSchema,
+      keycard: ClassicKeyCardSchema,
     });
   }
 }
@@ -157,7 +158,7 @@ class ClassicGame extends GameClass {
     }
     this.phase = BOARD;
 
-    this.keycard = new KeyCard();
+    this.keycard = new ClassicKeyCardModel();
     this.turn = this.keycard.start;
 
     const wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);

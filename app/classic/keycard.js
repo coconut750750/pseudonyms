@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const c = require('../common/const');
 
 const { BOARD_LEN } = c;
@@ -21,8 +23,28 @@ function shuffle(a) {
   return a;
 }
 
-class KeyCard {
+class ClassicKeyCardSchema extends mongoose.Schema {
   constructor() {
+    super(arguments);
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      start: {
+        type: String,
+        enum: [RED, BLUE]
+      },
+      tiles: [{
+        type: String,
+        enum: [RED_TILE, BLUE_TILE, WHITE_TILE, BLACK_TILE]
+      }],
+      redLeft: Number,
+      blueLeft: Number,
+    });
+  }
+}
+
+class ClassicKeyCard extends mongoose.Model{
+  constructor() {
+    super();
     this.start = Math.floor(Math.random() * 2) === 0 ? RED : BLUE;
     this.tiles = [];
     this.generate();
@@ -88,4 +110,13 @@ class KeyCard {
   }
 }
 
-module.exports = KeyCard;
+const schema = new ClassicKeyCardSchema({
+  strict: false
+});
+schema.loadClass(ClassicKeyCard);
+const ClassicKeyCardModel = mongoose.model(ClassicKeyCard, schema);
+
+module.exports = {
+  ClassicKeyCardModel,
+  ClassicKeyCardSchema: schema,
+};

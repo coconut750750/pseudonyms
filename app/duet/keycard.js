@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const c = require('../common/const');
 
 const { BOARD_LEN } = c;
@@ -26,8 +28,34 @@ function shuffle(a) {
   return a;
 }
 
-class KeyCard {
+class DuetKeyCardSchema extends mongoose.Schema {
   constructor() {
+    super(arguments);
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      tiles: [{
+        _id : false,
+        [RED]: {
+          type: String,
+          enum: [GREEN_TILE, WHITE_TILE, BLACK_TILE]
+        }, 
+        [BLUE]: {
+          type: String,
+          enum: [GREEN_TILE, WHITE_TILE, BLACK_TILE]
+        }
+      }],
+      leftover: Number,
+      teamLeftover: {
+        [RED]: Number,
+        [BLUE]: Number,
+      },
+    });
+  }
+}
+
+class DuetKeyCard extends mongoose.Model {
+  constructor() {
+    super();
     this.tiles = [];
     this.leftover = N_GREEN_TILES;
     this.teamLeftover = {
@@ -114,4 +142,11 @@ class KeyCard {
   }
 }
 
-module.exports = KeyCard;
+const schema = new DuetKeyCardSchema();
+schema.loadClass(DuetKeyCard);
+const DuetKeyCardModel = mongoose.model(DuetKeyCard, schema);
+
+module.exports = {
+  DuetKeyCardModel,
+  DuetKeyCardSchema: schema,
+};

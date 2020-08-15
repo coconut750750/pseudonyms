@@ -6,7 +6,7 @@ const { GameError } = require("../common/gameerror");
 
 const socketio = require("./socketio");
 const { DuetBoardModel, DuetBoardSchema } = require("./board");
-const KeyCard = require("./keycard");
+const { DuetKeyCardModel, DuetKeyCardSchema } = require("./keycard");
 const { DuetPlayerListModel, DuetPlayerListSchema } = require("./playerlist");
 const { DuetGameOptionsSchema, DuetGameOptionsModel } = require("./gameoptions");
 const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
@@ -36,6 +36,7 @@ class DuetSchema extends GameSchema {
       timersLeft: Number,
       mistakesLeft: Number,
       gameoptions: DuetGameOptionsSchema,
+      keycard: DuetKeyCardSchema,
     });
   }
 }
@@ -138,7 +139,7 @@ class DuetGame extends GameClass {
     this.phase = BOARD;
 
     this.turn = FIRST_TURN;
-    this.keycard = new KeyCard();
+    this.keycard = new DuetKeyCardModel();
 
     const wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
     this.board = new DuetBoardModel(wordlist, (r, c, team) => this.notifyReveal(r, c, team));
