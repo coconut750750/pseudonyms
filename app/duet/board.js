@@ -11,7 +11,18 @@ class DuetBoardSchema extends BoardSchema {
   constructor() {
     super();
     this.add({
-      revealedInts: [Number],
+      revealed: [{
+         r: Number,
+         c: Number,
+         team: {
+          type: String,
+          enum: [RED, BLUE],
+         }
+      }],
+      revealedMatrix: [[{
+        type: String,
+        enum: [RED, BLUE],
+      }]]
     });
   }
 }
@@ -21,7 +32,7 @@ class DuetBoardClass extends BoardClass {
     super(wordlist);
 
     this.revealedMatrix = [];
-    for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealedMatrix.push(new Set()) };
+    for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealedMatrix.push([]) };
     this.revealed = [];
 
     this.jsonObj = this.genJson();
@@ -29,7 +40,7 @@ class DuetBoardClass extends BoardClass {
   }
 
   isRevealed(r, c, team) {
-    return this.revealedMatrix[this.coordToIndex(r, c)].has(team);
+    return (new Set(this.revealedMatrix[this.coordToIndex(r, c)])).has(team);
   }
 
   isValid(word) {
@@ -45,10 +56,10 @@ class DuetBoardClass extends BoardClass {
     const index = this.coordToIndex(r, c);
 
     if (isGreen) {
-      this.revealedMatrix[index].add(RED);
-      this.revealedMatrix[index].add(BLUE);
+      this.revealedMatrix[index].push(RED);
+      this.revealedMatrix[index].push(BLUE);
     } else {
-      this.revealedMatrix[index].add(team);
+      this.revealedMatrix[index].push(team);
     }
     this.revealed.push({ r, c, team });
     this.notifyReveal(r, c, team);
