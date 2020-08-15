@@ -1,8 +1,22 @@
 const _ = require('lodash');
-const { ClueModel } = require('./clue');
+const mongoose = require('mongoose');
 
-class Clues {
+const { ClueModel, ClueSchema } = require('./clue');
+
+class CluesSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      clues: [ClueSchema],
+      currentActive: Boolean,
+    });
+  }
+}
+
+class Clues extends mongoose.Model {
   constructor(notifyClue) {
+    super();
     this.notifyClue = notifyClue;
     this.clear();
   }
@@ -45,4 +59,12 @@ class Clues {
   }
 }
 
-module.exports = Clues;
+const schema = new CluesSchema();
+schema.loadClass(Clues);
+const CluesModel = mongoose.model(Clues, schema);
+
+
+module.exports = {
+  CluesModel,
+  CluesSchema,
+};
