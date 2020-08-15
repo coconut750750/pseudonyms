@@ -153,7 +153,6 @@ class Game extends GameInterface {
   }
 
   notifyClue() {
-    console.log(this.clues.json())
     this.broadcast('clues', this.clues.json());
   }
 
