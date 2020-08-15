@@ -1,12 +1,23 @@
-var _ = require('lodash');
+const _ = require('lodash');
+const mongoose = require('mongoose');
+
 const c = require("../common/const");
 const { BOARD_LEN } = c;
 const { RED, BLUE } = c.duet;
 
-const BoardInterface = require("../common/board")
+const { BoardClass, BoardSchema } = require("../common/board")
 
-class Board extends BoardInterface {
-  constructor(wordlist, notifyReveal, sendAllReveals) {
+class DuetBoardSchema extends BoardSchema {
+  constructor() {
+    super();
+    this.add({
+      revealedInts: [Number],
+    });
+  }
+}
+
+class DuetBoardClass extends BoardClass {
+  constructor(wordlist, notifyReveal) {
     super(wordlist);
 
     this.revealedMatrix = [];
@@ -15,7 +26,6 @@ class Board extends BoardInterface {
 
     this.jsonObj = this.genJson();
     this.notifyReveal = notifyReveal;
-    this.sendAllReveals = sendAllReveals;
   }
 
   isRevealed(r, c, team) {
@@ -43,10 +53,10 @@ class Board extends BoardInterface {
     this.revealed.push({ r, c, team });
     this.notifyReveal(r, c, team);
   }
-
-  sendReveals() {
-    this.sendAllReveals(this.revealedMatrix);
-  }
 }
 
-module.exports = Board;
+const schema = new DuetBoardSchema();
+schema.loadClass(DuetBoardClass);
+const DuetBoardModel = mongoose.model(DuetBoardClass, schema);
+
+module.exports = DuetBoardModel;

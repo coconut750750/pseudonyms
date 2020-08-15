@@ -1,8 +1,19 @@
-var _ = require('lodash');
-const { BOARD_LEN } = require("../common/const");
-const BoardInterface = require("../common/board")
+const _ = require('lodash');
+const mongoose = require('mongoose');
 
-class Board extends BoardInterface {
+const { BOARD_LEN } = require("../common/const");
+const { BoardClass, BoardSchema } = require("../common/board")
+
+class ClassicBoardSchema extends BoardSchema {
+  constructor() {
+    super();
+    this.add({
+      revealedInts: [Number],
+    });
+  }
+}
+
+class ClassicBoardClass extends BoardClass {
   constructor(wordlist, notifyReveal, sendAllReveals) {
     super(wordlist);
     this.revealedInts = [];
@@ -30,4 +41,8 @@ class Board extends BoardInterface {
   }
 }
 
-module.exports = Board;
+const schema = new ClassicBoardSchema();
+schema.loadClass(ClassicBoardClass);
+const ClassicBoardModel = mongoose.model(ClassicBoardClass, schema);
+
+module.exports = ClassicBoardModel;

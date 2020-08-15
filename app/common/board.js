@@ -1,7 +1,20 @@
+const mongoose = require('mongoose');
+
 const { BOARD_LEN } = require("../common/const");
 
-class Board {
+class BoardSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      tiles: [String],
+    });
+  }
+}
+
+class BoardClass extends mongoose.Model {
   constructor(wordlist) {
+    super();
     this.tiles = wordlist.getRandomWords(BOARD_LEN * BOARD_LEN);
   }
 
@@ -49,4 +62,7 @@ class Board {
   }
 }
 
-module.exports = Board;
+module.exports = {
+  BoardClass,
+  BoardSchema
+};
