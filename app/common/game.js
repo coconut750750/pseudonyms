@@ -29,7 +29,6 @@ class GameClass extends GameInterface {
   setupCallbacks(code, onEmpty, options, broadcast, emitter) {
     super.setup(code, onEmpty, options, broadcast, emitter);
     this.plist.setup(
-      () => this.notifyPlayerUpdate(),
       () => this.delete(),
     );
   }
@@ -68,14 +67,18 @@ class GameClass extends GameInterface {
 
   addPlayer(name, sid) {
     this.plist.add(name, sid);
+    this.notifyPlayerUpdate();
   }
 
   activatePlayer(name, sid) {
     this.plist.activate(name, sid);
+    this.notifyPlayerUpdate();
   }
 
   deactivatePlayer(name) {
-    this.plist.deactivate(name);
+    if (this.plist.deactivate(name)) {
+      this.notifyPlayerUpdate();
+    }
   }
 
   isActive(name) {
@@ -87,11 +90,14 @@ class GameClass extends GameInterface {
   }
 
   removePlayer(name) {
-    this.plist.removePlayer(name, this.emitter);
+    if (this.plist.removePlayer(name, this.emitter)) {
+      this.notifyPlayerUpdate();
+    }
   }
 
   resetTeams() {
     this.plist.resetTeams();
+    this.notifyPlayerUpdate();
   }
 
   canSetTeam() {
@@ -100,10 +106,12 @@ class GameClass extends GameInterface {
 
   setTeam(name, isRed) {
     this.plist.setTeam(name, isRed);
+    this.notifyPlayerUpdate();
   }
 
   randomizeTeams() {
     this.plist.randomizeTeams();
+    this.notifyPlayerUpdate();
   }
 
   allAssignedTeam() {

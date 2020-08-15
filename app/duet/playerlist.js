@@ -10,7 +10,6 @@ class DuetPlayerListSchema extends mongoose.Schema {
     mongoose.Schema.apply(this, arguments);
     this.add({
       PlayerClass: Object,
-      notifyUpdate: Object,
       endGame: Object,
       players: {
         type: Map,
@@ -28,8 +27,8 @@ class DuetPlayerListClass extends PlayerListInterface {
     super();
   }
 
-  setup(notifyUpdate, endGame) {
-    super.setup(notifyUpdate, endGame);
+  setup(endGame) {
+    super.setup(endGame);
   }
 
   createPlayer(name, sid) {

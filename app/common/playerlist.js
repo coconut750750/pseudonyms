@@ -7,8 +7,7 @@ class PlayerList extends mongoose.Model{
     this.players = new Map();
   }
 
-  setup(notifyUpdate, endGame) {
-    this.notifyUpdate = notifyUpdate;
+  setup(endGame) {
     this.endGame = endGame;
   }
 
@@ -34,12 +33,10 @@ class PlayerList extends mongoose.Model{
 
   add(name, sid) {
     this.players.set(name, this.createPlayer(name, sid));
-    this.notifyUpdate();
   }
 
   activate(name, sid) {
     this.players.get(name).activate(sid);
-    this.notifyUpdate();
   }
 
   deactivate(name) {
@@ -48,9 +45,10 @@ class PlayerList extends mongoose.Model{
       if (this.allDeactivated()) {
         this.endGame();
       } else {
-        this.notifyUpdate();
+        return true;
       }
     }
+    return false;
   }
 
   allDeactivated() {
@@ -71,21 +69,20 @@ class PlayerList extends mongoose.Model{
       if (this.allDeactivated()) {
         this.endGame();
       } else {
-        this.notifyUpdate();
+        return true;
       }
     }
+    return false;
   }
 
   resetTeams() {
     for (let [name, p] of this.players) {
       p.resetTeam();
     }
-    this.notifyUpdate();
   }
 
   setTeam(name, isRed) {
     this.players.get(name).setTeam(isRed);
-    this.notifyUpdate();
   }
 
   randomizeTeams() {
@@ -110,8 +107,6 @@ class PlayerList extends mongoose.Model{
           nBlue -= (1 - isRed);
       }
     }
-
-    this.notifyUpdate();
   }
 
   allAssignedTeam() {

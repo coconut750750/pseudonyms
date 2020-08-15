@@ -102,8 +102,7 @@ class ClassicGame extends GameClass {
 
     this.notifyPhaseChange();
 
-    this.plist.resetTeams();
-    this.plist.resetRoles();
+    this.resetPlayers();
   }
 
   canReset() {
@@ -121,6 +120,7 @@ class ClassicGame extends GameClass {
   setCaptain(player) {
     if (this.canSetRole(player)) {
       this.plist.setCaptain(player.name);
+      this.notifyPlayerUpdate();
     }
   }
 
@@ -128,6 +128,12 @@ class ClassicGame extends GameClass {
     if (this.canSetRole(player)) {
       this.plist.randomizeCaptain(player.team);
     }
+  }
+
+  resetPlayers() {
+    this.plist.resetTeams();
+    this.plist.resetRoles();
+    this.notifyPlayerUpdate();
   }
 
   canStart() {

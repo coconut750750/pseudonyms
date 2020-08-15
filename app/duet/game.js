@@ -107,7 +107,7 @@ class DuetGame extends GameClass {
 
     this.notifyPhaseChange();
 
-    this.plist.resetTeams();
+    this.resetTeams();
   }
 
   canReset() {

@@ -11,7 +11,6 @@ class ClassicPlayerListSchema extends mongoose.Schema {
     mongoose.Schema.apply(this, arguments);
     this.add({
       PlayerClass: Object,
-      notifyUpdate: Object,
       endGame: Object,
       players: {
         type: Map,
@@ -29,8 +28,8 @@ class ClassicPlayerListClass extends PlayerListInterface {
     super();
   }
 
-  setup(notifyUpdate, endGame) {
-    super.setup(notifyUpdate, endGame);
+  setup(endGame) {
+    super.setup(endGame);
   }
 
   createPlayer(name, sid) {
@@ -45,7 +44,6 @@ class ClassicPlayerListClass extends PlayerListInterface {
     for (let [name, p] of this.players) {
       p.resetRole();
     }
-    this.notifyUpdate();
   }
 
   randomizeCaptain(team) {
@@ -61,7 +59,6 @@ class ClassicPlayerListClass extends PlayerListInterface {
       }
     }
     this.players.get(name).setCaptain();
-    this.notifyUpdate();
   }
 
   enoughCaptains() {
