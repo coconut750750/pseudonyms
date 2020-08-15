@@ -9,7 +9,6 @@ class ClassicBoardSchema extends BoardSchema {
     super();
     this.add({
       revealedInts: [Number],
-      jsonObj: Object,
       notifyReveal: Object,
       sendAllReveals: Object,
     });
@@ -21,7 +20,6 @@ class ClassicBoardClass extends BoardClass {
     super(wordlist);
     this.revealedInts = [];
 
-    this.jsonObj = this.genJson();
     this.notifyReveal = notifyReveal;
     this.sendAllReveals = sendAllReveals;
   }

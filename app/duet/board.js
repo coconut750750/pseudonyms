@@ -23,7 +23,6 @@ class DuetBoardSchema extends BoardSchema {
         type: String,
         enum: [RED, BLUE],
       }]],
-      jsonObj: Object,
       notifyReveal: Object,
     });
   }
@@ -37,7 +36,6 @@ class DuetBoardClass extends BoardClass {
     for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealedMatrix.push([]) };
     this.revealed = [];
 
-    this.jsonObj = this.genJson();
     this.notifyReveal = notifyReveal;
   }
 
