@@ -31,6 +31,10 @@ class DuetSchema extends GameSchema {
       phase: String,
       board: DuetBoardSchema,
       plist: DuetPlayerListSchema,
+      turn: String,
+      win: Boolean,
+      timersLeft: Number,
+      mistakesLeft: Number,
     });
   }
 }

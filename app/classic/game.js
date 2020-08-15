@@ -33,6 +33,9 @@ class ClassicSchema extends GameSchema {
       phase: String,
       board: ClassicBoardSchema,
       plist: ClassicPlayerListSchema,
+      turn: String,
+      guessesLeft: Number,
+      winner: String,
     });
   }
 }
