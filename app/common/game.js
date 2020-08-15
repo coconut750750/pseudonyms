@@ -45,7 +45,7 @@ class GameClass extends GameInterface {
   }
 
   getPlayer(name) {
-    return this.plist.get(name);
+    return this.plist.getPlayer(name);
   }
 
   enoughPlayers() {
@@ -77,7 +77,7 @@ class GameClass extends GameInterface {
   }
 
   removePlayer(name) {
-    this.plist.remove(name);
+    this.plist.removePlayer(name, this.emitter);
   }
 
   resetTeams() {

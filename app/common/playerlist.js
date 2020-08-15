@@ -1,46 +1,48 @@
-var _ = require('lodash');
+const _ = require('lodash');
+const mongoose = require('mongoose');
 
-class PlayerList {
+class PlayerList extends mongoose.Model{
   constructor(PlayerClass, notifyUpdate, endGame) {
+    super();
     this.PlayerClass = PlayerClass;
     this.notifyUpdate = notifyUpdate;
     this.endGame = endGame;
-    this.players = {};
+    this.players = new Map();
   }
 
   length() {
-    return Object.keys(this.players).length;
+    return this.players.size;
   }
 
-  get(name) {
-    return this.players[name];
+  getPlayer(name) {
+    return this.players.get(name);
   }
 
   getAll() {
-    return Object.values(this.players);
+    return Array.from(this.players.values());
   }
 
   exists(name) {
-    return name in this.players;
+    return this.players.has(name);
   }
 
   add(name, sid) {
-    this.players[name] = new this.PlayerClass(
+    this.players.set(name, new this.PlayerClass(
       name,
       sid,
       this.length() === 0
-    );
+    ));
     this.notifyUpdate();
   }
 
   activate(name, sid) {
-    this.players[name].activate(sid);
+    this.players.get(name).activate(sid);
     this.notifyUpdate();
   }
 
   deactivate(name) {
-    if (name in this.players) {
-      this.players[name].deactivate();
+    if (this.players.has(name)) {
+      this.players.get(name).deactivate();
       if (this.allDeactivated()) {
         this.endGame();
       } else {
@@ -50,20 +52,20 @@ class PlayerList {
   }
 
   allDeactivated() {
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       if (p.active) { return false; }
     }
     return true;
   }
 
   isActive(name) {
-    return this.players[name].active;
+    return this.players.get(name).active;
   }
 
-  remove(name) {
-    if (name in this.players) {
-      this.players[name].send('end', {});
-      delete this.players[name];
+  removePlayer(name, emitter) {
+    if (this.players.has(name)) {
+      this.players.get(name).send('end', {}, emitter);
+      this.players.delete(name);
       if (this.allDeactivated()) {
         this.endGame();
       } else {
@@ -73,14 +75,14 @@ class PlayerList {
   }
 
   resetTeams() {
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       p.resetTeam();
     }
     this.notifyUpdate();
   }
 
   setTeam(name, isRed) {
-    this.players[name].setTeam(isRed);
+    this.players.get(name).setTeam(isRed);
     this.notifyUpdate();
   }
 
@@ -94,7 +96,7 @@ class PlayerList {
       nBlue += r;
     }
 
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       if (nRed === 0) {
           p.setTeam(false);
       } else if (nBlue === 0) {
@@ -111,7 +113,7 @@ class PlayerList {
   }
 
   allAssignedTeam() {
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       if (!p.assignedTeam()) {
         return false;
       }
@@ -121,7 +123,7 @@ class PlayerList {
 
   teamCount(team) {
     let count = 0;
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       if (p.isOnTeam(team)) {
         count += 1;
       }
@@ -131,7 +133,7 @@ class PlayerList {
 
   getNonSpectatorCount() {
     let count = 0;
-    for (let p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       if (p.assignedTeam()) {
         count += 1;
       }

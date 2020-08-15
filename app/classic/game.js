@@ -8,7 +8,7 @@ const { CluesModel, CluesSchema } = require("../common/clues");
 const socketio = require("./socketio");
 const { ClassicBoardModel, ClassicBoardSchema } = require("./board");
 const KeyCard = require("./keycard");
-const PlayerList = require("./playerlist");
+const { ClassicPlayerListModel, ClassicPlayerListSchema } = require("./playerlist");
 const GameOptions = require("./gameoptions");
 const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
 
@@ -32,13 +32,14 @@ class ClassicSchema extends GameSchema {
       },
       phase: String,
       board: ClassicBoardSchema,
+      plist: ClassicPlayerListSchema,
     });
   }
 }
 
 class ClassicGame extends GameClass {
   constructor(code, onEmpty, options, broadcast, emitter) {
-    super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
+    super(code, onEmpty, options, broadcast, emitter, ClassicPlayerListModel, MIN_PLAYERS);
 
     this.broadcastCaptains = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsCaptain(event, data, this.emitter));
@@ -52,7 +53,7 @@ class ClassicGame extends GameClass {
   }
 
   canRemove(name) {
-    return (this.phase === BOARD || this.phase === RESULT) && !this.plist.get(name).assignedTeam();
+    return (this.phase === BOARD || this.phase === RESULT) && !this.plist.getPlayer(name).assignedTeam();
   }
 
   socketio(socket, game, name, player) {
@@ -205,6 +206,7 @@ class ClassicGame extends GameClass {
     this.guessesLeft = parseInt(count) + 1;
     this.notifyGuessesLeft();
     this.startGuess();
+    this.save();
   }
 
   canReveal(player) {

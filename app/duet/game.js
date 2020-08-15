@@ -7,7 +7,7 @@ const { GameError } = require("../common/gameerror");
 const socketio = require("./socketio");
 const { DuetBoardModel, DuetBoardSchema } = require("./board");
 const KeyCard = require("./keycard");
-const PlayerList = require("./playerlist");
+const { DuetPlayerListModel, DuetPlayerListSchema } = require("./playerlist");
 const GameOptions = require("./gameoptions");
 const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
 
@@ -30,13 +30,14 @@ class DuetSchema extends GameSchema {
       },
       phase: String,
       board: DuetBoardSchema,
+      plist: DuetPlayerListSchema,
     });
   }
 }
 
 class DuetGame extends GameClass {
   constructor(code, onEmpty, options, broadcast, emitter) {
-    super(code, onEmpty, options, broadcast, emitter, PlayerList, MIN_PLAYERS);
+    super(code, onEmpty, options, broadcast, emitter, DuetPlayerListModel, MIN_PLAYERS);
 
     this.broadcastReds = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data, this.emitter));
@@ -54,7 +55,7 @@ class DuetGame extends GameClass {
   }
 
   canRemove(name) {
-    return (this.phase === BOARD || this.phase === RESULT) && !this.plist.get(name).assignedTeam();
+    return (this.phase === BOARD || this.phase === RESULT) && !this.plist.getPlayer(name).assignedTeam();
   }
 
   socketio(socket, game, name, player) {

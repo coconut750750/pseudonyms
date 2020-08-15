@@ -1,33 +1,51 @@
-var _ = require('lodash');
-const Player = require('./player');
+const _ = require('lodash');
+const mongoose = require('mongoose');
+
+const { ClassicPlayerSchema, ClassicPlayerModel } = require('./player');
 const { RED, BLUE } = require('../common/const').classic;
 const PlayerListInterface = require('../common/playerlist');
 
-class PlayerList extends PlayerListInterface {
+class ClassicPlayerListSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      PlayerClass: Object,
+      notifyUpdate: Object,
+      endGame: Object,
+      players: {
+        type: Map,
+        of: ClassicPlayerSchema,
+      },
+    });
+  }
+}
+
+class ClassicPlayerListClass extends PlayerListInterface {
   constructor(notifyUpdate, endGame) {
-    super(Player, notifyUpdate, endGame);
+    super(ClassicPlayerModel, notifyUpdate, endGame);
   }
 
   resetRoles() {
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       p.resetRole();
     }
     this.notifyUpdate();
   }
 
   randomizeCaptain(team) {
-    const players = Object.values(this.players).filter(p => p.isOnTeam(team));
+    const players = this.getAll().filter(p => p.isOnTeam(team));
     const r = Math.floor(Math.random() * players.length);
     this.setCaptain(players[r].name);
   }
 
   setCaptain(name) {
-    for (var p of Object.values(this.players)) {
-      if (p.isOnTeam(this.players[name].team)) {
+    for (let [n, p] of this.players) {
+      if (p.isOnTeam(this.players.get(name).team)) {
         p.resetRole();
       }
     }
-    this.players[name].setCaptain();
+    this.players.get(name).setCaptain();
     this.notifyUpdate();
   }
 
@@ -35,7 +53,7 @@ class PlayerList extends PlayerListInterface {
     let hasRedCaptain = false;
     let hasBlueCaptain = false;
 
-    for (var p of Object.values(this.players)) {
+    for (let [name, p] of this.players) {
       hasRedCaptain = hasRedCaptain || (p.isOnTeam(RED) && p.isCaptain());
       hasBlueCaptain = hasBlueCaptain || (p.isOnTeam(BLUE) && p.isCaptain());
     }
@@ -44,4 +62,11 @@ class PlayerList extends PlayerListInterface {
   }
 }
 
-module.exports = PlayerList;
+const schema = new ClassicPlayerListSchema();
+schema.loadClass(ClassicPlayerListClass);
+const ClassicPlayerListModel = mongoose.model(ClassicPlayerListClass, schema);
+
+module.exports = {
+  ClassicPlayerListModel,
+  ClassicPlayerListSchema: schema,
+};
