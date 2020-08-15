@@ -67,6 +67,6 @@ schema.loadClass(Clues);
 const CluesModel = mongoose.model(Clues, schema);
 
 module.exports = {
-  CluesModel: Clues,
+  CluesModel,
   CluesSchema: schema,
 };
