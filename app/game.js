@@ -1,5 +1,18 @@
-class GameInterface {
+const mongoose = require('mongoose');
+
+class AbstractGameSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    mongoose.Schema.apply(this, arguments);
+    this.add({
+      code: {type: String, required: true},
+    });
+  }
+}
+
+class GameInterface extends mongoose.Model {
   constructor(code, onEmpty, options, broadcast, emitter) {
+    super();
     this.code = code;
     this.onEmpty = onEmpty;
     this.options = options;
@@ -54,4 +67,7 @@ class GameInterface {
   }
 }
 
-module.exports = GameInterface;
+module.exports = {
+  GameInterface,
+  AbstractGameSchema,
+};

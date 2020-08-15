@@ -1,11 +1,25 @@
-const GameInterface = require("../game");
-const Clues = require("../common/clues");
+const mongoose = require('mongoose');
+const { GameInterface, AbstractGameSchema } = require("../game");
+const { CluesModel, CluesSchema } = require("../common/clues");
 const socketio = require("./socketio");
 
-class Game extends GameInterface {
+class GameSchema extends AbstractGameSchema {
+  constructor() {
+    super(arguments);
+    this.add({
+      minPlayers: Number,
+      clues: {
+        type: CluesSchema,
+        strict: false,
+      },
+    });
+  }
+}
+
+class GameClass extends GameInterface {
   constructor(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
     super(code, onEmpty, options, broadcast, emitter);
-    this.clues = new Clues( () => this.notifyClue() );
+    this.clues = new CluesModel( () => this.notifyClue() );
 
     this.plist = new PlayerListClass(
       () => this.notifyPlayerUpdate(),
@@ -163,4 +177,7 @@ class Game extends GameInterface {
   }
 }
 
-module.exports = Game;
+module.exports = {
+  GameClass,
+  GameSchema,
+};
