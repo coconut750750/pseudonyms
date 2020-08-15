@@ -16,8 +16,12 @@ class GameSchema extends AbstractGameSchema {
 }
 
 class GameClass extends GameInterface {
-  constructor(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
-    super(code, onEmpty, options, broadcast, emitter);
+  constructor() {
+    super();
+  }
+
+  setup(code, onEmpty, options, broadcast, emitter, PlayerListClass, minPlayers) {
+    super.setup(code, onEmpty, options, broadcast, emitter);
     this.clues = new CluesModel( () => this.notifyClue() );
 
     this.plist = new PlayerListClass(
@@ -176,7 +180,12 @@ class GameClass extends GameInterface {
   }
 }
 
+let schema = new GameSchema();
+schema.loadClass(GameClass);
+let GameModel = mongoose.model(GameClass, schema, 'games');
+
 module.exports = {
   GameClass,
   GameSchema,
+  GameModel,
 };

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const { GameClass, GameSchema } = require("../common/game")
+const { GameClass, GameSchema, GameModel } = require("../common/game")
 const WordList = require("../common/wordlist");
 const { GameError } = require("../common/gameerror");
 const { CluesModel, CluesSchema } = require("../common/clues");
@@ -43,8 +43,12 @@ class ClassicSchema extends GameSchema {
 }
 
 class ClassicGame extends GameClass {
-  constructor(code, onEmpty, options, broadcast, emitter) {
-    super(code, onEmpty, options, broadcast, emitter, ClassicPlayerListModel, MIN_PLAYERS);
+  constructor() {
+    super();
+  }
+
+  setup(code, onEmpty, options, broadcast, emitter) {
+    super.setup(code, onEmpty, options, broadcast, emitter, ClassicPlayerListModel, MIN_PLAYERS);
 
     this.broadcastCaptains = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsCaptain(event, data, this.emitter));
@@ -373,8 +377,7 @@ class ClassicGame extends GameClass {
 
 let classicSchema = new ClassicSchema();
 classicSchema.loadClass(ClassicGame);
-
-let ClassicGameModel = mongoose.model(ClassicGame, classicSchema, 'games');
+let ClassicGameModel = GameModel.discriminator('ClassicGame', classicSchema);
 
 module.exports = {
   ClassicGameModel,
