@@ -5,7 +5,11 @@ class AbstractGameSchema extends mongoose.Schema {
     super();
     mongoose.Schema.apply(this, arguments);
     this.add({
-      code: {type: String, required: true},
+      code: {
+        type: String,
+        required: true,
+        index: true,
+      },
     });
   }
 }
