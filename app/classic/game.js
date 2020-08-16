@@ -188,7 +188,7 @@ class ClassicGame extends GameClass {
     this.turn = this.keycard.start;
 
     const wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
-    this.board = new ClassicBoardModel(wordlist, (r, c) => this.notifyReveal(r, c));
+    this.board = new ClassicBoardModel(wordlist);
     this.gameStats.startGame(this.turn);
 
     this.notifyKeyChange();
@@ -255,6 +255,8 @@ class ClassicGame extends GameClass {
 
     this.board.reveal(r, c);
     this.keycard.reveal(r, c);
+    this.notifyReveal(r, c);
+
     this.guessesLeft -= 1;
     this.notifyScore();
 

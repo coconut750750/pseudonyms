@@ -9,19 +9,14 @@ class ClassicBoardSchema extends BoardSchema {
     super();
     this.add({
       revealedInts: [Number],
-      notifyReveal: Object,
-      sendAllReveals: Object,
     });
   }
 }
 
 class ClassicBoardClass extends BoardClass {
-  constructor(wordlist, notifyReveal, sendAllReveals) {
+  constructor(wordlist) {
     super(wordlist);
     this.revealedInts = [];
-
-    this.notifyReveal = notifyReveal;
-    this.sendAllReveals = sendAllReveals;
   }
 
   isRevealed(r, c) {
@@ -38,7 +33,6 @@ class ClassicBoardClass extends BoardClass {
       return;
     }
     this.revealedInts.push(this.coordToIndex(r, c));
-    this.notifyReveal(r, c);
   }
 }
 
