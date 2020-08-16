@@ -162,7 +162,7 @@ class DuetGame extends GameClass {
     this.keycard = new DuetKeyCardModel();
 
     const wordlist = new WordList(this.gameoptions.wordlist, this.gameoptions.customWords);
-    this.board = new DuetBoardModel(wordlist, (r, c, team) => this.notifyReveal(r, c, team));
+    this.board = new DuetBoardModel(wordlist);
     this.gameStats.startGame();
 
     this.notifyKeyChange();
@@ -239,6 +239,7 @@ class DuetGame extends GameClass {
 
     this.board.reveal(r, c, this.turn, this.keycard.isGreen(r, c, this.turn));
     this.keycard.reveal(r, c, this.turn);
+    this.notifyReveal(r, c, this.turn);
     this.notifyScore();
 
     if (this.keycard.isBlack(r, c, this.turn)) {
@@ -285,8 +286,10 @@ class DuetGame extends GameClass {
     }
 
     const isGreen = this.keycard.isGreen(r, c, otherTeam);
+
     this.board.reveal(r, c, otherTeam, isGreen);
     this.keycard.reveal(r, c, otherTeam);
+    this.notifyReveal(r, c, otherTeam);
     this.notifyScore();
 
     if (!isGreen) {

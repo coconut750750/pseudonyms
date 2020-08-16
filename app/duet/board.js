@@ -23,20 +23,17 @@ class DuetBoardSchema extends BoardSchema {
         type: String,
         enum: [RED, BLUE],
       }]],
-      notifyReveal: Object,
     });
   }
 }
 
 class DuetBoardClass extends BoardClass {
-  constructor(wordlist, notifyReveal) {
+  constructor(wordlist) {
     super(wordlist);
 
     this.revealedMatrix = [];
     for (var i = 0; i < BOARD_LEN * BOARD_LEN; i++) { this.revealedMatrix.push([]) };
     this.revealed = [];
-
-    this.notifyReveal = notifyReveal;
   }
 
   isRevealed(r, c, team) {
@@ -62,7 +59,6 @@ class DuetBoardClass extends BoardClass {
       this.revealedMatrix[index].push(team);
     }
     this.revealed.push({ r, c, team });
-    this.notifyReveal(r, c, team);
   }
 }
 
