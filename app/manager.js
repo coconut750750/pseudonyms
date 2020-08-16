@@ -19,23 +19,27 @@ class Manager {
     }
   }
 
-  setupGame(newGame) {
-    const code = this.generateCode();
+  async setupGame(newGame) {
+    const code = await this.generateCode();
     newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
-    newGame.save();
+    await newGame.save();
     this.games[code] = newGame;
   }
 
-  createClassicGame() {
+  async createClassicGame() {
     const newGame = new ClassicGameModel();
-    this.setupGame(newGame);
+    await this.setupGame(newGame);
     return newGame;
   }
 
-  createDuetGame() {
+  async createDuetGame() {
     const newGame = new DuetGameModel();
-    this.setupGame(newGame);
+    await this.setupGame(newGame);
     return newGame;
+  }
+
+  async gameExists(code) {
+    return await GameModel.exists({ code });
   }
 
   async getGame(code) {
@@ -60,14 +64,14 @@ class Manager {
     delete this.games[code];
   }
 
-  generateCode() {
+  async generateCode() {
     var code = '';
     const length = 4;
     do {
       for (var i = 0; i < length; i++) {
         code += String.fromCharCode(97 + Math.random() * 26);
       }
-    } while (this.games[code]);
+    } while (await this.gameExists(code));
     return code;
   }
 

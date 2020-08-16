@@ -6,8 +6,8 @@ const MAX_NAME_LENGTH = 12;
 
 const { CLASSIC, DUET } = require('./common/const');
 
-router.post('/classic/create', (req, res) => {
-  const game = req.gm.createClassicGame();
+router.post('/classic/create', async (req, res) => {
+  const game = await req.gm.createClassicGame();
   
   res.send({
     gameCode: `${game.code}`,
@@ -15,8 +15,8 @@ router.post('/classic/create', (req, res) => {
   });
 });
 
-router.post('/duet/create', (req, res) => {
-  const game = req.gm.createDuetGame();
+router.post('/duet/create', async (req, res) => {
+  const game = await req.gm.createDuetGame();
   
   res.send({
     gameCode: `${game.code}`,
@@ -52,8 +52,8 @@ router.get('/checkname', async (req, res) => {
 
 router.get('/checkcode', async (req, res) => {
   const { gameCode } = req.query;
-  const game = await req.gm.getGame(gameCode);
-  if (game != undefined) {
+  const exists = await req.gm.gameExists(gameCode);
+  if (exists) {
     res.send({});
   } else {
     res.status(400).send({ message: 'Invalid game code' });
