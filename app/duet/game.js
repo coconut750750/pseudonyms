@@ -58,8 +58,8 @@ class DuetGame extends GameClass {
     super();
   }
 
-  setup(code, onEmpty, options, broadcast, emitter) {
-    super.setup(code, onEmpty, options, broadcast, emitter, DuetPlayerListModel);
+  setup(code, onEmpty, options, broadcast, emitter, reload) {
+    super.setup(code, onEmpty, options, broadcast, emitter, reload, DuetPlayerListModel);
 
     this.broadcastReds = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data, this.emitter));

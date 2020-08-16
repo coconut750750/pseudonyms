@@ -11,6 +11,7 @@ class Manager {
 
     this.broadcast = (code) => (event, data) => io.to(code).emit(event, data);
     this.emitter = (id, event, data) => io.to(id).emit(event, data);
+    this.reload = (game) => this.reloadGameModel(game);
     this.options = { statsCollection: this.statsCollection };
 
     if (dev) {
@@ -21,7 +22,7 @@ class Manager {
 
   async setupGame(newGame) {
     const code = await this.generateCode();
-    newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter, this.reload);
     await newGame.save();
     this.games[code] = newGame;
   }
@@ -55,8 +56,13 @@ class Manager {
     if (game === null) {
       return undefined;
     }
-    game.setupCallbacks(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    game.setupCallbacks(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter, this.reload);
     return game;
+  }
+
+  async reloadGameModel(game) {
+    const updated = await this.getGame(game.code);
+    Object.assign(game, updated);
   }
 
   async endGame(code) {
@@ -78,7 +84,7 @@ class Manager {
   devClassic() {
     const code = 'cccc';
     this.games[code] = new ClassicGameModel();
-    this.games[code].setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    this.games[code].setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter, this.reload);
 
     for (let name of ['11', '22', '33', '44', '55']) {
       this.games[code].addPlayer(name, undefined);
@@ -103,7 +109,7 @@ class Manager {
   devDuet() {
     const code = 'dddd';
     this.games[code] = new DuetGameModel();
-    this.games[code].setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
+    this.games[code].setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter, this.reload);
 
     for (let name of ['11', '22', '33']) {
       this.games[code].addPlayer(name, undefined);
