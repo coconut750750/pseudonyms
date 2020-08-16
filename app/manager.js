@@ -19,21 +19,22 @@ class Manager {
     }
   }
 
-  createClassicGame() {
+  setupGame(newGame) {
     const code = this.generateCode();
-    const newGame = new ClassicGameModel();
     newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
-    this.games[code] = newGame;
     newGame.save();
+    this.games[code] = newGame;
+  }
+
+  createClassicGame() {
+    const newGame = new ClassicGameModel();
+    this.setupGame(newGame);
     return newGame;
   }
 
   createDuetGame() {
-    const code = this.generateCode();
     const newGame = new DuetGameModel();
-    newGame.setup(code, () => this.endGame(code), this.options, this.broadcast(code), this.emitter);
-    this.games[code] = newGame;
-    newGame.save();
+    this.setupGame(newGame);
     return newGame;
   }
 
