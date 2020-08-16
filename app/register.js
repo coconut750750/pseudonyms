@@ -35,7 +35,7 @@ router.get('/checkname', async (req, res) => {
 
   const { gameCode } = req.query;
   if (gameCode !== undefined) {
-    const game = await req.gm.retrieveGame(gameCode);
+    const game = await req.gm.retrieveGameModel(gameCode);
     if (game === undefined) {
       res.status(400).send({ message: 'Invalid game code' });
     } else if (game.playerExists(name) && !game.isActive(name)) {
@@ -52,7 +52,7 @@ router.get('/checkname', async (req, res) => {
 
 router.get('/checkcode', async (req, res) => {
   const { gameCode } = req.query;
-  const game = await req.gm.retrieveGame(gameCode);
+  const game = await req.gm.getGame(gameCode);
   if (game != undefined) {
     res.send({});
   } else {

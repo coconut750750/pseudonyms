@@ -37,7 +37,15 @@ class Manager {
     return newGame;
   }
 
-  async retrieveGame(code) {
+  async getGame(code) {
+    let game = await GameModel.findOne({ code }).lean();
+    if (game === null) {
+      return undefined;
+    }
+    return game;
+  }
+
+  async retrieveGameModel(code) {
     let game = await GameModel.findOne({ code });
     if (game === null) {
       return undefined;
