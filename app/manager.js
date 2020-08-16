@@ -55,7 +55,8 @@ class Manager {
     return game;
   }
 
-  endGame(code) {
+  async endGame(code) {
+    await GameModel.deleteOne({ code });
     delete this.games[code];
   }
 
