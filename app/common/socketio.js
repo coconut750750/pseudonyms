@@ -5,7 +5,10 @@ function socketio(socket, game, name, player) {
     if (game.canStart() && player.isAdmin) {
       const { options } = data;
       tryCatch(
-        () => game.start(options),
+        () => {
+          game.start(options);
+          game.save();
+        },
         (err) => socket.emit('message', { message: err.message }),
       );
     }
@@ -15,18 +18,23 @@ function socketio(socket, game, name, player) {
     if (game.canSetTeam()) {
       const { team } = data;
       game.setTeam(name, team === 'red');
+      game.save();
     }
   });
 
   socket.on('randomizeTeams', data => {
     if (game.canSetTeam()) {
       game.randomizeTeams();
+      game.save();
     }
   });
 
   socket.on('confirmTeams', data => {
     tryCatch(
-      () => game.confirmTeams(),
+      () => {
+        game.confirmTeams();
+        game.save();
+      },
       (err) => socket.emit('message', { message: err.message }),
     );
   });
@@ -43,6 +51,7 @@ function socketio(socket, game, name, player) {
       () => {
         if (game.canSendClue(player)) {
           game.addClue(player, word, parseInt(count));
+          game.save();
         }
       },
       (err) => socket.emit('message', { message: err.message }),
@@ -56,18 +65,21 @@ function socketio(socket, game, name, player) {
         return;
       }
       game.reveal(r, c);
+      game.save();
     }
   });
 
   socket.on('endTurn', data => {
     if (game.canEndTurn(player)) {
       game.endTurn();
+      game.save();
     }
   });
 
   socket.on('newGame', data => {
     if (game.canReset()) {
       game.reset();
+      game.save();
     }
   });
 
@@ -76,6 +88,7 @@ function socketio(socket, game, name, player) {
     if (player.isAdmin) {
       if (!game.hasStarted() || game.canRemove(name)) {
         game.removePlayer(name);
+        game.save();
       }
     }
   });

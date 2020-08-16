@@ -3,15 +3,20 @@ const { tryCatch } = require("../common/gameerror");
 function socketio(socket, game, name, player) {
   socket.on('setCaptain', data => {
     game.setCaptain(player);
+    game.save();
   });
 
   socket.on('randomizeRoles', data => {
     game.randomizeRoles(player);
+    game.save();
   });
 
   socket.on('confirmRoles', data => {
     tryCatch(
-      () => game.confirmRoles(),
+      () => {
+        game.confirmRoles();
+        game.save();
+      },
       (err) => socket.emit('message', { message: err.message }),
     );
   });

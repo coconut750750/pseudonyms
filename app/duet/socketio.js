@@ -6,6 +6,7 @@ function socketio(socket, game, name, player) {
         return;
       }
       game.suddenDeathReveal(player, r, c);
+      game.save();
     }
   });
 
