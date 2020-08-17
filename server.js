@@ -63,13 +63,14 @@ app.io.on('connect', function (socket) {
       game.addPlayer(name, socket.id);
     }
     player = game.getPlayer(name);
-    game.save();
+    await game.save();
 
     game.socketio(socket, game, name, player);
     socket.emit('ready', {});
   });
 
-  socket.on('exitGame', data => {
+  socket.on('exitGame', async data => {
+    await game.reload();
     if (player.isAdmin) {
       game.delete();
     } else {
@@ -82,7 +83,8 @@ app.io.on('connect', function (socket) {
     } 
   });
 
-  socket.on('disconnect', data => {
+  socket.on('disconnect', async data => {
+    await game.reload();
     if (game !== undefined && game.playerExists(name)) {
       if (game.canRemove(name)) {
         game.removePlayer(name);
