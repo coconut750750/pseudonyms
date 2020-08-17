@@ -34,7 +34,9 @@ function App(props) {
 
   const setGame = useCallback((gameCode, name, gameMode) => {
     const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
-    let socket = io(socketiohost);
+    let socket = io(socketiohost, {
+      transports: [ 'websocket', 'polling' ]
+    });
     socket.on('end', data => {
       closeSocket(socket);
     });

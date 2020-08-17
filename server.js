@@ -4,6 +4,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const socketioredis = require('socket.io-redis')
 
 const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
@@ -12,8 +13,10 @@ var app = express();
 var server = require('http').Server(app);
 app.io = require('socket.io')(server, {
   pingInterval: 10000,
-  pingTimeout: 30000
+  pingTimeout: 30000,
+  transports: [ 'websocket', 'polling' ],
 });
+app.io.adapter(socketioredis({ host: 'localhost', port: 6379 }))
 
 const { GameInterface } = require('./app/game');
 const GameManager = require('./app/manager');
@@ -73,6 +76,7 @@ app.io.on('connect', function (socket) {
     if (!exists) {
       return;
     }
+    const player = game.getPlayer(name);
     if (player.isAdmin) {
       game.delete();
     } else {
