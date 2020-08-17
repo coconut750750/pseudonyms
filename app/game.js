@@ -19,7 +19,7 @@ class GameInterface extends mongoose.Model {
     super();
   }
 
-  setup(code, onEmpty, options, broadcast, emitter, reload) {
+  setupCallbacks(code, onEmpty, options, broadcast, emitter, reload) {
     this.code = code;
     this.onEmpty = onEmpty;
     this.options = options;

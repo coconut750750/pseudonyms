@@ -87,14 +87,16 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('disconnect', async data => {
-    const exists = await game.reload();
-    if (exists && game.playerExists(name)) {
-      if (game.canRemove(name)) {
-        game.removePlayer(name);
-      } else {
-        game.deactivatePlayer(name);
+    if (game !== undefined) {
+      const exists = await game.reload();
+      if (exists && game.playerExists(name)) {
+        if (game.canRemove(name)) {
+          game.removePlayer(name);
+        } else {
+          game.deactivatePlayer(name);
+        }
+        game.save();
       }
-      game.save();
     }
   });
 });

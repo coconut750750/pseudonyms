@@ -27,7 +27,7 @@ class GameClass extends GameInterface {
   }
 
   setupCallbacks(code, onEmpty, options, broadcast, emitter, reload) {
-    super.setup(code, onEmpty, options, broadcast, emitter, reload);
+    super.setupCallbacks(code, onEmpty, options, broadcast, emitter, reload);
   }
 
   mode() {

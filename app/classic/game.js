@@ -65,12 +65,14 @@ class ClassicGame extends GameClass {
 
   setup(code, onEmpty, options, broadcast, emitter, reload) {
     super.setup(code, onEmpty, options, broadcast, emitter, reload, ClassicPlayerListModel);
+    this.reset();
+  }
 
+  setupCallbacks(code, onEmpty, options, broadcast, emitter, reload) {
+    super.setupCallbacks(code, onEmpty, options, broadcast, emitter, reload);
     this.broadcastCaptains = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsCaptain(event, data, this.emitter));
     }
-
-    this.reset();
   }
 
   mode() {

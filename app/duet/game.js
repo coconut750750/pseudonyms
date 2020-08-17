@@ -64,7 +64,11 @@ class DuetGame extends GameClass {
 
   setup(code, onEmpty, options, broadcast, emitter, reload) {
     super.setup(code, onEmpty, options, broadcast, emitter, reload, DuetPlayerListModel);
+    this.reset();
+  }
 
+  setupCallbacks(code, onEmpty, options, broadcast, emitter, reload) {
+    super.setupCallbacks(code, onEmpty, options, broadcast, emitter, reload);
     this.broadcastReds = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(RED, event, data, this.emitter));
     };
@@ -72,8 +76,6 @@ class DuetGame extends GameClass {
     this.broadcastBlues = (event, data) => {
       this.plist.getAll().forEach(p => p.sendAsTeam(BLUE, event, data, this.emitter));
     };
-
-    this.reset();
   }
 
   mode() {
