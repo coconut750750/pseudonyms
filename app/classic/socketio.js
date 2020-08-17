@@ -1,14 +1,16 @@
 const { tryCatch } = require("../common/gameerror");
 
-function socketio(socket, game, name, player) {
+function socketio(socket, game, name) {
   socket.on('setCaptain', async data => {
     await game.reload();
+    const player = game.getPlayer(name);
     game.setCaptain(player);
     game.save();
   });
 
   socket.on('randomizeRoles', async data => {
     await game.reload();
+    const player = game.getPlayer(name);
     game.randomizeRoles(player);
     game.save();
   });
@@ -27,6 +29,7 @@ function socketio(socket, game, name, player) {
   // retrieving info for reconnected clients
   socket.on('getReconnect', async data => {
     await game.reload();
+    const player = game.getPlayer(name);
     game.reconnectSendBoard(player);
     game.reconnectSendKey(player);
     game.reconnectSendTurn(player);

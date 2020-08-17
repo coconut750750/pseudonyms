@@ -1,8 +1,9 @@
 const { tryCatch } = require("../common/gameerror");
 
-function socketio(socket, game, name, player) {
+function socketio(socket, game, name) {
   socket.on('startGame', async data => {
     await game.reload();
+    const player = game.getPlayer(name);
     if (game.canStart() && player.isAdmin) {
       const { options } = data;
       tryCatch(
@@ -54,6 +55,7 @@ function socketio(socket, game, name, player) {
     await game.reload();
     tryCatch(
       () => {
+        const player = game.getPlayer(name);
         if (game.canSendClue(player)) {
           game.addClue(player, word, parseInt(count));
           game.save();
@@ -65,6 +67,7 @@ function socketio(socket, game, name, player) {
 
   socket.on('revealWord', async data => {
     await game.reload();
+    const player = game.getPlayer(name);
     if (game.canReveal(player)) {
       const { r, c } = data;
       if (r === undefined || c === undefined) {
@@ -77,6 +80,7 @@ function socketio(socket, game, name, player) {
 
   socket.on('endTurn', async data => {
     await game.reload();
+    const player = game.getPlayer(name);
     if (game.canEndTurn(player)) {
       game.endTurn();
       game.save();
@@ -92,11 +96,11 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('removePlayer', async data => {
-    const { name } = data;
+    const player = game.getPlayer(name);
     if (player.isAdmin) {
       await game.reload();
-      if (!game.hasStarted() || game.canRemove(name)) {
-        game.removePlayer(name);
+      if (!game.hasStarted() || game.canRemove(data.name)) {
+        game.removePlayer(data.name);
         game.save();
       }
     }

@@ -38,8 +38,8 @@ class GameClass extends GameInterface {
     throw new Error('Game.minPlayers() implemention required!');
   }
 
-  socketio(socket, game, name, player) {
-    socketio(socket, game, name, player);
+  socketio(socket, game, name) {
+    socketio(socket, game, name);
   }
 
   reset() {

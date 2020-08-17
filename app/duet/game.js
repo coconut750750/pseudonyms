@@ -90,9 +90,9 @@ class DuetGame extends GameClass {
     return (this.phase === BOARD || this.phase === RESULT) && !this.plist.getPlayer(name).assignedTeam();
   }
 
-  socketio(socket, game, name, player) {
-    super.socketio(socket, game, name, player);
-    socketio(socket, game, name, player);
+  socketio(socket, game, name) {
+    super.socketio(socket, game, name);
+    socketio(socket, game, name);
   }
 
   reset() {

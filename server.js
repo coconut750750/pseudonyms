@@ -62,10 +62,9 @@ app.io.on('connect', function (socket) {
     } else {
       game.addPlayer(name, socket.id);
     }
-    player = game.getPlayer(name);
     await game.save();
 
-    game.socketio(socket, game, name, player);
+    game.socketio(socket, game, name);
     socket.emit('ready', {});
   });
 
