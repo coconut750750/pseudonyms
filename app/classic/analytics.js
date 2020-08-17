@@ -1,9 +1,30 @@
+const mongoose = require('mongoose');
+
 const TOTAL_COMPLETE_QUERY = { type: "classic_total" };
 const TOTAL_STARTS_QUERY = { type: "classic_starts" };
 const WORDLIST_COUNT_QUERY = { type: "classic_wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "classic_players" };
 const MATURE_QUERY = { type: "classic_mature" };
 const { RED, BLUE, N_START_TILES, N_OTHER_TILES } = require("../common/const").classic;
+
+class ClassicGameStatsSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    this.add({
+      matured: Boolean,
+      turns: Number,
+      startTeam: {
+        type: String,
+        enum: [RED, BLUE],
+      },
+      timeInSec: Number,
+      startTime: Date,
+      firstTeamWin: Boolean,
+      firstTeamScoreTrend: [Number],
+      secondTeamScoreTrend: [Number],
+    });
+  }
+}
 
 class GameStats {
   constructor() {
@@ -166,9 +187,13 @@ async function getStats(collection) {
   };
 }
 
+const schema = new ClassicGameStatsSchema();
+schema.loadClass(GameStats);
+
 module.exports = {
   incrementGameStarts,
   saveGame,
   getStats,
   GameStats,
+  GameStatsSchema: schema,
 };

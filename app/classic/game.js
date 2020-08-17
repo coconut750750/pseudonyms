@@ -10,7 +10,7 @@ const { ClassicBoardModel, ClassicBoardSchema } = require("./board");
 const { ClassicKeyCardModel, ClassicKeyCardSchema } = require("./keycard");
 const { ClassicPlayerListModel, ClassicPlayerListSchema } = require("./playerlist");
 const { ClassicGameOptionsSchema, ClassicGameOptionsModel } = require("./gameoptions");
-const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
+const { incrementGameStarts, saveGame, GameStats, GameStatsSchema } = require("./analytics");
 
 const c = require('../common/const');
 const { CLASSIC } = c;
@@ -49,6 +49,10 @@ class ClassicSchema extends GameSchema {
       keycard: {
         type: ClassicKeyCardSchema,
         _id : false,
+      },
+      gameStats: {
+        type: GameStatsSchema,
+        _id: false,
       },
     });
   }
