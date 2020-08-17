@@ -1,9 +1,24 @@
+const mongoose = require('mongoose');
+
 const TOTAL_COMPLETE_QUERY = { type: "duet_total" };
 const TOTAL_STARTS_QUERY = { type: "duet_starts" };
 const WORDLIST_COUNT_QUERY = { type: "duet_wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "duet_players" };
 const WINS_QUERY = { type: "duet_wins" };
 const { N_GREEN_TILES } = require("../common/const").duet;
+
+class DuetGameStatsSchema extends mongoose.Schema {
+  constructor() {
+    super();
+    this.add({
+      turns: Number,
+      timeInSec: Number,
+      startTime: Date,
+      win: Boolean,
+      scoreTrend: [Number],
+    });
+  }
+}
 
 class GameStats {
   constructor() {
@@ -131,9 +146,13 @@ async function getStats(collection) {
   };
 }
 
+const schema = new DuetGameStatsSchema();
+schema.loadClass(GameStats);
+
 module.exports = {
   incrementGameStarts,
   saveGame,
   getStats,
   GameStats,
+  GameStatsSchema: schema,
 };

@@ -9,7 +9,7 @@ const { DuetBoardModel, DuetBoardSchema } = require("./board");
 const { DuetKeyCardModel, DuetKeyCardSchema } = require("./keycard");
 const { DuetPlayerListModel, DuetPlayerListSchema } = require("./playerlist");
 const { DuetGameOptionsSchema, DuetGameOptionsModel } = require("./gameoptions");
-const { incrementGameStarts, saveGame, GameStats } = require("./analytics");
+const { incrementGameStarts, saveGame, GameStats, GameStatsSchema } = require("./analytics");
 
 const c = require('../common/const');
 const { DUET } = c;
@@ -49,6 +49,10 @@ class DuetSchema extends GameSchema {
         type: DuetKeyCardSchema,
         _id : false,
       },
+      gameStats: {
+        type: GameStatsSchema,
+        _id: false,
+      }
     });
   }
 }
