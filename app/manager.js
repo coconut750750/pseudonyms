@@ -63,6 +63,7 @@ class Manager {
   async reloadGameModel(game) {
     const updated = await this.getGame(game.code);
     Object.assign(game, updated);
+    return updated !== undefined;
   }
 
   async endGame(code) {

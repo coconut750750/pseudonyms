@@ -70,7 +70,10 @@ app.io.on('connect', function (socket) {
   });
 
   socket.on('exitGame', async data => {
-    await game.reload();
+    const exists = await game.reload();
+    if (!exists) {
+      return;
+    }
     if (player.isAdmin) {
       game.delete();
     } else {
@@ -80,12 +83,12 @@ app.io.on('connect', function (socket) {
         game.removePlayer(name);
       }
       game.save();
-    } 
+    }
   });
 
   socket.on('disconnect', async data => {
-    await game.reload();
-    if (game !== undefined && game.playerExists(name)) {
+    const exists = await game.reload();
+    if (exists && game.playerExists(name)) {
       if (game.canRemove(name)) {
         game.removePlayer(name);
       } else {
