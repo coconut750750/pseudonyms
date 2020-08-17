@@ -11,18 +11,24 @@ class DuetBoardSchema extends BoardSchema {
   constructor() {
     super();
     this.add({
-      revealed: [{
-         r: Number,
-         c: Number,
-         team: {
-          type: String,
-          enum: [RED, BLUE],
-         }
-      }],
-      revealedMatrix: [[{
-        type: String,
-        enum: [RED, BLUE],
-      }]],
+      revealed: {
+        type: [{
+           r: Number,
+           c: Number,
+           team: {
+            type: String,
+            enum: [RED, BLUE],
+           }
+        }],
+        _id: false,
+      },
+      revealedMatrix: {
+        type: [{
+          type: [Object],
+          _id: false,
+        }],
+        _id: false,
+      },
     });
   }
 }
@@ -58,6 +64,7 @@ class DuetBoardClass extends BoardClass {
     } else {
       this.revealedMatrix[index].push(team);
     }
+    this.markModified('revealedMatrix');
     this.revealed.push({ r, c, team });
   }
 }
