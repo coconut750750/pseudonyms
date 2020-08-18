@@ -13,6 +13,11 @@ import { checkCode } from './api/register';
 const HOME = "home";
 const GAME = "game";
 
+const CLIENT_DISCONNECT = "io client disconnect";
+const SOCKETIOHOST = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
+const SOCKETOPTIONS = { transports: [ 'websocket', 'polling' ] };
+const RECONNECT_TIMEOUT = 1000;
+
 function App(props) {
   const history = useHistory();
   const { urlgamecode } = useParams();
@@ -33,18 +38,22 @@ function App(props) {
   }, []);
 
   const setGame = useCallback((gameCode, name, gameMode) => {
-    const socketiohost = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
-    let socket = io(socketiohost, {
-      transports: [ 'websocket', 'polling' ]
-    });
+    let socket = io(SOCKETIOHOST, SOCKETOPTIONS);
     socket.on('end', data => {
       closeSocket(socket);
     });
-    socket.on('disconnect', data => {
-      ReactDOM.unstable_batchedUpdates(() => {
-        setGameData({});
-        goHome();
-      });
+    socket.on('disconnect', reason => {
+      if (reason === CLIENT_DISCONNECT) {
+        ReactDOM.unstable_batchedUpdates(() => {
+          setGameData({});
+          goHome();
+        });
+      } else {
+        setTimeout(() => {
+          setGame(gameCode, name, gameMode);
+          socket.disconnect();
+        }, RECONNECT_TIMEOUT);
+      }
     });
 
     ReactDOM.unstable_batchedUpdates(() => {
