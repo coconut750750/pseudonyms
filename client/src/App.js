@@ -50,8 +50,9 @@ function App(props) {
         });
       } else {
         setTimeout(() => {
-          setGame(gameCode, name, gameMode);
           socket.disconnect();
+          socket = undefined;
+          setGame(gameCode, name, gameMode);
         }, RECONNECT_TIMEOUT);
       }
     });
