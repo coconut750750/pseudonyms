@@ -76,6 +76,10 @@ class GameClass extends GameInterface {
     this.plist.deactivate(name, () => this.notifyPlayerUpdate(), () => this.delete())
   }
 
+  allDeactivated() {
+    return this.plist.allDeactivated();
+  }
+
   isActive(name) {
     return this.plist.isActive(name);
   }

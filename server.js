@@ -48,9 +48,9 @@ app.use("/game/", gameRouter);
 
 // SOCKET IO SETUP
 app.io.on('connect', function (socket) {
-  var game;
-  var name;
-  var player;
+  let game;
+  let name;
+  let player;
 
   socket.on('joinGame', async data => {
     name = data.name;
@@ -98,7 +98,9 @@ app.io.on('connect', function (socket) {
         } else {
           game.deactivatePlayer(name);
         }
-        game.save();
+        if (!game.allDeactivated()) {
+          game.save();
+        }
       }
     }
   });
