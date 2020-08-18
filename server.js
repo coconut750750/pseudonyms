@@ -77,6 +77,9 @@ app.io.on('connect', function (socket) {
       return;
     }
     const player = game.getPlayer(name);
+    if (player === undefined) {
+      return;
+    }
     if (player.isAdmin) {
       game.delete();
     } else {
