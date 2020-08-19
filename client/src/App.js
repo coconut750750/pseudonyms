@@ -16,7 +16,6 @@ const GAME = "game";
 const CLIENT_DISCONNECT = "io client disconnect";
 const SOCKETIOHOST = process.env.NODE_ENV === 'development' ? 'localhost:5000' : '';
 const SOCKETOPTIONS = { transports: [ 'websocket', 'polling' ] };
-const RECONNECT_TIMEOUT = 1000;
 
 function App(props) {
   const history = useHistory();
@@ -49,11 +48,9 @@ function App(props) {
           goHome();
         });
       } else {
-        setTimeout(() => {
-          socket.disconnect();
-          socket = undefined;
-          setGame(gameCode, name, gameMode);
-        }, RECONNECT_TIMEOUT);
+        socket.disconnect();
+        socket = undefined;
+        setGame(gameCode, name, gameMode);
       }
     });
 
