@@ -87,9 +87,9 @@ class ClassicGame extends GameClass {
     return (this.phase === BOARD || this.phase === RESULT) && !this.plist.getPlayer(name).assignedTeam();
   }
 
-  socketio(socket, game, name) {
-    super.socketio(socket, game, name);
-    socketio(socket, game, name);
+  socketio(socket, game, name, withLock) {
+    super.socketio(socket, game, name, withLock);
+    socketio(socket, game, name, withLock);
   }
 
   reset() {
