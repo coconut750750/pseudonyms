@@ -4,7 +4,13 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const socketioredis = require('socket.io-redis')
+const redis = require('redis');
+const socketioredis = require('socket.io-redis');
+const redislock = require('redislock');
+const asynclock = require('async-lock');
+
+const { GameInterface } = require('./app/game');
+const GameManager = require('./app/manager');
 
 const port = process.env.PSEUDONYMS_PORT || process.env.PORT || 5000;
 const dev = process.env.NODE_ENV === 'development';
@@ -18,15 +24,20 @@ app.io = require('socket.io')(server, {
 });
 app.io.adapter(socketioredis({ host: 'localhost', port: 6379 }))
 
-const { GameInterface } = require('./app/game');
-const GameManager = require('./app/manager');
-
 mongoose.connect(process.env.PSEUDO_MONGO_URI, { useNewUrlParser: true });
 const db = mongoose.connection;
 if (dev) {
   db.dropCollection('games');
 }
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+const redisClient = redis.createClient();
+const lock = redislock.createLock(redisClient, {
+  timeout: 10000,
+  retries: -1,
+  delay: 100,
+});
+const locallock = new asynclock();
 
 app.use(bodyParser.json());
 app.gm = new GameManager(dev, app.io, db.collection('stats'));
@@ -51,60 +62,86 @@ app.io.on('connect', function (socket) {
   let game;
   let name;
   let player;
+  let withLock;
 
-  socket.on('joinGame', async data => {
+  socket.on('joinGame', data => {
     name = data.name;
-    game = await app.gm.retrieveGameModel(data.gameCode);
-    if (!(game instanceof GameInterface)) {
-      return;
-    }
     socket.join(data.gameCode);
 
-    if (game.playerExists(name)) {
-      game.activatePlayer(name, socket.id);
-    } else {
-      game.addPlayer(name, socket.id);
-    }
-    await game.save();
+    withLock = (acquireFn, releaseFn) => {
+      const lockKey = `game:${data.gameCode}`;
+      locallock.acquire(lockKey, async (done) => {
+        lock.acquire(lockKey).then(async () => {
+          await acquireFn();
+          return lock.release();
+        }).then(done);
+      }, async (err, ret) => {
+        await releaseFn();
+      });
+    };
 
-    game.socketio(socket, game, name);
-    socket.emit('ready', {});
+    withLock(
+      async () => {
+        game = await app.gm.retrieveGameModel(data.gameCode);
+        if (game instanceof GameInterface) {
+          if (game.playerExists(name)) {
+            game.activatePlayer(name, socket.id);
+          } else {
+            game.addPlayer(name, socket.id);
+          }
+          await game.save();
+        }
+      }, () => {
+        if (game instanceof GameInterface) {
+          game.socketio(socket, game, name, withLock);
+          socket.emit('ready', {});
+        }
+      }
+    );
   });
 
-  socket.on('exitGame', async data => {
-    const exists = await game.reload();
-    if (!exists) {
-      return;
-    }
-    const player = game.getPlayer(name);
-    if (player === undefined) {
-      return;
-    }
-    if (player.isAdmin) {
-      game.delete();
-    } else {
-      if (game.hasStarted()) {
-        game.deactivatePlayer(name);
-      } else {
-        game.removePlayer(name);
-      }
-      game.save();
-    }
+  socket.on('exitGame', data => {
+    withLock(
+      async () => {
+        const exists = await game.reload();
+        if (!exists) {
+          return;
+        }
+        const player = game.getPlayer(name);
+        if (player === undefined) {
+          return;
+        }
+        if (player.isAdmin) {
+          game.delete();
+        } else {
+          if (game.hasStarted()) {
+            game.deactivatePlayer(name);
+          } else {
+            game.removePlayer(name);
+          }
+          game.save();
+        }
+      }, () => {}
+    );
   });
 
   socket.on('disconnect', async data => {
     if (game !== undefined) {
-      const exists = await game.reload();
-      if (exists && game.playerExists(name)) {
-        if (game.canRemove(name)) {
-          game.removePlayer(name);
-        } else {
-          game.deactivatePlayer(name);
-        }
-        if (!game.allDeactivated()) {
-          game.save();
-        }
-      }
+      withLock(
+        async () => {
+          const exists = await game.reload();
+          if (exists && game.playerExists(name)) {
+            if (game.canRemove(name)) {
+              game.removePlayer(name);
+            } else {
+              game.deactivatePlayer(name);
+            }
+            if (!game.allDeactivated()) {
+              game.save();
+            }
+          }
+        }, () => {}
+      );
     }
   });
 });
