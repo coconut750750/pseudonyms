@@ -2,14 +2,32 @@
     box-shadow: 0 0 0px 2px black;
 }
 
+.dark .badge.captain {
+    box-shadow: 0 0 0px 2px white;
+}
+
 .badge img.captain-icon {
     height: 9px;
     margin-right: 4px;
     filter: invert(1);
 }
 
-.badge.badge-light img.captain-icon {
+.badge.badge-empty {
+    color: #212529;
+    background-color: #f8f9fa;
+}
+
+.badge.badge-empty img.captain-icon {
     filter: invert(0);
+}
+
+.dark .badge.badge-empty {
+    color: #fff;
+    background-color: #343a40;
+}
+
+.dark .badge.badge-empty img.captain-icon {
+    filter: invert(1);
 }
 
 .badge.player {}
@@ -39,9 +57,14 @@
     background-color: #fff;
 }
 
-.badge.badge-light .badge-x span:before,
-.badge.badge-light .badge-x span:after {
+.badge.badge-empty .badge-x span:before,
+.badge.badge-empty .badge-x span:after {
     background-color: #333;
+}
+
+.dark .badge.badge-empty .badge-x span:before,
+.dark .badge.badge-empty .badge-x span:after {
+    background-color: #fff;
 }
 
 .badge .badge-x span:before {

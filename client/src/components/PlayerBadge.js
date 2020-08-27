@@ -5,7 +5,7 @@ import './PlayerBadge.css';
 function PlayerBadge(props) {
   const getBadgeClass = () => {
     if (!props.player.active) {
-      return "badge-light";
+      return "badge-empty";
     } else if (props.player.isRed()) {
       return "badge-danger";
     } else if (props.player.isBlue()) {
