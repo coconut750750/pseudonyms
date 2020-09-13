@@ -1,3 +1,13 @@
+.badge.badge-active {
+    color: #fff;
+    background-color: #343a40;
+}
+
+.dark .badge.badge-active {
+    color: #212529;
+    background-color: #f8f9fa;
+}
+
 .badge.captain {
     box-shadow: 0 0 0px 2px black;
 }
@@ -17,13 +27,13 @@
     background-color: #f8f9fa;
 }
 
-.badge.badge-empty img.captain-icon {
-    filter: invert(0);
-}
-
 .dark .badge.badge-empty {
     color: #fff;
     background-color: #343a40;
+}
+
+.badge.badge-empty img.captain-icon {
+    filter: invert(0);
 }
 
 .dark .badge.badge-empty img.captain-icon {
@@ -54,7 +64,16 @@
     content: ' ';
     height: 12px;
     width: 1.2px;
+}
+
+.badge.badge-active .badge-x span:before,
+.badge.badge-active .badge-x span:after {
     background-color: #fff;
+}
+
+.dark .badge.badge-active .badge-x span:before,
+.dark .badge.badge-active .badge-x span:after {
+    background-color: #333;
 }
 
 .badge.badge-empty .badge-x span:before,

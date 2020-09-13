@@ -11,7 +11,7 @@ function PlayerBadge(props) {
     } else if (props.player.isBlue()) {
       return "badge-primary";
     } else {
-      return "badge-dark";
+      return "badge-active";
     }
   }
 
