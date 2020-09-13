@@ -19,7 +19,6 @@
     color: var(--text-color);
     vertical-align: text-top;
     height: 12.8px;
-    transform: rotate(180deg);
 }
 
 .gamecode {

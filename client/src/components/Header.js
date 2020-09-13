@@ -23,9 +23,9 @@ export default function Header(props) {
       </div>
 
       <div className="row">
-        <div className="col-2 d-flex justify-content-center"></div>
+        <div className="col-2"></div>
         <div className="col-8"><h6>Codenames online</h6></div>
-        <div className="col-2">{props.tipToggle}</div>
+        <div className="col-2"></div>
       </div>
       <hr/>
     </div>
