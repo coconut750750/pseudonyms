@@ -21,12 +21,6 @@ export default function Header(props) {
           <DarkModeToggle/>
         </div>
       </div>
-
-      <div className="row">
-        <div className="col-2"></div>
-        <div className="col-8"><h6>Codenames online</h6></div>
-        <div className="col-2"></div>
-      </div>
       <hr/>
     </div>
   );
