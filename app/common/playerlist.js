@@ -62,7 +62,9 @@ class PlayerList {
 
   remove(name) {
     if (name in this.players) {
-      this.players[name].send('end', {});
+      if (this.players[name].socket !== undefined) {
+        this.players[name].socket.disconnect();
+      }
       delete this.players[name];
       if (this.allDeactivated()) {
         this.endGame();
