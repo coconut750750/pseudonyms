@@ -6,6 +6,7 @@
 
 .dark #footer {
     background: linear-gradient(rgb(42, 42, 42) 0%, rgb(29, 29, 29) 5%, rgb(18, 18, 18) 10%);
+    background: linear-gradient(rgb(58, 58, 58) 0%, rgb(45, 45, 45) 5%, rgb(34, 34, 34) 10%);
 }
 
 #footer-content {

@@ -13,15 +13,15 @@ body {
 }
 
 body.dark {
-    --background-color: #121212;
+    --background-color: #222222;
     --unselected-color: #787878ff;
     --selected-color: #edededff;
     --shadow-color: #78787888;
     --strong-shadow-color: #d1d6da99;
     --text-color: #edededff;
-    --button-color: #14171b;
-    --button-hover-color: #1c1c1c;
-    --tile-color: #f8f8f844;
+    --button-color: #24272b;
+    --button-hover-color: #2c2c2c;
+    --tile-color: #2a2a2a;
     --border-color: rgba(237, 237, 237, 0.1);
     --strong-border-color: rgba(237, 237, 237, 0.2);
 }
