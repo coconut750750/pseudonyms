@@ -3,6 +3,7 @@ import React from 'react';
 import ClassicBoard from '../game_components/classic/ClassicBoard';
 import DuetBoard from '../game_components/duet/DuetBoard';
 import Tip from '../components/Tip';
+import Stats from '../game_components/Stats';
 
 import {
   isClassic,
@@ -52,6 +53,12 @@ function Result(props) {
       <br/>
 
       {renderBoard()}
+
+      <Stats
+        mode={props.mode}
+        stats={props.stats}
+        clueHistory={props.clueHistory}
+      />
     </div>
   );
 }
