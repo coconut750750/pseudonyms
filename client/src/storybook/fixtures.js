@@ -16,7 +16,7 @@ export const clues = [
   {word: 'clue', count: 2, team: 'blue'},
   {word: 'tree', count: 2, team: 'red'},
   {word: 'trumpet', count: 2, team: 'blue'},
-  {word: 'kangaroo', count: 2, team: 'red'},
+  {word: 'kangaroooooooooooooooo', count: 2, team: 'red'},
   {word: 'miss', count: 2, team: 'blue'},
   {word: 'ball', count: 2, team: 'red'},
   {word: 'kite', count: 2, team: 'blue'},

@@ -15,7 +15,7 @@ const generateDataset = (name, color, trend) => ({
   label: name,
   fill: false,
   lineTension: 0.1,
-  backgroundColor: '#ffffff',
+  backgroundColor: color,
   borderColor: color,
   borderWidth: 2,
   data: trend,
@@ -58,6 +58,14 @@ const otherChartOptions = {
   events: [],
 };
 
+const secToTime = (s) => {
+  if (s < 60 * 60) {
+    return new Date(s * 1000).toISOString().substr(14, 5).toString();
+  } else {
+    return new Date(s * 1000).toISOString().substr(11, 8).toString();
+  }
+}
+
 export default function Stats({ mode, stats, clueHistory }) {
   const secondTeam = stats.startTeam === 'blue' ? 'red' : 'blue';
 
@@ -90,11 +98,12 @@ export default function Stats({ mode, stats, clueHistory }) {
   };
 
   const renderDuetScoreTrend = (stats, clueHistory) => {
+    const hasSuddenDeath = clueHistory.length === stats.scoreTrend.length - 2;
     return (
       <Line
         height={100}
         data={{
-          labels: generateLabels(clueHistory, [['sudden', 'death'], '']),
+          labels: generateLabels(clueHistory, hasSuddenDeath ? [['sudden', 'death'], ''] : ['']),
           datasets: [
             generateDataset('green', STYLES.colors.green, stats.scoreTrend),
           ],
@@ -103,10 +112,10 @@ export default function Stats({ mode, stats, clueHistory }) {
           ...otherChartOptions,
           scales: {
             x: generateXAxisStyle((context) => {
-              if (context.index === clueHistory.length) {
-                return 'black';
-              } else {
+              if (context.index < clueHistory.length) {
                 return STYLES.colors.green;
+              } else {
+                return 'black';
               }
             }),
             y: generateYAxisStyle(15),
@@ -119,14 +128,14 @@ export default function Stats({ mode, stats, clueHistory }) {
   const renderSummary = (stats) => {
     return (
       <div className="d-flex justify-content-around">
-        <p>Time elapsed: {stats.timeInSec}s</p>
+        <p>Time elapsed: {secToTime(stats.timeInSec)}</p>
         <p>Turns taken: {stats.turns}</p>
       </div>
     );
   };
 
   return (
-    <div id="stats" className="ml-4 mr-4">
+    <div id="stats" className="skinny">
       <h6>Game Stats</h6>
 
       {stats !== undefined &&
