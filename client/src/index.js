@@ -29,10 +29,10 @@ function Index(props) {
       <div className="outer">
         <Switch>
           {process.env.NODE_ENV === 'development' &&
-            <div>
-              <Route exact path="/story/classic"><ClassicResult /></Route>
-              <Route exact path="/story/duet"><DuetResult /></Route>
-            </div>
+            <Route exact path="/story/classic"><ClassicResult /></Route>
+          }
+          {process.env.NODE_ENV === 'development' &&
+            <Route exact path="/story/duet"><DuetResult /></Route>
           }
           <Route exact path="/howto"><HowTo/></Route>
           <Route exact path="/moregames"><MoreGames/></Route>
