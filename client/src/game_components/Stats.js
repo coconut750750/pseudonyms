@@ -76,12 +76,12 @@ export default function Stats({ mode, stats, clueHistory }) {
           ...otherChartOptions,
           scales: {
             x: generateXAxisStyle((context) => {
-                if (context.index % 2 === 0) {
-                  return STYLES.colors[stats.startTeam];
-                } else {
-                  return STYLES.colors[secondTeam];
-                }
-              }),
+              if (context.index % 2 === 0) {
+                return STYLES.colors[stats.startTeam];
+              } else {
+                return STYLES.colors[secondTeam];
+              }
+            }),
             y: generateYAxisStyle(9),
           }
         }}
@@ -102,7 +102,13 @@ export default function Stats({ mode, stats, clueHistory }) {
         options={{
           ...otherChartOptions,
           scales: {
-            x: generateXAxisStyle(STYLES.colors.green),
+            x: generateXAxisStyle((context) => {
+              if (context.index === clueHistory.length) {
+                return 'black';
+              } else {
+                return STYLES.colors.green;
+              }
+            }),
             y: generateYAxisStyle(15),
           }
         }}
