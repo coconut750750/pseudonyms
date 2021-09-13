@@ -2,9 +2,19 @@ export const BOARD_SIZE = 5;
 
 export const RED = "red";
 export const BLUE = "blue";
+export const GREEN = "green";
 export const NO_TEAM = "";
 export const FIRST_TURN = "ft";
 export const SUDDEN_DEATH = "sd";
+
+export const STYLES = {
+  colors: {
+    [RED]: '#dc3545',
+    [BLUE]: '#007bff',
+    [GREEN]: '#28a745',
+  },
+  font: 'Roboto Mono, monospace'
+}
 
 export const RED_TILE = 'r';
 export const BLUE_TILE = 'b';
