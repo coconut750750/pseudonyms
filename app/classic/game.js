@@ -257,13 +257,15 @@ class ClassicGame extends GameInterface {
     this.stopTimer();
     this.winner = winner;
     this.phase = RESULT;
-    this.notifyWinner();
-    this.notifyFinalReveal();
-    this.notifyPhaseChange();
-
+    
     this.gameStats.addTurn(this.keycard.redLeft, this.keycard.blueLeft);
     this.gameStats.endGame(matured, this.winner);
     saveGame(this.options.statsCollection, this.plist.getNonSpectatorCount(), this.gameoptions.wordlist, this.gameStats);
+    
+    this.notifyWinner();
+    this.notifyFinalReveal();
+    this.notifyGameStats();
+    this.notifyPhaseChange();
   }
 
   notifyPhaseChange() {
@@ -307,6 +309,10 @@ class ClassicGame extends GameInterface {
 
   notifyFinalReveal() {
     this.broadcast('key', this.keycard.json());
+  }
+
+  notifyGameStats() {
+    this.broadcast('stats', { stats: this.gameStats });
   }
 
   // send data for disconnected users

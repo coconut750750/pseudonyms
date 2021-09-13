@@ -258,15 +258,16 @@ class DuetGame extends GameInterface {
   endGame(win) {
     this.stopTimer();
     this.phase = RESULT;
-
     this.win = win;
-    this.notifyWin();
-    this.notifyFinalReveal();
-    this.notifyPhaseChange();
-
+    
     this.gameStats.addTurn(this.keycard.leftover);
     this.gameStats.endGame(win);
     saveGame(this.options.statsCollection, this.plist.getNonSpectatorCount(), this.gameoptions.wordlist, win);
+    
+    this.notifyWin();
+    this.notifyFinalReveal();
+    this.notifyGameStats();
+    this.notifyPhaseChange();
   }
 
   getRevealsData() {
@@ -315,6 +316,10 @@ class DuetGame extends GameInterface {
 
   notifyFinalReveal() {
     this.broadcast('key', this.keycard.jsonMerged());
+  }
+
+  notifyGameStats() {
+    this.broadcast('stats', { stats: this.gameStats });
   }
 
   // send data for disconnected users
