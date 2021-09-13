@@ -17,9 +17,9 @@ const generateDataset = (name, color, trend) => ({
   lineTension: 0.1,
   backgroundColor: color,
   borderColor: color,
-  borderWidth: 2,
+  borderWidth: 3,
   data: trend,
-  pointRadius: 3, // hide the point image
+  pointRadius: 2, // hide the point image
 });
 
 const generateXAxisStyle = (color) => ({
@@ -31,6 +31,7 @@ const generateXAxisStyle = (color) => ({
   },
   grid: {
     display: false,
+    drawBorder: false,
   },
 });
 
@@ -48,6 +49,11 @@ const generateYAxisStyle = (max) => ({
   grid: {
     color: 'black',
     drawBorder: false,
+  },
+  afterDataLimits: function(axis) {
+    // add innder padding for points on the top and bottom lines
+    axis.max += 1;
+    axis.min -= 1;
   },
 });
 
@@ -72,7 +78,6 @@ export default function Stats({ mode, stats, clueHistory }) {
   const renderClassicScoreTrend = (stats, clueHistory) => {
     return (
       <Line
-        height={100}
         data={{
           labels: generateLabels(clueHistory, [' ']),
           datasets: [
@@ -101,7 +106,6 @@ export default function Stats({ mode, stats, clueHistory }) {
     const hasSuddenDeath = clueHistory.length === stats.scoreTrend.length - 2;
     return (
       <Line
-        height={100}
         data={{
           labels: generateLabels(clueHistory, hasSuddenDeath ? [['sudden', 'death'], ''] : ['']),
           datasets: [
