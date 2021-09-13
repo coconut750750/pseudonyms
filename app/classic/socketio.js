@@ -25,6 +25,7 @@ function socketio(socket, game, name, player) {
     game.reconnectSendGuessesLeft(player);
     game.reconnectSendScore(player);
     game.reconnectSendWinner(player);
+    game.reconnectSendStats(player);
     socket.emit('phase', { phase: game.phase });
   });
 }

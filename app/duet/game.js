@@ -362,6 +362,12 @@ class DuetGame extends GameInterface {
       player.send('winner', { winner: this.win });
     }
   }
+
+  reconnectSendStats(player) {
+    if (this.phase === RESULT) {
+      player.send('stats', { stats: this.gameStats });
+    }
+  }
 }
 
 module.exports = DuetGame;

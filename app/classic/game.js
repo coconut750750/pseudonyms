@@ -359,6 +359,12 @@ class ClassicGame extends GameInterface {
       player.send('winner', { winner: this.winner });
     }
   }
+
+  reconnectSendStats(player) {
+    if (this.phase === RESULT) {
+      player.send('stats', { stats: this.gameStats });
+    }
+  }
 }
 
 module.exports = ClassicGame;
