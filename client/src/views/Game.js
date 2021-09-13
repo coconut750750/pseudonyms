@@ -39,6 +39,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   const [guessesLeft, setGuessesLeft] = useState(undefined);
   const [score, setScore] = useState(undefined);
   const [winner, setWinner] = useState("");
+  const [stats, setStats] = useState(undefined);
 
   const [tips, setTips] = useState((localStorage.getItem("tips") || 'true') === 'true');
   const setTipsActive = useCallback((active) => {
@@ -132,6 +133,12 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
       setWinner(winner);
     });
 
+    socket.off('stats');
+    socket.on('stats', data => {
+      const { stats } = data;
+      setStats(stats);
+    });
+
     socket.emit('getReconnect', {});
 
   }, [gameCode, name, socket, setError]);
@@ -186,7 +193,9 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
               winner={winner}
               board={board}
               reveals={reveals}
-              keycard={key}/>,
+              keycard={key}
+              stats={stats}
+              clueHistory={clueHistory}/>,
   };
 
   return (
