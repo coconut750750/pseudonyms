@@ -4,29 +4,28 @@ const WORDLIST_COUNT_QUERY = { type: "duet_wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "duet_players" };
 const WINS_QUERY = { type: "duet_wins" };
 const { N_GREEN_TILES } = require("../common/const").duet;
+const GameStatsInterface = require("../common/analytics");
 
-class GameStats {
+class GameStats extends GameStatsInterface {
   constructor() {
-    this.turns = 0;
-    
-    this.timeInSec = 0;
-    this.startTime = undefined;
-
+    super();
     this.win = false;
     this.scoreTrend = [N_GREEN_TILES];
   }
 
   startGame() {
-    this.startTime = new Date();
+    super.startGame();
   }
 
   addTurn(score) {
-    this.turns += 1;
+    super.addTurn();
+    
     this.scoreTrend.push(score);
   }
 
   endGame(win) {
-    this.timeInSec = (new Date() - this.startTime) / 1000;
+    super.endGame();
+
     this.win = win;
   }
 }

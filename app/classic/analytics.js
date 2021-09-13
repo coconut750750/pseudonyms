@@ -4,15 +4,14 @@ const WORDLIST_COUNT_QUERY = { type: "classic_wordlist" };
 const PLAYERS_COUNT_QUERY = { type: "classic_players" };
 const MATURE_QUERY = { type: "classic_mature" };
 const { RED, BLUE, N_START_TILES, N_OTHER_TILES } = require("../common/const").classic;
+const GameStatsInterface = require("../common/analytics");
 
-class GameStats {
+class GameStats extends GameStatsInterface {
   constructor() {
+    super();
     this.matured = false,
-    this.turns = 0;
     
     this.startTeam = undefined;
-    this.timeInSec = 0;
-    this.startTime = undefined;
 
     this.firstTeamWin = false;
     this.firstTeamScoreTrend = [N_START_TILES];
@@ -20,12 +19,13 @@ class GameStats {
   }
 
   startGame(startTeam) {
+    super.startGame();
     this.startTeam = startTeam;
-    this.startTime = new Date();
   }
 
   addTurn(redScore, blueScore) {
-    this.turns += 1;
+    super.addTurn();
+
     if (this.startTeam === RED) {
       this.firstTeamScoreTrend.push(redScore);
       this.secondTeamScoreTrend.push(blueScore);
@@ -36,7 +36,8 @@ class GameStats {
   }
 
   endGame(matured, winner) {
-    this.timeInSec = (new Date() - this.startTime) / 1000;
+    super.endGame();
+
     this.matured = matured;
     this.firstTeamWin = this.startTeam === winner;
   }
