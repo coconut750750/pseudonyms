@@ -185,6 +185,7 @@ class ClassicGame extends GameInterface {
       return false;
     }
     this.clues.add(word, count, this.turn);
+    this.gameStats.addClue();
     this.guessesLeft = parseInt(count) + 1;
     this.notifyGuessesLeft();
     this.startGuess();

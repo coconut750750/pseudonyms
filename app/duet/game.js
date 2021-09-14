@@ -176,6 +176,7 @@ class DuetGame extends GameInterface {
       this.notifyTurnChange();
     }
     this.clues.add(word, count, this.turn);
+    this.gameStats.addClue();
     this.startGuess();
   }
 
@@ -222,6 +223,7 @@ class DuetGame extends GameInterface {
     if (this.timersLeft <= 0) {
       this.turn = SUDDEN_DEATH;
       this.stopTimer();
+      this.gameStats.addClue();
     } else {
       this.turn = this.turn === RED ? BLUE : RED;
       if (this.keycard.teamFinished(this.turn)) {

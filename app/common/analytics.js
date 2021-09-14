@@ -4,18 +4,25 @@ class GameStatsInterface {
     
     this.timeInSec = 0;
     this.startTime = undefined;
-    this.timeTrend = [];
+    
+    this.clueEndTimes = [];
+    this.guessEndTimes = [];
   }
 
   startGame() {
     this.startTime = new Date();
   }
 
+  addClue() {
+    const time = (new Date() - this.startTime) / 1000;
+    this.clueEndTimes.push(time);
+  }
+
   addTurn() {
     this.turns += 1;
 
     const time = (new Date() - this.startTime) / 1000;
-    this.timeTrend.push(time);
+    this.guessEndTimes.push(time);
   }
 
   endGame() {
