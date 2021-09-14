@@ -16,10 +16,12 @@ export const clues = [
   {word: 'clue', count: 2, team: 'blue'},
   {word: 'tree', count: 2, team: 'red'},
   {word: 'trumpet', count: 2, team: 'blue'},
-  {word: 'kangaroooooooooooooooo', count: 2, team: 'red'},
+  {word: 'kangaroo', count: 2, team: 'red'},
   {word: 'miss', count: 2, team: 'blue'},
   {word: 'ball', count: 2, team: 'red'},
   {word: 'kite', count: 2, team: 'blue'},
+  {word: 'fdsa', count: 2, team: 'red'},
+  {word: 'asdf', count: 2, team: 'blue'},
 ];
 
 export const classic = {
@@ -37,8 +39,10 @@ export const classic = {
   stats: {
     firstTeamScoreTrend: [9,8,8,6,6,3,2,0],
     secondTeamScoreTrend: [8,8,6,6,4,3,1,1],
+    clueEndTimes: [60, 125, 145, 165, 175, 185, 195],
+    guessEndTimes: [120, 140, 160, 170, 180, 190, 200],
     startTeam: "blue",
-    timeInSec: 1,
+    timeInSec: 200,
     turns: 1,
   },
 };
@@ -55,8 +59,10 @@ export const duet = {
     {r: 3, c: 0, color: 'x', team: 'red'},
   ],
   stats: {
-    scoreTrend: [15, 14, 12, 10, 7, 6, 4, 3, 0],
-    timeInSec: 212.414,
+    scoreTrend: [15, 14, 12, 10, 6, 4, 3, 2, 1, 1, 0],
+    clueEndTimes: [5.088, 12.138, 15.284, 18.784, 23.796, 29.206, 32.399, 37.922, 41.767, 46.7],
+    guessEndTimes: [10.69, 14.037, 17.419, 21.84, 27.23, 31.215, 36.165, 39.841, 46.7, 49.793],
+    timeInSec: 49.793,
     turns: 1,
     win: false,
   },
