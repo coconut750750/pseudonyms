@@ -1,5 +1,6 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { LinearScale } from 'chart.js';
+import { Chart, Line } from 'react-chartjs-2';
 
 import {
   isClassic,
@@ -7,31 +8,72 @@ import {
   STYLES,
 } from '../utils/const';
 
-const generateLabels = (clueHistory, suffix) => (
-  [...clueHistory.map(c => c.word), ...suffix]
+class GameTimelineScale extends LinearScale {
+  buildTicks() {
+    return this.chart.data.annotations.map(v => ({
+      value: v.value,
+      label: [v.annotation],
+      major: false,
+    }));
+  }
+
+  generateTickLabels(ticks) {
+    // label already generated in buildTicks
+    // override for noop
+  }
+}
+
+GameTimelineScale.id = 'timelineScale';
+Chart.register(GameTimelineScale);
+
+const generateLabels = (guessEndTimes) => (
+  [0, ...guessEndTimes.map(t => Math.floor(t))]
 );
+
+const clueToAnnotation = (clue) => (`${clue.word} : ${clue.count}`);
+
+const generateAnnotations = (clueHistory, clueEndTimes, suffix) => {
+  const annotations = clueHistory.map(c => clueToAnnotation(c)).concat(suffix);
+  return clueEndTimes.map((t, i) => ({ value: t, annotation: annotations[i] }));
+};
 
 const generateDataset = (name, color, trend) => ({
   label: name,
   fill: false,
-  lineTension: 0.1,
+  tension: 0.1,
   backgroundColor: color,
   borderColor: color,
   borderWidth: 3,
   data: trend,
-  pointRadius: 2, // hide the point image
+  pointRadius: 2,
 });
 
-const generateXAxisStyle = (color) => ({
+const generateXAxisStyle = (color, max) => ({
+  min: 0,
+  max: max,
+  type: 'timelineScale',
   ticks: {
+    padding: 0,
     font: {
       family: STYLES.font,
+      size: STYLES.fontSize,
     },
     color,
+    autoSkip: false,
+    maxRotation: 30,
+    minRotation: 30,
+    labelOffset: -STYLES.fontSize / 2,
   },
   grid: {
-    display: false,
+    // display: false,
     drawBorder: false,
+  },
+  afterDataLimits: function(axis) {
+    // add inner padding for points on the far right edge
+    const max = axis.max;
+    // console.log(axis.min, axis.max)
+    axis.min -= max * .01;
+    axis.max += max * .01;
   },
 });
 
@@ -39,6 +81,7 @@ const generateYAxisStyle = (max) => ({
   min: 0,
   max,
   ticks: {
+    beginAtZero: true,
     font: {
       family: STYLES.font,
     },
@@ -52,8 +95,8 @@ const generateYAxisStyle = (max) => ({
   },
   afterDataLimits: function(axis) {
     // add innder padding for points on the top and bottom lines
-    axis.max += 1;
-    axis.min -= 1;
+    axis.max += .5;
+    axis.min -= .5;
   },
 });
 
@@ -79,7 +122,8 @@ export default function Stats({ mode, stats, clueHistory }) {
     return (
       <Line
         data={{
-          labels: generateLabels(clueHistory, [' ']),
+          labels: generateLabels(stats.guessEndTimes),
+          annotations: generateAnnotations(clueHistory, stats.clueEndTimes, []),
           datasets: [
             generateDataset(stats.startTeam, STYLES.colors[stats.startTeam], stats.firstTeamScoreTrend),
             generateDataset(secondTeam, STYLES.colors[secondTeam], stats.secondTeamScoreTrend),
@@ -88,13 +132,16 @@ export default function Stats({ mode, stats, clueHistory }) {
         options={{
           ...otherChartOptions,
           scales: {
-            x: generateXAxisStyle((context) => {
-              if (context.index % 2 === 0) {
-                return STYLES.colors[stats.startTeam];
-              } else {
-                return STYLES.colors[secondTeam];
-              }
-            }),
+            x: generateXAxisStyle(
+              (context) => {
+                if (context.index % 2 === 0) {
+                  return STYLES.colors[stats.startTeam];
+                } else {
+                  return STYLES.colors[secondTeam];
+                }
+              },
+              stats.timeInSec,
+            ),
             y: generateYAxisStyle(9),
           }
         }}
@@ -107,7 +154,8 @@ export default function Stats({ mode, stats, clueHistory }) {
     return (
       <Line
         data={{
-          labels: generateLabels(clueHistory, hasSuddenDeath ? [['sudden', 'death'], ''] : ['']),
+          labels: generateLabels(stats.guessEndTimes),
+          annotations: generateAnnotations(clueHistory, stats.clueEndTimes, hasSuddenDeath ? ['sudden death'] : []),
           datasets: [
             generateDataset('green', STYLES.colors.green, stats.scoreTrend),
           ],
@@ -115,13 +163,16 @@ export default function Stats({ mode, stats, clueHistory }) {
         options={{
           ...otherChartOptions,
           scales: {
-            x: generateXAxisStyle((context) => {
-              if (context.index < clueHistory.length) {
-                return STYLES.colors.green;
-              } else {
-                return 'black';
-              }
-            }),
+            x: generateXAxisStyle(
+              (context) => {
+                if (context.index < clueHistory.length) {
+                  return STYLES.colors.green;
+                } else {
+                  return 'black';
+                }
+              },
+              stats.timeInSec,
+            ),
             y: generateYAxisStyle(15),
           }
         }}
@@ -140,7 +191,7 @@ export default function Stats({ mode, stats, clueHistory }) {
 
   return (
     <div id="stats" className="skinny">
-      <h6>Game Stats</h6>
+      <h6>Game Progress</h6>
 
       {stats !== undefined &&
         <div>

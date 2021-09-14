@@ -13,7 +13,8 @@ export const STYLES = {
     [BLUE]: '#007bff',
     [GREEN]: '#28a745',
   },
-  font: 'Roboto Mono, monospace'
+  font: 'Roboto Mono, monospace',
+  fontSize: 12,
 }
 
 export const RED_TILE = 'r';

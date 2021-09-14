@@ -53,6 +53,7 @@ function Result(props) {
       <br/>
 
       {renderBoard()}
+      <br/>
 
       <Stats
         mode={props.mode}
