@@ -15,8 +15,10 @@ export const STYLES = {
     black: '#000',
     white: '#999',
   },
-  font: 'Roboto Mono, monospace',
-  fontSize: 12,
+  font: {
+    family: 'Roboto Mono, monospace',
+    size: 12,
+  },
 }
 
 export const RED_TILE = 'r';
@@ -47,4 +49,12 @@ export const otherTeam = (team) => {
     return NO_TEAM;
   }
   return team === RED ? BLUE : RED;
-}
+};
+
+export const secToTime = (s) => {
+  if (s < 60 * 60) {
+    return new Date(s * 1000).toISOString().substr(14, 5).toString();
+  } else {
+    return new Date(s * 1000).toISOString().substr(11, 8).toString();
+  }
+};

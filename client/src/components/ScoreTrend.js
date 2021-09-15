@@ -4,15 +4,17 @@ import { Chart, Line } from 'react-chartjs-2';
 
 import {
   STYLES,
+  secToTime,
 } from '../utils/const';
 
 import './ScoreTrend.css';
 
 class ScoreTrendScale extends LinearScale {
   buildTicks() {
-    return this.chart.data.annotations.map(v => ({
+    return this.chart.data.annotations.map((v, i) => ({
       value: v.value,
-      label: [v.annotation],
+      label: v.annotation,
+      color: this.chart.data.color.indexToColor(i),
       major: false,
     }));
   }
@@ -45,17 +47,14 @@ const generateDataset = (name, color, trend) => ({
   pointRadius: 0,
 });
 
-const generateXAxisStyle = (color, defaultColor, max) => ({
+const generateXAxisStyle = (defaultColor, max) => ({
   min: 0,
   max: max,
   type: 'scoreTrendScale',
   ticks: {
     padding: 0,
-    font: {
-      family: STYLES.font,
-      size: STYLES.fontSize,
-    },
-    color,
+    font: STYLES.font,
+    color: (context) => context.tick.color,
     autoSkip: false,
     maxRotation: 60,
     minRotation: 60,
@@ -66,12 +65,11 @@ const generateXAxisStyle = (color, defaultColor, max) => ({
     drawOnChartArea: false,
     color: defaultColor,
   },
-  afterDataLimits: function(axis) {
-    // add inner padding for points on the far right edge
-    const max = axis.max;
-    // console.log(axis.min, axis.max)
-    axis.min -= max * .01;
-    axis.max += max * .01;
+  title: {
+    display: true,
+    text: 'Clues over time',
+    font: STYLES.font,
+    color: defaultColor,
   },
 });
 
@@ -80,9 +78,7 @@ const generateYAxisStyle = (defaultColor, max) => ({
   max,
   ticks: {
     beginAtZero: true,
-    font: {
-      family: STYLES.font,
-    },
+    font: STYLES.font,
     color: defaultColor,
     stepSize: 1,
     autoSkip: false,
@@ -91,6 +87,12 @@ const generateYAxisStyle = (defaultColor, max) => ({
     color: defaultColor,
     drawBorder: false,
   },
+  title: {
+    display: true,
+    text: 'Words left',
+    font: STYLES.font,
+    color: defaultColor,
+  },
 });
 
 const otherChartOptions = {
@@ -98,9 +100,16 @@ const otherChartOptions = {
     legend: false,
   },
   events: [],
+  layout: {
+    padding: 20,
+  },
+  animation: {
+    duration: 500,
+  },
+  maintainAspectRatio: false,
 };
 
-const plugins = (linePositions, colorFn) => ([{
+const plugins = [{
   afterDatasetsDraw: function(chart) {
     const ctx = chart.ctx;
     const y_axis = chart.scales['y'];
@@ -109,18 +118,30 @@ const plugins = (linePositions, colorFn) => ([{
 
     ctx.lineWidth = 1;
 
+    const linePositions = chart.data.labels.slice(1);
+
     linePositions.forEach((t, index) => {
       const x = chart.scales.x.getPixelForValue(t)
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(x, topY);
       ctx.lineTo(x, bottomY);
-      ctx.strokeStyle = colorFn(index);
+      ctx.strokeStyle = chart.data.color.indexToColor(index);
       ctx.stroke();
       ctx.restore();
     });
-  }
-}]);
+
+    let t = linePositions[linePositions.length - 1];
+    let x = chart.scales.x.getPixelForValue(t);
+    ctx.save();
+    ctx.textBaseline = 'middle';
+    ctx.textAlign = 'center';
+    ctx.font = STYLES.font.size + 'px ' + STYLES.font.family;
+    ctx.fillStyle = chart.data.color.defaultColor;
+    ctx.fillText(secToTime(t), x, topY - STYLES.font.size);
+    ctx.restore();
+  },
+}];
 
 export default function ScoreTrend({
   clueHistory,
@@ -135,29 +156,31 @@ export default function ScoreTrend({
 }) {
   return (
     <div className="scoreTrend">
-    <Line
-      data={{
-        labels: generateLabels(guessEndTimes),
-        annotations: generateAnnotations(clueHistory, clueEndTimes, annotationSuffix),
-        datasets: datasets.map(d => generateDataset(d.name, d.color, d.trend)),
-      }}
-      plugins={plugins(guessEndTimes, indexToColor)}
-      options={{
-        maintainAspectRatio: false,
-        ...otherChartOptions,
-        scales: {
-          x: generateXAxisStyle(
-            (context) => indexToColor(context.index),
-            defaultColor,
-            xMax,
-          ),
-          y: generateYAxisStyle(
-            defaultColor,
-            yMax,
-          ),
-        }
-      }}
-    />
+      <Line
+        data={{
+          labels: generateLabels(guessEndTimes),
+          annotations: generateAnnotations(clueHistory, clueEndTimes, annotationSuffix),
+          datasets: datasets.map(d => generateDataset(d.name, d.color, d.trend)),
+          color: {
+            defaultColor: defaultColor,
+            indexToColor: indexToColor,
+          },
+        }}
+        plugins={plugins}
+        options={{
+          ...otherChartOptions,
+          scales: {
+            x: generateXAxisStyle(
+              defaultColor,
+              xMax,
+            ),
+            y: generateYAxisStyle(
+              defaultColor,
+              yMax,
+            ),
+          }
+        }}
+      />
     </div>
   );
 };

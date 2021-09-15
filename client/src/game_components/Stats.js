@@ -8,25 +8,17 @@ import {
   isClassic,
   isDuet,
   STYLES,
-  RED,
-  BLUE,
   GREEN,
+  otherTeam,
+  secToTime,
 } from '../utils/const';
-
-const secToTime = (s) => {
-  if (s < 60 * 60) {
-    return new Date(s * 1000).toISOString().substr(14, 5).toString();
-  } else {
-    return new Date(s * 1000).toISOString().substr(11, 8).toString();
-  }
-};
 
 export default function Stats({ mode, stats, clueHistory }) {
   const { darkModeOn } = useContext(PreferencesContext);
   const defaultColor = darkModeOn ? STYLES.colors.white : STYLES.colors.black;
 
   const renderClassicScoreTrend = (stats, clueHistory) => {
-    const secondTeam = stats.startTeam === BLUE ? RED : BLUE;
+    const secondTeam = otherTeam(stats.startTeam);
     const indexToColor = (index) => {
       if (index % 2 === 0) {
         return STYLES.colors[stats.startTeam];
