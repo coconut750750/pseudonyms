@@ -45,6 +45,7 @@ export default function Stats({ mode, stats, clueHistory }) {
   };
 
   const renderDuetScoreTrend = (stats, clueHistory) => {
+    const hasSuddenDeath = clueHistory.length === stats.scoreTrend.length - 2;
     const indexToColor = (index) => {
       if (index < clueHistory.length) {
         return STYLES.colors.green;
@@ -52,8 +53,6 @@ export default function Stats({ mode, stats, clueHistory }) {
         return 'black';
       }
     };
-
-    const hasSuddenDeath = clueHistory.length === stats.scoreTrend.length - 2;
 
     return (
       <ScoreTrend
@@ -71,22 +70,17 @@ export default function Stats({ mode, stats, clueHistory }) {
     );
   };
 
-  const renderSummary = (stats) => {
-    return (
-      <div className="d-flex justify-content-around">
-        <p>Time elapsed: {secToTime(stats.timeInSec)}</p>
-        <p>Turns taken: {stats.turns}</p>
-      </div>
-    );
-  };
-
   return (
     <div id="stats" className="skinny">
-      <h6>Game Progress</h6>
+      <h6>Game Progression</h6>
 
       {stats !== undefined &&
         <div>
-          {renderSummary(stats)}
+          <div className="d-flex justify-content-around">
+            <p>Time elapsed: {secToTime(stats.timeInSec)}</p>
+            <p>Turns taken: {stats.turns}</p>
+          </div>
+
           {isClassic(mode) && renderClassicScoreTrend(stats, clueHistory)}
           {isDuet(mode) && renderDuetScoreTrend(stats, clueHistory)}
         </div>

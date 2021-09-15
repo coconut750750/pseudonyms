@@ -6,6 +6,8 @@ import {
   STYLES,
 } from '../utils/const';
 
+import './ScoreTrend.css';
+
 class ScoreTrendScale extends LinearScale {
   buildTicks() {
     return this.chart.data.annotations.map(v => ({
@@ -55,8 +57,8 @@ const generateXAxisStyle = (color, max) => ({
     },
     color,
     autoSkip: false,
-    maxRotation: 30,
-    minRotation: 30,
+    maxRotation: 60,
+    minRotation: 60,
   },
   grid: {
     // display: false,
@@ -131,6 +133,7 @@ export default function ScoreTrend({
   yMax,
 }) {
   return (
+    <div className="scoreTrend">
     <Line
       data={{
         labels: generateLabels(guessEndTimes),
@@ -139,6 +142,7 @@ export default function ScoreTrend({
       }}
       plugins={plugins(guessEndTimes, indexToColor)}
       options={{
+        maintainAspectRatio: false,
         ...otherChartOptions,
         scales: {
           x: generateXAxisStyle(
@@ -149,5 +153,6 @@ export default function ScoreTrend({
         }
       }}
     />
+    </div>
   );
 };
