@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Toggle from '../input_components/Toggle';
+
+import { PreferencesContext } from '../contexts/PreferencesContext';
 
 import './DarkModeToggle.css';
 
 export default function DarkModeToggle(props) {
-  const [darkModeOn, setDarkModeOn] = useState((localStorage.getItem("dark") || 'false') === 'true');
+  const { darkModeOn, setDarkModeOn } = useContext(PreferencesContext);
 
   useEffect(() => {
     localStorage.setItem("dark", darkModeOn);

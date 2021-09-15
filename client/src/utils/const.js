@@ -12,6 +12,8 @@ export const STYLES = {
     [RED]: '#dc3545',
     [BLUE]: '#007bff',
     [GREEN]: '#28a745',
+    black: '#000',
+    white: '#999',
   },
   font: 'Roboto Mono, monospace',
   fontSize: 12,

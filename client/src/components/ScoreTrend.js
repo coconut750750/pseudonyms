@@ -45,7 +45,7 @@ const generateDataset = (name, color, trend) => ({
   pointRadius: 0,
 });
 
-const generateXAxisStyle = (color, max) => ({
+const generateXAxisStyle = (color, defaultColor, max) => ({
   min: 0,
   max: max,
   type: 'scoreTrendScale',
@@ -64,7 +64,7 @@ const generateXAxisStyle = (color, max) => ({
     // display: false,
     drawBorder: false,
     drawOnChartArea: false,
-    color: 'black',
+    color: defaultColor,
   },
   afterDataLimits: function(axis) {
     // add inner padding for points on the far right edge
@@ -75,7 +75,7 @@ const generateXAxisStyle = (color, max) => ({
   },
 });
 
-const generateYAxisStyle = (max) => ({
+const generateYAxisStyle = (defaultColor, max) => ({
   min: 0,
   max,
   ticks: {
@@ -83,12 +83,12 @@ const generateYAxisStyle = (max) => ({
     font: {
       family: STYLES.font,
     },
-    color: 'black',
+    color: defaultColor,
     stepSize: 1,
     autoSkip: false,
   },
   grid: {
-    color: 'black',
+    color: defaultColor,
     drawBorder: false,
   },
 });
@@ -129,6 +129,7 @@ export default function ScoreTrend({
   annotationSuffix,
   datasets,
   indexToColor,
+  defaultColor,
   xMax,
   yMax,
 }) {
@@ -147,9 +148,13 @@ export default function ScoreTrend({
         scales: {
           x: generateXAxisStyle(
             (context) => indexToColor(context.index),
+            defaultColor,
             xMax,
           ),
-          y: generateYAxisStyle(yMax),
+          y: generateYAxisStyle(
+            defaultColor,
+            yMax,
+          ),
         }
       }}
     />

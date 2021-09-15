@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import ScoreTrend from '../components/ScoreTrend';
+
+import { PreferencesContext } from '../contexts/PreferencesContext';
 
 import {
   isClassic,
   isDuet,
   STYLES,
+  RED,
+  BLUE,
+  GREEN,
 } from '../utils/const';
 
 const secToTime = (s) => {
@@ -17,8 +22,11 @@ const secToTime = (s) => {
 };
 
 export default function Stats({ mode, stats, clueHistory }) {
+  const { darkModeOn } = useContext(PreferencesContext);
+  const defaultColor = darkModeOn ? STYLES.colors.white : STYLES.colors.black;
+
   const renderClassicScoreTrend = (stats, clueHistory) => {
-    const secondTeam = stats.startTeam === 'blue' ? 'red' : 'blue';
+    const secondTeam = stats.startTeam === BLUE ? RED : BLUE;
     const indexToColor = (index) => {
       if (index % 2 === 0) {
         return STYLES.colors[stats.startTeam];
@@ -38,6 +46,7 @@ export default function Stats({ mode, stats, clueHistory }) {
           { name: secondTeam, color: STYLES.colors[secondTeam], trend: stats.secondTeamScoreTrend },
         ]}
         indexToColor={indexToColor}
+        defaultColor={defaultColor}
         xMax={stats.timeInSec}
         yMax={9}
       />
@@ -50,7 +59,7 @@ export default function Stats({ mode, stats, clueHistory }) {
       if (index < clueHistory.length) {
         return STYLES.colors.green;
       } else {
-        return 'black';
+        return defaultColor;
       }
     };
 
@@ -61,9 +70,10 @@ export default function Stats({ mode, stats, clueHistory }) {
         clueEndTimes={stats.clueEndTimes}
         annotationSuffix={hasSuddenDeath ? ['sudden death'] : []}
         datasets={[
-          { name: 'green', color: STYLES.colors.green, trend: stats.scoreTrend },
+          { name: GREEN, color: STYLES.colors.green, trend: stats.scoreTrend },
         ]}
         indexToColor={indexToColor}
+        defaultColor={defaultColor}
         xMax={stats.timeInSec}
         yMax={15}
       />
