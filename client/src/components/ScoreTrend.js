@@ -9,7 +9,7 @@ import {
 
 import './ScoreTrend.css';
 
-class ScoreTrendScale extends LinearScale {
+class CluesScale extends LinearScale {
   buildTicks() {
     return this.chart.data.annotations.map((v, i) => ({
       value: v.value,
@@ -24,8 +24,26 @@ class ScoreTrendScale extends LinearScale {
   }
 }
 
-ScoreTrendScale.id = 'scoreTrendScale';
-Chart.register(ScoreTrendScale);
+CluesScale.id = 'clues';
+Chart.register(CluesScale);
+
+class TimeScale extends LinearScale {
+  buildTicks() {
+    return this.chart.data.labels.slice(1).map((v, i) => ({
+      value: v,
+      label: secToTime(v),
+      color: this.chart.data.color.indexToColor(i),
+      major: false,
+    }));
+  }
+
+  generateTickLabels(ticks) {
+    // label already generated in buildTicks, override for noop
+  }
+}
+
+TimeScale.id = 'times';
+Chart.register(TimeScale);
 
 const generateLabels = (guessEndTimes) => ([0, ...guessEndTimes.map(t => t)]);
 
@@ -47,10 +65,11 @@ const generateDataset = (name, color, trend) => ({
   pointRadius: 0,
 });
 
-const generateXAxisStyle = (defaultColor, max) => ({
+const generateCluesAxisStyle = (defaultColor, max) => ({
   min: 0,
   max: max,
-  type: 'scoreTrendScale',
+  position: 'top',
+  type: 'clues',
   ticks: {
     padding: 0,
     font: STYLES.font,
@@ -65,11 +84,22 @@ const generateXAxisStyle = (defaultColor, max) => ({
     drawOnChartArea: false,
     color: defaultColor,
   },
-  title: {
-    display: true,
-    text: 'Clues over time',
+});
+
+const generateTimesAxisStyle = (defaultColor, max) => ({
+  min: 0,
+  max: max,
+  position: 'bottom',
+  type: 'times',
+  ticks: {
     font: STYLES.font,
     color: defaultColor,
+    maxRotation: 60,
+    minRotation: 60,
+  },
+  grid: {
+    drawBorder: false,
+    color: (context) => context.tick.color,
   },
 });
 
@@ -87,12 +117,6 @@ const generateYAxisStyle = (defaultColor, max) => ({
     color: defaultColor,
     drawBorder: false,
   },
-  title: {
-    display: true,
-    text: 'Words left',
-    font: STYLES.font,
-    color: defaultColor,
-  },
 });
 
 const otherChartOptions = {
@@ -100,48 +124,11 @@ const otherChartOptions = {
     legend: false,
   },
   events: [],
-  layout: {
-    padding: 20,
-  },
   animation: {
     duration: 500,
   },
   maintainAspectRatio: false,
 };
-
-const plugins = [{
-  afterDatasetsDraw: function(chart) {
-    const ctx = chart.ctx;
-    const y_axis = chart.scales['y'];
-    const topY = y_axis.top;
-    const bottomY = y_axis.bottom;
-
-    ctx.lineWidth = 1;
-
-    const linePositions = chart.data.labels.slice(1);
-
-    linePositions.forEach((t, index) => {
-      const x = chart.scales.x.getPixelForValue(t)
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x, topY);
-      ctx.lineTo(x, bottomY);
-      ctx.strokeStyle = chart.data.color.indexToColor(index);
-      ctx.stroke();
-      ctx.restore();
-    });
-
-    let t = linePositions[linePositions.length - 1];
-    let x = chart.scales.x.getPixelForValue(t);
-    ctx.save();
-    ctx.textBaseline = 'middle';
-    ctx.textAlign = 'center';
-    ctx.font = STYLES.font.size + 'px ' + STYLES.font.family;
-    ctx.fillStyle = chart.data.color.defaultColor;
-    ctx.fillText(secToTime(t), x, topY - STYLES.font.size);
-    ctx.restore();
-  },
-}];
 
 export default function ScoreTrend({
   clueHistory,
@@ -162,15 +149,17 @@ export default function ScoreTrend({
           annotations: generateAnnotations(clueHistory, clueEndTimes, annotationSuffix),
           datasets: datasets.map(d => generateDataset(d.name, d.color, d.trend)),
           color: {
-            defaultColor: defaultColor,
             indexToColor: indexToColor,
           },
         }}
-        plugins={plugins}
         options={{
           ...otherChartOptions,
           scales: {
-            x: generateXAxisStyle(
+            clues: generateCluesAxisStyle(
+              defaultColor,
+              xMax,
+            ),
+            times: generateTimesAxisStyle(
               defaultColor,
               xMax,
             ),
