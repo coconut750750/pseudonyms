@@ -82,7 +82,7 @@ function Walkthrough(props) {
           }
         </div>
         
-        <div class="laptop">
+        <div className="laptop">
           <img className="screen" src={getImage(mode, screen)} alt={getScreen(mode, screen)}/>
         </div>
         

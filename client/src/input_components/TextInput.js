@@ -4,7 +4,7 @@ import './TextInput.css';
 
 function TextInput(props) {
   return (
-    <div class="form-group md">
+    <div className="form-group md">
       <label>{props.label}</label>
       <input type="text" className="form-control" ref={props.fref} {...props}/>
     </div>

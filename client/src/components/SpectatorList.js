@@ -19,7 +19,7 @@ export default function SpectatorList({ socket, players, isAdmin }) {
     return (
       <div className="spectator-list">
         <div className="row justify-content-center">
-          <div class="p-0 spectator-toggle" onClick={ () => setOpen(!open) }>
+          <div className="p-0 spectator-toggle" onClick={ () => setOpen(!open) }>
             <p className="m-0">Spectators: {n}<UpDownArrow up={open}/></p>
           </div>
         </div>

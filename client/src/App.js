@@ -32,14 +32,21 @@ function App(props) {
     socket.disconnect();
   }, []);
 
+  const reset = useCallback((socket) => {
+    closeSocket(socket);
+    ReactDOM.unstable_batchedUpdates(() => {
+      setGameData({});
+      goHome();
+    });
+  }, [closeSocket, setGameData, goHome]);
+
   const setGame = useCallback((gameCode, name, gameMode) => {
     let socket = io();
+    socket.on('end', data => {
+      reset(socket);
+    });
     socket.on('disconnect', data => {
-      closeSocket(socket);
-      ReactDOM.unstable_batchedUpdates(() => {
-        setGameData({});
-        goHome();
-      });
+      reset(socket);
     });
 
     ReactDOM.unstable_batchedUpdates(() => {
@@ -47,7 +54,7 @@ function App(props) {
       setViewState(GAME);
     });
     history.push(`/${gameCode}`);
-  }, [closeSocket, goHome, history]);
+  }, [reset, history]);
 
   useEffect(() => {
     if (viewState === HOME && urlgamecode !== undefined && urlgamecode.length !== 0) {

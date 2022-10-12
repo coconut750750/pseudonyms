@@ -36,10 +36,10 @@ function Create(props) {
       } }>
         <div className="btn-group btn-group-toggle mt-2">
           <label className={`game-mode-radio ${gameMode === CLASSIC ? 'selected' : 'unselected'}`} onClick={() => setMode(CLASSIC)}>
-            <input type="radio" name="options" id="option1" autocomplete="off"/> Classic
+            <input type="radio" name="options" id="option1" autoComplete="off"/> Classic
           </label>
           <label className={`game-mode-radio ${gameMode === DUET ? 'selected' : 'unselected'}`} onClick={() => setMode(DUET)}>
-            <input type="radio" name="options" id="option2" autocomplete="off"/> Duet
+            <input type="radio" name="options" id="option2" autoComplete="off"/> Duet
           </label>
         </div>
 

@@ -8,7 +8,9 @@ function PlayerList(props) {
   return (
     <div className={`player-list d-flex justify-content-center ${props.vertical ? "vertical" : "horizontal"}`} style={{ flexWrap: "wrap" }}>
       {props.players.map( player => 
-        <div>
+        <div
+          key={player.name}
+        >
           <PlayerBadge
             key={player.name}
             player={player}
