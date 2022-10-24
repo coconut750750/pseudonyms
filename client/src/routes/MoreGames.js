@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 const games = [
   {name: "Connoisseurs", description: "Based on Cards Against Humanity", link: "https://connoisseurs.brandon-wang.com/"},
+  {name: "Mahjong", description: "Four player Chinese Mahjong", link: "https://mj.brandon-wang.com/"},
   {name: "Red Flags", description: "Based on Red Flags the card game", link: "https://redflagsio.herokuapp.com/"},
-  {name: "Secret Hitler", link: "http://www.secrethitler.party/"},
+  {name: "Secret Hitler", link: "https://secret-hitler.com//"},
   {name: "Drawphone", description: "Telephone with pictures", link: "https://drawphone.tannerkrewson.com/"},
   {name: "Netgames", description: "Avalon, Love Letter, One Night Ultimate Werewolf & more", link: "https://netgames.io/games/"},
 ];
