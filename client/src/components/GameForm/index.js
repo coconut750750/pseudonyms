@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './GameForm.css';
 
@@ -7,13 +7,19 @@ import Join from './Join';
 
 
 export default function GameForm(props) {
-  const join = <Join urlGameCode={props.urlCode} join={props.setGame}/>;
   const create = <Create setGame={props.setGame}/>;
+  const join = <Join urlGameCode={props.urlCode} join={props.setGame}/>;
 
-  const tabLabels = ["Join", "Create"];
-  const tabs = [join, create];
+  const tabLabels = ["Create", "Join"];
+  const tabs = [create, join];
 
   const [tab, setTab] = useState(0);
+
+  useEffect(() => {
+    if (props.urlCode !== undefined) {
+      setTab(1);
+    }
+  }, [props.urlCode]);
 
   return (
     <div className="game-form elevated">
