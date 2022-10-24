@@ -96,3 +96,31 @@ select:focus,
     box-shadow: 0 0 10px 2px var(--shadow-color);
     color: var(--text-color);
 }
+
+.link,
+.link:hover {
+    color: var(--text-color);
+    display: inline-block;
+    text-decoration: none;
+}
+
+.link::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--text-color);
+    transition: width 0.3s;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+.link p {
+    margin-bottom: 0;
+}
+
+.mb-small {
+    margin-bottom: 0.5rem;
+}

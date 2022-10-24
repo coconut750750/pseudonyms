@@ -168,7 +168,12 @@ function Lobby(props) {
   return (
     <div className="fill-height skinny">
       <h5>Lobby</h5>
-      <h6>Click the game code for a shareable link!</h6>
+      <p className="mb-small">Click the game code for a shareable link</p>
+      <p>
+        Like the game?{' '}
+        <a className="link" target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/brandonwang">Support me</a>{' '}
+        or <a className="link" target="_blank" rel="noopener noreferrer" href="/feedback">leave some feedback</a>!
+      </p>
 
       <div className="row m-2 d-flex justify-content-center">
         <div className="col-md-6">

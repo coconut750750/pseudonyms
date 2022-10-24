@@ -50,6 +50,11 @@ function Result(props) {
       <h5 className="mb-0">Results<Tip classic={isClassic(props.mode)} duet={isDuet(props.mode)} help="resultsHelp"/></h5>
       {props.gameHeader}
       {renderHeader()}
+      <p>
+        Enjoyed playing?{' '}
+        <a className="link" target="_blank" rel="noopener noreferrer" href="https://www.buymeacoffee.com/brandonwang">Support me</a>{' '}
+        or <a className="link" target="_blank" rel="noopener noreferrer" href="/feedback">leave some feedback</a>!
+      </p>
       <br/>
 
       {renderBoard()}

@@ -22,27 +22,3 @@
 #built-by a {
     color: var(--unselected-color);
 }
-
-.footer-links,
-.footer-links:hover {
-    color: var(--text-color);
-    display: inline-block;
-    text-decoration: none;
-}
-
-.footer-links::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 2px;
-    background: var(--text-color);
-    transition: width 0.3s;
-}
-
-.footer-links:hover::after {
-  width: 100%;
-}
-
-.footer-links p {
-    margin-bottom: 0;
-}
