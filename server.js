@@ -87,12 +87,12 @@ app.io.on('connect', function (socket) {
 
 if (process.env.NODE_ENV === 'production') {
     // Serve any static files
-    app.use(express.static(path.join(__dirname, 'client/dist', {
+    app.use(express.static(path.join(__dirname, 'client/dist'), {
       maxAge: 86400000,
       setHeaders: function(res, path) {
         res.setHeader("Expires", new Date(Date.now() + 2592000000*30).toUTCString());
       },
-    })));
+    }));
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
         res.sendFile(path.join(__dirname, 'client/dist', 'index.html'));
