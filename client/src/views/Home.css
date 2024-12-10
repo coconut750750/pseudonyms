@@ -16,8 +16,4 @@
     #home > div {
         flex-direction: column;
     }
-
-    #home .col {
-        flex-basis: unset;
-    }
 }
