@@ -124,7 +124,7 @@ function BoardView(props) {
 
       <div className="row d-flex justify-content-center">
         <div className="col-xl"/>
-        <div className="col-xl">
+        <div className="col-xl p-0">
           {renderBoard()}
         </div>
         <div className="col-xl">
