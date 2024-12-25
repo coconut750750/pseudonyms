@@ -17,9 +17,8 @@ function Rejoin({
     checkName(name, gameCode).then(res => {
       setRejoinData({ gameCode, name, mode: res.mode });
     }).catch(res => {
-      localStorage.setItem('previous_game', JSON.stringify('{}'));
+      setRejoinData(undefined);
     });
-
   }, []);
 
   const joinGame = async () => {
