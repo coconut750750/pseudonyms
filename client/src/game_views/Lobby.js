@@ -13,6 +13,8 @@ const timeLimitOptions = [
   { value: 30, display: "30 seconds"},
   { value: 60, display: "1 minute"},
   { value: 120, display: "2 minutes"},
+  { value: 180, display: "3 minutes"},
+  { value: 240, display: "4 minutes"},
   { value: 300, display: "5 minutes"},
   { value: 0, display: "unlimited"}
 ];
