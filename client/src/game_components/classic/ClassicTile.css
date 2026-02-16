@@ -25,7 +25,7 @@
 .tile.hidden.key.x .text { color: #000000; }
 
 .tile.revealed .emoji {  }
-.tile.hidden.key.r .emoji { text-shadow: 0 0 12px #dc3545, 0 0 12px #dc3545, 0 0 12px #dc3545; }
-.tile.hidden.key.b .emoji { text-shadow: 0 0 12px #007bff, 0 0 12px #007bff, 0 0 12px #007bff; }
+.tile.hidden.key.r .emoji { text-shadow: 0 0 18px #dc3545, 0 0 18px #dc3545, 0 0 18px #dc3545; }
+.tile.hidden.key.b .emoji { text-shadow: 0 0 18px #007bff, 0 0 18px #007bff, 0 0 18px #007bff; }
 .tile.hidden.key.y .emoji {  }
-.tile.hidden.key.x .emoji { text-shadow: 0 0 12px #000000, 0 0 12px #000000, 0 0 12px #000000; }
+.tile.hidden.key.x .emoji { text-shadow: 0 0 18px #000000, 0 0 18px #000000, 0 0 18px #000000; }
