@@ -10,7 +10,7 @@ function Join(props) {
   const [error, setError] = useState("");
 
   const joinGame = async () => {
-    const name = nameInputRef.current.value;
+    const name = nameInputRef.current.value.trim();
     const gameCode = gameCodeInputRef.current.value.toLowerCase();
     checkName(name, gameCode).then(res => {
       props.join(gameCode, name, res.mode);

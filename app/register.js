@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const MIN_NAME_LENGTH = 2;
-const MAX_NAME_LENGTH = 12;
+const MIN_NAME_LENGTH = 1;
+const MAX_NAME_LENGTH = 16;
 
 const { CLASSIC, DUET } = require('./common/const');
 

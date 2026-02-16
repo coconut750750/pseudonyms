@@ -12,7 +12,7 @@ function Create(props) {
   const [gameMode, setMode] = useState(CLASSIC);
 
   const create = async () => {
-    const name = nameInputRef.current.value;
+    const name = nameInputRef.current.value.trim();
     checkName(name).then(res => {
       const createSuccess = res => {
         props.setGame(res.gameCode, name, res.mode);
