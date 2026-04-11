@@ -211,7 +211,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
         {game_views[phase]}
       </div>
 
-      {(phase !== LOBBY && phase !== BOARD) &&
+      {(phase !== LOBBY && me?.isAdmin) &&
         <div>
           <button type="button" className="btn" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>
         </div>

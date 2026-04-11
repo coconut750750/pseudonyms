@@ -117,7 +117,7 @@ function BoardView(props) {
   };
 
   return (
-    <div>
+    <div className="mb-2">
       {getTurnDescriptor()}
       {props.gameHeader}
       {renderCurrentClue()}

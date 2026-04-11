@@ -12,7 +12,7 @@
     border-color: #c6c8ca;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 900px) {
     #home > div {
         flex-direction: column;
     }

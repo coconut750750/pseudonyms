@@ -2,8 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    height: 450px;
-    width: 700px;
+    height: 38.6vw;
+    width: 60vw;
     margin: 0 auto;
 }
 
@@ -14,7 +14,7 @@
   }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 900px) {
   .board {
     width: 98vw;
     height: 75vw;

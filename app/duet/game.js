@@ -72,7 +72,7 @@ class DuetGame extends GameInterface {
   }
 
   canReset() {
-    return this.phase !== BOARD;
+    return true;
   }
 
   canStart() {

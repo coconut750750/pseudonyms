@@ -31,7 +31,7 @@ function socketio(socket, game, name, player) {
     );
   });
 
-   socket.on('sendClue', data => {
+  socket.on('sendClue', data => {
     const { word, count } = data;
     if (word === undefined || count === undefined) {
       return;
@@ -66,7 +66,7 @@ function socketio(socket, game, name, player) {
   });
 
   socket.on('newGame', data => {
-    if (game.canReset()) {
+    if (player.isAdmin && game.canReset()) {
       game.reset();
     }
   });
