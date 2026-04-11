@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
 import GameBadge from '../components/GameBadge';
+import LongPressButton from '../components/LongPressButton';
 import WrappedMessage from '../components/WrappedMessage';
 
 import GameHeader from '../game_components/GameHeader';
@@ -199,6 +200,18 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
               clueHistory={clueHistory}/>,
   };
 
+  const returnToLobbyButton = () => {
+    if (phase === LOBBY || !me?.isAdmin) {
+      return undefined;
+    }
+    if (phase === BOARD) {
+      return <LongPressButton onLongPress={ () => socket.emit('newGame', {}) }>Return to Lobby</LongPressButton>;
+    }
+    else {
+      return <button type="button" className="btn" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>;
+    }
+  };
+
   return (
     <div id="game" className={`fill-height ${tips ? '' : 'hidetips'} pb-2`}>
       <GameBadge
@@ -212,11 +225,9 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
         {game_views[phase]}
       </div>
 
-      {(phase !== LOBBY && me?.isAdmin) &&
-        <div>
-          <button type="button" className="btn" onClick={ () => socket.emit('newGame', {}) }>Return to Lobby</button>
-        </div>
-      }
+      <div>
+        {returnToLobbyButton()}
+      </div>
     </div>
   );
 }
