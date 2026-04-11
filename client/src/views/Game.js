@@ -163,6 +163,7 @@ function Game({ socket, gameCode, name, gameMode, exitGame, setError, setSuccess
   const game_views = {
     [LOBBY]: <Lobby 
               mode={gameMode}
+              gameCode={gameCode}
               socket={socket}
               players={players}
               me={me}/>,

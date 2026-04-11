@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 
 import PlayerList from '../components/PlayerList';
@@ -33,6 +33,30 @@ function Lobby(props) {
   const [turnLimit, setTurnLimit] = useState(9);
   const [mistakeLimit, setMistakeLimit] = useState(9);
 
+  const loadOptionsFromStorage = useCallback(() => {
+    try {
+      const options = JSON.parse(localStorage.getItem("options"));
+      if (options.gameCode !== props.gameCode) {
+        return;
+      }
+      let { clueLimit, guessLimit, wordlist, customWords, timers, mistakes } = options;
+      if (wordlist !== undefined) {
+        setWordlist(wordlist)
+      } else if (customWords !== undefined) {
+        setUseCustom(true);
+        setCustomWords(customWords);
+      }
+      setClueLimit(clueLimit || 0);
+      setGuessLimit(guessLimit || 0);
+      if (isDuet(props.mode)) {
+        setTurnLimit(timers || 9);
+        setMistakeLimit(mistakes || 9);
+      }
+    } catch {
+      return;
+    }
+  }, [props.gameCode]);
+
   const startGame = () => {
     let options = { clueLimit, guessLimit };
     if (!useCustom) {
@@ -44,6 +68,7 @@ function Lobby(props) {
       options = { ...options, timers: turnLimit, mistakes: mistakeLimit };
     }
     props.socket.emit('startGame', { options: options });
+    localStorage.setItem("options", JSON.stringify({ gameCode: props.gameCode, ...options }));
   };
 
   const exitGame = () => {
@@ -54,16 +79,17 @@ function Lobby(props) {
     if (props.mode !== undefined) {
       getWordlists().then(data => {
         ReactDOM.unstable_batchedUpdates(() => {
+          setWordlists(data);
           if (isClassic(props.mode)) {
             setWordlist("classic");
           } else if (isDuet(props.mode)) {
             setWordlist("duet");
           }
-          setWordlists(data);
+          loadOptionsFromStorage();
         });
       });
     }
-  }, [props.mode]);
+  }, [props.mode, loadOptionsFromStorage]);
 
   const renderWordlistSelect = () => {
     let options = [];
