@@ -21,6 +21,7 @@ class Game extends GameInterface {
   }
 
   reset() {
+    clearInterval(this.timer);
     this.timer = undefined;
   }
 
