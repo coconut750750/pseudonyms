@@ -11,9 +11,6 @@ import './ScoreTrend.css';
 
 class CluesScale extends LinearScale {
   buildTicks() {
-    if (this.chart.data.annotations === undefined || this.chart.data.color === undefined) {
-      return [];
-    }
     return this.chart.data.annotations.map((v, i) => ({
       value: v.value,
       label: v.annotation,
@@ -32,9 +29,6 @@ Chart.register(CluesScale);
 
 class TimeScale extends LinearScale {
   buildTicks() {
-    if (this.chart.data.color === undefined) {
-      return [];
-    }
     return this.chart.data.labels.slice(1).map((v, i) => ({
       value: v,
       label: secToTime(v),
