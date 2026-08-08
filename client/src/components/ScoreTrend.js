@@ -152,6 +152,7 @@ export default function ScoreTrend({
   xMax,
   yMax,
 }) {
+  console.log(clueHistory, clueEndTimes, indexToColor)
   return (
     <div className="scoreTrend">
       <Line
