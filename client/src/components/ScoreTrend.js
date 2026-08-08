@@ -11,9 +11,6 @@ import './ScoreTrend.css';
 
 class CluesScale extends LinearScale {
   buildTicks() {
-    console.log("CluesScale");
-    console.log(this.chart.data.annotations);
-    console.log(this.chart.data.color);
     if (this.chart.data.annotations === undefined || this.chart.data.color === undefined) {
       return [];
     }
@@ -35,8 +32,6 @@ Chart.register(CluesScale);
 
 class TimeScale extends LinearScale {
   buildTicks() {
-    console.log("TimeScale");
-    console.log(this.chart.data.color);
     if (this.chart.data.color === undefined) {
       return [];
     }
@@ -152,14 +147,6 @@ export default function ScoreTrend({
   xMax,
   yMax,
 }) {
-  console.log({
-          labels: generateLabels(guessEndTimes),
-          annotations: generateAnnotations(clueHistory, clueEndTimes, annotationSuffix),
-          datasets: datasets.map(d => generateDataset(d.name, d.color, d.trend)),
-          color: {
-            indexToColor: indexToColor,
-          },
-        })
   return (
     <div className="scoreTrend">
       <Line

@@ -60,11 +60,11 @@ function Result(props) {
       {renderBoard()}
       <br/>
 
-      <Stats
+      {/*<Stats
         mode={props.mode}
         stats={props.stats}
         clueHistory={props.clueHistory}
-      />
+      />*/}
     </div>
   );
 }
