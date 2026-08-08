@@ -11,6 +11,9 @@ import './ScoreTrend.css';
 
 class CluesScale extends LinearScale {
   buildTicks() {
+    if (this.chart.data.annotations === undefined) {
+      return [];
+    }
     return this.chart.data.annotations.map((v, i) => ({
       value: v.value,
       label: v.annotation,
