@@ -11,7 +11,10 @@ import './ScoreTrend.css';
 
 class CluesScale extends LinearScale {
   buildTicks() {
-    if (this.chart.data.annotations === undefined) {
+    console.log("CluesScale");
+    console.log(this.chart.data.annotations);
+    console.log(this.chart.data.color);
+    if (this.chart.data.annotations === undefined || this.chart.data.color === undefined) {
       return [];
     }
     return this.chart.data.annotations.map((v, i) => ({
@@ -32,6 +35,11 @@ Chart.register(CluesScale);
 
 class TimeScale extends LinearScale {
   buildTicks() {
+    console.log("TimeScale");
+    console.log(this.chart.data.color);
+    if (this.chart.data.color === undefined) {
+      return [];
+    }
     return this.chart.data.labels.slice(1).map((v, i) => ({
       value: v,
       label: secToTime(v),
