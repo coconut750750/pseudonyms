@@ -152,7 +152,14 @@ export default function ScoreTrend({
   xMax,
   yMax,
 }) {
-  console.log(clueHistory, clueEndTimes, indexToColor)
+  console.log({
+          labels: generateLabels(guessEndTimes),
+          annotations: generateAnnotations(clueHistory, clueEndTimes, annotationSuffix),
+          datasets: datasets.map(d => generateDataset(d.name, d.color, d.trend)),
+          color: {
+            indexToColor: indexToColor,
+          },
+        })
   return (
     <div className="scoreTrend">
       <Line
