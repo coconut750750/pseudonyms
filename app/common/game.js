@@ -1,6 +1,8 @@
 const GameInterface = require("../game");
 const socketio = require("./socketio");
 
+const { ROOM_EMPTY_TIMEOUT } = require("./const");
+
 class Game extends GameInterface {
   constructor(code, onEmpty, options, broadcast, PlayerListClass, minPlayers) {
     super(code, onEmpty, options, broadcast);
@@ -10,6 +12,7 @@ class Game extends GameInterface {
       () => this.delete(),
     );
     this.minPlayers = minPlayers;
+    this.emptyRoomTimer = setTimeout(() => this._delete(), ROOM_EMPTY_TIMEOUT);
   }
 
   mode() {
@@ -42,10 +45,12 @@ class Game extends GameInterface {
   }
 
   addPlayer(name, socket) {
+    clearTimeout(this.emptyRoomTimer);
     this.plist.add(name, socket);
   }
 
   activatePlayer(name, socket) {
+    clearTimeout(this.emptyRoomTimer);
     this.plist.activate(name, socket);
   }
 
@@ -152,6 +157,10 @@ class Game extends GameInterface {
   }
 
   delete() {
+    this.emptyRoomTimer = setTimeout(() => this._delete(), ROOM_EMPTY_TIMEOUT);
+  }
+
+  _delete() {
     clearInterval(this.timer);
     this.broadcast('end', {});
     this.onEmpty();

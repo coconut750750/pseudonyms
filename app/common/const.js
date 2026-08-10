@@ -58,4 +58,5 @@ module.exports = {
 
   MIN_WORDS: 50,
   BOARD_LEN: 5,
+  ROOM_EMPTY_TIMEOUT: 30 * 60 * 1000,
 }
