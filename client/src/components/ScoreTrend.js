@@ -9,12 +9,19 @@ import {
 
 import './ScoreTrend.css';
 
+class CustomOptions {
+  constructor(annotations, indexToColor) {
+    this.annotations = annotations;
+    this.colors = Array.from({ length: annotations.length }, (_, index) => indexToColor(index));
+  }
+}
+
 class CluesScale extends LinearScale {
   buildTicks() {
-    return this.chart.data.annotations.map((v, i) => ({
+    return this.options.customOptions.annotations.map((v, i) => ({
       value: v.value,
       label: v.annotation,
-      color: this.chart.data.color.indexToColor(i),
+      color: this.options.customOptions.colors[i],
       major: false,
     }));
   }
@@ -32,7 +39,7 @@ class TimeScale extends LinearScale {
     return this.chart.data.labels.slice(1).map((v, i) => ({
       value: v,
       label: secToTime(v),
-      color: this.chart.data.color.indexToColor(i),
+      color: this.options.customOptions.colors[i],
       major: false,
     }));
   }
@@ -65,11 +72,12 @@ const generateDataset = (name, color, trend) => ({
   pointRadius: 0,
 });
 
-const generateCluesAxisStyle = (defaultColor, max) => ({
+const generateCluesAxisStyle = (defaultColor, max, customOptions) => ({
   min: 0,
   max: max,
   position: 'top',
   type: 'clues',
+  customOptions,
   ticks: {
     padding: 0,
     font: STYLES.font,
@@ -86,11 +94,12 @@ const generateCluesAxisStyle = (defaultColor, max) => ({
   },
 });
 
-const generateTimesAxisStyle = (defaultColor, max) => ({
+const generateTimesAxisStyle = (defaultColor, max, customOptions) => ({
   min: 0,
   max: max,
   position: 'bottom',
   type: 'times',
+  customOptions,
   ticks: {
     font: STYLES.font,
     color: defaultColor,
@@ -141,16 +150,13 @@ export default function ScoreTrend({
   xMax,
   yMax,
 }) {
+  const customOptions = new CustomOptions(generateAnnotations(clueHistory, clueEndTimes, annotationSuffix), indexToColor);
   return (
     <div className="scoreTrend">
       <Line
         data={{
           labels: generateLabels(guessEndTimes),
-          annotations: generateAnnotations(clueHistory, clueEndTimes, annotationSuffix),
           datasets: datasets.map(d => generateDataset(d.name, d.color, d.trend)),
-          color: {
-            indexToColor: indexToColor,
-          },
         }}
         options={{
           ...otherChartOptions,
@@ -158,10 +164,12 @@ export default function ScoreTrend({
             clues: generateCluesAxisStyle(
               defaultColor,
               xMax,
+              customOptions,
             ),
             times: generateTimesAxisStyle(
               defaultColor,
               xMax,
+              customOptions,
             ),
             y: generateYAxisStyle(
               defaultColor,
