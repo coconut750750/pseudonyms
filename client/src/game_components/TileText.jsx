@@ -1,10 +1,10 @@
 import React from 'react';
-import _ from "lodash";
+const segmenter = new Intl.Segmenter(undefined, { granularity: "grapheme" });
 
 var emojiRe = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/
 
 const onlyEmoji = (text) => {
-  const chars = _.toArray(text);
+  const chars = Array.from(segmenter.segment(text), s => s.segment);
   for (let c of chars) {
     if (!emojiRe.test(c)) {
       return false;

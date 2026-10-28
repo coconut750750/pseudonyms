@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from "react";
-import debounce from "lodash/debounce";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 
 import './WrappedMessage.css';
 
@@ -7,16 +6,18 @@ const WrappedMessage = WrappedComponent =>
   function Message(props) {
     const [message, setMessage] = useState(undefined);
     const [messageClass, setMessageClass] = useState(undefined);
+    const timer = useRef(undefined);
 
     const disappearTime = 2000;
     const debounceDisappear = () => {
       setMessage(undefined);
       setMessageClass(undefined);
     };
-    const disappearCallback = useCallback(
-      debounce(debounceDisappear, disappearTime),
-      []
-    );
+    const disappearCallback = useCallback(() => {
+      clearTimeout(timer.current);
+      timer.current = setTimeout(debounceDisappear, disappearTime);
+    }, []);
+    useEffect(() => () => clearTimeout(timer.current), []);
 
     const setErrorMessage = useCallback(message => {
       setMessage(message);

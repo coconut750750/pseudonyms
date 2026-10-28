@@ -15,7 +15,6 @@ export default defineConfig({
     },
   },
   build: {
-    // server.js serves the built app from client/dist
     outDir: 'dist',
     sourcemap: false,
   },

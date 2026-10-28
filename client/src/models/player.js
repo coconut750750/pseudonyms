@@ -1,7 +1,5 @@
 import { RED, BLUE, NO_TEAM } from '../utils/const';
 
-import _ from 'lodash';
-
 export default class Player {
   constructor(name, isAdmin, active, team, role) {
     this.name = name;
@@ -29,7 +27,7 @@ export default class Player {
 }
 
 export function getMeIndex(players, name) {
-  return _.findIndex(players, { name });
+  return players ? players.findIndex(p => p?.name === name) : -1;
 }
 
 export function getMePlayer(players, name) {
