@@ -10,4 +10,4 @@
 
 ### deploying the server
 
-1. after a new build, restart it: `forever start server.js --uid pseudonyms`
+1. after a new build, restart it: `forever start --uid pseudonyms server.js`
