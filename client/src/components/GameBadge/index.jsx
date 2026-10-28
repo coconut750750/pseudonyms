@@ -6,8 +6,8 @@ import {
   isDuet,
 } from '../../utils/const';
 
-import { ReactComponent as LightOn } from './lightbulb-on.svg';
-import { ReactComponent as LightOff } from './lightbulb-off.svg';
+import LightOn from './lightbulb-on.svg?react';
+import LightOff from './lightbulb-off.svg?react';
 
 import './GameBadge.css';
 

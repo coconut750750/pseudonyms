@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import * as serviceWorker from './serviceWorker';
 
 import {
   BrowserRouter as Router,
@@ -30,10 +29,10 @@ function Index(props) {
 
         <div className="outer">
           <Switch>
-            {process.env.NODE_ENV === 'development' &&
+            {import.meta.env.DEV &&
               <Route exact path="/story/classic"><ClassicResult /></Route>
             }
-            {process.env.NODE_ENV === 'development' &&
+            {import.meta.env.DEV &&
               <Route exact path="/story/duet"><DuetResult /></Route>
             }
             <Route exact path="/howto"><HowTo/></Route>
@@ -50,4 +49,7 @@ function Index(props) {
   );
 }
 
-serviceWorker.unregister();
+// Remove any service worker left over from the old Create React App build.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+}

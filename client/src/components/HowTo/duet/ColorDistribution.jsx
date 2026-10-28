@@ -2,11 +2,11 @@ import React from 'react';
 
 import './ColorDistribution.css';
 
-const {
-  GREEN_TILE: G,
-  WHITE_TILE: Y,
-  BLACK_TILE: X,
-} = require('../../../utils/const');
+import {
+  GREEN_TILE as G,
+  WHITE_TILE as Y,
+  BLACK_TILE as X,
+} from '../../../utils/const';
 
 const topRowGreens = [G,G,G,G,G,G,G,G,G,Y,Y,Y,Y,Y,X];
 const botRowGreens = [X,Y,Y,Y,Y,Y,G,G,G,G,G,G,G,G,G];

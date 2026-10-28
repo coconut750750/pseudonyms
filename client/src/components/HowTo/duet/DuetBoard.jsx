@@ -5,14 +5,14 @@ import { newBoard } from '../../../models/board';
 import { newKey } from '../../../models/keycard';
 import Toggle from '../../../input_components/Toggle';
 
-const {
+import {
   RED,
   BLUE,
   BOARD_SIZE,
-  GREEN_TILE: G,
-  WHITE_TILE: Y,
-  BLACK_TILE: X,
-} = require('../../../utils/const');
+  GREEN_TILE as G,
+  WHITE_TILE as Y,
+  BLACK_TILE as X,
+} from '../../../utils/const';
 
 const board = (() => {
   const words = ['HOLLYWOOD','SCREEN','PLAY','MARBLE','DINOSAUR','CAT','PITCH','BOND','GREECE','DECK','SPIKE','CENTER','VACUUM','UNICORN','UNDERTAKER','TOOTH','FAIR','WELL','SHOT','BILL','STAFF','SQUARE','PAN','KING','CHICK'];

@@ -1,6 +1,6 @@
 import { RED, BLUE, NO_TEAM } from '../utils/const';
 
-var _ = require('lodash');
+import _ from 'lodash';
 
 export default class Player {
   constructor(name, isAdmin, active, team, role) {
